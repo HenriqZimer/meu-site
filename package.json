@@ -42,7 +42,12 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "clean": "rm -rf .nuxt .output node_modules/.cache"
+    "clean": "rm -rf .nuxt .output node_modules/.cache dist",
+    "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
+    "clean:docker": "docker system prune -f && docker volume prune -f",
+    "cleanup": "./scripts/cleanup.sh",
+    "cleanup:full": "./scripts/cleanup.sh full",
+    "cleanup:docker": "./scripts/cleanup.sh docker"
   },
   "dependencies": {
     "@googlemaps/markerclusterer": "^2.6.2",
