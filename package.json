@@ -1,10 +1,29 @@
 {
   "name": "meu-site",
   "version": "1.0.0",
-  "description": "Landing page profissional minimalista com Vue 3 e Nuxt 3",
-  "author": "Seu Nome",
+  "description": "Portfolio profissional responsivo com Vue 3, Nuxt 3 e Vuetify - Design minimalista focado em DevOps",
+  "author": "Henrique Pereira Zimermann <contato@henriqzimer.com.br>",
+  "license": "MIT",
   "type": "module",
   "private": true,
+  "homepage": "https://henriqzimer.github.io/meu-site",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HenriqZimer/meu-site.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HenriqZimer/meu-site/issues"
+  },
+  "keywords": [
+    "portfolio",
+    "vue3",
+    "nuxt3",
+    "vuetify",
+    "typescript",
+    "devops",
+    "responsive",
+    "landing-page"
+  ],
   "scripts": {
     "dev": "nuxt dev",
     "dev:prod": "nuxt preview",
@@ -13,6 +32,9 @@
     "preview": "nuxt preview",
     "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
+    "test": "echo 'No tests specified yet' && exit 0",
+    "test:build": "npm run build",
+    "validate": "./scripts/validate.sh",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
