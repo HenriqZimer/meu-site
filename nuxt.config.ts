@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   modules: [
     'vuetify-nuxt-module',
     '@nuxt/eslint',
-    '@nuxt/image',
+    // '@nuxt/image', // Temporariamente desabilitado para Docker
     '@nuxt/scripts'
   ],
 
@@ -126,11 +126,11 @@ export default defineNuxtConfig({
     minify: process.env.NODE_ENV === 'production'
   },
 
-  // Configurações do Nuxt Image
-  image: {
-    quality: 80,
-    format: ['webp', 'jpg', 'png'],
-    // Usar provider simples para evitar warning do sharp
-    provider: 'ipx'
-  }
+  // Configurações do Nuxt Image (desabilitado temporariamente)
+  // image: {
+  //   quality: 80,
+  //   format: ['webp', 'jpg', 'png'],
+  //   // Usar provider simples para evitar warning do sharp
+  //   provider: 'ipx'
+  // }
 })
