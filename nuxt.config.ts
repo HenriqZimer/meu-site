@@ -77,8 +77,6 @@ export default defineNuxtConfig({
   ],
 
   app: {
-    // Configuração para GitHub Pages com domínio customizado
-    baseURL: '/',
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
@@ -120,19 +118,12 @@ export default defineNuxtConfig({
   },
 
   // Configurações condicionais baseadas no ambiente
-  ssr: process.env.NODE_ENV === 'production',
+  ssr: true,
   
   // Configurações de build para produção
   nitro: {
     compressPublicAssets: process.env.NODE_ENV === 'production',
-    minify: process.env.NODE_ENV === 'production',
-    // Configuração para GitHub Pages com domínio customizado
-    ...(process.env.NITRO_PRESET === 'github-pages' && {
-      preset: 'github-pages',
-      output: {
-        publicDir: '.output/public'
-      }
-    })
+    minify: process.env.NODE_ENV === 'production'
   },
 
   // Configurações do Nuxt Image
