@@ -4,10 +4,10 @@
     <Header />
     <v-main>
       <Hero />
-      <!-- <About />
-      <Skills />
+      <About />
+      <!-- <Skills /> -->
       <Portfolio />
-      <Certifications /> -->
+      <Certifications />
       <!-- <Contact /> -->
     </v-main>
     <Footer />

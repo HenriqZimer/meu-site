@@ -88,7 +88,7 @@
           <div class="avatar-wrapper">
             <v-avatar size="420" class="elevation-12 hero-avatar">
               <v-img
-                src="https://henriqzimer.com.br/foto-perfil-profissional.jpg"
+                src="https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg"
                 alt="Henrique Zimermann"
                 cover
               />
