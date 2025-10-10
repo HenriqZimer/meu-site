@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const isProduction = process.env.NODE_ENV === 'production'
+const isProduction = process.env.NODE_ENV
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -29,7 +29,6 @@ export default defineNuxtConfig({
   modules: [
     'vuetify-nuxt-module',
     '@nuxt/eslint',
-    // '@nuxt/image', // Temporariamente desabilitado para Docker
     '@nuxt/scripts'
   ],
 
@@ -118,7 +117,7 @@ export default defineNuxtConfig({
   },
 
   // Configurações condicionais baseadas no ambiente
-  ssr: true,
+  ssr: process.env.NODE_ENV === 'production',
   
   // Configurações de build para produção
   nitro: {
@@ -126,11 +125,5 @@ export default defineNuxtConfig({
     minify: process.env.NODE_ENV === 'production'
   },
 
-  // Configurações do Nuxt Image (desabilitado temporariamente)
-  // image: {
-  //   quality: 80,
-  //   format: ['webp', 'jpg', 'png'],
-  //   // Usar provider simples para evitar warning do sharp
-  //   provider: 'ipx'
-  // }
+
 })
