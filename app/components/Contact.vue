@@ -17,7 +17,7 @@
 
             <v-list class="bg-transparent">
               <v-list-item class="px-0 mb-4">
-                <template v-slot:prepend>
+                <template #prepend>
                   <v-icon color="primary" size="24">mdi-email</v-icon>
                 </template>
                 <v-list-item-title class="text-body-1">
@@ -26,7 +26,7 @@
               </v-list-item>
 
               <v-list-item class="px-0 mb-4">
-                <template v-slot:prepend>
+                <template #prepend>
                   <v-icon color="primary" size="24">mdi-phone</v-icon>
                 </template>
                 <v-list-item-title class="text-body-1">
@@ -35,7 +35,7 @@
               </v-list-item>
 
               <v-list-item class="px-0 mb-4">
-                <template v-slot:prepend>
+                <template #prepend>
                   <v-icon color="primary" size="24">mdi-map-marker</v-icon>
                 </template>
                 <v-list-item-title class="text-body-1">
@@ -44,7 +44,7 @@
               </v-list-item>
             </v-list>
 
-            <v-divider class="my-6"></v-divider>
+            <v-divider class="my-6"/>
 
             <h4 class="text-subtitle-1 font-weight-bold mb-4">Redes Sociais</h4>
             <div class="d-flex gap-2">
@@ -91,7 +91,7 @@
                 variant="outlined"
                 density="comfortable"
                 class="mb-4"
-              ></v-text-field>
+              />
 
               <v-text-field
                 v-model="formData.email"
@@ -101,7 +101,7 @@
                 variant="outlined"
                 density="comfortable"
                 class="mb-4"
-              ></v-text-field>
+              />
 
               <v-text-field
                 v-model="formData.subject"
@@ -110,7 +110,7 @@
                 variant="outlined"
                 density="comfortable"
                 class="mb-4"
-              ></v-text-field>
+              />
 
               <v-textarea
                 v-model="formData.message"
@@ -119,7 +119,7 @@
                 variant="outlined"
                 rows="5"
                 class="mb-4"
-              ></v-textarea>
+              />
 
               <v-btn
                 type="submit"
@@ -219,9 +219,12 @@ const handleSubmit = async () => {
     }
 
     if (form.value) {
-      (form.value as any).reset()
+      // Reset do formulário usando interface adequada
+      const formElement = form.value as HTMLFormElement
+      formElement.reset()
     }
-  } catch (error) {
+  } catch {
+    // Erro capturado mas não utilizado diretamente
     alert.value = {
       show: true,
       type: 'error',

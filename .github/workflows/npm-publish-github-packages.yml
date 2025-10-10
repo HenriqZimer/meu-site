@@ -38,14 +38,10 @@ jobs:
         run: npm ci
         
       - name: 🔍 Run ESLint
-        run: |
-          echo "🔍 Executando verificações de código..."
-          npm run lint
+        run: npm run lint
         
       - name: 🧹 Check code formatting
-        run: |
-          echo "🧹 Verificando formatação do código..."
-          npm run lint -- --max-warnings 0
+        run: npm run lint -- --max-warnings 0
 
   # Job 2: Build e testes
   build:
@@ -77,18 +73,11 @@ jobs:
           
       - name: 🧪 Run tests (if available)
         run: |
-          echo "🧪 Executando testes..."
           if npm run test --silent > /dev/null 2>&1; then
             npm run test
           else
-            echo "⏭️ Nenhum teste configurado, pulando..."
+            echo "⏭️ No tests configured, skipping..."
           fi
-          
-      - name: ✅ Build validation
-        run: |
-          echo "✅ Build concluído com sucesso!"
-          echo "📊 Tamanho dos arquivos gerados:"
-          ls -lah .output/ || echo "Pasta .output não encontrada"
           
       - name: 📊 Upload build artifacts
         if: matrix.node-version == 20
@@ -128,12 +117,7 @@ jobs:
         run: npm ci
         
       - name: 🏗️ Generate static site
-        run: |
-          # Usar variáveis de produção se disponíveis
-          if [ -f .env.production ]; then
-            cp .env.production .env
-          fi
-          npm run generate
+        run: npm run generate
         env:
           NODE_ENV: production
           

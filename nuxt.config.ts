@@ -28,11 +28,9 @@ export default defineNuxtConfig({
 
   modules: [
     'vuetify-nuxt-module',
-    '@nuxt/content',
     '@nuxt/eslint',
     '@nuxt/image',
-    '@nuxt/scripts',
-    '@nuxt/test-utils'
+    '@nuxt/scripts'
   ],
 
   vuetify: {
@@ -131,6 +129,8 @@ export default defineNuxtConfig({
   // Configurações do Nuxt Image
   image: {
     quality: 80,
-    format: ['webp', 'jpg', 'png']
+    format: ['webp', 'jpg', 'png'],
+    // Usar provider simples para evitar warning do sharp
+    provider: 'ipx'
   }
 })

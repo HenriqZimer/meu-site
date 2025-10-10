@@ -12,8 +12,8 @@
           <v-btn
             text
             size="large"
-            @click="scrollToSection('home')"
             class="logo-btn"
+            @click="scrollToSection('home')"
           >
             <v-icon start>mdi-home</v-icon>
             <span class="text-h6 font-weight-bold logo-text">Início</span>
@@ -27,9 +27,9 @@
             v-for="(item, index) in menuItems"
             :key="item.id"
             variant="text"
-            @click="scrollToSection(item.id)"
             class="nav-btn mx-1"
             :style="{ animationDelay: `${index * 0.1}s` }"
+            @click="scrollToSection(item.id)"
           >
             <v-icon start class="nav-icon">{{ item.icon }}</v-icon>
             <span style="text-transform: capitalize;" class="nav-text">{{ item.label.toLowerCase() }}</span>
@@ -37,8 +37,8 @@
           
           <v-btn
             variant="text"
-            @click="toggleTheme"
             class="ml-4 theme-btn"
+            @click="toggleTheme"
           >
             <v-icon start class="theme-icon">{{ theme.global.name.value === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
             <span style="text-transform: capitalize;" class="theme-text">{{ theme.global.name.value === 'dark' ? 'modo claro' : 'modo escuro' }}</span>
@@ -48,12 +48,12 @@
         <v-col cols="auto" class="hidden-md-and-up">
           <v-btn
             icon
-            @click="toggleTheme"
             class="mr-2 mobile-theme-btn"
+            @click="toggleTheme"
           >
             <v-icon class="mobile-theme-icon">{{ theme.global.name.value === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
           </v-btn>
-          <v-app-bar-nav-icon @click="drawer = !drawer" class="mobile-nav-icon" />
+          <v-app-bar-nav-icon class="mobile-nav-icon" @click="drawer = !drawer" />
         </v-col>
       </v-row>
     </v-container>
@@ -69,11 +69,11 @@
       <v-list-item
         v-for="(item, index) in menuItems"
         :key="item.id"
-        @click="scrollToSection(item.id); drawer = false"
         class="drawer-item"
         :style="{ animationDelay: `${index * 0.1}s` }"
+        @click="scrollToSection(item.id); drawer = false"
       >
-        <template v-slot:prepend>
+        <template #prepend>
           <v-icon class="drawer-icon">{{ item.icon }}</v-icon>
         </template>
         <v-list-item-title class="drawer-text">{{ item.label }}</v-list-item-title>
@@ -100,7 +100,7 @@ const menuItems = [
 const toggleTheme = () => {
   theme.global.name.value = theme.global.name.value === 'light' ? 'dark' : 'light'
   // Salvar preferência no localStorage
-  if (process.client) {
+  if (import.meta.client) {
     localStorage.setItem('theme', theme.global.name.value)
   }
 }
@@ -127,7 +127,7 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   
   // Restaurar tema salvo do localStorage
-  if (process.client) {
+  if (import.meta.client) {
     const savedTheme = localStorage.getItem('theme')
     if (savedTheme) {
       theme.global.name.value = savedTheme as 'light' | 'dark'

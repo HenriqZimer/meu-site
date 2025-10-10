@@ -91,10 +91,10 @@
                 src="https://henriqzimer.com.br/foto-perfil-profissional.jpg"
                 alt="Henrique Zimermann"
                 cover
-              ></v-img>
+              />
             </v-avatar>
-            <div class="avatar-ring"></div>
-            <div class="avatar-glow"></div>
+            <div class="avatar-ring"/>
+            <div class="avatar-glow"/>
           </div>
         </v-col>
       </v-row>

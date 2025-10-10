@@ -32,7 +32,7 @@
 
         <v-col cols="12" md="6">
           <v-row>
-            <v-col cols="6" v-for="stat in stats" :key="stat.label">
+            <v-col v-for="stat in stats" :key="stat.label" cols="6">
               <v-card class="pa-4 text-center" elevation="2">
                 <div class="text-h3 font-weight-bold text-primary mb-2">
                   {{ stat.value }}

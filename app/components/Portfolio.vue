@@ -25,11 +25,11 @@
 
       <v-row>
         <v-col
+          v-for="project in filteredProjects"
+          :key="project.id"
           cols="12"
           md="6"
           lg="4"
-          v-for="project in filteredProjects"
-          :key="project.id"
         >
           <v-card elevation="2" class="h-100 d-flex flex-column">
             <v-img
@@ -38,7 +38,7 @@
               cover
               class="text-white"
             >
-              <template v-slot:placeholder>
+              <template #placeholder>
                 <div class="d-flex align-center justify-center fill-height bg-grey-lighten-2">
                   <v-icon size="64" color="grey">mdi-image</v-icon>
                 </div>

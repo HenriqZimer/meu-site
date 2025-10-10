@@ -31,8 +31,8 @@
               :key="link.label"
               variant="text"
               size="small"
-              @click="scrollToSection(link.href)"
               class="text-capitalize"
+              @click="scrollToSection(link.href)"
             >
               {{ link.label }}
             </v-btn>
@@ -40,7 +40,7 @@
         </v-col>
       </v-row>
 
-      <v-divider class="border-opacity-25 mb-6"></v-divider>
+      <v-divider class="border-opacity-25 mb-6"/>
 
       <!-- Copyright -->
       <v-row align="center">
@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 // Variáveis de ambiente
 const siteName = useRuntimeConfig().public.siteName

@@ -11,10 +11,10 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" md="4" v-for="category in skillCategories" :key="category.name">
+        <v-col v-for="category in skillCategories" :key="category.name" cols="12" md="4">
           <v-card class="pa-6" elevation="2" height="100%">
             <div class="d-flex align-center mb-4">
-              <v-icon :icon="category.icon" size="32" color="primary" class="mr-3"></v-icon>
+              <v-icon :icon="category.icon" size="32" color="primary" class="mr-3"/>
               <h3 class="text-h6 font-weight-bold">{{ category.name }}</h3>
             </div>
 
@@ -34,7 +34,7 @@
                     color="primary"
                     height="6"
                     rounded
-                  ></v-progress-linear>
+                  />
                 </div>
               </v-list-item>
             </v-list>

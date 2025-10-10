@@ -34,8 +34,8 @@
         </NuxtLink>
 
         <button
-          @click="$router.back()"
           class="inline-flex items-center justify-center px-8 py-3 border-2 border-gray-900 text-gray-900 rounded-lg hover:bg-gray-900 hover:text-white transition-all hover:scale-105 font-medium"
+          @click="$router.back()"
         >
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />

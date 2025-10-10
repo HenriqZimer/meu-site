@@ -26,7 +26,7 @@
                   class="mb-2 rounded-lg"
                   hover
                 >
-                  <template v-slot:prepend>
+                  <template #prepend>
                     <v-icon :color="cert.color" size="large">
                       {{ cert.icon }}
                     </v-icon>
@@ -40,7 +40,7 @@
                     {{ cert.issuer }}
                   </v-list-item-subtitle>
 
-                  <template v-slot:append>
+                  <template #append>
                     <v-icon size="small">mdi-open-in-new</v-icon>
                   </template>
                 </v-list-item>
@@ -66,7 +66,7 @@
                   class="mb-2 rounded-lg"
                   hover
                 >
-                  <template v-slot:prepend>
+                  <template #prepend>
                     <v-icon :color="cert.color" size="large">
                       {{ cert.icon }}
                     </v-icon>
@@ -80,7 +80,7 @@
                     {{ cert.issuer }}
                   </v-list-item-subtitle>
 
-                  <template v-slot:append>
+                  <template #append>
                     <v-icon size="small">mdi-open-in-new</v-icon>
                   </template>
                 </v-list-item>

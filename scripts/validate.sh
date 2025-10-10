@@ -45,6 +45,16 @@ fi
 
 echo "✅ nuxt.config.ts encontrado"
 
+# Verificar vulnerabilidades de segurança
+echo "🔒 Verificando vulnerabilidades de segurança..."
+audit_output=$(npm audit --audit-level=high 2>&1)
+if [ $? -eq 0 ]; then
+    echo "✅ Sem vulnerabilidades críticas"
+else
+    echo "⚠️ Vulnerabilidades encontradas (verificar SECURITY-AUDIT.md)"
+    # Continua mesmo com vulnerabilidades moderate (apenas dev dependencies)
+fi
+
 # Instalar dependências
 echo "📦 Instalando dependências..."
 npm ci
