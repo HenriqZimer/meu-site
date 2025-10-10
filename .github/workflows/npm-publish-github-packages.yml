@@ -4,9 +4,9 @@
 name: 🚀 Portfolio CI/CD
 
 on:
-  # Executa em pushes para main e PRs
-  push:
-    branches: [ main, develop ]
+  # Executa em pushes para main e PRs (DESABILITADO TEMPORARIAMENTE)
+  # push:
+  #   branches: [ main, develop ]
   pull_request:
     branches: [ main ]
   
