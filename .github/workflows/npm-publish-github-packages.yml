@@ -120,10 +120,13 @@ jobs:
         run: npm run generate
         env:
           NODE_ENV: production
+          NITRO_PRESET: github-pages
           
       - name: 📄 Setup Pages
         if: success()
         uses: actions/configure-pages@v4
+        with:
+          enablement: true
         
       - name: 📤 Upload to GitHub Pages
         if: success()
