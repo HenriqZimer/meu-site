@@ -1,5 +1,6 @@
 export const useScrollAnimation = () => {
   const observeElements = () => {
+    // @ts-expect-error - import.meta.client is available in Nuxt runtime
     if (import.meta.client) {
       const observer = new IntersectionObserver(
         (entries) => {

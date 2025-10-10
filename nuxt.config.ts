@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const isProduction = process.env.NODE_ENV
+const isProduction = process.env.NODE_ENV === 'production'
 
+// @ts-expect-error - defineNuxtConfig is global in Nuxt
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   
@@ -32,6 +33,7 @@ export default defineNuxtConfig({
     '@nuxt/scripts'
   ],
 
+  // Configuração do Vuetify
   vuetify: {
     vuetifyOptions: {
       theme: {
