@@ -104,6 +104,14 @@
                 alt="Foto profissional de Henrique Zimermann, especialista em DevOps"
                 cover
                 loading="eager"
+                sizes="(max-width: 600px) 280px, (max-width: 960px) 320px, 420px"
+                srcset="
+                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=280 280w,
+                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=320 320w,
+                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=420 420w,
+                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=560 560w,
+                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=640 640w
+                "
               />
             </v-avatar>
             <div class="avatar-ring" aria-hidden="true"/>
@@ -125,17 +133,19 @@ const linkedinUrl = useRuntimeConfig().public.linkedinUrl
 const phoneNumber = useRuntimeConfig().public.phone
 
 const scrollToSection = (id: string) => {
-  const element = document.getElementById(id)
-  if (element) {
-    const offset = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    })
-  }
+  // Use requestAnimationFrame to avoid forced reflow
+  requestAnimationFrame(() => {
+    const element = document.getElementById(id)
+    if (element) {
+      const offset = 80
+      const elementPosition = element.offsetTop
+      
+      window.scrollTo({
+        top: elementPosition - offset,
+        behavior: 'smooth'
+      })
+    }
+  })
 }
 </script>
 

@@ -69,7 +69,9 @@ export default defineNuxtConfig({
       },
     },
     moduleOptions: {
-      styles: true
+      styles: {
+        configFile: 'assets/css/vuetify.scss'
+      }
     }
   },
 
@@ -100,6 +102,11 @@ export default defineNuxtConfig({
           crossorigin: '' 
         },
         { 
+          rel: 'preconnect', 
+          href: 'https://cdn.jsdelivr.net', 
+          crossorigin: '' 
+        },
+        { 
           rel: 'preload', 
           href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
           as: 'style',
@@ -113,8 +120,15 @@ export default defineNuxtConfig({
         },
         {
           rel: 'preload',
-          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg',
-          as: 'image'
+          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=420',
+          as: 'image',
+          media: '(min-width: 960px)'
+        },
+        {
+          rel: 'preload',
+          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=280',
+          as: 'image',
+          media: '(max-width: 600px)'
         }
       ],
       meta: [
@@ -134,6 +148,23 @@ export default defineNuxtConfig({
   // Build otimizations
   build: {
     transpile: ['vuetify']
+  },
+
+  // Vite optimizations
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vuetify': ['vuetify'],
+            'vendor': ['vue', '@vue/runtime-core']
+          }
+        }
+      }
+    },
+    ssr: {
+      noExternal: ['vuetify']
+    }
   },
 
   // Optimization config
@@ -194,14 +225,28 @@ export default defineNuxtConfig({
     }
   },
 
-  // Security headers
+  // Security headers and cache optimization
   routeRules: {
+    '/': { 
+      headers: { 
+        'X-Frame-Options': 'DENY',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'Cache-Control': 's-maxage=31536000'
+      } 
+    },
     '/**': { 
       headers: { 
         'X-Frame-Options': 'DENY',
         'X-Content-Type-Options': 'nosniff',
         'Referrer-Policy': 'strict-origin-when-cross-origin'
       } 
+    },
+    '/assets/**': { 
+      headers: { 'Cache-Control': 'max-age=31536000, immutable' } 
+    },
+    '/_nuxt/**': { 
+      headers: { 'Cache-Control': 'max-age=31536000, immutable' } 
     }
   }
 })
