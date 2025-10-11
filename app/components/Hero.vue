@@ -105,13 +105,7 @@
                 cover
                 loading="eager"
                 sizes="(max-width: 600px) 280px, (max-width: 960px) 320px, 420px"
-                srcset="
-                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=280 280w,
-                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=320 320w,
-                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=420 420w,
-                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=560 560w,
-                  https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=640 640w
-                "
+                srcset="https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=280 280w, https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=320 320w, https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=420 420w, https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=560 560w, https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=640 640w"
               />
             </v-avatar>
             <div class="avatar-ring" aria-hidden="true"/>

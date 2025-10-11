@@ -1,0 +1,16 @@
+/* Vuetify optimized styles */
+.v-application {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Material Design Icons optimization */
+.mdi::before {
+  font-display: swap;
+}
+
+/* Font display optimization for Material Design Icons */
+@media (prefers-reduced-motion: no-preference) {
+  .v-icon {
+    transition: transform 0.2s ease;
+  }
+}

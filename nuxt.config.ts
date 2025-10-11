@@ -69,14 +69,13 @@ export default defineNuxtConfig({
       },
     },
     moduleOptions: {
-      styles: {
-        configFile: 'assets/css/vuetify.scss'
-      }
+      styles: true
     }
   },
 
   css: [
-    '~/assets/css/animations.css'
+    '~/assets/css/animations.css',
+    '~/assets/css/vuetify.css'
   ],
 
   app: {
