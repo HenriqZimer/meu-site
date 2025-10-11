@@ -1,2 +1,24 @@
-User-Agent: *
-Disallow:
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://meu-site.henriqzimer.com.br/sitemap.xml
+
+# Specific rules for search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Block common bot paths that don't add value
+Disallow: /_nuxt/
+Disallow: /api/
+
+# Allow important assets
+Allow: /_nuxt/*.css
+Allow: /_nuxt/*.js
+Allow: /_nuxt/*.woff*
+Allow: /_nuxt/*.png
+Allow: /_nuxt/*.jpg
+Allow: /_nuxt/*.webp
