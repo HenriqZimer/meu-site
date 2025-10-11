@@ -72,6 +72,7 @@
       class="ma-4"
       size="large"
       @click="scrollToTop"
+      aria-label="Voltar ao topo da página"
     />
   </v-footer>
 </template>

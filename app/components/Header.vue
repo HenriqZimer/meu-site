@@ -50,10 +50,15 @@
             icon
             class="mr-2 mobile-theme-btn"
             @click="toggleTheme"
+            :aria-label="theme.global.name.value === 'dark' ? 'Alternar para modo claro' : 'Alternar para modo escuro'"
           >
             <v-icon class="mobile-theme-icon">{{ theme.global.name.value === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
           </v-btn>
-          <v-app-bar-nav-icon class="mobile-nav-icon" @click="drawer = !drawer" />
+          <v-app-bar-nav-icon 
+            class="mobile-nav-icon" 
+            @click="drawer = !drawer"
+            :aria-label="drawer ? 'Fechar menu de navegação' : 'Abrir menu de navegação'"
+          />
         </v-col>
       </v-row>
     </v-container>

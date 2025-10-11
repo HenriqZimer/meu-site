@@ -246,6 +246,9 @@ export default defineNuxtConfig({
     },
     '/_nuxt/**': { 
       headers: { 'Cache-Control': 'max-age=31536000, immutable' } 
+    },
+    '/robots.txt': { 
+      headers: { 'Content-Type': 'text/plain; charset=UTF-8' } 
     }
   }
 })
