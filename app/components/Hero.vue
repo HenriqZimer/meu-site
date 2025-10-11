@@ -1,5 +1,5 @@
 <template>
-  <section id="home">
+  <section id="home" aria-label="Seção principal de apresentação">
     <v-container class="fill-height" style="min-height: 100vh; padding-top: 80px;">
       <v-row align="center" justify="center">
         <v-col cols="12" md="6">
@@ -7,19 +7,20 @@
             <h1 class="text-h2 text-md-h1 font-weight-bold mb-4 hero-title">
               Olá, sou <span class="text-primary hero-name">{{ siteFirstName }}</span>
             </h1>
-            <p class="text-h5 text-md-h4 text-grey-darken-1 mb-6 hero-subtitle">
+            <p class="text-h5 text-md-h4 text-grey-darken-1 mb-6 hero-subtitle" role="complementary">
               {{ siteDescription }}
             </p>
             <p class="text-body-1 text-grey-darken-1 mb-8 hero-description">
               {{ heroDescription }}
             </p>
 
-            <div class="d-flex flex-column flex-sm-row justify-center justify-md-start mb-8 hero-buttons">
+            <nav class="d-flex flex-column flex-sm-row justify-center justify-md-start mb-8 hero-buttons" aria-label="Navegação principal">
               <v-btn
                 size="large"
                 color="primary"
                 class="mb-3 mb-sm-0 me-sm-4 btn-primary"
                 @click="scrollToSection('portfolio')"
+                aria-label="Visualizar portfólio de projetos"
               >
                 Ver Portfólio
               </v-btn>
@@ -29,20 +30,23 @@
                 color="primary"
                 class="btn-secondary"
                 @click="scrollToSection('contact')"
+                aria-label="Ir para seção de contato"
               >
                 Entre em Contato
               </v-btn>
-            </div>
+            </nav>
 
-            <div class="d-flex gap-4 justify-center justify-md-start flex-wrap hero-social">
+            <nav class="d-flex gap-4 justify-center justify-md-start flex-wrap hero-social" aria-label="Links para redes sociais">
               <v-btn
                 icon
                 variant="text"
                 :href="githubUrl"
                 target="_blank"
                 class="social-icon"
+                aria-label="Acessar perfil no GitHub (abre em nova aba)"
+                rel="noopener"
               >
-                <v-icon>mdi-github</v-icon>
+                <v-icon aria-hidden="true">mdi-github</v-icon>
               </v-btn>
               <v-btn
                 icon
@@ -50,8 +54,10 @@
                 :href="linkedinUrl"
                 target="_blank"
                 class="social-icon"
+                aria-label="Acessar perfil no LinkedIn (abre em nova aba)"
+                rel="noopener"
               >
-                <v-icon>mdi-linkedin</v-icon>
+                <v-icon aria-hidden="true">mdi-linkedin</v-icon>
               </v-btn>
               <v-btn
                 icon
@@ -59,8 +65,10 @@
                 :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`"
                 target="_blank"
                 class="social-icon"
+                aria-label="Entrar em contato via WhatsApp (abre em nova aba)"
+                rel="noopener"
               >
-                <v-icon>mdi-whatsapp</v-icon>
+                <v-icon aria-hidden="true">mdi-whatsapp</v-icon>
               </v-btn>
               <v-btn
                 icon
@@ -68,8 +76,10 @@
                 href="https://www.credly.com/users/henrique-zimermann"
                 target="_blank"
                 class="social-icon"
+                aria-label="Visualizar certificações no Credly (abre em nova aba)"
+                rel="noopener"
               >
-                <v-icon>mdi-certificate</v-icon>
+                <v-icon aria-hidden="true">mdi-certificate</v-icon>
               </v-btn>
               <v-btn
                 icon
@@ -77,10 +87,12 @@
                 href="https://notion.so/henrique-zimermann"
                 target="_blank"
                 class="social-icon"
+                aria-label="Acessar página no Notion (abre em nova aba)"
+                rel="noopener"
               >
-                <v-icon>mdi-notebook</v-icon>
+                <v-icon aria-hidden="true">mdi-notebook</v-icon>
               </v-btn>
-            </div>
+            </nav>
           </div>
         </v-col>
 
@@ -89,12 +101,13 @@
             <v-avatar size="420" class="elevation-12 hero-avatar">
               <v-img
                 src="https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg"
-                alt="Henrique Zimermann"
+                alt="Foto profissional de Henrique Zimermann, especialista em DevOps"
                 cover
+                loading="eager"
               />
             </v-avatar>
-            <div class="avatar-ring"/>
-            <div class="avatar-glow"/>
+            <div class="avatar-ring" aria-hidden="true"/>
+            <div class="avatar-glow" aria-hidden="true"/>
           </div>
         </v-col>
       </v-row>

@@ -6,8 +6,8 @@
       <Hero />
       <About />
       <!-- <Skills /> -->
-      <Portfolio />
-      <Certifications />
+      <LazyPortfolio />
+      <LazyCertifications />
       <!-- <Contact /> -->
     </v-main>
     <Footer />

@@ -100,9 +100,26 @@ export default defineNuxtConfig({
           crossorigin: '' 
         },
         { 
+          rel: 'preload', 
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+          as: 'style',
+          onload: "this.onload=null;this.rel='stylesheet'"
+        },
+        { 
           rel: 'stylesheet', 
-          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap' 
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+          media: 'print',
+          onload: "this.media='all'"
+        },
+        {
+          rel: 'preload',
+          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg',
+          as: 'image'
         }
+      ],
+      meta: [
+        { name: 'robots', content: 'index, follow' },
+        { name: 'theme-color', content: '#3b82f6' }
       ]
     }
   },
@@ -110,7 +127,27 @@ export default defineNuxtConfig({
   // Otimizações de performance
   experimental: {
     payloadExtraction: true,
-    renderJsonPayloads: true
+    renderJsonPayloads: true,
+    treeshakeClientOnly: true
+  },
+
+  // Build otimizations
+  build: {
+    transpile: ['vuetify']
+  },
+
+  // Optimization config
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
   },
 
   // Configuração do servidor de desenvolvimento
@@ -124,8 +161,47 @@ export default defineNuxtConfig({
   // Configurações de build para produção
   nitro: {
     compressPublicAssets: process.env.NODE_ENV === 'production',
-    minify: process.env.NODE_ENV === 'production'
+    minify: process.env.NODE_ENV === 'production',
+    prerender: {
+      crawlLinks: true
+    }
   },
 
+  // Performance hints
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? 'warning' : false
+  },
 
+  // Router options for better SEO
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth'
+    }
+  },
+
+  // Image optimization
+  image: {
+    quality: 80,
+    format: ['webp', 'jpg'],
+    screens: {
+      'xs': 320,
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+      'xxl': 1536,
+      '2xl': 1536
+    }
+  },
+
+  // Security headers
+  routeRules: {
+    '/**': { 
+      headers: { 
+        'X-Frame-Options': 'DENY',
+        'X-Content-Type-Options': 'nosniff',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
+      } 
+    }
+  }
 })
