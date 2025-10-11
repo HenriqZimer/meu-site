@@ -7,10 +7,10 @@
             <h1 class="text-h2 text-md-h1 font-weight-bold mb-4 hero-title">
               Olá, sou <span class="text-primary hero-name">{{ siteFirstName }}</span>
             </h1>
-            <p class="text-h5 text-md-h4 text-grey-darken-1 mb-6 hero-subtitle" role="complementary">
+            <p class="text-h5 text-md-h4 text-medium-emphasis mb-6 hero-subtitle" role="complementary">
               {{ siteDescription }}
             </p>
-            <p class="text-body-1 text-grey-darken-1 mb-8 hero-description">
+            <p class="text-body-1 text-medium-emphasis mb-8 hero-description">
               {{ heroDescription }}
             </p>
 

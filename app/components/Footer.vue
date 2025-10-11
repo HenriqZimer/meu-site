@@ -21,6 +21,8 @@
               size="large"
               target="_blank"
               class="social-btn"
+              :aria-label="`Acessar ${social.name} (abre em nova aba)`"
+              rel="noopener"
             />
           </div>
           

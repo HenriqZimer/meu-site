@@ -33,7 +33,7 @@
             </v-card-title>
             
             <v-card-text class="pa-8">
-              <v-list>
+              <v-list role="group" aria-label="Lista de certificações obtidas">
                 <v-list-item
                   v-for="(cert, index) in obtainedCertifications"
                   :key="cert.name"
@@ -42,12 +42,15 @@
                   class="mb-4 rounded-xl cert-item animate-slide-in-left"
                   :style="`animation-delay: ${0.5 + index * 0.1}s;`"
                   hover
+                  role="listitem"
+                  :aria-label="`Acessar certificação ${cert.name} da ${cert.issuer}`"
+                  rel="noopener"
                 >
                   <template #prepend>
                     <v-avatar v-if="cert.image" size="56" class="me-4 cert-avatar">
-                      <v-img :src="cert.image" :alt="cert.name" />
+                      <v-img :src="cert.image" :alt="`Logo da certificação ${cert.name}`" />
                     </v-avatar>
-                    <v-icon v-else :color="cert.color" size="x-large" class="me-4">
+                    <v-icon v-else :color="cert.color" size="x-large" class="me-4" :aria-hidden="true">
                       {{ cert.icon }}
                     </v-icon>
                   </template>
@@ -67,6 +70,8 @@
                       variant="outlined" 
                       color="success"
                       class="cert-link-btn"
+                      :aria-label="`Abrir certificação ${cert.name} em nova aba`"
+                      tabindex="-1"
                     ></v-btn>
                   </template>
                 </v-list-item>
@@ -98,7 +103,7 @@
             </v-card-title>
             
             <v-card-text class="pa-8">
-              <v-list>
+              <v-list role="group" aria-label="Lista de certificações planejadas">
                 <v-list-item
                   v-for="(cert, index) in plannedCertifications"
                   :key="cert.name"
@@ -107,12 +112,15 @@
                   class="mb-4 rounded-xl cert-item animate-slide-in-right"
                   :style="`animation-delay: ${0.6 + index * 0.05}s;`"
                   hover
+                  role="listitem"
+                  :aria-label="`Acessar informações da certificação ${cert.name} da ${cert.issuer}`"
+                  rel="noopener"
                 >
                   <template #prepend>
                     <v-avatar v-if="cert.image" size="56" class="me-4 cert-avatar">
-                      <v-img :src="cert.image" :alt="cert.name" />
+                      <v-img :src="cert.image" :alt="`Logo da certificação ${cert.name}`" />
                     </v-avatar>
-                    <v-icon v-else :color="cert.color" size="x-large" class="me-4">
+                    <v-icon v-else :color="cert.color" size="x-large" class="me-4" :aria-hidden="true">
                       {{ cert.icon }}
                     </v-icon>
                   </template>
@@ -132,6 +140,8 @@
                       variant="outlined" 
                       color="primary"
                       class="cert-link-btn"
+                      :aria-label="`Abrir informações da certificação ${cert.name} em nova aba`"
+                      tabindex="-1"
                     ></v-btn>
                   </template>
                 </v-list-item>

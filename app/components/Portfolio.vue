@@ -4,7 +4,7 @@
       <v-row justify="center" class="mb-12">
         <v-col cols="12" class="text-center">
           <h2 class="text-h3 font-weight-bold mb-4 animate-fade-up">Portfólio</h2>
-          <div class="text-h6 text-grey-darken-1 mb-8 animate-fade-up" style="animation-delay: 0.1s;">
+          <div class="text-h6 text-medium-emphasis mb-8 animate-fade-up" style="animation-delay: 0.1s;">
             Alguns dos meus trabalhos recentes
             <v-divider class="mx-auto mt-8 animate-scale-width" style="max-width: 200px; animation-delay: 0.2s;"></v-divider>
           </div>
@@ -63,8 +63,10 @@
                     class="overlay-btn me-3"
                     :href="project.demoUrl"
                     target="_blank"
+                    :aria-label="`Acessar documentação do projeto ${project.title}`"
+                    rel="noopener"
                   >
-                    <v-icon>mdi-book-open-page-variant</v-icon>
+                    <v-icon aria-hidden="true">mdi-book-open-page-variant</v-icon>
                   </v-btn>
                   <v-btn
                     icon
@@ -73,8 +75,10 @@
                     class="overlay-btn"
                     :href="project.githubUrl"
                     target="_blank"
+                    :aria-label="`Acessar código do projeto ${project.title} no GitHub`"
+                    rel="noopener"
                   >
-                    <v-icon>mdi-github</v-icon>
+                    <v-icon aria-hidden="true">mdi-github</v-icon>
                   </v-btn>
                 </div>
               </v-img>
@@ -85,7 +89,7 @@
             </v-card-title>
 
             <v-card-text class="flex-grow-1 pa-4">
-              <p class="text-body-2 text-grey-darken-1 mb-4 line-height-relaxed">
+              <p class="text-body-2 text-medium-emphasis mb-4 line-height-relaxed">
                 {{ project.description }}
               </p>
 
