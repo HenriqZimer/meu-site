@@ -1,114 +1,139 @@
 <template>
-  <v-footer class="bg-surface py-8 mt-16">
-    <v-container>
-      <!-- Seção Principal -->
-      <v-row justify="center" align="center" class="mb-8">
-        <v-col cols="12" class="text-center">
-          <h3 class="text-h5 font-weight-bold mb-4">{{ siteName }}</h3>
-          <p class="text-body-1 text-medium-emphasis mb-6 max-w-md mx-auto">
-            {{ footerDescription }}
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <!-- Main Content -->
+      <div class="footer-content">
+        <!-- Brand Section -->
+        <div class="footer-brand">
+          <div class="brand-logo">
+            <div class="brand-initial">H</div>
+            <div class="brand-text">
+              <div class="brand-name">Henrique Zimermann</div>
+              <div class="brand-tagline">DevOps & Cloud Engineer</div>
+            </div>
+          </div>
+          <p class="brand-description">
+            Automatizando infraestruturas e otimizando processos de desenvolvimento.
+            Especialista em CI/CD, containerização e orquestração na nuvem.
           </p>
-          
-          <!-- Redes Sociais -->
-          <div class="d-flex justify-center gap-4 mb-6">
-            <v-btn
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4 class="links-title">Navegação</h4>
+          <nav class="links-nav">
+            <a
+              v-for="link in quickLinks"
+              :key="link.label"
+              @click="scrollToSection(link.href)"
+              class="nav-link"
+            >
+              {{ link.label }}
+            </a>
+          </nav>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-contact">
+          <h4 class="contact-title">Contato</h4>
+          <div class="contact-info">
+            <a :href="`mailto:${email}`" class="contact-item">
+              <v-icon icon="mdi-email-outline" size="16" />
+              {{ email }}
+            </a>
+            <a :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`" class="contact-item" target="_blank">
+              <v-icon icon="mdi-phone-outline" size="16" />
+              {{ phoneNumber }}
+            </a>
+            <div class="contact-item">
+              <v-icon icon="mdi-map-marker-outline" size="16" />
+              Santa Catarina, Brasil
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Links -->
+        <div class="footer-social">
+          <h4 class="social-title">Conecte-se</h4>
+          <div class="social-links">
+            <a
               v-for="social in socialLinks"
               :key="social.name"
               :href="social.href"
-              :icon="social.icon"
-              :color="social.color"
-              variant="text"
-              size="large"
+              :aria-label="`Visitar ${social.name}`"
+              class="social-link"
               target="_blank"
-              class="social-btn"
-              :aria-label="`Acessar ${social.name} (abre em nova aba)`"
-              rel="noopener"
-            />
-          </div>
-          
-          <!-- Links Rápidos -->
-          <div class="d-flex justify-center flex-wrap gap-4">
-            <v-btn
-              v-for="link in quickLinks"
-              :key="link.label"
-              variant="text"
-              size="small"
-              class="text-capitalize"
-              @click="scrollToSection(link.href)"
+              rel="noopener noreferrer"
             >
-              {{ link.label }}
-            </v-btn>
+              <v-icon :icon="social.icon" size="20" />
+            </a>
           </div>
-        </v-col>
-      </v-row>
+        </div>
+      </div>
 
-      <v-divider class="border-opacity-25 mb-6"/>
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <div class="bottom-content">
+          <div class="copyright">
+            <span>© {{ currentYear }} Henrique Zimermann</span>
+            <span class="separator">•</span>
+            <span>Todos os direitos reservados</span>
+          </div>
+          <div class="tech-stack">
+            <span>Desenvolvido com</span>
+            <v-icon icon="mdi-heart" size="14" color="#ef4444" />
+            <span>usando</span>
+            <span class="tech-highlight">Vue.js</span>
+            <span>&</span>
+            <span class="tech-highlight">Nuxt</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Copyright -->
-      <v-row align="center">
-        <v-col cols="12" md="6" class="text-center text-md-start">
-          <p class="text-body-2 text-medium-emphasis mb-0">
-            © {{ currentYear }} {{ siteName }}. Todos os direitos reservados.
-          </p>
-        </v-col>
-        <v-col cols="12" md="6" class="text-center text-md-end">
-          <p class="text-body-2 text-medium-emphasis mb-0 d-flex align-center justify-center justify-md-end gap-1">
-            Feito com 
-            <v-icon size="16" color="red">mdi-heart</v-icon> 
-            usando Vue.js & Vuetify
-          </p>
-        </v-col>
-      </v-row>
-    </v-container>
-
-    <!-- Botão Voltar ao Topo -->
+    <!-- Scroll to Top Button -->
     <v-btn
       v-if="showScrollTop"
-      icon="mdi-chevron-up"
-      color="primary"
-      variant="elevated"
-      position="fixed"
-      location="bottom end"
-      class="ma-4"
-      size="large"
       @click="scrollToTop"
-      aria-label="Voltar ao topo da página"
-    />
-  </v-footer>
+      class="scroll-top-btn"
+      :ripple="false"
+      fab
+      fixed
+    >
+      <v-icon icon="mdi-arrow-up" size="20" />
+    </v-btn>
+  </footer>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-
-// Variáveis de ambiente
-const siteName = useRuntimeConfig().public.siteName
-const footerDescription = useRuntimeConfig().public.footerDescription
-const email = useRuntimeConfig().public.email
-const githubUrl = useRuntimeConfig().public.githubUrl
-const linkedinUrl = useRuntimeConfig().public.linkedinUrl
-const phoneNumber = useRuntimeConfig().public.phone
+// Configuration
+const config = useRuntimeConfig()
+const siteName = config.public.siteName
+const email = config.public.email
+const githubUrl = config.public.githubUrl
+const linkedinUrl = config.public.linkedinUrl
+const phoneNumber = config.public.phone
 
 const currentYear = new Date().getFullYear()
 const showScrollTop = ref(false)
 
 const socialLinks = [
-  { name: 'GitHub', icon: 'mdi-github', href: githubUrl, color: 'grey-lighten-1' },
-  { name: 'LinkedIn', icon: 'mdi-linkedin', href: linkedinUrl, color: '#0077B5' },
-  { name: 'Email', icon: 'mdi-email', href: `mailto:${email}`, color: 'primary' },
-  { name: 'WhatsApp', icon: 'mdi-whatsapp', href: `https://wa.me/${phoneNumber.replace(/\D/g, '')}`, color: '#25D366' }
+  { name: 'GitHub', icon: 'mdi-github', href: githubUrl },
+  { name: 'LinkedIn', icon: 'mdi-linkedin', href: linkedinUrl },
+  { name: 'Email', icon: 'mdi-email-outline', href: `mailto:${email}` }
 ]
 
 const quickLinks = [
-  { label: 'Início', href: 'home' },
   { label: 'Sobre', href: 'about' },
-  { label: 'Habilidades', href: 'skills' },
-  { label: 'Portfólio', href: 'portfolio' },
+  { label: 'Skills', href: 'skills' },
+  { label: 'Projetos', href: 'portfolio' },
   { label: 'Certificações', href: 'certifications' },
   { label: 'Contato', href: 'contact' }
 ]
 
+// Methods
 const handleScroll = () => {
-  showScrollTop.value = window.scrollY > 300
+  showScrollTop.value = window.scrollY > 400
 }
 
 const scrollToSection = (id: string) => {
@@ -132,8 +157,9 @@ const scrollToTop = () => {
   })
 }
 
+// Lifecycle
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
@@ -142,23 +168,324 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.social-btn {
+.modern-footer {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #e2e8f0;
+  margin-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  padding: 80px 0 60px;
+}
+
+/* Brand Section */
+.footer-brand {
+  max-width: 400px;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.brand-initial {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 14px;
+  font-weight: 500;
+  color: #94a3b8;
+  line-height: 1.2;
+}
+
+.brand-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+/* Links Section */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.links-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.025em;
+}
+
+.links-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-link {
+  font-size: 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #3b82f6;
+  transform: translateX(4px);
+}
+
+/* Contact Section */
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.025em;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.contact-item:hover {
+  color: #3b82f6;
+}
+
+/* Social Section */
+.footer-social {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.social-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.025em;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  color: #3b82f6;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.social-link:hover {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  padding: 32px 0;
+}
+
+.bottom-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.copyright {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.separator {
+  color: #64748b;
+}
+
+.tech-stack {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.tech-highlight {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+/* Scroll to Top Button */
+.scroll-top-btn {
+  position: fixed !important;
+  bottom: 32px;
+  right: 32px;
+  width: 56px !important;
+  height: 56px !important;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4) !important;
+  color: white !important;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
   transition: all 0.3s ease;
+  z-index: 100;
 }
 
-.social-btn:hover {
-  transform: translateY(-3px) scale(1.1);
+.scroll-top-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
 }
 
-.max-w-md {
-  max-width: 28rem;
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+  }
+  
+  .footer-brand {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
 }
 
-.gap-1 {
-  gap: 0.25rem;
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 0 16px;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 60px 0 40px;
+  }
+  
+  .brand-logo {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .brand-initial {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .bottom-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .scroll-top-btn {
+    bottom: 24px !important;
+    right: 24px !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
 }
 
-.gap-4 {
-  gap: 1rem;
+@media (max-width: 480px) {
+  .footer-content {
+    padding: 48px 0 32px;
+  }
+  
+  .social-links {
+    justify-content: flex-start;
+  }
+  
+  .tech-stack {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 </style>

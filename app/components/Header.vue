@@ -1,116 +1,174 @@
 <template>
   <v-app-bar
-    :elevation="scrolled ? 4 : 0"
-    :color="scrolled ? 'surface' : 'transparent'"
+    :elevation="scrolled ? 1 : 0"
+    :color="scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'"
     flat
     fixed
-    class="header-bar"
+    class="modern-header"
+    :class="{ 'header-scrolled': scrolled }"
+    height="72"
   >
-    <v-container>
-      <v-row align="center">
-        <v-col cols="auto">
+    <v-container fluid class="header-container">
+      <div class="header-content">
+        <!-- Logo/Brand -->
+        <div class="brand-section">
           <v-btn
-            text
-            size="large"
-            class="logo-btn"
+            variant="text"
+            class="brand-btn"
             @click="scrollToSection('home')"
+            :ripple="false"
           >
-            <v-icon start>mdi-home</v-icon>
-            <span class="text-h6 font-weight-bold logo-text">Início</span>
+            <div class="brand-content">
+              <div class="brand-initial">H</div>
+              <div class="brand-info">
+                <div class="brand-name">Henrique</div>
+                <div class="brand-role">DevOps Engineer</div>
+              </div>
+            </div>
           </v-btn>
-        </v-col>
+        </div>
 
-        <v-spacer />
-
-        <v-col cols="auto" class="hidden-sm-and-down">
-          <v-btn
-            v-for="(item, index) in menuItems"
-            :key="item.id"
-            variant="text"
-            class="nav-btn mx-1"
-            :style="{ animationDelay: `${index * 0.1}s` }"
-            @click="scrollToSection(item.id)"
-          >
-            <v-icon start class="nav-icon">{{ item.icon }}</v-icon>
-            <span style="text-transform: capitalize;" class="nav-text">{{ item.label.toLowerCase() }}</span>
-          </v-btn>
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav" v-if="!isMobile">
+          <div class="nav-items">
+            <v-btn
+              v-for="item in menuItems"
+              :key="item.id"
+              variant="text"
+              class="nav-item"
+              :class="{ 'nav-item--active': activeSection === item.id }"
+              @click="scrollToSection(item.id)"
+              :ripple="false"
+            >
+              {{ item.label }}
+            </v-btn>
+          </div>
           
+          <!-- CTA Button -->
           <v-btn
-            variant="text"
-            class="ml-4 theme-btn"
-            @click="toggleTheme"
+            variant="flat"
+            color="primary"
+            class="cta-btn"
+            @click="scrollToSection('contact')"
+            :ripple="false"
           >
-            <v-icon start class="theme-icon">{{ theme.global.name.value === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
-            <span style="text-transform: capitalize;" class="theme-text">{{ theme.global.name.value === 'dark' ? 'modo claro' : 'modo escuro' }}</span>
+            Fale Comigo
           </v-btn>
-        </v-col>
+        </nav>
 
-        <v-col cols="auto" class="hidden-md-and-up">
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" v-if="isMobile">
           <v-btn
             icon
-            class="mr-2 mobile-theme-btn"
-            @click="toggleTheme"
-            :aria-label="theme.global.name.value === 'dark' ? 'Alternar para modo claro' : 'Alternar para modo escuro'"
+            variant="text"
+            class="mobile-menu-btn"
+            @click="toggleDrawer"
+            :ripple="false"
           >
-            <v-icon class="mobile-theme-icon">{{ theme.global.name.value === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-weather-night' }}</v-icon>
+            <v-icon :icon="drawer ? 'mdi-close' : 'mdi-menu'" />
           </v-btn>
-          <v-app-bar-nav-icon 
-            class="mobile-nav-icon" 
-            @click="drawer = !drawer"
-            :aria-label="drawer ? 'Fechar menu de navegação' : 'Abrir menu de navegação'"
-          />
-        </v-col>
-      </v-row>
+        </div>
+      </div>
     </v-container>
   </v-app-bar>
 
+  <!-- Mobile Navigation Drawer -->
   <v-navigation-drawer
     v-model="drawer"
     temporary
     location="right"
     class="mobile-drawer"
+    width="320"
   >
-    <v-list>
-      <v-list-item
-        v-for="(item, index) in menuItems"
-        :key="item.id"
-        class="drawer-item"
-        :style="{ animationDelay: `${index * 0.1}s` }"
-        @click="scrollToSection(item.id); drawer = false"
-      >
-        <template #prepend>
-          <v-icon class="drawer-icon">{{ item.icon }}</v-icon>
-        </template>
-        <v-list-item-title class="drawer-text">{{ item.label }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <div class="drawer-initial">H</div>
+          <div class="drawer-info">
+            <div class="drawer-name">Henrique Zimermann</div>
+            <div class="drawer-role">DevOps & Cloud Engineer</div>
+          </div>
+        </div>
+        <v-btn
+          icon
+          variant="text"
+          @click="drawer = false"
+          class="drawer-close"
+          :ripple="false"
+        >
+          <v-icon icon="mdi-close" />
+        </v-btn>
+      </div>
+      
+      <div class="drawer-nav">
+        <v-btn
+          v-for="item in menuItems"
+          :key="item.id"
+          variant="text"
+          class="drawer-nav-item"
+          :class="{ 'drawer-nav-item--active': activeSection === item.id }"
+          @click="handleDrawerItemClick(item.id)"
+          block
+          :ripple="false"
+        >
+          <v-icon :icon="item.icon" start />
+          {{ item.label }}
+        </v-btn>
+        
+        <v-btn
+          variant="flat"
+          color="primary"
+          class="drawer-cta"
+          @click="handleDrawerItemClick('contact')"
+          block
+          :ripple="false"
+        >
+          <v-icon icon="mdi-send" start />
+          Fale Comigo
+        </v-btn>
+      </div>
+    </div>
   </v-navigation-drawer>
 </template>
 
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
+import { useResponsive } from '~/composables/useResponsive'
 
-const scrolled = ref(false)
-const drawer = ref(false)
-const theme = useTheme()
-
-const menuItems = [
-  { id: 'about', label: 'Sobre', icon: 'mdi-account' },
-  { id: 'skills', label: 'Habilidades', icon: 'mdi-star' },
-  { id: 'portfolio', label: 'Portfólio', icon: 'mdi-briefcase' },
-  { id: 'certifications', label: 'Certificações', icon: 'mdi-certificate' },
-  { id: 'contact', label: 'Contato', icon: 'mdi-email' }
-]
-
-const toggleTheme = () => {
-  theme.global.name.value = theme.global.name.value === 'light' ? 'dark' : 'light'
-  // Salvar preferência no localStorage
-  if (import.meta.client) {
-    localStorage.setItem('theme', theme.global.name.value)
-  }
+// Types
+interface MenuItem {
+  id: string
+  label: string
+  icon: string
 }
 
+// Composables
+const { isMobile } = useResponsive()
+
+// Reactive state
+const scrolled = ref(false)
+const drawer = ref(false)
+const activeSection = ref('home')
+
+// Menu items configuration
+const menuItems: MenuItem[] = [
+  { id: 'about', label: 'Sobre', icon: 'mdi-account-circle' },
+  { id: 'skills', label: 'Skills', icon: 'mdi-code-tags' },
+  { id: 'portfolio', label: 'Projetos', icon: 'mdi-briefcase-variant' },
+  { id: 'certifications', label: 'Certificações', icon: 'mdi-certificate' },
+  { id: 'contact', label: 'Contato', icon: 'mdi-message-text' }
+]
+
+// Navigation methods
 const scrollToSection = (id: string) => {
+  if (id === 'home') {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+    activeSection.value = 'home'
+    return
+  }
+
   const element = document.getElementById(id)
   if (element) {
     const offset = 80
@@ -121,23 +179,44 @@ const scrollToSection = (id: string) => {
       top: offsetPosition,
       behavior: 'smooth'
     })
+    
+    activeSection.value = id
   }
 }
 
+const toggleDrawer = () => {
+  drawer.value = !drawer.value
+}
+
+const handleDrawerItemClick = (id: string) => {
+  scrollToSection(id)
+  drawer.value = false
+}
+
+// Scroll detection
 const handleScroll = () => {
   scrolled.value = window.scrollY > 20
+  updateActiveSection()
 }
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+const updateActiveSection = () => {
+  const sections = ['home', ...menuItems.map(item => item.id)]
+  const scrollPosition = window.scrollY + 100
   
-  // Restaurar tema salvo do localStorage
-  if (import.meta.client) {
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-      theme.global.name.value = savedTheme as 'light' | 'dark'
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const sectionId = sections[i]
+    const element = document.getElementById(sectionId)
+    if (element && element.offsetTop <= scrollPosition) {
+      activeSection.value = sectionId
+      break
     }
   }
+}
+
+// Lifecycle hooks
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  updateActiveSection()
 })
 
 onUnmounted(() => {
@@ -146,35 +225,404 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Animações de entrada do header */
-.header-bar {
-  animation: slideDownFade 0.8s ease-out;
+.modern-header {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-bottom: 1px solid transparent;
+  z-index: 1000;
 }
 
-/* Logo com animação */
+.modern-header.header-scrolled {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+}
+
+/* Brand Section */
+.brand-section {
+  flex-shrink: 0;
+}
+
+.brand-btn {
+  padding: 8px 16px !important;
+  min-width: auto !important;
+  height: auto !important;
+}
+
+.brand-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-initial {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.025em;
+}
+
+.brand-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+}
+
+.brand-role {
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-item {
+  position: relative;
+  padding: 8px 16px !important;
+  min-width: auto !important;
+  height: 40px !important;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: #475569 !important;
+  transition: all 0.2s ease;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.nav-item:hover {
+  color: #0f172a !important;
+}
+
+.nav-item:hover::after,
+.nav-item--active::after {
+  width: 20px;
+}
+
+.nav-item--active {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+
+.cta-btn {
+  padding: 8px 24px !important;
+  height: 40px !important;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  border-radius: 20px !important;
+  box-shadow: 0 1px 3px rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* Mobile Menu */
+.mobile-menu-btn {
+  width: 40px !important;
+  height: 40px !important;
+  color: #475569 !important;
+}
+
+/* Mobile Drawer */
+.mobile-drawer {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.drawer-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.drawer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.drawer-initial {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+}
+
+.drawer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawer-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.drawer-role {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.2;
+}
+
+.drawer-close {
+  width: 40px !important;
+  height: 40px !important;
+  color: #64748b !important;
+}
+
+.drawer-nav {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.drawer-nav-item {
+  justify-content: flex-start !important;
+  padding: 16px 20px !important;
+  height: 56px !important;
+  font-size: 16px;
+  font-weight: 500;
+  color: #475569 !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease;
+}
+
+.drawer-nav-item:hover {
+  background: rgba(59, 130, 246, 0.05) !important;
+  color: #0f172a !important;
+}
+
+.drawer-nav-item--active {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
+  font-weight: 600;
+}
+
+.drawer-cta {
+  margin-top: 16px;
+  padding: 16px 20px !important;
+  height: 56px !important;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Dark mode support */
+:global(.v-theme--dark) .modern-header {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+:global(.v-theme--dark) .modern-header.header-scrolled {
+  background: rgba(15, 23, 42, 0.95) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+:global(.v-theme--dark) .brand-name {
+  color: #f1f5f9;
+}
+
+:global(.v-theme--dark) .nav-item {
+  color: #cbd5e1 !important;
+}
+
+:global(.v-theme--dark) .nav-item:hover,
+:global(.v-theme--dark) .nav-item--active {
+  color: #f1f5f9 !important;
+}
+
+:global(.v-theme--dark) .mobile-drawer {
+  background: rgba(15, 23, 42, 0.98);
+}
+
+:global(.v-theme--dark) .drawer-name {
+  color: #f1f5f9;
+}
+
+:global(.v-theme--dark) .drawer-nav-item {
+  color: #cbd5e1 !important;
+}
+
+:global(.v-theme--dark) .drawer-nav-item:hover {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #f1f5f9 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .header-container {
+    padding: 0 16px;
+  }
+  
+  .brand-info {
+    display: none;
+  }
+  
+  .brand-initial {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+}
+</style>
+
+<style scoped>
+/* === HEADER CONTAINER === */
+.header-bar {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition-base);
+  animation: slideDown var(--transition-slow) ease-out;
+  z-index: 1000;
+}
+
+.header-bar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom-color: var(--color-gray-200);
+  box-shadow: var(--shadow-md);
+}
+
+.header-container {
+  max-width: var(--container-max-width);
+  padding: 0 var(--spacing-container-mobile);
+}
+
+.header-row {
+  min-height: var(--header-height-mobile);
+}
+
+/* === LOGO SECTION === */
 .logo-btn {
-  transition: all 0.3s ease;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  transition: var(--transition-base);
+  border-radius: var(--border-radius-lg);
+  animation: slideInLeft var(--transition-slower) ease-out 200ms both;
 }
 
 .logo-btn:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px) scale(1.02);
+  background: var(--color-primary-alpha-10);
+}
+
+.logo-icon {
+  transition: var(--transition-base);
+}
+
+.logo-btn:hover .logo-icon {
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.logo-icon.animate-bounce {
+  animation: bounce 0.8s ease-in-out;
 }
 
 .logo-text {
-  background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: slideInLeft 0.8s ease-out 0.2s both;
+  font-weight: var(--font-weight-bold);
+  transition: var(--transition-base);
 }
 
-/* Navegação com animações em cascata */
+/* === NAVIGATION === */
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
 .nav-btn {
-  animation: slideInUp 0.6s ease-out both;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-base);
   overflow: hidden;
+  animation: slideUp var(--transition-slower) ease-out both;
 }
 
 .nav-btn::before {
@@ -184,8 +632,12 @@ onUnmounted(() => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-  transition: left 0.5s ease;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--color-primary-alpha-20), 
+    transparent
+  );
+  transition: left var(--transition-slower) ease;
 }
 
 .nav-btn:hover::before {
@@ -194,98 +646,183 @@ onUnmounted(() => {
 
 .nav-btn:hover {
   transform: translateY(-2px);
-  background-color: rgba(59, 130, 246, 0.05);
+  background: var(--color-primary-alpha-10);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-btn--active {
+  background: var(--color-primary-alpha-20);
+  color: var(--color-primary);
+}
+
+.nav-btn--active .nav-icon {
+  color: var(--color-primary);
 }
 
 .nav-icon {
-  transition: all 0.3s ease;
+  transition: var(--transition-base);
 }
 
 .nav-btn:hover .nav-icon {
   transform: scale(1.1) rotate(5deg);
-  color: #3b82f6;
+  color: var(--color-primary);
 }
 
 .nav-text {
-  transition: all 0.3s ease;
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-base);
 }
 
 .nav-btn:hover .nav-text {
-  color: #3b82f6;
+  color: var(--color-primary);
 }
 
-/* Botão de tema com animações */
+/* === THEME TOGGLE === */
 .theme-btn {
-  animation: slideInUp 0.6s ease-out 0.8s both;
-  transition: all 0.3s ease;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-base);
+  animation: slideUp var(--transition-slower) ease-out both;
 }
 
 .theme-btn:hover {
-  transform: translateY(-2px) rotate(5deg);
+  transform: translateY(-2px);
+  background: var(--color-secondary-alpha-10);
 }
 
 .theme-icon {
-  transition: all 0.3s ease;
+  transition: var(--transition-base);
+}
+
+.theme-icon.animate-spin {
+  animation: spin 0.5s ease-in-out;
 }
 
 .theme-btn:hover .theme-icon {
   transform: rotate(180deg) scale(1.2);
-  color: #f59e0b;
+  color: var(--color-secondary);
 }
 
-/* Mobile icons */
-.mobile-theme-btn, .mobile-nav-icon {
-  animation: slideInRight 0.6s ease-out 0.4s both;
-  transition: all 0.3s ease;
+.theme-text {
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-base);
 }
 
-.mobile-theme-btn:hover, .mobile-nav-icon:hover {
+.theme-btn:hover .theme-text {
+  color: var(--color-secondary);
+}
+
+/* === MOBILE ACTIONS === */
+.mobile-actions {
+  gap: var(--spacing-xs);
+}
+
+.mobile-theme-btn,
+.mobile-menu-btn {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-base);
+  animation: slideInRight var(--transition-slower) ease-out 400ms both;
+}
+
+.mobile-theme-btn:hover,
+.mobile-menu-btn:hover {
   transform: scale(1.1) rotate(10deg);
+  background: var(--color-primary-alpha-10);
 }
 
-.mobile-theme-icon {
-  transition: all 0.3s ease;
+.mobile-theme-icon,
+.mobile-menu-icon {
+  transition: var(--transition-base);
+}
+
+.mobile-theme-icon.animate-spin {
+  animation: spin 0.5s ease-in-out;
 }
 
 .mobile-theme-btn:hover .mobile-theme-icon {
-  color: #f59e0b;
+  color: var(--color-secondary);
 }
 
-/* Drawer animations */
+.mobile-menu-btn:hover .mobile-menu-icon {
+  color: var(--color-primary);
+}
+
+/* === MOBILE DRAWER === */
 .mobile-drawer {
-  animation: slideInRight 0.4s ease-out;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(20px);
+  animation: slideInRight var(--transition-base) ease-out;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+  background: var(--color-gray-50);
+}
+
+.drawer-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-gray-800);
+  margin: 0;
+}
+
+.drawer-close {
+  width: var(--spacing-3xl);
+  height: var(--spacing-3xl);
+}
+
+.drawer-list {
+  padding: var(--spacing-md) 0;
 }
 
 .drawer-item {
-  animation: slideInRight 0.4s ease-out both;
-  transition: all 0.3s ease;
+  margin: var(--spacing-xs) var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-base);
+  animation: slideInRight var(--transition-base) ease-out both;
 }
 
 .drawer-item:hover {
   transform: translateX(-5px);
-  background-color: rgba(59, 130, 246, 0.1);
+  background: var(--color-primary-alpha-10);
+  box-shadow: var(--shadow-sm);
+}
+
+.drawer-item--active {
+  background: var(--color-primary-alpha-20);
+  border-left: 3px solid var(--color-primary);
 }
 
 .drawer-icon {
-  transition: all 0.3s ease;
+  transition: var(--transition-base);
+  margin-right: var(--spacing-md);
 }
 
-.drawer-item:hover .drawer-icon {
+.drawer-item:hover .drawer-icon,
+.drawer-item--active .drawer-icon {
   transform: scale(1.1);
-  color: #3b82f6;
+  color: var(--color-primary);
 }
 
 .drawer-text {
-  transition: all 0.3s ease;
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-base);
 }
 
-.drawer-item:hover .drawer-text {
-  color: #3b82f6;
-  font-weight: 500;
+.drawer-item:hover .drawer-text,
+.drawer-item--active .drawer-text {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
 }
 
-/* Keyframes */
-@keyframes slideDownFade {
+/* === ANIMATIONS === */
+@keyframes slideDown {
   from {
     opacity: 0;
     transform: translateY(-100%);
@@ -307,7 +844,7 @@ onUnmounted(() => {
   }
 }
 
-@keyframes slideInUp {
+@keyframes slideUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -329,10 +866,79 @@ onUnmounted(() => {
   }
 }
 
-/* Responsividade */
-@media (max-width: 960px) {
-  .logo-text {
-    animation: slideInUp 0.8s ease-out 0.2s both;
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
   }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (min-width: 600px) {
+  .header-container {
+    padding: 0 var(--spacing-container-tablet);
+  }
+  
+  .header-row {
+    min-height: var(--header-height-tablet);
+  }
+}
+
+@media (min-width: 960px) {
+  .header-container {
+    padding: 0 var(--spacing-container-desktop);
+  }
+  
+  .header-row {
+    min-height: var(--header-height-desktop);
+  }
+  
+  .nav-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+  
+  .theme-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+  }
+}
+
+/* === DARK MODE === */
+:global(.v-theme--dark) .header-bar {
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom-color: var(--color-gray-700);
+}
+
+:global(.v-theme--dark) .header-bar.scrolled {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom-color: var(--color-gray-600);
+}
+
+:global(.v-theme--dark) .mobile-drawer {
+  background: rgba(15, 23, 42, 0.98);
+}
+
+:global(.v-theme--dark) .drawer-header {
+  background: var(--color-gray-800);
+}
+
+:global(.v-theme--dark) .drawer-title {
+  color: var(--color-gray-100);
 }
 </style>

@@ -1,133 +1,110 @@
 <template>
-  <section id="about" class="section-background">
-    <v-container class="py-20">
-      <v-row justify="center" class="mb-16">
-        <v-col cols="12" class="text-center">
-          <h2 class="text-h2 font-weight-bold mb-6 animate-fade-up" style="animation-delay: 0s;">Sobre Mim</h2>
-          <div class="text-h5 text-grey-darken-1 animate-fade-up line-height-relaxed" style="animation-delay: 0.1s;">
-            Conhecendo um pouco mais da minha jornada
-            <v-divider class="mx-auto mt-8 animate-scale-width" style="max-width: 200px; animation-delay: 0.2s;"></v-divider>
+  <section id="about" class="modern-about">
+    <div class="about-container">
+      <!-- Header Section -->
+      <div class="about-header">
+        <span class="section-badge">
+          <v-icon icon="mdi-account-circle" start size="16" />
+          Sobre Mim
+        </span>
+        <h2 class="section-title">
+          Conhecendo minha
+          <span class="title-highlight">jornada</span>
+        </h2>
+        <p class="section-description">
+          Uma trajetória em constante evolução no mundo da tecnologia
+        </p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="about-content">
+        <!-- Story Grid -->
+        <div class="story-grid">
+          <!-- Past -->
+          <div class="story-card past">
+            <div class="story-icon">
+              <v-icon icon="mdi-history" color="primary" size="24" />
+            </div>
+            <h3 class="story-title">Minha História</h3>
+            <p class="story-text">
+              Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva.
+            </p>
           </div>
-        </v-col>
-      </v-row>
 
-      <v-row class="align-items-stretch">
-        <v-col cols="12" lg="6" class="animate-fade-right">
-          <v-card 
-            class="h-100 pa-8 story-card" 
-            elevation="0"
-            variant="outlined"
-            rounded="xl"
-          >
-            <div class="text-body-1 text-grey-darken-1 story-content">
-              <div class="mb-6 animate-typewriter" style="animation-delay: 0.4s;">
-                <v-icon color="primary" size="large" class="me-3 float-start">mdi-account-heart</v-icon>
-                <p class="text-h6 font-weight-medium mb-4 text-primary">
-                  Minha História
-                </p>
-                <p class="mb-4 line-height-relaxed">
-                  Olá! Que bom ter a oportunidade de me apresentar. Meu nome é Henrique e sou um profissional de tecnologia com mais de 6 anos de experiência em atendimento ao público, onde aprimorei habilidades essenciais como paciência, autoconfiança e a arte de resolver problemas.
-                </p>
-              </div>
-              
-              <div class="mb-6 animate-typewriter" style="animation-delay: 0.6s;">
-                <v-icon color="success" size="large" class="me-3 float-start">mdi-cog</v-icon>
-                <p class="text-h6 font-weight-medium mb-4 text-success">
-                  Presente
-                </p>
-                <p class="mb-4 line-height-relaxed">
-                  Atualmente, minha jornada é na área de infraestrutura de TI, onde lido com redes, ferramentas Microsoft, virtualização e automação. Adoro a parte prática de dar suporte e ver as coisas funcionando.
-                </p>
-              </div>
+          <!-- Present -->
+          <div class="story-card present">
+            <div class="story-icon">
+              <v-icon icon="mdi-cogs" color="success" size="24" />
+            </div>
+            <h3 class="story-title">Presente</h3>
+            <p class="story-text">
+              Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas.
+            </p>
+          </div>
 
-              <div class="animate-typewriter" style="animation-delay: 0.8s;">
-                <v-icon color="warning" size="large" class="me-3 float-start">mdi-rocket-launch</v-icon>
-                <p class="text-h6 font-weight-medium mb-4 text-warning">
-                  Futuro
-                </p>
-                <p class="line-height-relaxed">
-                  Além disso, estou me dedicando a estudar DevOps. Estou animado para explorar mais sobre orquestração de containers, automação e cloud computing, pois acredito que essas tecnologias são o futuro para criar soluções mais inteligentes e eficientes.
-                </p>
+          <!-- Future -->
+          <div class="story-card future">
+            <div class="story-icon">
+              <v-icon icon="mdi-rocket-launch" color="warning" size="24" />
+            </div>
+            <h3 class="story-title">Futuro</h3>
+            <p class="story-text">
+              Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+          <div class="stats-grid">
+            <div class="stat-item" v-for="(stat, index) in stats" :key="stat.label">
+              <div class="stat-icon">
+                <v-icon :icon="stat.icon" :color="stat.color" size="20" />
+              </div>
+              <div class="stat-content">
+                <div class="stat-value">{{ stat.value }}</div>
+                <div class="stat-label">{{ stat.label }}</div>
               </div>
             </div>
-          </v-card>
-        </v-col>
+          </div>
+        </div>
 
-        <v-col cols="12" lg="6" class="animate-fade-left">
-          <!-- Estatísticas -->
-          <v-row class="mb-6">
-            <v-col v-for="(stat, index) in stats" :key="stat.label" cols="6">
-              <v-card 
-                class="pa-6 text-center stats-card animate-scale-up" 
-                elevation="0"
-                rounded="xl"
-                :style="`animation-delay: ${0.2 + index * 0.1}s;`"
-                hover
-                variant="outlined"
-                :color="stat.color"
-              >
-                <v-icon :color="stat.color" size="x-large" class="mb-3 pulse-icon">{{ stat.icon }}</v-icon>
-                <div class="text-h2 font-weight-bold mb-2 counter-number" :class="`text-${stat.color}`">
-                  {{ stat.value }}
-                </div>
-                <div class="text-body-1 font-weight-medium">
-                  {{ stat.label }}
-                </div>
-              </v-card>
-            </v-col>
-          </v-row>
-
-          <!-- Valores -->
-          <v-card 
-            class="pa-8 values-card animate-fade-up" 
-            elevation="0"
-            rounded="xl"
-            style="animation-delay: 0.6s;"
-            variant="outlined"
-          >
-            <div class="text-center mb-6">
-              <v-icon color="primary" size="x-large" class="mb-3">mdi-heart</v-icon>
-              <h3 class="text-h4 font-weight-bold">Meus Valores</h3>
-              <p class="text-grey-darken-1 mt-2">Princípios que guiam minha jornada</p>
+        <!-- Values Section -->
+        <div class="values-section">
+          <h3 class="values-title">Meus Valores</h3>
+          <div class="values-grid">
+            <div 
+              v-for="(value, index) in values" 
+              :key="value"
+              class="value-item"
+              :style="{ animationDelay: `${index * 100}ms` }"
+            >
+              <v-icon :icon="getValueIcon(value)" size="18" />
+              <span>{{ value }}</span>
             </div>
-            
-            <div class="d-flex flex-wrap justify-center gap-3">
-              <v-chip
-                v-for="(value, index) in values"
-                :key="value"
-                class="ma-1 value-chip animate-bounce-in"
-                :color="getChipColor(index)"
-                variant="elevated"
-                size="large"
-                :style="`animation-delay: ${0.7 + index * 0.05}s;`"
-              >
-                <v-icon start :icon="getValueIcon(value)"></v-icon>
-                {{ value }}
-              </v-chip>
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 const stats = [
   { 
-    value: '+2', 
+    value: '6+', 
     label: 'Anos de Experiência',
-    icon: 'mdi-clock-outline',
+    icon: 'mdi-briefcase-outline',
     color: 'primary'
   },
   { 
-    value: '+5', 
-    label: 'Projetos Concluídos',
-    icon: 'mdi-check-circle-outline',
+    value: '50+', 
+    label: 'Projetos Realizados',
+    icon: 'mdi-rocket-launch-outline',
     color: 'success'
   },
   { 
-    value: '+3', 
+    value: '3+', 
     label: 'Anos de Estudo',
     icon: 'mdi-school-outline',
     color: 'info'
@@ -141,27 +118,20 @@ const stats = [
 ]
 
 const values = [
-  'Estudo',
+  'Estudo Contínuo',
   'Qualidade',
   'Inovação',
   'Colaboração',
-  'Aprendizado Contínuo',
   'Performance',
   'Comprometimento'
 ]
 
-const getChipColor = (index: number) => {
-  const colors = ['primary', 'success', 'info', 'warning', 'error', 'secondary', 'primary']
-  return colors[index % colors.length]
-}
-
 const getValueIcon = (value: string) => {
   const iconMap: Record<string, string> = {
-    'Estudo': 'mdi-book-open-variant',
+    'Estudo Contínuo': 'mdi-book-open-variant',
     'Qualidade': 'mdi-star',
     'Inovação': 'mdi-lightbulb-outline',
     'Colaboração': 'mdi-account-group',
-    'Aprendizado Contínuo': 'mdi-trending-up',
     'Performance': 'mdi-speedometer',
     'Comprometimento': 'mdi-handshake'
   }
@@ -170,83 +140,252 @@ const getValueIcon = (value: string) => {
 </script>
 
 <style scoped>
-/* Seção Background */
-.section-background {
-  position: relative;
+.modern-about {
+  padding: 120px 0 80px;
+  background: #fafafa;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
-.section-background::before {
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* Header Section */
+.about-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3b82f6;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.title-highlight {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-description {
+  font-size: 18px;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Content Section */
+.about-content {
+  display: grid;
+  gap: 60px;
+}
+
+/* Story Grid */
+.story-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-bottom: 60px;
+}
+
+.story-card {
+  background: white;
+  padding: 32px;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.story-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="rgba(0,0,0,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-  opacity: 0.3;
-  pointer-events: none;
+  height: 4px;
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
-/* Animações Principais */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.story-card:hover::before {
+  transform: scaleX(1);
 }
 
-@keyframes fadeRight {
-  from {
-    opacity: 0;
-    transform: translateX(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.story-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
 }
 
-@keyframes fadeLeft {
-  from {
-    opacity: 0;
-    transform: translateX(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+.story-icon {
+  width: 56px;
+  height: 56px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
 
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.8) rotateY(20deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg);
-  }
+.story-card:hover .story-icon {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
 }
 
-@keyframes bounceIn {
-  from {
-    opacity: 0;
-    transform: scale(0.3) rotate(-10deg);
-  }
-  50% {
-    transform: scale(1.05) rotate(2deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
+.story-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+  letter-spacing: -0.025em;
 }
 
-@keyframes typewriter {
+.story-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Stats Section */
+.stats-section {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 60px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(59, 130, 246, 0.05);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Values Section */
+.values-section {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+}
+
+.values-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: -0.025em;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.value-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: slideInUp 0.6s ease forwards;
+}
+
+.value-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes slideInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -257,235 +396,66 @@ const getValueIcon = (value: string) => {
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-}
-
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-@keyframes counterAnimation {
-  from {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-/* Classes de Animação */
-.animate-fade-up {
-  animation: fadeUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-}
-
-.animate-fade-right {
-  animation: fadeRight 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-  animation-delay: 0.2s;
-}
-
-.animate-fade-left {
-  animation: fadeLeft 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-  animation-delay: 0.3s;
-}
-
-.animate-scale-up {
-  animation: scaleUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  opacity: 0;
-}
-
-.animate-bounce-in {
-  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  opacity: 0;
-}
-
-.animate-typewriter {
-  animation: typewriter 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-/* Componentes Estilizados */
-.gradient-text {
-  background: linear-gradient(135deg, 
-    rgb(var(--v-theme-primary)) 0%, 
-    rgb(var(--v-theme-secondary)) 50%,
-    rgb(var(--v-theme-primary)) 100%
-  );
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 3s ease-in-out infinite;
-}
-
-.story-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(10px);
-  border: 2px solid rgba(var(--v-theme-primary), 0.1);
-}
-
-.story-card::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, 
-    rgba(var(--v-theme-primary), 0.3),
-    rgba(var(--v-theme-secondary), 0.3),
-    rgba(var(--v-theme-primary), 0.3)
-  );
-  background-size: 300% 300%;
-  z-index: -1;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  animation: gradientShift 3s ease-in-out infinite;
-}
-
-.story-card:hover::before {
-  opacity: 1;
-}
-
-.story-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(var(--v-theme-primary), 0.15);
-}
-
-.story-content {
-  position: relative;
-  z-index: 1;
-}
-
-.stats-card {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.stats-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-}
-
-.stats-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.2), 
-    transparent
-  );
-  transition: left 0.6s ease;
-}
-
-.stats-card:hover::before {
-  left: 100%;
-}
-
-.counter-number {
-  animation: counterAnimation 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  animation-delay: inherit;
-}
-
-.pulse-icon {
-  animation: pulse 2s ease-in-out infinite;
-}
-
-.values-card {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgba(var(--v-theme-surface), 0.95);
-  backdrop-filter: blur(10px);
-  border: none !important;
-}
-
-.values-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(var(--v-theme-primary), 0.1);
-}
-
-.value-chip {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-}
-
-.value-chip:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.line-height-relaxed {
-  line-height: 1.8;
-}
-
-.float-start {
-  float: left;
-  margin-top: 0.25rem;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .story-card:hover,
-  .stats-card:hover,
-  .values-card:hover {
-    transform: none;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-about {
+    padding: 80px 0 60px;
   }
   
-  .value-chip:hover {
-    transform: scale(1.02);
+  .about-container {
+    padding: 0 16px;
+  }
+  
+  .about-header {
+    margin-bottom: 60px;
+  }
+  
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .story-card {
+    padding: 24px;
+  }
+  
+  .stats-section,
+  .values-section {
+    padding: 24px;
+    margin-bottom: 40px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .stat-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 16px;
+  }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
-/* Dark mode adjustments */
-.v-theme--dark .story-card {
-  background: rgba(var(--v-theme-surface), 0.9);
-}
-
-.v-theme--dark .section-background::before {
-  opacity: 0.1;
-}
-
-.v-theme--dark .values-card {
-  background: rgba(var(--v-theme-surface), 0.9);
-}
-
-/* Print styles */
-@media print {
-  .animate-fade-up,
-  .animate-fade-right,
-  .animate-fade-left,
-  .animate-scale-up,
-  .animate-bounce-in,
-  .animate-typewriter {
-    animation: none;
-    opacity: 1;
-    transform: none;
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .story-card {
+    padding: 20px;
+  }
+  
+  .stats-section,
+  .values-section {
+    padding: 20px;
   }
 }
 </style>

@@ -1,254 +1,78 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
-const isProduction = process.env.NODE_ENV === 'production'
-
-// @ts-expect-error - defineNuxtConfig is global in Nuxt
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
+  srcDir: 'app/',
   
-  // DevTools habilitado apenas em desenvolvimento
-  devtools: { enabled: !isProduction },
+  devtools: { enabled: true },
 
-  // Configuração das variáveis de ambiente públicas
   runtimeConfig: {
     public: {
-      siteName: process.env.NUXT_PUBLIC_SITE_NAME,
-      siteFirstName: process.env.NUXT_PUBLIC_SITE_FIRST_NAME,
-      siteDescription: process.env.NUXT_PUBLIC_SITE_DESCRIPTION,
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
-      email: process.env.NUXT_PUBLIC_EMAIL,
-      phone: process.env.NUXT_PUBLIC_PHONE,
-      location: process.env.NUXT_PUBLIC_LOCATION,
-      githubUrl: process.env.NUXT_PUBLIC_GITHUB_URL,
-      linkedinUrl: process.env.NUXT_PUBLIC_LINKEDIN_URL,
-      formspreeId: process.env.NUXT_PUBLIC_FORMSPREE_ID,
-      gaId: process.env.NUXT_PUBLIC_GA_ID,
-      heroDescription: process.env.NUXT_PUBLIC_HERO_DESCRIPTION,
-      footerDescription: process.env.NUXT_PUBLIC_FOOTER_DESCRIPTION
+      siteName: 'Henrique Pereira Zimermann',
+      siteFirstName: 'Henrique',
+      siteDescription: 'DevOps & Cloud Engineer',
+      siteUrl: 'https://henriqzimer.com.br',
+      email: 'contato@henriqzimer.com.br',
+      phone: '+55 (47) 99260-6276',
+      location: 'Balneário Piçarras - Santa Catarina, Brasil',
+      githubUrl: 'https://github.com/henriqzimer',
+      linkedinUrl: 'https://linkedin.com/in/henrique-zimermann',
+      formspreeId: '',
+      gaId: '',
+      heroDescription: 'Automatizando infraestruturas e otimizando processos de desenvolvimento. Especialista em CI/CD, containerização e orquestração na nuvem.',
+      footerDescription: 'Engenheiro DevOps focado em automação, infraestrutura como código e entrega contínua'
     }
   },
 
   modules: [
-    'vuetify-nuxt-module',
-    '@nuxt/eslint',
-    '@nuxt/scripts'
+    'vuetify-nuxt-module'
   ],
 
-  // Configuração do Vuetify
   vuetify: {
     vuetifyOptions: {
       theme: {
-        defaultTheme: 'dark',
+        defaultTheme: 'light',
         themes: {
           light: {
             colors: {
-              primary: '#2563eb',
-              secondary: '#06b6d4',
-              accent: '#8b5cf6',
-              error: '#ef4444',
-              info: '#3b82f6',
-              success: '#10b981',
-              warning: '#f59e0b',
-              background: '#ffffff',
-              surface: '#f9fafb',
-            },
-          },
-          dark: {
-            colors: {
               primary: '#3b82f6',
-              secondary: '#06b6d4',
-              accent: '#8b5cf6',
+              secondary: '#64748b',
+              accent: '#06b6d4',
               error: '#ef4444',
-              info: '#60a5fa',
-              success: '#10b981',
               warning: '#f59e0b',
-              background: '#0f172a',
-              surface: '#1e293b',
-            },
-          },
-        },
-      },
-    },
-    moduleOptions: {
-      styles: true
+              info: '#3b82f6',
+              success: '#10b981'
+            }
+          }
+        }
+      }
     }
   },
 
   css: [
-    '~/assets/css/animations.css',
-    '~/assets/css/vuetify.css'
+    'assets/css/design-tokens.css',
+    'assets/css/critical.css',
+    'assets/css/animations.css'
   ],
+
+  components: {
+    global: true,
+    dirs: [
+      '~/components',
+      '~/components/base'
+    ]
+  },
 
   app: {
     head: {
+      htmlAttrs: { lang: 'pt-BR' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      htmlAttrs: {
-        lang: 'pt-BR'
-      },
-      link: [
-        { 
-          rel: 'icon', 
-          type: 'image/svg+xml', 
-          href: '/favicon.svg' 
-        },
-        { 
-          rel: 'preconnect', 
-          href: 'https://fonts.googleapis.com' 
-        },
-        { 
-          rel: 'preconnect', 
-          href: 'https://fonts.gstatic.com', 
-          crossorigin: '' 
-        },
-        { 
-          rel: 'preconnect', 
-          href: 'https://cdn.jsdelivr.net', 
-          crossorigin: '' 
-        },
-        { 
-          rel: 'preload', 
-          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-          as: 'style',
-          onload: "this.onload=null;this.rel='stylesheet'"
-        },
-        { 
-          rel: 'stylesheet', 
-          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-          media: 'print',
-          onload: "this.media='all'"
-        },
-        {
-          rel: 'preload',
-          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=420',
-          as: 'image',
-          media: '(min-width: 960px)'
-        },
-        {
-          rel: 'preload',
-          href: 'https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=280',
-          as: 'image',
-          media: '(max-width: 600px)'
-        }
-      ],
       meta: [
         { name: 'robots', content: 'index, follow' },
         { name: 'theme-color', content: '#3b82f6' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }
       ]
-    }
-  },
-
-  // Otimizações de performance
-  experimental: {
-    payloadExtraction: true,
-    renderJsonPayloads: true,
-    treeshakeClientOnly: true
-  },
-
-  // Build otimizations
-  build: {
-    transpile: ['vuetify']
-  },
-
-  // Vite optimizations
-  vite: {
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'vuetify': ['vuetify'],
-            'vendor': ['vue', '@vue/runtime-core']
-          }
-        }
-      }
-    },
-    ssr: {
-      noExternal: ['vuetify']
-    }
-  },
-
-  // Optimization config
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all'
-        }
-      }
-    }
-  },
-
-  // Configuração do servidor de desenvolvimento
-  devServer: {
-    port: parseInt(process.env.NUXT_PORT || '3000')
-  },
-
-  // Configurações condicionais baseadas no ambiente
-  ssr: process.env.NODE_ENV === 'production',
-  
-  // Configurações de build para produção
-  nitro: {
-    compressPublicAssets: process.env.NODE_ENV === 'production',
-    minify: process.env.NODE_ENV === 'production',
-    prerender: {
-      crawlLinks: true
-    }
-  },
-
-  // Performance hints
-  performance: {
-    hints: process.env.NODE_ENV === 'production' ? 'warning' : false
-  },
-
-  // Router options for better SEO
-  router: {
-    options: {
-      scrollBehaviorType: 'smooth'
-    }
-  },
-
-  // Image optimization
-  image: {
-    quality: 80,
-    format: ['webp', 'jpg'],
-    screens: {
-      'xs': 320,
-      'sm': 640,
-      'md': 768,
-      'lg': 1024,
-      'xl': 1280,
-      'xxl': 1536,
-      '2xl': 1536
-    }
-  },
-
-  // Security headers and cache optimization
-  routeRules: {
-    '/': { 
-      headers: { 
-        'X-Frame-Options': 'DENY',
-        'X-Content-Type-Options': 'nosniff',
-        'Referrer-Policy': 'strict-origin-when-cross-origin',
-        'Cache-Control': 's-maxage=31536000'
-      } 
-    },
-    '/**': { 
-      headers: { 
-        'X-Frame-Options': 'DENY',
-        'X-Content-Type-Options': 'nosniff',
-        'Referrer-Policy': 'strict-origin-when-cross-origin'
-      } 
-    },
-    '/assets/**': { 
-      headers: { 'Cache-Control': 'max-age=31536000, immutable' } 
-    },
-    '/_nuxt/**': { 
-      headers: { 'Cache-Control': 'max-age=31536000, immutable' } 
-    },
-    '/robots.txt': { 
-      headers: { 'Content-Type': 'text/plain; charset=UTF-8' } 
     }
   }
 })

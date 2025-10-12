@@ -1,62 +1,65 @@
 <template>
   <v-app>
-    <NuxtRouteAnnouncer />
-    <Header />
-    <v-main>
-      <Hero />
-      <About />
-      <!-- <Skills /> -->
-      <LazyPortfolio />
-      <LazyCertifications />
-      <!-- <Contact /> -->
-    </v-main>
-    <Footer />
+    <v-theme-provider theme="light">
+      <!-- Header -->
+      <Header />
+      
+      <!-- Main content -->
+      <v-main>
+        <NuxtRouteAnnouncer />
+        <NuxtPage />
+      </v-main>
+      
+      <!-- Footer -->
+      <Footer />
+    </v-theme-provider>
   </v-app>
 </template>
 
 <script setup lang="ts">
-// Variáveis de ambiente para SEO
-const siteName = useRuntimeConfig().public.siteName
-const siteDescription = useRuntimeConfig().public.siteDescription
-const siteUrl = useRuntimeConfig().public.siteUrl
-
-// Configuração de SEO e meta tags
+// Configuração de SEO global
 useHead({
-  title: `${siteName} - ${siteDescription}`,
+  htmlAttrs: { lang: 'pt-BR' },
   meta: [
-    { name: 'description', content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.` },
-    { name: 'keywords', content: 'devops, desenvolvedor, vue.js, nuxt, react, typescript, web developer, portfolio, kubernetes, docker, aws' },
-    { property: 'og:title', content: `${siteName} - ${siteDescription}` },
-    { property: 'og:description', content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.` },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: siteUrl },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: `${siteName} - ${siteDescription}` },
-    { name: 'twitter:description', content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.` }
-  ],
-  link: [
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    { rel: 'canonical', href: siteUrl }
+    { charset: 'utf-8' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ]
 })
 </script>
 
 <style>
-/* Reset e estilos globais */
+/* Global reset and base styles */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+body {
+  font-family: var(--font-family-primary);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--background-primary);
+}
+
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Global transitions */
+* {
+  transition: all 0.3s ease;
+}
+
+/* Focus styles for accessibility */
+:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* Remove focus outline for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 </style>
