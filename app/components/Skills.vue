@@ -345,6 +345,7 @@ const otherTechs: TechItem[] = [
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 32px;
   margin-bottom: 80px;
+  justify-content: center;
 }
 
 .skill-category {
@@ -467,6 +468,7 @@ const otherTechs: TechItem[] = [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
+  justify-content: center;
 }
 
 .learning-card {
@@ -603,10 +605,11 @@ const otherTechs: TechItem[] = [
 
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   max-width: 1000px;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .tech-card {
@@ -729,7 +732,7 @@ const otherTechs: TechItem[] = [
   }
   
   .tech-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 16px;
   }
   

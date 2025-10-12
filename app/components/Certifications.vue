@@ -255,7 +255,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
 
 <style>
 .modern-certifications {
-  padding: 120px 0 80px;
+  padding: 80px 0 80px;
   background: rgb(var(--v-theme-surface));
   min-height: 100vh;
   display: flex;
@@ -267,6 +267,8 @@ const certificationStats = computed<CertificationStat[]>(() => [
   margin: 0 auto;
   padding: 0 24px;
   width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Header Section */
@@ -475,6 +477,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 32px;
+  justify-content: center;
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.4s;
   opacity: 0;
@@ -534,6 +537,10 @@ const certificationStats = computed<CertificationStat[]>(() => [
 @media (max-width: 768px) {
   .modern-certifications {
     padding: 80px 0 60px;
+  }
+  
+  .certifications-container {
+    padding: 0 16px;
   }
   
   .certifications-header {
@@ -616,6 +623,25 @@ const certificationStats = computed<CertificationStat[]>(() => [
   
   .progress-percentage {
     font-size: 1.125rem;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .certifications-container {
+    padding: 0 12px;
+  }
+  
+  .certifications-grid {
+    gap: 16px;
+  }
+  
+  .modern-certifications {
+    padding: 50px 0 30px;
+  }
+  
+  .progress-section {
+    max-width: 200px;
   }
 }
 </style>

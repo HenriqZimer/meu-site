@@ -519,6 +519,7 @@ const scrollToContact = () => {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 32px;
   margin-bottom: 48px;
+  justify-content: center;
 }
 
 .portfolio-item {
@@ -883,6 +884,7 @@ const scrollToContact = () => {
   
   .filter-chips {
     gap: 8px;
+    justify-content: center;
   }
   
   .portfolio-grid {
@@ -924,7 +926,7 @@ const scrollToContact = () => {
   }
   
   .filter-chips {
-    justify-content: flex-start;
+    justify-content: center;
     gap: 6px;
   }
   

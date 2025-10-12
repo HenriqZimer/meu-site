@@ -273,6 +273,7 @@ const getValueColor = (index: number) => {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 32px;
   margin-bottom: 60px;
+  justify-content: center;
 }
 
 .story-card {
@@ -353,6 +354,7 @@ const getValueColor = (index: number) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 24px;
+  justify-content: center;
 }
 
 .stat-item {
@@ -477,6 +479,7 @@ const getValueColor = (index: number) => {
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  justify-content: center;
 }
 
 .value-card {
@@ -627,6 +630,46 @@ const getValueColor = (index: number) => {
   }
 }
 
+/* Tablet adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .story-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    justify-content: center;
+  }
+}
+
+/* Medium tablets */
+@media (max-width: 960px) and (min-width: 769px) {
+  .story-grid {
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+  }
+}
+
+/* Small tablets - 2+1 fix */
+@media (max-width: 900px) and (min-width: 769px) {
+  .story-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-content: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    justify-content: center;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .modern-about {
@@ -660,6 +703,7 @@ const getValueColor = (index: number) => {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    justify-content: center;
   }
   
   .stat-item {
@@ -672,6 +716,7 @@ const getValueColor = (index: number) => {
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+    justify-content: center;
   }
   
   .value-card {

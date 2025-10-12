@@ -459,6 +459,10 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   .social-links {
     justify-content: center;
   }
+  
+  .scroll-indicator {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
