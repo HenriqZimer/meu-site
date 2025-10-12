@@ -1,357 +1,375 @@
 <template>
-  <v-card 
-    :class="cardClasses"
-    :elevation="elevation"
-    :rounded="rounded"
-    :style="cardStyles"
-    data-animate="scale-up"
-    :data-delay="animationDelay"
-  >
-    <!-- Imagem do projeto -->
-    <div v-if="image || $slots.image" class="image-container">
-      <slot name="image">
-        <picture v-if="image">
-          <source 
-            :srcset="getImageSrc('webp')" 
-            type="image/webp"
-            :media="getMediaQuery()"
-          >
-          <source 
-            :srcset="getImageSrc('webp', true)" 
-            type="image/webp"
-            :media="getMobileMediaQuery()"
-          >
-          <v-img
-            :src="getImageSrc('webp')"
-            :height="imageHeight"
-            cover
-            class="text-white"
-            :alt="imageAlt"
-            :loading="lazy ? 'lazy' : 'eager'"
-          >
-            <template #placeholder>
-              <div class="d-flex align-center justify-center fill-height bg-gradient-primary">
-                <v-icon size="80" color="white" class="animate-pulse">{{ placeholderIcon }}</v-icon>
-              </div>
-            </template>
-
-            <!-- Overlay com ações -->
-            <div v-if="showOverlay" class="overlay">
-              <slot name="overlay">
-                <div class="d-flex gap-6">
-                  <v-btn
-                    v-if="demoUrl"
-                    icon
-                    size="large"
-                    color="white"
-                    class="overlay-btn"
-                    :href="demoUrl"
-                    target="_blank"
-                    :aria-label="`Acessar demo do projeto ${title}`"
-                    rel="noopener"
-                  >
-                    <v-icon>{{ demoIcon }}</v-icon>
-                  </v-btn>
-                  <v-btn
-                    v-if="githubUrl"
-                    icon
-                    size="large"
-                    color="white"
-                    class="overlay-btn"
-                    :href="githubUrl"
-                    target="_blank"
-                    :aria-label="`Acessar código do projeto ${title} no GitHub`"
-                    rel="noopener"
-                  >
-                    <v-icon>mdi-github</v-icon>
-                  </v-btn>
-                </div>
-              </slot>
-            </div>
-          </v-img>
-        </picture>
-      </slot>
+  <div class="modern-project-card" :style="cardStyles">
+    <!-- Project Image -->
+    <div v-if="image || $slots.image" class="project-image">
+      <div class="image-wrapper">
+        <img 
+          class="project-img"
+          :src="image"
+          :alt="imageAlt"
+          :loading="lazy ? 'lazy' : 'eager'"
+        />
+        
+        <!-- Status Badge -->
+        <div v-if="status" class="status-badge" :class="`status-badge--${status}`">
+          <v-icon :icon="getStatusIcon(status)" size="12" />
+          <span>{{ getStatusLabel(status) }}</span>
+        </div>
+        
+        <!-- Tech Overlay -->
+        <div v-if="technologies && technologies.length" class="tech-overlay">
+          <div class="tech-tags">
+            <span 
+              v-for="tech in technologies.slice(0, 3)"
+              :key="tech"
+              class="tech-tag"
+            >
+              {{ tech }}
+            </span>
+            <span v-if="technologies.length > 3" class="tech-more">
+              +{{ technologies.length - 3 }}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Conteúdo do card -->
-    <div :class="contentClasses">
-      <!-- Título -->
-      <v-card-title v-if="title" :class="titleClasses">
-        {{ title }}
-      </v-card-title>
-
-      <!-- Descrição -->
-      <v-card-text v-if="description" :class="descriptionClasses">
-        <p class="mb-4">
-          {{ description }}
-        </p>
-
-        <!-- Tags/Tecnologias -->
-        <div v-if="technologies.length > 0 || $slots.technologies" class="technologies-container">
-          <slot name="technologies">
-            <div class="d-flex flex-wrap justify-center gap-2">
-              <v-chip
-                v-for="(tech, index) in technologies"
-                :key="tech"
-                :size="chipSize"
-                :color="chipColor"
-                :variant="chipVariant"
-                class="tech-chip"
-                :class="chipClasses"
-                :style="`animation-delay: ${1 + index * 0.05}s;`"
-              >
-                {{ tech }}
-              </v-chip>
-            </div>
-          </slot>
-        </div>
-      </v-card-text>
-
-      <!-- Slot para conteúdo customizado -->
-      <div v-if="$slots.default" class="custom-content">
-        <slot />
+    <!-- Project Content -->
+    <div class="project-content">
+      <!-- Featured Badge -->
+      <div v-if="featured" class="featured-badge">
+        <v-icon icon="mdi-star" size="12" />
+        <span>Destaque</span>
       </div>
 
-      <!-- Actions (botões) -->
-      <v-card-actions v-if="$slots.actions" :class="actionsClasses">
-        <slot name="actions" />
-      </v-card-actions>
+      <!-- Project Title -->
+      <h3 class="project-title">{{ title }}</h3>
+      
+      <!-- Project Description -->
+      <p class="project-description">{{ description }}</p>
+      
+      <!-- Technologies -->
+      <div v-if="technologies && technologies.length" class="project-technologies">
+        <span 
+          v-for="tech in technologies"
+          :key="tech"
+          class="tech-chip"
+        >
+          {{ tech }}
+        </span>
+      </div>
+
+      <!-- Project Footer -->
+      <div class="project-footer">
+        <div class="project-links">
+          <v-btn
+            v-if="demoUrl"
+            variant="tonal"
+            color="primary"
+            size="small"
+            class="project-btn"
+            :href="demoUrl"
+            target="_blank"
+          >
+            <v-icon start icon="mdi-open-in-new" />
+            Demo
+          </v-btn>
+          <v-btn
+            v-if="githubUrl"
+            variant="outlined"
+            color="primary"
+            size="small"
+            class="project-btn"
+            :href="githubUrl"
+            target="_blank"
+          >
+            <v-icon start icon="mdi-github" />
+            Código
+          </v-btn>
+        </div>
+      </div>
     </div>
-  </v-card>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Props {
   title?: string
   description?: string
   image?: string
-  imageHeight?: string | number
   imageAlt?: string
   technologies?: string[]
   demoUrl?: string
   githubUrl?: string
-  elevation?: number | string
-  rounded?: boolean | string
-  hover?: boolean
-  showOverlay?: boolean
   lazy?: boolean
   animationDelay?: number
-  size?: 'small' | 'medium' | 'large'
-  chipColor?: string
-  chipVariant?: 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
-  placeholderIcon?: string
-  demoIcon?: string
+  featured?: boolean
+  status?: 'completed' | 'in-progress' | 'planning'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   title: '',
   description: '',
   image: '',
-  imageHeight: 220,
   imageAlt: '',
   technologies: () => [],
   demoUrl: '',
   githubUrl: '',
-  elevation: 4,
-  rounded: 'xl',
-  hover: true,
-  showOverlay: true,
   lazy: true,
   animationDelay: 0,
-  size: 'medium',
-  chipColor: 'primary',
-  chipVariant: 'tonal',
-  placeholderIcon: 'mdi-code-braces',
-  demoIcon: 'mdi-book-open-page-variant'
+  featured: false,
+  status: 'completed'
 })
 
-const { getResponsiveClasses, isMobile } = useResponsive()
-
-// Classes do card
-const cardClasses = computed(() => {
-  const classes = ['project-card', 'h-100', 'd-flex', 'flex-column']
-  
-  if (props.hover) {
-    classes.push('project-card--hover')
+// Helper methods
+const getStatusIcon = (status: string) => {
+  const icons = {
+    'completed': 'mdi-check-circle',
+    'in-progress': 'mdi-clock-outline',
+    'planning': 'mdi-lightbulb-outline'
   }
-  
-  classes.push(`project-card--${props.size}`)
-  
-  return classes.join(' ')
-})
-
-// Estilos do card
-const cardStyles = computed(() => ({}))
-
-// Configurações de imagem responsiva
-const getImageSrc = (format: string = 'webp', mobile: boolean = false) => {
-  if (!props.image) return ''
-  
-  const width = mobile ? 300 : 400
-  return `${props.image}?w=${width}&f=${format}`
+  return icons[status as keyof typeof icons] || 'mdi-help-circle'
 }
 
-const getMediaQuery = () => '(min-width: 600px)'
-const getMobileMediaQuery = () => '(max-width: 599px)'
-
-// Classes do conteúdo
-const contentClasses = computed(() => {
-  return 'flex-grow-1 d-flex flex-column'
-})
-
-// Classes do título
-const titleClasses = computed(() => {
-  const sizeMap = {
-    small: 'text-h6 font-weight-bold pa-3 pb-1',
-    medium: 'text-h6 font-weight-bold pa-4 pb-2',
-    large: 'text-h5 font-weight-bold pa-5 pb-2'
+const getStatusLabel = (status: string) => {
+  const labels = {
+    'completed': 'Concluído',
+    'in-progress': 'Em progresso',
+    'planning': 'Planejado'
   }
-  
-  return sizeMap[props.size]
-})
+  return labels[status as keyof typeof labels] || 'Desconhecido'
+}
 
-// Classes da descrição
-const descriptionClasses = computed(() => {
-  const sizeMap = {
-    small: 'flex-grow-1 pa-3 pt-1',
-    medium: 'flex-grow-1 pa-4 pt-2',
-    large: 'flex-grow-1 pa-5 pt-2'
-  }
-  
-  return sizeMap[props.size]
-})
-
-// Configurações do chip
-const chipSize = computed(() => {
-  const sizeMap = {
-    small: 'x-small',
-    medium: 'small',
-    large: 'default'
-  }
-  
-  return sizeMap[props.size]
-})
-
-const chipClasses = computed(() => {
-  return 'ma-1 animate-fade-up'
-})
-
-// Classes das ações
-const actionsClasses = computed(() => {
-  const sizeMap = {
-    small: 'pa-3 pt-0',
-    medium: 'pa-4 pt-0',
-    large: 'pa-5 pt-0'
-  }
-  
-  return sizeMap[props.size]
-})
+// Computed properties
+const cardStyles = computed(() => ({
+  '--animation-delay': `${props.animationDelay}ms`
+}))
 </script>
 
 <style scoped>
-.project-card {
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  cursor: pointer;
+.modern-project-card {
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-surface-bright));
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.modern-project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Project Image */
+.project-image {
+  position: relative;
+  height: 200px;
   overflow: hidden;
 }
 
-.project-card--hover:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
-}
-
-.project-card--small {
-  max-width: 280px;
-}
-
-.project-card--medium {
-  max-width: 350px;
-}
-
-.project-card--large {
-  max-width: 400px;
-}
-
-.image-container {
+.image-wrapper {
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
-.overlay {
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.modern-project-card:hover .project-img {
+  transform: scale(1.05);
+}
+
+/* Status Badge */
+.status-badge {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
+  top: 12px;
+  left: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
-}
-
-.project-card--hover:hover .overlay {
-  opacity: 1;
-}
-
-.overlay-btn {
-  transform: scale(0.8);
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9) !important;
-  color: rgb(var(--v-theme-primary)) !important;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
   backdrop-filter: blur(10px);
+  z-index: 2;
 }
 
-.project-card--hover:hover .overlay-btn {
-  transform: scale(1);
+.status-badge--completed {
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
 }
 
-.overlay-btn:hover {
-  transform: scale(1.1) !important;
-  background: rgba(255, 255, 255, 1) !important;
+.status-badge--in-progress {
+  background: rgba(255, 152, 0, 0.9);
+  color: white;
 }
 
-.bg-gradient-primary {
-  background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+.status-badge--planning {
+  background: rgba(63, 81, 181, 0.9);
+  color: white;
+}
+
+/* Tech Overlay */
+.tech-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 20px 12px 12px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.modern-project-card:hover .tech-overlay {
+  transform: translateY(0);
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tech-tag {
+  padding: 2px 6px;
+  background: rgba(59, 130, 246, 0.9);
+  color: white;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.tech-more {
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Project Content */
+.project-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Featured Badge */
+.featured-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 193, 7, 0.1);
+  color: #ff9800;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  width: fit-content;
+  border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+/* Project Title */
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+/* Project Description */
+.project-description {
+  color: rgb(var(--v-theme-on-surface-variant));
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+/* Technologies */
+.project-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 
 .tech-chip {
-  transition: all 0.3s ease;
+  padding: 4px 8px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.tech-chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.technologies-container {
+/* Project Footer */
+.project-footer {
   margin-top: auto;
 }
 
-.custom-content {
-  flex-grow: 1;
+.project-links {
+  display: flex;
+  gap: 8px;
 }
 
-/* Responsividade */
-@media (max-width: 960px) {
-  .project-card--hover:hover {
-    transform: none;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
+.project-btn {
+  border-radius: 8px !important;
+  font-size: 0.8rem !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .project-image {
+    height: 160px;
   }
   
-  .project-card--small,
-  .project-card--medium,
-  .project-card--large {
-    max-width: none;
+  .project-content {
+    padding: 16px;
   }
-}
-
-@media (max-width: 600px) {
-  .tech-chip:hover {
-    transform: none;
+  
+  .project-title {
+    font-size: 1.1rem;
+  }
+  
+  .project-description {
+    font-size: 0.85rem;
   }
 }
 </style>

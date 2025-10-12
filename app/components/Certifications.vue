@@ -1,102 +1,98 @@
 <template>
-  <SectionContainer
-    id="certifications"
-    title="Certificações"
-    subtitle="Minha jornada de aprendizado contínuo e desenvolvimento profissional"
-    background="surface"
-    padding="large"
-  >
-    <!-- Grid responsivo das certificações -->
-    <v-row class="certification-grid" :class="responsiveClasses">
-      <!-- Certificações Obtidas -->
-      <v-col 
-        cols="12" 
-        :md="gridLayout.md" 
-        :lg="gridLayout.lg"
-        class="certification-section"
-        data-animate="fade-right"
-        data-delay="200"
-      >
-        <CertificationCard
-          title="Certificações Obtidas"
-          icon="mdi-certificate"
-          color="success"
-          :items="obtainedCertifications"
-          :count="obtainedCertifications.length"
-          type="obtained"
-          :animation-delay="300"
-        />
-      </v-col>
-
-      <!-- Certificações Planejadas -->
-      <v-col 
-        cols="12" 
-        :md="gridLayout.md" 
-        :lg="gridLayout.lg"
-        class="certification-section"
-        data-animate="fade-left"
-        data-delay="400"
-      >
-        <CertificationCard
-          title="Próximas Metas"
-          icon="mdi-target"
-          color="primary"
-          :items="plannedCertifications"
-          :count="plannedCertifications.length"
-          type="planned"
-          :animation-delay="500"
-        />
-      </v-col>
-    </v-row>
-
-    <!-- Estatísticas -->
-    <template #footer>
-      <v-row justify="center" class="mt-8">
-        <v-col cols="12" :md="statsLayout.md" :lg="statsLayout.lg">
-          <v-card 
-            class="stats-overview elevation-8"
-            rounded="xl"
-            variant="tonal"
-            color="surface"
-            data-animate="fade-up"
-            data-delay="600"
-          >
-            <v-card-text class="pa-8">
-              <div class="text-center mb-6">
-                <h3 class="text-h4 font-weight-bold mb-2 text-primary">
-                  Progresso de Certificações
-                </h3>
-                <p class="text-body-1 text-medium-emphasis">
-                  Acompanhe minha evolução profissional
-                </p>
-              </div>
-              
-              <v-row class="stats-grid">
-                <v-col
-                  v-for="(stat, index) in certificationStats"
-                  :key="stat.label"
-                  cols="6"
-                  :sm="statsItemLayout.sm"
-                  :md="statsItemLayout.md"
-                  class="text-center"
-                >
-                                    <StatCard
-                    :value="stat.value"
-                    :label="stat.label"
-                    :icon="stat.icon"
+  <section id="certifications" class="modern-certifications">
+    <div class="certifications-container">
+      <!-- Header Section -->
+      <div class="certifications-header">
+        <span class="section-badge primary-theme">
+          <v-icon icon="mdi-certificate" start size="16" />
+          Certificações
+        </span>
+        <h2 class="section-title">
+          Minha jornada de
+          <span class="title-highlight primary-theme">aprendizado</span>
+        </h2>
+        <p class="section-description">
+          Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps
+        </p>
+        
+        <!-- Statistics Overview -->
+        <div class="stats-overview">
+          <v-row justify="center">
+            <v-col 
+              v-for="(stat, index) in certificationStats" 
+              :key="index"
+              cols="6" 
+              sm="3"
+              class="stat-item"
+              :data-animate-delay="index * 100"
+            >
+              <div class="stat-card">
+                <div class="stat-icon-wrapper">
+                  <v-icon 
+                    :icon="stat.icon" 
                     :color="stat.color"
-                    stats-style
-                    size="medium"
-                    :animation-delay="index * 200"
+                    size="32"
+                    class="stat-icon"
                   />
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </template>
-  </SectionContainer>
+                </div>
+                <div class="stat-content">
+                  <div class="stat-value" :class="`text-${stat.color}`">
+                    {{ stat.value }}
+                  </div>
+                  <div class="stat-label">{{ stat.label }}</div>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+          <div class="progress-info">
+            <span class="progress-label">Progresso da Jornada</span>
+            <span class="progress-percentage">{{ Math.round((obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100) }}%</span>
+          </div>
+          <v-progress-linear
+            :model-value="(obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100"
+            color="primary"
+            bg-color="surface-variant"
+            height="8"
+            rounded
+            class="progress-bar"
+          />
+        </div>
+      </div>
+
+      <!-- Grid responsivo das certificações -->
+      <div class="certifications-grid">
+        <!-- Certificações Obtidas -->
+        <div class="certification-section" data-animate="fade-right">
+          <CertificationCard
+            title="Certificações Obtidas"
+            icon="mdi-certificate"
+            color="primary"
+            :items="obtainedCertifications"
+            :count="obtainedCertifications.length"
+            type="obtained"
+            :animation-delay="300"
+          />
+        </div>
+
+        <!-- Certificações Planejadas -->
+        <div class="certification-section" data-animate="fade-left">
+          <CertificationCard
+            title="Próximas Metas"
+            icon="mdi-target"
+            color="primary"
+            :items="plannedCertifications"
+            :count="plannedCertifications.length"
+            type="planned"
+            :animation-delay="500"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -234,7 +230,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
     icon: 'mdi-check-circle',
     value: obtainedCertifications.length,
     label: 'Obtidas',
-    color: 'success'
+    color: 'primary'
   },
   {
     icon: 'mdi-target',
@@ -257,96 +253,369 @@ const certificationStats = computed<CertificationStat[]>(() => [
 ])
 </script>
 
-<style scoped>
-/* Layout Grid System */
-.certification-grid {
-  gap: 2rem;
-}
-
-.certification-section {
+<style>
+.modern-certifications {
+  padding: 120px 0 80px;
+  background: rgb(var(--v-theme-surface));
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 
-/* Responsive Adjustments */
-.certification-grid--mobile {
-  gap: 1.5rem;
+.modern-certifications .certifications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
 }
 
-.certification-grid--tablet {
-  gap: 1.75rem;
+/* Header Section */
+.modern-certifications .certifications-header {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.certification-grid--desktop {
-  gap: 2rem;
+.modern-certifications .section-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
+  padding: 8px 16px !important;
+  border-radius: 24px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  margin-bottom: 16px !important;
+  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
-/* Stats Overview */
-.stats-overview {
-  background: linear-gradient(
-    135deg,
-    rgba(var(--v-theme-surface), 1) 0%,
-    rgba(var(--v-theme-background), 0.8) 100%
-  );
-  border: 1px solid rgba(var(--v-theme-primary), 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.modern-certifications .section-badge .v-icon {
+  color: #3b82f6 !important;
+}
+
+.modern-certifications .section-badge.primary-theme {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: #3b82f6 !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+}
+
+.modern-certifications .section-badge.primary-theme .v-icon {
+  color: #3b82f6 !important;
+}
+
+.modern-certifications .section-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 16px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.modern-certifications .title-highlight {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+.modern-certifications .title-highlight.primary-theme {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+}
+
+.modern-certifications .section-description {
+  font-size: 1.2rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  max-width: 600px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+/* Statistics Overview */
+.modern-certifications .stats-overview {
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+}
+
+.modern-certifications .stat-item {
+  opacity: 0;
+  animation: fadeInScale 0.6s ease forwards;
+}
+
+.modern-certifications .stat-item[data-animate-delay="0"] { animation-delay: 0.8s; }
+.modern-certifications .stat-item[data-animate-delay="100"] { animation-delay: 0.9s; }
+.modern-certifications .stat-item[data-animate-delay="200"] { animation-delay: 1.0s; }
+.modern-certifications .stat-item[data-animate-delay="300"] { animation-delay: 1.1s; }
+
+.modern-certifications .stat-card {
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border: 1px solid rgba(var(--v-theme-outline-variant), 0.2);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
 
-.stats-overview:hover {
+.modern-certifications .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8) !important;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modern-certifications .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(var(--v-theme-primary), 0.15) !important;
+  box-shadow: 0 8px 32px rgba(var(--v-theme-shadow), 0.15);
+  border-color: rgba(var(--v-theme-primary), 0.3);
 }
 
-.stats-grid {
-  gap: 1rem;
+.modern-certifications .stat-card:hover::before {
+  opacity: 1;
 }
 
-/* Mobile optimizations */
-@media (max-width: 599px) {
-  .certification-grid {
-    gap: 1rem;
+.modern-certifications .stat-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(var(--v-theme-primary), 0.1);
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.modern-certifications .stat-card:hover .stat-icon-wrapper {
+  transform: scale(1.1);
+  background: rgba(var(--v-theme-primary), 0.15);
+}
+
+.modern-certifications .stat-icon {
+  transition: all 0.3s ease;
+}
+
+.modern-certifications .stat-card:hover .stat-icon {
+  transform: scale(1.1);
+}
+
+.modern-certifications .stat-content {
+  margin-top: 8px;
+}
+
+.modern-certifications .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.modern-certifications .stat-label {
+  font-size: 0.875rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Progress Section */
+.modern-certifications .progress-section {
+  max-width: 400px;
+  margin: 0 auto;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 1.2s;
+}
+
+.modern-certifications .progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.modern-certifications .progress-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modern-certifications .progress-percentage {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+.modern-certifications .progress-bar {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Certifications Grid */
+.modern-certifications .certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 32px;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.modern-certifications .certification-section {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.modern-certifications .certification-section[data-animate="fade-right"] {
+  animation-delay: 0.6s;
+}
+
+.modern-certifications .certification-section[data-animate="fade-left"] {
+  animation-delay: 0.8s;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .modern-certifications {
+    padding: 100px 0 60px;
   }
   
-  .stats-grid {
-    gap: 0.5rem;
-  }
-}
-
-/* Tablet optimizations */
-@media (min-width: 600px) and (max-width: 959px) {
-  .certification-grid {
-    gap: 1.5rem;
-  }
-}
-
-/* Desktop optimizations */
-@media (min-width: 960px) {
-  .certification-grid {
-    gap: 2rem;
+  .certifications-container {
+    padding: 0 20px;
   }
   
-  .stats-overview:hover {
-    transform: translateY(-8px);
+  .certifications-grid {
+    gap: 24px;
   }
 }
 
-/* Performance optimizations */
-.certification-section,
-.stats-overview {
-  will-change: transform;
-  contain: layout style paint;
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .stats-overview,
-  .certification-section {
-    transition: none !important;
+@media (max-width: 768px) {
+  .modern-certifications {
+    padding: 80px 0 60px;
   }
   
-  .stats-overview:hover {
-    transform: none !important;
+  .certifications-header {
+    margin-bottom: 64px;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+  }
+  
+  .stats-overview {
+    margin-bottom: 32px;
+  }
+  
+  .stat-card {
+    padding: 16px;
+  }
+  
+  .stat-value {
+    font-size: 1.75rem;
+  }
+  
+  .stat-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .progress-section {
+    max-width: 300px;
+  }
+  
+  .certifications-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modern-certifications {
+    padding: 60px 0 40px;
+  }
+  
+  .certifications-container {
+    padding: 0 16px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .stats-overview {
+    margin-bottom: 24px;
+  }
+  
+  .stat-card {
+    padding: 12px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  .stat-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+  
+  .progress-section {
+    max-width: 250px;
+  }
+  
+  .progress-label {
+    font-size: 0.75rem;
+  }
+  
+  .progress-percentage {
+    font-size: 1.125rem;
   }
 }
 </style>

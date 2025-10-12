@@ -34,7 +34,7 @@
           <!-- Present -->
           <div class="story-card present">
             <div class="story-icon">
-              <v-icon icon="mdi-cogs" color="success" size="24" />
+              <v-icon icon="mdi-cogs" color="primary" size="24" />
             </div>
             <h3 class="story-title">Presente</h3>
             <p class="story-text">
@@ -71,16 +71,34 @@
 
         <!-- Values Section -->
         <div class="values-section">
-          <h3 class="values-title">Meus Valores</h3>
+          <div class="values-header">
+            <div class="values-badge">
+              <v-icon icon="mdi-heart" start size="14" />
+              Valores
+            </div>
+            <h3 class="values-title">Princípios que <span class="values-highlight">me guiam</span></h3>
+            <p class="values-subtitle">Cada projeto é uma oportunidade de aplicar valores sólidos e entregar excelência</p>
+          </div>
           <div class="values-grid">
             <div 
-              v-for="(value, index) in values" 
-              :key="value"
-              class="value-item"
-              :style="{ animationDelay: `${index * 100}ms` }"
+              v-for="(value, index) in valuesData" 
+              :key="value.title"
+              class="value-card"
+              :style="{ animationDelay: `${index * 150}ms` }"
             >
-              <v-icon :icon="getValueIcon(value)" size="18" />
-              <span>{{ value }}</span>
+              <div class="value-card-inner">
+                <div class="value-icon-wrapper">
+                  <div class="value-icon" :style="{ background: value.gradient }">
+                    <v-icon :icon="value.icon" size="24" color="white" />
+                  </div>
+                  <div class="value-glow" :style="{ background: value.gradient }"></div>
+                </div>
+                <div class="value-content">
+                  <h4 class="value-title">{{ value.title }}</h4>
+                  <p class="value-description">{{ value.description }}</p>
+                </div>
+                <div class="value-border" :style="{ background: value.gradient }"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -101,7 +119,7 @@ const stats = [
     value: '50+', 
     label: 'Projetos Realizados',
     icon: 'mdi-rocket-launch-outline',
-    color: 'success'
+    color: 'primary'
   },
   { 
     value: '3+', 
@@ -126,23 +144,67 @@ const values = [
   'Comprometimento'
 ]
 
+const valuesData = [
+  {
+    title: 'Estudo Contínuo',
+    description: 'Sempre em busca de novos conhecimentos e tecnologias para me manter atualizado',
+    icon: 'mdi-school',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
+  },
+  {
+    title: 'Qualidade',
+    description: 'Compromisso com a excelência em cada linha de código e processo implementado',
+    icon: 'mdi-shield-check',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+  },
+  {
+    title: 'Inovação',
+    description: 'Busco soluções criativas e modernas para resolver problemas complexos',
+    icon: 'mdi-rocket-launch',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)'
+  },
+  {
+    title: 'Colaboração',
+    description: 'Trabalho em equipe e comunicação efetiva são fundamentais para o sucesso',
+    icon: 'mdi-account-group',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #3730a3 100%)'
+  },
+  {
+    title: 'Performance',
+    description: 'Otimização e eficiência são prioridades em todas as soluções que desenvolvo',
+    icon: 'mdi-lightning-bolt',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #4338ca 100%)'
+  },
+  {
+    title: 'Comprometimento',
+    description: 'Dedicação total para entregar resultados que superem as expectativas',
+    icon: 'mdi-target',
+    gradient: 'linear-gradient(135deg, #3b82f6 0%, #312e81 100%)'
+  }
+]
+
 const getValueIcon = (value: string) => {
   const iconMap: Record<string, string> = {
-    'Estudo Contínuo': 'mdi-book-open-variant',
-    'Qualidade': 'mdi-star',
-    'Inovação': 'mdi-lightbulb-outline',
+    'Estudo Contínuo': 'mdi-school',
+    'Qualidade': 'mdi-shield-check',
+    'Inovação': 'mdi-rocket-launch',
     'Colaboração': 'mdi-account-group',
-    'Performance': 'mdi-speedometer',
-    'Comprometimento': 'mdi-handshake'
+    'Performance': 'mdi-lightning-bolt',
+    'Comprometimento': 'mdi-target'
   }
-  return iconMap[value] || 'mdi-check'
+  return iconMap[value] || 'mdi-circle'
+}
+
+const getValueColor = (index: number) => {
+  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
+  return colors[index % colors.length]
 }
 </script>
 
 <style scoped>
 .modern-about {
   padding: 120px 0 80px;
-  background: #fafafa;
+  background: rgb(var(--v-theme-background));
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -178,7 +240,7 @@ const getValueIcon = (value: string) => {
 .section-title {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 800;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-background));
   margin-bottom: 16px;
   letter-spacing: -0.025em;
   line-height: 1.1;
@@ -193,7 +255,7 @@ const getValueIcon = (value: string) => {
 
 .section-description {
   font-size: 18px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -214,10 +276,10 @@ const getValueIcon = (value: string) => {
 }
 
 .story-card {
-  background: white;
+  background: rgb(var(--v-theme-surface));
   padding: 32px;
   border-radius: 24px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgb(var(--v-theme-surface-bright));
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -248,8 +310,8 @@ const getValueIcon = (value: string) => {
 .story-icon {
   width: 56px;
   height: 56px;
-  background: #f8fafc;
-  border: 2px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface-bright));
+  border: 2px solid rgb(var(--v-theme-surface-light));
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -266,7 +328,7 @@ const getValueIcon = (value: string) => {
 .story-title {
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-surface));
   margin-bottom: 16px;
   letter-spacing: -0.025em;
 }
@@ -274,16 +336,16 @@ const getValueIcon = (value: string) => {
 .story-text {
   font-size: 16px;
   line-height: 1.6;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
 }
 
 /* Stats Section */
 .stats-section {
-  background: white;
+  background: rgb(var(--v-theme-surface));
   padding: 40px;
   border-radius: 24px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgb(var(--v-theme-surface-bright));
   margin-bottom: 60px;
 }
 
@@ -298,21 +360,21 @@ const getValueIcon = (value: string) => {
   align-items: center;
   gap: 16px;
   padding: 20px;
-  background: #f8fafc;
+  background: rgb(var(--v-theme-surface-bright));
   border-radius: 16px;
   transition: all 0.3s ease;
 }
 
 .stat-item:hover {
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(59, 130, 246, 0.1);
   transform: translateY(-2px);
 }
 
 .stat-icon {
   width: 48px;
   height: 48px;
-  background: white;
-  border: 2px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface));
+  border: 2px solid rgb(var(--v-theme-surface-light));
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -327,61 +389,230 @@ const getValueIcon = (value: string) => {
 .stat-value {
   font-size: 24px;
   font-weight: 800;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-surface));
   line-height: 1;
   margin-bottom: 4px;
 }
 
 .stat-label {
   font-size: 14px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   font-weight: 500;
 }
 
 /* Values Section */
 .values-section {
-  background: white;
-  padding: 40px;
-  border-radius: 24px;
-  border: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(16, 185, 129, 0.03));
+  padding: 60px 48px;
+  border-radius: 32px;
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.values-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.values-header {
+  text-align: center;
+  margin-bottom: 48px;
+  position: relative;
+  z-index: 1;
+}
+
+.values-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .values-title {
-  font-size: 24px;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: #0f172a;
-  text-align: center;
-  margin-bottom: 32px;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 12px;
   letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.values-highlight {
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.values-subtitle {
+  font-size: 1.1rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  margin: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.value-item {
+.value-card {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  transition: transform 0.4s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+}
+
+.value-card-inner {
+  background: rgba(var(--v-theme-surface), 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 20px;
+  padding: 32px 24px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.value-card:hover .value-card-inner {
+  background: rgba(var(--v-theme-surface), 1);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.value-icon-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.value-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(59, 130, 246, 0.1);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 16px 20px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #475569;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
   transition: all 0.3s ease;
-  opacity: 0;
-  animation: slideInUp 0.6s ease forwards;
+  color: #3b82f6;
 }
 
-.value-item:hover {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
-  color: #3b82f6;
-  transform: translateY(-2px);
+.value-card:hover .value-icon {
+  transform: scale(1.1);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.value-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(20px);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.value-card:hover .value-glow {
+  opacity: 0.6;
+}
+
+.value-content {
+  flex: 1;
+  text-align: left;
+}
+
+.value-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 8px;
+  letter-spacing: -0.025em;
+}
+
+.value-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(var(--v-theme-on-surface-variant));
+  margin: 0;
+}
+
+.value-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.value-card:hover .value-border {
+  opacity: 1;
+}
+
+/* Dark mode support */
+:global(.v-theme--dark) .values-section {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+:global(.v-theme--dark) .value-card-inner {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(71, 85, 105, 0.3);
+}
+
+:global(.v-theme--dark) .value-card:hover .value-card-inner {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.value-card:hover .value-icon {
+  background: rgba(59, 130, 246, 0.2);
+  transform: scale(1.1);
+}
+
+.value-text {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
 /* Animations */
@@ -422,7 +653,7 @@ const getValueIcon = (value: string) => {
   
   .stats-section,
   .values-section {
-    padding: 24px;
+    padding: 32px 24px;
     margin-bottom: 40px;
   }
   
@@ -439,8 +670,18 @@ const getValueIcon = (value: string) => {
   }
   
   .values-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .value-card {
+    padding: 20px 12px;
+    min-height: 90px;
+  }
+  
+  .value-icon {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -455,7 +696,48 @@ const getValueIcon = (value: string) => {
   
   .stats-section,
   .values-section {
-    padding: 20px;
+    padding: 24px 16px;
   }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .value-card {
+    padding: 16px 12px;
+    min-height: 80px;
+  }
+}
+
+/* Value color variations */
+.value-icon--color-0 {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.value-icon--color-1 {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.value-icon--color-2 {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.value-icon--color-3 {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.value-icon--color-4 {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.value-icon--color-5 {
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
 }
 </style>

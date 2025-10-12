@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     :elevation="scrolled ? 1 : 0"
-    :color="scrolled ? 'rgba(255, 255, 255, 0.95)' : 'transparent'"
+    :color="scrolled ? 'surface' : 'transparent'"
     flat
     fixed
     class="modern-header"
@@ -205,6 +205,7 @@ const updateActiveSection = () => {
   
   for (let i = sections.length - 1; i >= 0; i--) {
     const sectionId = sections[i]
+    if (!sectionId) continue
     const element = document.getElementById(sectionId)
     if (element && element.offsetTop <= scrollPosition) {
       activeSection.value = sectionId
@@ -233,10 +234,11 @@ onUnmounted(() => {
   z-index: 1000;
 }
 
-.modern-header.header-scrolled {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.header-scrolled {
+  background: rgba(30, 41, 59, 0.95) !important;
+  border-bottom-color: rgba(51, 65, 85, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .header-container {
@@ -292,18 +294,19 @@ onUnmounted(() => {
 }
 
 .brand-name {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1;
-  color: #0f172a;
-  letter-spacing: -0.025em;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(var(--v-theme-on-surface)) !important;
+  margin: 0;
 }
 
 .brand-role {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
-  color: #64748b;
-  line-height: 1;
+  line-height: 1.2;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
+  margin: 0;
 }
 
 /* Desktop Navigation */
@@ -327,7 +330,7 @@ onUnmounted(() => {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.025em;
-  color: #475569 !important;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
   transition: all 0.2s ease;
 }
 
@@ -345,7 +348,7 @@ onUnmounted(() => {
 }
 
 .nav-item:hover {
-  color: #0f172a !important;
+  color: #3b82f6 !important;
 }
 
 .nav-item:hover::after,
@@ -354,7 +357,7 @@ onUnmounted(() => {
 }
 
 .nav-item--active {
-  color: #0f172a !important;
+  color: #3b82f6 !important;
   font-weight: 600;
 }
 
@@ -378,12 +381,12 @@ onUnmounted(() => {
 .mobile-menu-btn {
   width: 40px !important;
   height: 40px !important;
-  color: #475569 !important;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
 }
 
 /* Mobile Drawer */
 .mobile-drawer {
-  background: rgba(255, 255, 255, 0.98);
+  background: rgba(30, 41, 59, 0.98) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -431,7 +434,7 @@ onUnmounted(() => {
 .drawer-name {
   font-size: 16px;
   font-weight: 600;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-surface));
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
@@ -439,14 +442,14 @@ onUnmounted(() => {
 .drawer-role {
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   line-height: 1.2;
 }
 
 .drawer-close {
   width: 40px !important;
   height: 40px !important;
-  color: #64748b !important;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
 }
 
 .drawer-nav {
@@ -463,14 +466,14 @@ onUnmounted(() => {
   height: 56px !important;
   font-size: 16px;
   font-weight: 500;
-  color: #475569 !important;
+  color: rgb(var(--v-theme-on-surface-variant)) !important;
   border-radius: 12px !important;
   transition: all 0.2s ease;
 }
 
 .drawer-nav-item:hover {
   background: rgba(59, 130, 246, 0.05) !important;
-  color: #0f172a !important;
+  color: rgb(var(--v-theme-on-surface)) !important;
 }
 
 .drawer-nav-item--active {

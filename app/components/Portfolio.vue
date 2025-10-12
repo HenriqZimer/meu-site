@@ -1,82 +1,145 @@
 <template>
-  <SectionContainer
-    id="portfolio"
-    title="Portfólio"
-    subtitle="Alguns dos meus trabalhos recentes"
-    padding="large"
-  >
-    <!-- Filtros -->
-    <div class="portfolio-filters">
-      <div class="filters-header">
-        <h3 class="filters-title">Filtrar por categoria</h3>
-        <p class="filters-subtitle">Explore diferentes tipos de projetos</p>
+  <section id="portfolio" class="modern-portfolio">
+    <div class="portfolio-container">
+      <!-- Header Section -->
+      <div class="portfolio-header">
+        <span class="section-badge">
+          <v-icon icon="mdi-briefcase" start size="16" />
+          Portfólio
+        </span>
+        <h2 class="section-title">
+          Meus
+          <span class="title-highlight">projetos</span>
+        </h2>
+        <p class="section-description">
+          Alguns dos meus trabalhos recentes e soluções desenvolvidas
+        </p>
       </div>
-      
-      <div class="filter-chips">
-        <v-chip
-          v-for="(filter, index) in filters"
-          :key="filter.value"
-          :class="{ 'filter-chip--active': selectedFilter === filter.value }"
-          class="filter-chip"
-          :color="selectedFilter === filter.value ? 'primary' : 'default'"
-          :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'"
-          size="large"
-          :style="{ animationDelay: `${300 + index * 100}ms` }"
-          @click="setFilter(filter.value)"
-        >
-          <v-icon start size="18">{{ filter.icon }}</v-icon>
-          {{ filter.label }}
-          <v-badge 
-            v-if="filter.count > 0" 
-            :content="filter.count" 
-            color="secondary" 
-            inline
-            class="ml-2"
-          />
-        </v-chip>
-      </div>
-    </div>
 
-    <!-- Grid de Projetos -->
-    <div class="portfolio-content">
-      <transition-group name="portfolio-list" tag="div" class="portfolio-grid">
-        <div
-          v-for="(project, index) in filteredProjects"
-          :key="project.id"
-          class="portfolio-item"
-          :style="{ animationDelay: `${600 + index * 150}ms` }"
-        >
-          <ProjectCard
-            :title="project.title"
-            :description="project.description"
-            :image="project.image"
-            :technologies="project.technologies"
-            :demo-url="project.demoUrl"
-            :github-url="project.githubUrl"
-            :featured="project.featured"
-            :status="project.status"
-            size="medium"
-            :lazy="index > 2"
-            class="project-card"
-          />
+      <!-- Filtros -->
+      <div class="portfolio-filters">
+        <div class="filter-chips">
+          <v-chip
+            v-for="(filter, index) in filters"
+            :key="filter.value"
+            :class="{ 'filter-chip--active': selectedFilter === filter.value }"
+            class="filter-chip"
+            :color="selectedFilter === filter.value ? 'primary' : 'default'"
+            :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'"
+            size="large"
+            :style="{ animationDelay: `${300 + index * 100}ms` }"
+            @click="setFilter(filter.value)"
+          >
+            <v-icon start size="18">{{ filter.icon }}</v-icon>
+            {{ filter.label }}
+            <v-badge 
+              v-if="filter.count > 0" 
+              :content="filter.count" 
+              color="primary" 
+              inline
+              class="ml-2"
+            />
+          </v-chip>
         </div>
-      </transition-group>
-      
-      <!-- Empty State -->
-      <div v-if="filteredProjects.length === 0" class="empty-state">
-        <v-icon size="64" color="grey-lighten-1" class="empty-icon">mdi-folder-open-outline</v-icon>
-        <h3 class="empty-title">Nenhum projeto encontrado</h3>
-        <p class="empty-description">Tente selecionar uma categoria diferente</p>
       </div>
-    </div>
 
-    <!-- Call to Action -->
-    <template #footer>
+      <!-- Grid de Projetos -->
+      <div class="portfolio-content">
+        <div class="portfolio-grid" :key="selectedFilter">
+          <div
+            v-for="(project, index) in filteredProjects"
+            :key="project.id"
+            class="portfolio-item"
+            :style="{ 
+              animationDelay: `${index * 100}ms`,
+              animation: 'fadeInUp 0.6s ease forwards'
+            }"
+          >
+            <ProjectCard
+              :title="project.title"
+              :description="project.description"
+              :image="project.image"
+              :technologies="project.technologies"
+              :demo-url="project.demoUrl"
+              :github-url="project.githubUrl"
+              :featured="project.featured"
+              :status="project.status"
+              size="medium"
+              :lazy="index > 2"
+              class="project-card"
+            />
+          </div>
+        </div>
+      
+        <!-- Empty State -->
+        <div v-if="filteredProjects.length === 0" class="empty-state">
+          <v-icon size="64" color="grey-lighten-1" class="empty-icon">mdi-folder-open-outline</v-icon>
+          <h3 class="empty-title">Nenhum projeto encontrado</h3>
+          <p class="empty-description">Tente selecionar uma categoria diferente</p>
+        </div>
+      </div>
+
+      <!-- Technologies Section -->
+      <!-- <div class="technologies-section">
+        <div class="technologies-header">
+          <div class="tech-badge">
+            <v-icon icon="mdi-cog" start size="14" />
+            Stack Tecnológico
+          </div>
+          <h3 class="technologies-title">
+            Outras <span class="tech-highlight">tecnologias</span> que utilizo
+          </h3>
+          <p class="technologies-subtitle">
+            Ferramentas e frameworks que complementam meu arsenal de desenvolvimento
+          </p>
+        </div>
+        
+        <div class="technologies-grid">
+          <div 
+            v-for="(tech, index) in otherTechnologies" 
+            :key="tech.name"
+            class="tech-card"
+            :style="{ animationDelay: `${index * 100}ms` }"
+          >
+            <div class="tech-card-inner">
+              <div class="tech-icon-wrapper">
+                <v-icon 
+                  :icon="tech.icon" 
+                  :color="tech.color"
+                  size="32"
+                  class="tech-icon"
+                />
+              </div>
+              <div class="tech-content">
+                <h4 class="tech-name">{{ tech.name }}</h4>
+                <p class="tech-description">{{ tech.description }}</p>
+                <div class="tech-level">
+                  <span class="tech-level-label">Nível:</span>
+                  <div class="tech-level-bar">
+                    <div 
+                      class="tech-level-fill" 
+                      :style="{ 
+                        width: `${tech.level}%`,
+                        background: tech.color 
+                      }"
+                    ></div>
+                  </div>
+                  <span class="tech-level-value">{{ tech.level }}%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Call to Action -->
       <div class="portfolio-cta">
-        <v-card class="cta-card" elevation="0" rounded="xl">
+        <div class="cta-card">
           <div class="cta-content">
-            <v-icon color="primary" size="48" class="cta-icon">mdi-rocket-launch</v-icon>
-            <h3 class="cta-title">Interessado em trabalhar comigo?</h3>
+            <h3 class="cta-title">
+              <v-icon color="white" size="32" class="cta-icon">mdi-rocket-launch</v-icon>
+              Interessado em trabalhar comigo?
+            </h3>
             <p class="cta-description">
               Tenho experiência em criar soluções inovadoras e estou sempre aberto a novos desafios.
             </p>
@@ -89,7 +152,7 @@
                 @click="scrollToContact"
               >
                 <v-icon start>mdi-email</v-icon>
-                Entre em Contato
+                Email
               </v-btn>
               <v-btn
                 color="secondary"
@@ -102,16 +165,27 @@
                 <v-icon start>mdi-github</v-icon>
                 Ver no GitHub
               </v-btn>
+              <v-btn
+                color="info"
+                size="large"
+                variant="tonal"
+                class="cta-button"
+                href="https://linkedin.com/in/henriquezimer"
+                target="_blank"
+              >
+                <v-icon start>mdi-linkedin</v-icon>
+                LinkedIn
+              </v-btn>
             </div>
           </div>
-        </v-card>
+        </div>
       </div>
-    </template>
-  </SectionContainer>
+    </div>
+  </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 
 // Types
 interface Project {
@@ -186,6 +260,76 @@ const projects: Project[] = [
     githubUrl: 'https://github.com/HenriqZimer/meu-site',
     featured: true,
     status: 'in-progress'
+  },
+  {
+    id: 5,
+    title: 'Portfolio Pessoal Moderno',
+    description: 'Site pessoal desenvolvido com Vue 3, Nuxt 3 e Vuetify, focado em performance, acessibilidade e design responsivo.',
+    image: 'https://via.placeholder.com/400x220/9c27b0/ffffff?text=Portfolio+Vue',
+    category: 'frontend',
+    technologies: ['Vue 3', 'Nuxt 3', 'TypeScript', 'Vuetify', 'CSS'],
+    demoUrl: 'https://henriquezimer.dev',
+    githubUrl: 'https://github.com/HenriqZimer/meu-site',
+    featured: true,
+    status: 'in-progress'
+  },
+  {
+    id: 6,
+    title: 'Portfolio Pessoal Moderno',
+    description: 'Site pessoal desenvolvido com Vue 3, Nuxt 3 e Vuetify, focado em performance, acessibilidade e design responsivo.',
+    image: 'https://via.placeholder.com/400x220/9c27b0/ffffff?text=Portfolio+Vue',
+    category: 'frontend',
+    technologies: ['Vue 3', 'Nuxt 3', 'TypeScript', 'Vuetify', 'CSS'],
+    demoUrl: 'https://henriquezimer.dev',
+    githubUrl: 'https://github.com/HenriqZimer/meu-site',
+    featured: true,
+    status: 'in-progress'
+  }
+]
+
+// Other Technologies Data
+const otherTechnologies = [
+  {
+    name: 'Docker',
+    description: 'Containerização e deployment',
+    icon: 'mdi-docker',
+    color: '#0db7ed',
+    level: 85
+  },
+  {
+    name: 'PostgreSQL',
+    description: 'Banco de dados relacional',
+    icon: 'mdi-database',
+    color: '#336791',
+    level: 80
+  },
+  {
+    name: 'MongoDB',
+    description: 'Banco de dados NoSQL',
+    icon: 'mdi-leaf',
+    color: '#47A248',
+    level: 75
+  },
+  {
+    name: 'Git',
+    description: 'Controle de versão',
+    icon: 'mdi-git',
+    color: '#F05032',
+    level: 90
+  },
+  {
+    name: 'AWS',
+    description: 'Serviços de nuvem',
+    icon: 'mdi-aws',
+    color: '#FF9900',
+    level: 70
+  },
+  {
+    name: 'Figma',
+    description: 'Design e prototipação',
+    icon: 'mdi-figma',
+    color: '#F24E1E',
+    level: 85
   }
 ]
 
@@ -236,6 +380,7 @@ const filteredProjects = computed(() => {
   return projects
     .filter(project => project.category === selectedFilter.value)
     .sort((a, b) => {
+      // Featured projects first
       if (a.featured && !b.featured) return -1
       if (!a.featured && b.featured) return 1
       return 0
@@ -243,218 +388,460 @@ const filteredProjects = computed(() => {
 })
 
 // Methods
-const setFilter = (filter: string) => {
-  selectedFilter.value = filter
+const setFilter = (value: string) => {
+  // Adiciona uma pequena animação de fade
+  const portfolioGrid = document.querySelector('.portfolio-grid') as HTMLElement
+  if (portfolioGrid) {
+    portfolioGrid.style.opacity = '0.5'
+    portfolioGrid.style.transform = 'translateY(10px)'
+    
+    setTimeout(() => {
+      selectedFilter.value = value
+      
+      nextTick(() => {
+        portfolioGrid.style.opacity = '1'
+        portfolioGrid.style.transform = 'translateY(0)'
+      })
+    }, 150)
+  } else {
+    selectedFilter.value = value
+  }
 }
 
 const scrollToContact = () => {
   const element = document.getElementById('contact')
   if (element) {
-    const offset = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    })
+    element.scrollIntoView({ behavior: 'smooth' })
   }
 }
 </script>
 
 <style scoped>
-/* === PORTFOLIO FILTERS === */
-.portfolio-filters {
-  margin-bottom: var(--spacing-4xl);
-  animation: slideUp var(--transition-slower) ease-out 200ms both;
+.modern-portfolio {
+  padding: 0px 0 40px;
+  background: rgb(var(--v-theme-background));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
-.filters-header {
+.portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* Header Section */
+.portfolio-header {
   text-align: center;
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 64px;
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-.filters-title {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-800);
-  margin-bottom: var(--spacing-sm);
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  backdrop-filter: blur(10px);
 }
 
-.filters-subtitle {
-  font-size: var(--text-lg);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-600);
-  margin: 0;
+.section-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-background));
+  margin-bottom: 16px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.title-highlight {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-description {
+  font-size: 1.2rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Filtros */
+.portfolio-filters {
+  margin-bottom: 48px;
 }
 
 .filter-chips {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--spacing-md);
+  gap: 12px;
 }
 
 .filter-chip {
-  font-family: var(--font-family-sans);
-  font-weight: var(--font-weight-medium);
-  transition: var(--transition-base);
-  border-radius: var(--border-radius-lg);
-  animation: bounceIn var(--transition-slower) ease-out both;
-  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  border-radius: 12px !important;
 }
 
 .filter-chip:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
 .filter-chip--active {
-  background-color: var(--color-primary);
-  color: var(--color-white);
   transform: scale(1.05);
-  box-shadow: var(--shadow-colored);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
 }
 
-/* === PORTFOLIO CONTENT === */
+/* Portfolio Content */
 .portfolio-content {
-  min-height: 500px;
-  position: relative;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
 }
 
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: var(--spacing-xl);
-  width: 100%;
+  gap: 32px;
+  margin-bottom: 48px;
 }
 
 .portfolio-item {
-  animation: slideInScale var(--transition-slower) ease-out both;
-}
-
-.project-card {
-  height: 100%;
-  transition: var(--transition-base);
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-}
-
-/* === TRANSITION ANIMATIONS === */
-.portfolio-list-enter-active,
-.portfolio-list-leave-active {
-  transition: all var(--transition-base);
-}
-
-.portfolio-list-enter-from {
   opacity: 0;
-  transform: translateY(30px) scale(0.95);
+  animation: fadeInUp 0.6s ease forwards;
 }
 
-.portfolio-list-leave-to {
-  opacity: 0;
-  transform: translateY(-30px) scale(0.95);
-}
-
-.portfolio-list-move {
-  transition: transform var(--transition-base);
-}
-
-/* === EMPTY STATE === */
+/* Empty State */
 .empty-state {
   text-align: center;
-  padding: var(--spacing-4xl) var(--spacing-xl);
-  animation: slideUp var(--transition-slower) ease-out;
+  padding: 80px 20px;
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 
 .empty-icon {
-  margin-bottom: var(--spacing-lg);
-  opacity: 0.6;
+  margin-bottom: 24px;
+  opacity: 0.5;
 }
 
 .empty-title {
-  font-size: var(--text-2xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-600);
-  margin-bottom: var(--spacing-md);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .empty-description {
-  font-size: var(--text-lg);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-500);
-  margin: 0;
+  font-size: 1rem;
+  opacity: 0.8;
 }
 
-/* === CALL TO ACTION === */
+/* Technologies Section */
+.technologies-section {
+  margin: 80px 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.technologies-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.technologies-title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-background));
+  margin: 16px 0;
+  line-height: 1.2;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.tech-highlight {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.technologies-subtitle {
+  font-size: 1.125rem;
+  color: rgba(var(--v-theme-on-background), 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease forwards;
+}
+
+.technologies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.tech-card {
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.tech-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+}
+
+.tech-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tech-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .tech-icon-wrapper {
+  transform: scale(1.1);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.tech-icon {
+  transition: all 0.3s ease;
+}
+
+.tech-content {
+  flex: 1;
+}
+
+.tech-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-background));
+  margin-bottom: 8px;
+}
+
+.tech-description {
+  color: rgba(var(--v-theme-on-background), 0.7);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.tech-level {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.tech-level-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(var(--v-theme-on-background), 0.8);
+  min-width: 40px;
+}
+
+.tech-level-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(var(--v-theme-outline), 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tech-level-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1s ease 0.5s;
+  position: relative;
+}
+
+.tech-level-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+  animation: shimmer 2s infinite;
+}
+
+.tech-level-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(var(--v-theme-on-background), 0.9);
+  min-width: 35px;
+  text-align: right;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Call to Action */
 .portfolio-cta {
-  margin-top: var(--spacing-5xl);
-  animation: slideUp var(--transition-slower) ease-out 800ms both;
+  margin-top: 80px;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
 }
 
 .cta-card {
-  background: linear-gradient(135deg, var(--color-primary-alpha-10), var(--color-secondary-alpha-10));
-  border: 1px solid var(--color-primary-alpha-20);
-  padding: var(--spacing-4xl);
-  transition: var(--transition-base);
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-surface-bright));
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(var(--v-theme-primary), 0.05) 0%,
+    transparent 50%,
+    rgba(var(--v-theme-secondary), 0.05) 100%
+  );
+  pointer-events: none;
 }
 
 .cta-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-primary-alpha-30);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border-color: rgba(var(--v-theme-primary), 0.2);
 }
 
 .cta-content {
   text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 48px 32px;
+  position: relative;
+  z-index: 2;
 }
 
 .cta-icon {
-  margin-bottom: var(--spacing-lg);
-  animation: float 3s ease-in-out infinite;
+  animation: pulse-gentle 3s ease-in-out infinite;
+  color: white !important;
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.05); 
+  }
 }
 
 .cta-title {
-  font-size: var(--text-3xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-800);
-  margin-bottom: var(--spacing-lg);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 16px;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-icon {
+  animation: pulse-gentle 3s ease-in-out infinite;
+  color: white !important;
 }
 
 .cta-description {
-  font-size: var(--text-lg);
-  font-family: var(--font-family-sans);
-  color: var(--color-gray-600);
-  line-height: var(--line-height-relaxed);
-  margin-bottom: var(--spacing-2xl);
+  font-size: 1.1rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.6;
 }
 
 .cta-actions {
   display: flex;
-  flex-wrap: wrap;
+  gap: 16px;
   justify-content: center;
-  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .cta-button {
-  font-family: var(--font-family-sans);
-  font-weight: var(--font-weight-medium);
-  transition: var(--transition-base);
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+  padding: 12px 24px !important;
+  flex: 1;
+  min-width: 160px;
+  max-width: 200px;
 }
 
 .cta-button:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(var(--v-theme-primary), 0.3);
 }
 
-/* === ANIMATIONS === */
-@keyframes slideUp {
+/* Animations */
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -465,62 +852,52 @@ const scrollToContact = () => {
   }
 }
 
-@keyframes slideInScale {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
+/* Responsive */
+@media (max-width: 1024px) {
+  .modern-portfolio {
+    padding: 60px 0 60px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  
+  .portfolio-container {
+    padding: 0 20px;
   }
-}
-
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3) translateY(20px);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05) translateY(-5px);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(0.95) translateY(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 600px) {
+  
   .portfolio-grid {
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modern-portfolio {
+    padding: 50px 0 60px;
+  }
+  
+  .portfolio-header {
+    margin-bottom: 48px;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
   }
   
   .filter-chips {
-    gap: var(--spacing-sm);
+    gap: 8px;
   }
   
-  .filter-chip:hover {
-    transform: none;
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   
-  .cta-card {
-    padding: var(--spacing-2xl);
+  .cta-content {
+    padding: 32px 20px;
+  }
+  
+  .cta-title {
+    font-size: 1.8rem !important;
+    flex-direction: column;
+    gap: 8px;
   }
   
   .cta-actions {
@@ -529,60 +906,63 @@ const scrollToContact = () => {
   }
   
   .cta-button {
-    width: 100%;
-    max-width: 280px;
+    width: 200px;
   }
 }
 
-@media (min-width: 601px) and (max-width: 960px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 480px) {
+  .modern-portfolio {
+    padding: 40px 0 40px;
+  }
+  
+  .portfolio-container {
+    padding: 0 16px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .filter-chips {
+    justify-content: flex-start;
+    gap: 6px;
+  }
+  
+  .cta-content {
+    padding: 24px 16px;
+  }
+  
+  .cta-title {
+    font-size: 1.6rem !important;
+    flex-direction: column;
+    gap: 8px;
   }
 }
 
-@media (min-width: 961px) and (max-width: 1200px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* Portfolio animations */
+.portfolio-item {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (min-width: 1201px) {
-  .portfolio-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+/* Filter transition effect */
+.portfolio-grid {
+  transition: all 0.3s ease;
+  min-height: 400px;
 }
 
-/* === DARK MODE === */
-:global(.v-theme--dark) .filters-title {
-  color: var(--color-gray-100);
-}
-
-:global(.v-theme--dark) .filters-subtitle {
-  color: var(--color-gray-400);
-}
-
-:global(.v-theme--dark) .empty-title {
-  color: var(--color-gray-400);
-}
-
-:global(.v-theme--dark) .empty-description {
-  color: var(--color-gray-500);
-}
-
-:global(.v-theme--dark) .cta-card {
-  background: linear-gradient(135deg, var(--color-gray-800), var(--color-gray-900));
-  border-color: var(--color-gray-700);
-}
-
-:global(.v-theme--dark) .cta-card:hover {
-  border-color: var(--color-primary-alpha-50);
-}
-
-:global(.v-theme--dark) .cta-title {
-  color: var(--color-gray-100);
-}
-
-:global(.v-theme--dark) .cta-description {
-  color: var(--color-gray-400);
+.portfolio-content {
+  position: relative;
 }
 </style>

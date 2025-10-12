@@ -156,7 +156,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #fafafa;
+  background: rgb(var(--v-theme-background));
 }
 
 .hero-container {
@@ -205,7 +205,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 800;
   line-height: 1.1;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-background));
   margin-bottom: 16px;
   letter-spacing: -0.025em;
 }
@@ -221,7 +221,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .hero-subtitle {
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 600;
-  color: #475569;
+  color: rgb(var(--v-theme-on-background-variant));
   margin-bottom: 24px;
   letter-spacing: -0.025em;
 }
@@ -229,7 +229,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .hero-description {
   font-size: 18px;
   line-height: 1.7;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   margin-bottom: 40px;
   max-width: 480px;
 }
@@ -280,7 +280,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .social-label {
   font-size: 14px;
   font-weight: 600;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -297,10 +297,10 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: white;
-  border: 2px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface));
+  border: 2px solid rgb(var(--v-theme-surface-bright));
   border-radius: 16px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -309,7 +309,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   border-color: #3b82f6;
   color: #3b82f6;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 /* Visual Content */
@@ -329,12 +329,12 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 
 .avatar-wrapper {
   position: relative;
-  width: 320px;
-  height: 320px;
-  border-radius: 32px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
   overflow: hidden;
   background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  padding: 6px;
+  padding: 8px;
   box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
 }
 
@@ -342,7 +342,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 26px;
+  border-radius: 50%;
 }
 
 /* Scroll Indicator */
@@ -355,7 +355,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 
 .scroll-line {
@@ -426,8 +426,8 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   }
   
   .avatar-wrapper {
-    width: 280px;
-    height: 280px;
+    width: 350px;
+    height: 350px;
   }
 }
 
@@ -452,8 +452,8 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   }
   
   .avatar-wrapper {
-    width: 240px;
-    height: 240px;
+    width: 300px;
+    height: 300px;
   }
   
   .social-links {
@@ -472,8 +472,8 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   }
   
   .avatar-wrapper {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
   }
 }
 </style>

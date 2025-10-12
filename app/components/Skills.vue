@@ -114,19 +114,38 @@
       <!-- Technologies Section -->
       <div class="technologies-section">
         <div class="technologies-header">
-          <h3 class="technologies-title">Outras Tecnologias</h3>
-          <p class="technologies-subtitle">Ferramentas do meu toolkit</p>
+          <div class="tech-badge">
+            <v-icon icon="mdi-cog" start size="14" />
+            Stack Tecnológico
+          </div>
+          <h3 class="technologies-title">
+            Outras <span class="tech-highlight">tecnologias</span>
+          </h3>
+          <p class="technologies-subtitle">
+            Ferramentas e frameworks que complementam meu arsenal de desenvolvimento
+          </p>
         </div>
         
         <div class="tech-grid">
           <div 
             v-for="(tech, index) in otherTechs"
             :key="tech.name"
-            class="tech-item"
+            class="tech-card"
             :style="{ animationDelay: `${1000 + index * 50}ms` }"
           >
-            <v-icon :icon="tech.icon" :color="tech.color" size="18" />
-            <span>{{ tech.name }}</span>
+            <div class="tech-card-inner">
+              <div class="tech-icon-wrapper">
+                <v-icon 
+                  :icon="tech.icon" 
+                  :color="tech.color"
+                  size="24"
+                  class="tech-icon"
+                />
+              </div>
+              <div class="tech-content">
+                <span class="tech-name">{{ tech.name }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -178,7 +197,7 @@ const skillCategories: SkillCategory[] = [
   {
     name: 'Infraestrutura',
     icon: 'mdi-server',
-    color: 'success',
+    color: 'primary',
     skills: [
       { name: 'Virtualização', level: 88 },
       { name: 'Redes', level: 82 },
@@ -228,6 +247,20 @@ const learningItems: LearningItem[] = [
     progress: 40,
     icon: 'mdi-ansible',
     color: 'error'
+  },
+  {
+    name: 'Azure DevOps',
+    description: 'Plataforma DevOps Microsoft',
+    progress: 70,
+    icon: 'mdi-microsoft-azure-devops',
+    color: 'info'
+  },
+  {
+    name: 'Ansible',
+    description: 'Automação e configuração',
+    progress: 40,
+    icon: 'mdi-ansible',
+    color: 'error'
   }
 ]
 
@@ -238,8 +271,8 @@ const otherTechs: TechItem[] = [
   { name: 'Jenkins', icon: 'mdi-pipe', color: 'primary' },
   { name: 'Prometheus', icon: 'mdi-chart-line', color: 'error' },
   { name: 'Grafana', icon: 'mdi-chart-box', color: 'warning' },
-  { name: 'ELK Stack', icon: 'mdi-database-search', color: 'success' },
-  { name: 'Nginx', icon: 'mdi-web', color: 'success' },
+  { name: 'ELK Stack', icon: 'mdi-database-search', color: 'primary' },
+  { name: 'Nginx', icon: 'mdi-web', color: 'primary' },
   { name: 'MySQL', icon: 'mdi-database', color: 'info' },
   { name: 'PostgreSQL', icon: 'mdi-elephant', color: 'info' },
   { name: 'Redis', icon: 'mdi-memory', color: 'error' },
@@ -250,8 +283,8 @@ const otherTechs: TechItem[] = [
 
 <style scoped>
 .modern-skills {
-  padding: 120px 0 80px;
-  background: white;
+  padding: 0px 0 10px;
+  background: rgb(var(--v-theme-background));
   min-height: 100vh;
 }
 
@@ -285,7 +318,7 @@ const otherTechs: TechItem[] = [
 .section-title {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 800;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-background));
   margin-bottom: 16px;
   letter-spacing: -0.025em;
   line-height: 1.1;
@@ -300,7 +333,7 @@ const otherTechs: TechItem[] = [
 
 .section-description {
   font-size: 18px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -315,8 +348,8 @@ const otherTechs: TechItem[] = [
 }
 
 .skill-category {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-surface-bright));
   border-radius: 20px;
   padding: 32px;
   transition: all 0.3s ease;
@@ -340,8 +373,8 @@ const otherTechs: TechItem[] = [
 .category-icon {
   width: 52px;
   height: 52px;
-  background: white;
-  border: 2px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface-bright));
+  border: 2px solid rgb(var(--v-theme-surface-light));
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -357,7 +390,7 @@ const otherTechs: TechItem[] = [
 .category-title {
   font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-surface));
   margin: 0;
   letter-spacing: -0.025em;
 }
@@ -383,18 +416,18 @@ const otherTechs: TechItem[] = [
 .skill-name {
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: rgb(var(--v-theme-on-surface-variant));
 }
 
 .skill-level {
   font-size: 12px;
   font-weight: 600;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .skill-bar {
   height: 6px;
-  background: #e5e7eb;
+  background: rgb(var(--v-theme-surface-bright));
   border-radius: 3px;
   overflow: hidden;
 }
@@ -419,14 +452,14 @@ const otherTechs: TechItem[] = [
 .learning-title {
   font-size: 32px;
   font-weight: 700;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-background));
   margin-bottom: 8px;
   letter-spacing: -0.025em;
 }
 
 .learning-subtitle {
   font-size: 16px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
 }
 
@@ -437,8 +470,8 @@ const otherTechs: TechItem[] = [
 }
 
 .learning-card {
-  background: white;
-  border: 1px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-surface-bright));
   border-radius: 16px;
   padding: 24px;
   transition: all 0.3s ease;
@@ -469,8 +502,8 @@ const otherTechs: TechItem[] = [
 .learning-icon {
   width: 40px;
   height: 40px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: rgb(var(--v-theme-surface-bright));
+  border: 1px solid rgb(var(--v-theme-surface-light));
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -486,14 +519,14 @@ const otherTechs: TechItem[] = [
 .learning-name {
   font-size: 16px;
   font-weight: 600;
-  color: #0f172a;
+  color: rgb(var(--v-theme-on-surface));
   margin-bottom: 4px;
   line-height: 1.2;
 }
 
 .learning-description {
   font-size: 13px;
-  color: #64748b;
+  color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
   line-height: 1.3;
 }
@@ -513,64 +546,129 @@ const otherTechs: TechItem[] = [
   position: absolute;
   font-size: 11px;
   font-weight: 600;
-  color: #374151;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 /* Technologies Section */
 .technologies-section {
-  background: #f8fafc;
-  border-radius: 24px;
-  padding: 48px 32px;
-  border: 1px solid #e2e8f0;
+  margin: 80px 0;
+  animation: slideInUp 0.8s ease forwards;
 }
 
 .technologies-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(59, 130, 246, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  animation: slideInUp 0.6s ease forwards;
 }
 
 .technologies-title {
-  font-size: 28px;
+  font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 8px;
-  letter-spacing: -0.025em;
+  color: rgb(var(--v-theme-on-background));
+  margin: 16px 0;
+  line-height: 1.2;
+  animation: slideInUp 0.8s ease forwards;
+}
+
+.tech-highlight {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .technologies-subtitle {
-  font-size: 16px;
-  color: #64748b;
-  margin: 0;
+  font-size: 1.125rem;
+  color: rgba(var(--v-theme-on-background), 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  animation: slideInUp 1s ease forwards;
 }
 
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
-.tech-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #374151;
-  transition: all 0.3s ease;
-  opacity: 0;
+.tech-card {
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: slideInUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  cursor: pointer;
 }
 
-.tech-item:hover {
-  background: rgba(59, 130, 246, 0.05);
-  border-color: #3b82f6;
-  transform: translateY(-2px);
+.tech-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+}
+
+.tech-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  text-align: center;
+  height: 100%;
+}
+
+.tech-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.tech-card:hover .tech-icon-wrapper {
+  transform: scale(1.1);
+  background: rgba(59, 130, 246, 0.15);
+}
+
+.tech-icon {
+  transition: all 0.3s ease;
+}
+
+.tech-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.tech-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-background));
+  text-align: center;
+  line-height: 1.3;
 }
 
 /* Animations */
@@ -588,7 +686,7 @@ const otherTechs: TechItem[] = [
 /* Responsive Design */
 @media (max-width: 768px) {
   .modern-skills {
-    padding: 80px 0 60px;
+    padding: 0px 0 40px;
   }
   
   .skills-container {
@@ -627,16 +725,30 @@ const otherTechs: TechItem[] = [
   }
   
   .technologies-section {
-    padding: 32px 20px;
+    margin: 60px 0;
   }
   
   .tech-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 16px;
+  }
+  
+  .tech-card-inner {
+    padding: 20px 12px;
+  }
+  
+  .tech-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
   }
 }
 
 @media (max-width: 480px) {
+  .modern-skills {
+    padding: 0px 0 20px;
+  }
+  
   .skill-category {
     padding: 20px;
   }
@@ -646,11 +758,26 @@ const otherTechs: TechItem[] = [
   }
   
   .technologies-section {
-    padding: 24px 16px;
+    margin: 40px 0;
   }
   
   .tech-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  .tech-card-inner {
+    padding: 16px 8px;
+  }
+  
+  .tech-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+  }
+  
+  .tech-name {
+    font-size: 0.85rem;
   }
 }
 </style>

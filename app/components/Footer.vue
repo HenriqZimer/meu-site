@@ -169,9 +169,9 @@ onUnmounted(() => {
 
 <style scoped>
 .modern-footer {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #e2e8f0;
-  margin-top: 80px;
+  background: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface-variant));
+  padding: 60px 0 30px;
   position: relative;
   overflow: hidden;
 }
@@ -232,25 +232,25 @@ onUnmounted(() => {
 }
 
 .brand-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: rgb(var(--v-theme-on-surface));
+  margin: 0;
   letter-spacing: -0.025em;
-  line-height: 1.2;
 }
 
 .brand-tagline {
   font-size: 14px;
   font-weight: 500;
-  color: #94a3b8;
-  line-height: 1.2;
+  color: rgb(var(--v-theme-on-surface-variant));
+  margin: 0;
 }
 
 .brand-description {
-  font-size: 15px;
+  color: rgb(var(--v-theme-on-surface-variant));
   line-height: 1.6;
-  color: #cbd5e1;
-  margin: 0;
+  margin: 16px 0 0 0;
+  max-width: 320px;
 }
 
 /* Links Section */
@@ -263,7 +263,7 @@ onUnmounted(() => {
 .links-title {
   font-size: 16px;
   font-weight: 600;
-  color: #f1f5f9;
+  color: rgb(var(--v-theme-on-surface));
   margin: 0 0 4px 0;
   letter-spacing: -0.025em;
 }
@@ -276,7 +276,7 @@ onUnmounted(() => {
 
 .nav-link {
   font-size: 14px;
-  color: #cbd5e1;
+  color: rgb(var(--v-theme-on-surface-variant));
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
@@ -298,7 +298,7 @@ onUnmounted(() => {
 .contact-title {
   font-size: 16px;
   font-weight: 600;
-  color: #f1f5f9;
+  color: rgb(var(--v-theme-on-surface));
   margin: 0 0 4px 0;
   letter-spacing: -0.025em;
 }
@@ -314,7 +314,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #cbd5e1;
+  color: rgb(var(--v-theme-on-surface-variant));
   text-decoration: none;
   transition: all 0.2s ease;
   font-weight: 500;
@@ -334,7 +334,7 @@ onUnmounted(() => {
 .social-title {
   font-size: 16px;
   font-weight: 600;
-  color: #f1f5f9;
+  color: rgb(var(--v-theme-on-surface));
   margin: 0 0 4px 0;
   letter-spacing: -0.025em;
 }

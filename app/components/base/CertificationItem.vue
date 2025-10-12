@@ -2,81 +2,76 @@
   <article 
     :class="itemClasses"
     :style="itemStyles"
-    data-animate="slide-in-up"
-    :data-delay="animationDelay"
     role="listitem"
   >
-    <v-list-item
-      :href="certification.link"
-      target="_blank"
-      hover
-      :aria-label="`Acessar ${type === 'obtained' ? 'certificação' : 'informações da certificação'} ${certification.name} da ${certification.issuer}`"
-      rel="noopener noreferrer"
-      class="pa-0"
-      :ripple="!isMobile"
-    >
+    <div class="certification-item-inner">
       <!-- Avatar/Icon -->
-      <template #prepend>
-        <div class="certification-avatar">
-          <v-avatar 
-            v-if="certification.image" 
-            :size="avatarSize"
-            class="me-4"
+      <div class="certification-avatar">
+        <v-avatar 
+          v-if="certification.image" 
+          :size="avatarSize"
+          class="certification-avatar-img"
+        >
+          <v-img 
+            :src="certification.image" 
+            :alt="`Logo da certificação ${certification.name}`"
+            :loading="index > 2 ? 'lazy' : 'eager'"
+            transition="fade-transition"
           >
-            <v-img 
-              :src="certification.image" 
-              :alt="`Logo da certificação ${certification.name}`"
-              :loading="index > 2 ? 'lazy' : 'eager'"
-              transition="fade-transition"
-            >
-              <template #placeholder>
-                <div class="d-flex align-center justify-center fill-height">
-                  <v-icon 
-                    :color="certification.color || 'primary'" 
-                    size="large"
-                  >
-                    mdi-certificate
-                  </v-icon>
-                </div>
-              </template>
-            </v-img>
-          </v-avatar>
-          
+            <template #placeholder>
+              <div class="d-flex align-center justify-center fill-height">
+                <v-icon 
+                  :color="certification.color || 'primary'" 
+                  size="large"
+                >
+                  mdi-certificate
+                </v-icon>
+              </div>
+            </template>
+          </v-img>
+        </v-avatar>
+        
+        <div 
+          v-else
+          class="certification-icon-wrapper"
+        >
           <v-icon 
-            v-else
             :color="certification.color || 'primary'" 
             :size="iconSize"
-            class="me-4"
           >
             {{ certification.icon || 'mdi-certificate' }}
           </v-icon>
         </div>
-      </template>
+      </div>
       
       <!-- Content -->
       <div class="certification-content">
-        <v-list-item-title :class="titleClasses">
+        <h4 class="certification-title">
           {{ certification.name }}
-        </v-list-item-title>
+        </h4>
         
-        <v-list-item-subtitle :class="subtitleClasses">
+        <p class="certification-issuer">
           {{ certification.issuer }}
-        </v-list-item-subtitle>
+        </p>
       </div>
 
       <!-- Action Button -->
-      <template #append>
+      <div class="certification-action">
         <v-btn 
+          :href="certification.link"
+          target="_blank"
           :icon="actionIcon"
           :size="buttonSize"
           variant="outlined" 
-          :color="type === 'obtained' ? 'success' : 'primary'"
+          :color="type === 'obtained' ? 'primary' : 'primary'"
           class="certification-action-btn"
           :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'} ${certification.name} em nova aba`"
-          tabindex="-1"
         />
-      </template>
-    </v-list-item>
+      </div>
+
+      <!-- Decorative Element -->
+      <div class="certification-decoration"></div>
+    </div>
   </article>
 </template>
 
@@ -108,8 +103,7 @@ const { isMobile, isTablet, getResponsiveValue } = useResponsive()
 
 // Computed properties
 const itemClasses = computed(() => [
-  'certification-item',
-  'rounded-xl',
+  'modern-certification-item',
   {
     'certification-item--mobile': isMobile.value,
     'certification-item--tablet': isTablet.value,
@@ -120,7 +114,7 @@ const itemClasses = computed(() => [
 
 const itemStyles = computed(() => ({
   '--animation-delay': `${props.animationDelay}ms`,
-  '--item-border-color': `rgba(var(--v-theme-${props.type === 'obtained' ? 'success' : 'primary'}), 0.2)`
+  '--item-color': `var(--v-theme-${props.type === 'obtained' ? 'primary' : 'primary'})`
 }))
 
 const titleClasses = computed(() => [
@@ -172,189 +166,205 @@ const actionIcon = computed(() =>
 </script>
 
 <style scoped>
-/* Item Base */
-.certification-item {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
-  position: relative;
+.modern-certification-item {
+  background: rgb(var(--v-theme-surface));
+  border: 1px solid rgb(var(--v-theme-surface-bright));
+  border-radius: 12px;
   overflow: hidden;
-  cursor: pointer;
-  background: transparent;
-}
-
-.certification-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(var(--v-theme-primary), 0.02),
-    transparent
-  );
+  transition: all 0.3s ease;
+  position: relative;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: var(--animation-delay);
 }
 
-.certification-item:hover::before {
-  opacity: 1;
+.modern-certification-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  border-color: rgba(var(--item-color), 0.3);
 }
 
-.certification-item:hover {
-  border-color: var(--item-border-color);
-  transform: translateX(8px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(var(--v-theme-primary), 0.1);
+.certification-item-inner {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
 }
 
 /* Avatar */
 .certification-avatar {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.modern-certification-item:hover .certification-avatar {
+  transform: scale(1.05);
+}
+
+.certification-avatar-img {
+  border: 2px solid rgba(var(--item-color), 0.1);
+  transition: all 0.3s ease;
+}
+
+.modern-certification-item:hover .certification-avatar-img {
+  border-color: rgba(var(--item-color), 0.3);
+  box-shadow: 0 4px 16px rgba(var(--item-color), 0.2);
+}
+
+.certification-icon-wrapper {
   display: flex;
   align-items: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(var(--item-color), 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
-.certification-item:hover .certification-avatar {
-  transform: scale(1.1) rotate(3deg);
-}
-
-.v-avatar {
-  position: relative;
-  overflow: hidden;
-}
-
-.v-avatar::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.certification-item:hover .v-avatar::before {
-  opacity: 1;
+.modern-certification-item:hover .certification-icon-wrapper {
+  background: rgba(var(--item-color), 0.2);
+  transform: rotate(5deg);
 }
 
 /* Content */
 .certification-content {
-  flex-grow: 1;
-  min-width: 0; /* Prevent text overflow */
+  flex: 1;
+  min-width: 0;
 }
 
-/* Action Button */
+.certification-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  margin-bottom: 4px;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.modern-certification-item:hover .certification-title {
+  color: rgb(var(--item-color));
+}
+
+.certification-issuer {
+  color: rgb(var(--v-theme-on-surface-variant));
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* Action */
+.certification-action {
+  flex-shrink: 0;
+}
+
 .certification-action-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
   opacity: 0.7;
 }
 
-.certification-item:hover .certification-action-btn {
-  transform: scale(1.2) rotate(15deg);
+.modern-certification-item:hover .certification-action-btn {
   opacity: 1;
-  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
+  transform: scale(1.1);
+}
+
+/* Decorative Element */
+.certification-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--item-color), 0.8) 0%,
+    rgba(var(--item-color), 0.4) 100%
+  );
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.modern-certification-item:hover .certification-decoration {
+  transform: scaleY(1);
 }
 
 /* Type-specific styles */
-.certification-item--obtained:hover {
-  border-color: rgba(var(--v-theme-success), 0.3);
-  box-shadow: 0 8px 25px rgba(var(--v-theme-success), 0.1);
+.certification-item--obtained .certification-decoration {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--v-theme-success), 0.8) 0%,
+    rgba(var(--v-theme-success), 0.4) 100%
+  );
 }
 
-.certification-item--planned:hover {
-  border-color: rgba(var(--v-theme-primary), 0.3);
-  box-shadow: 0 8px 25px rgba(var(--v-theme-primary), 0.1);
+.certification-item--planned .certification-decoration {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--v-theme-primary), 0.8) 0%,
+    rgba(var(--v-theme-primary), 0.4) 100%
+  );
 }
 
-/* Responsive adjustments */
-.certification-item--mobile {
-  padding: 0.5rem;
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.certification-item--mobile:hover {
-  transform: translateX(4px) scale(1.01);
-}
-
-.certification-item--tablet {
-  padding: 0.75rem;
-}
-
-.certification-item--tablet:hover {
-  transform: translateX(6px) scale(1.015);
-}
-
-/* Focus states for accessibility */
-.v-list-item:focus-visible {
-  outline: 2px solid var(--v-theme-primary);
-  outline-offset: 2px;
-}
-
-/* Performance optimizations */
-.certification-item {
-  will-change: transform;
-  contain: layout style paint;
+/* Responsive */
+@media (max-width: 768px) {
+  .certification-item-inner {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .certification-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .certification-title {
+    font-size: 1rem;
+  }
+  
+  .certification-issuer {
+    font-size: 0.85rem;
+  }
+  
+  .modern-certification-item:hover {
+    transform: translateY(-2px);
+  }
 }
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .certification-item,
+  .modern-certification-item,
   .certification-avatar,
-  .certification-action-btn {
+  .certification-action-btn,
+  .certification-decoration {
+    animation: none !important;
     transition: none !important;
   }
   
-  .certification-item:hover {
+  .modern-certification-item:hover {
     transform: none !important;
   }
   
-  .certification-item:hover .certification-avatar,
-  .certification-item:hover .certification-action-btn {
+  .modern-certification-item:hover .certification-avatar,
+  .modern-certification-item:hover .certification-action-btn {
     transform: none !important;
-  }
-}
-
-/* High contrast mode */
-@media (prefers-contrast: high) {
-  .certification-item {
-    border: 1px solid currentColor;
-  }
-  
-  .certification-item:hover {
-    background: rgba(var(--v-theme-primary), 0.1);
-  }
-}
-
-/* Touch device optimizations */
-@media (hover: none) {
-  .certification-item:hover {
-    transform: none;
-    box-shadow: none;
-  }
-  
-  .certification-item:hover .certification-avatar,
-  .certification-item:hover .certification-action-btn {
-    transform: none;
-  }
-  
-  .certification-action-btn {
-    opacity: 1;
-  }
-}
-
-/* Print styles */
-@media print {
-  .certification-item {
-    border: 1px solid #ccc;
-    break-inside: avoid;
-  }
-  
-  .certification-action-btn {
-    display: none;
   }
 }
 </style>
