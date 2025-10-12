@@ -19,7 +19,11 @@
             :ripple="false"
           >
             <div class="brand-content">
-              <div class="brand-initial">H</div>
+              <img 
+                src="/logo.png" 
+                alt="Henrique Zimermann Logo" 
+                class="brand-logo-img"
+              />
               <div class="brand-info">
                 <div class="brand-name">Henrique</div>
                 <div class="brand-role">DevOps Engineer</div>
@@ -282,22 +286,15 @@ onUnmounted(() => {
   gap: 12px;
 }
 
-.brand-initial {
+.brand-logo-img {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
   border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.025em;
   transition: all 0.3s ease;
+  object-fit: contain;
 }
 
-.brand-btn:hover .brand-initial {
+.brand-btn:hover .brand-logo-img {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
@@ -551,10 +548,9 @@ onUnmounted(() => {
     display: none;
   }
   
-  .brand-initial {
+  .brand-logo-img {
     width: 36px;
     height: 36px;
-    font-size: 16px;
   }
 }
 

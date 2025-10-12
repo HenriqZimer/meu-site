@@ -6,7 +6,11 @@
         <!-- Brand Section -->
         <div class="footer-brand">
           <div class="brand-logo">
-            <div class="brand-initial">H</div>
+            <img 
+              src="/logo.png" 
+              alt="Henrique Zimermann Logo" 
+              class="brand-logo-img"
+            />
             <div class="brand-text">
               <div class="brand-name">Henrique Zimermann</div>
               <div class="brand-tagline">DevOps & Cloud Engineer</div>
@@ -211,18 +215,11 @@ onUnmounted(() => {
   margin-bottom: 24px;
 }
 
-.brand-initial {
+.brand-logo-img {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
   border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.025em;
+  object-fit: contain;
 }
 
 .brand-text {
@@ -454,10 +451,9 @@ onUnmounted(() => {
     text-align: left;
   }
   
-  .brand-initial {
+  .brand-logo-img {
     width: 40px;
     height: 40px;
-    font-size: 18px;
   }
   
   .bottom-content {
