@@ -228,13 +228,20 @@ const handleSubmit = async () => {
   loading.value = true;
 
   try {
-    // Simular envio do formulário
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Criar o corpo do email com os dados do formulário
+    const emailBody = `Nome: ${formData.value.name}%0D%0AEmail: ${formData.value.email}%0D%0A%0D%0AMensagem:%0D%0A${formData.value.message}`;
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(formData.value.subject)}&body=${emailBody}`;
+    
+    // Abrir cliente de email
+    window.location.href = mailtoLink;
+
+    // Aguardar um pouco antes de mostrar a mensagem
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     alert.value = {
       show: true,
       type: "success",
-      message: "Mensagem enviada com sucesso! Responderei em breve.",
+      message: "Abrindo seu cliente de email! Se não abrir automaticamente, envie para: " + email,
     };
 
     // Resetar formulário
@@ -246,16 +253,16 @@ const handleSubmit = async () => {
     };
 
     if (form.value) {
-      // Reset do formulário usando interface adequada
-      const formElement = form.value as HTMLFormElement;
-      formElement.reset();
+      const formElement = form.value as any;
+      if (formElement.reset) {
+        formElement.reset();
+      }
     }
-  } catch {
-    // Erro capturado mas não utilizado diretamente
+  } catch (error) {
     alert.value = {
       show: true,
       type: "error",
-      message: "Erro ao enviar mensagem. Tente novamente.",
+      message: "Erro ao abrir cliente de email. Envie diretamente para: " + email,
     };
   } finally {
     loading.value = false;
@@ -509,6 +516,19 @@ const handleSubmit = async () => {
 
 .contact-form :deep(.v-field--variant-outlined:hover .v-field__outline) {
   color: rgba(var(--v-theme-outline), 0.5);
+}
+
+/* Borda vermelha em campos com erro */
+.contact-form :deep(.v-field--error .v-field__outline) {
+  color: rgb(239, 68, 68) !important;
+}
+
+.contact-form :deep(.v-field--error:not(.v-field--focused) .v-field__outline) {
+  color: rgb(239, 68, 68) !important;
+}
+
+.contact-form :deep(.v-messages__message) {
+  color: rgb(239, 68, 68) !important;
 }
 
 .submit-btn {

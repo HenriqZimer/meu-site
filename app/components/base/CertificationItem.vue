@@ -182,7 +182,18 @@ const actionIcon = computed(() =>
 .modern-certification-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-  border-color: rgba(var(--item-color), 0.3);
+}
+
+/* Hover para certificações obtidas - verde */
+.certification-item--obtained:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.2);
+}
+
+/* Hover para certificações planejadas - azul */
+.certification-item--planned:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
 }
 
 .certification-item-inner {
@@ -200,18 +211,15 @@ const actionIcon = computed(() =>
   transition: transform 0.3s ease;
 }
 
-.modern-certification-item:hover .certification-avatar {
-  transform: scale(1.05);
-}
-
 .certification-avatar-img {
-  border: 2px solid rgba(var(--item-color), 0.1);
+  border: 2px solid transparent;
   transition: all 0.3s ease;
 }
 
+/* Hover normal - sem zoom na imagem */
 .modern-certification-item:hover .certification-avatar-img {
-  border-color: rgba(var(--item-color), 0.3);
-  box-shadow: 0 4px 16px rgba(var(--item-color), 0.2);
+  border-color: transparent;
+  box-shadow: none;
 }
 
 .certification-icon-wrapper {
@@ -245,8 +253,14 @@ const actionIcon = computed(() =>
   transition: color 0.3s ease;
 }
 
-.modern-certification-item:hover .certification-title {
-  color: rgb(var(--item-color));
+/* Título verde para certificações obtidas */
+.certification-item--obtained:hover .certification-title {
+  color: #10b981;
+}
+
+/* Título azul para certificações planejadas */
+.certification-item--planned:hover .certification-title {
+  color: #3b82f6;
 }
 
 .certification-issuer {
@@ -298,16 +312,16 @@ const actionIcon = computed(() =>
 .certification-item--obtained .certification-decoration {
   background: linear-gradient(
     180deg,
-    rgba(var(--v-theme-success), 0.8) 0%,
-    rgba(var(--v-theme-success), 0.4) 100%
+    rgba(16, 185, 129, 0.8) 0%,
+    rgba(16, 185, 129, 0.4) 100%
   );
 }
 
 .certification-item--planned .certification-decoration {
   background: linear-gradient(
     180deg,
-    rgba(var(--v-theme-primary), 0.8) 0%,
-    rgba(var(--v-theme-primary), 0.4) 100%
+    rgba(59, 130, 246, 0.8) 0%,
+    rgba(59, 130, 246, 0.4) 100%
   );
 }
 

@@ -34,7 +34,7 @@
             <v-badge 
               v-if="filter.count > 0" 
               :content="filter.count" 
-              :color="selectedFilter === filter.value ? 'secondary' : 'primary'"
+              :color="selectedFilter === filter.value ? 'white' : 'primary'"
               inline
               class="ml-2"
             />
@@ -552,7 +552,7 @@ const scrollToContact = () => {
 .filter-chip {
   transition: all 0.3s ease;
   border-radius: 12px !important;
-  border: 2px solid transparent !important;
+  border: 2px solid white !important;
 }
 
 .filter-chip .v-icon {

@@ -1,6 +1,5 @@
 <template>
   <v-app-bar
-    :color="'transparent'"
     flat
     fixed
     class="modern-header"
@@ -18,7 +17,11 @@
           >
             <div class="brand-content">
               <div class="brand-logo">
-                <span class="brand-initial">H</span>
+                <img 
+              src="/logo.png" 
+              alt="Henrique Zimermann Logo" 
+              class="brand-logo-img"
+            />
               </div>
               <div class="brand-info">
                 <div class="brand-name">Henrique</div>
@@ -148,7 +151,6 @@ const activeSection = ref('home')
 // Menu items configuration
 const menuItems: MenuItem[] = [
   { id: 'about', label: 'Sobre', icon: 'mdi-account-circle' },
-  { id: 'skills', label: 'Skills', icon: 'mdi-code-tags' },
   { id: 'portfolio', label: 'Projetos', icon: 'mdi-briefcase-variant' },
   { id: 'certifications', label: 'Certificações', icon: 'mdi-certificate' },
   { id: 'contact', label: 'Contato', icon: 'mdi-message-text' }
@@ -229,7 +231,7 @@ onUnmounted(() => {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-bottom: 1px solid transparent;
   z-index: 1000;
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(15, 23, 42, 0.95) !important;
 }
 
 .header-scrolled {
@@ -252,15 +254,21 @@ onUnmounted(() => {
   width: 100%;
 }
 
+.brand-logo-img {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  object-fit: contain;
+}
 /* === BRAND SECTION === */
 .brand-section {
   flex-shrink: 0;
 }
-
+  
 .brand-btn {
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 1px 8px;
   background: transparent;
   border: none;
   border-radius: 12px;
@@ -279,7 +287,7 @@ onUnmounted(() => {
   gap: 12px;
 }
 
-.brand-logo {
+/* .brand-logo {
   width: 40px;
   height: 40px;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
@@ -289,12 +297,12 @@ onUnmounted(() => {
   justify-content: center;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   transition: all 0.3s ease;
-}
+} */
 
-.brand-btn:hover .brand-logo {
+/* .brand-btn:hover .brand-logo {
   transform: scale(1.05);
   box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
-}
+} */
 
 .brand-initial {
   font-size: 20px;

@@ -3,22 +3,12 @@
     <!-- Project Image -->
     <div v-if="image || $slots.image" class="project-image">
       <div class="image-wrapper">
-        <img 
+        <img
           class="project-img"
           :src="image"
           :alt="imageAlt"
           :loading="lazy ? 'lazy' : 'eager'"
         />
-        
-        <!-- Badges Overlay -->
-        <div class="badges-overlay">
-          <div v-if="featured" class="featured-badge">
-            <v-icon icon="mdi-star" size="10" />
-          </div>
-          <div v-if="status" class="status-badge" :class="`status-badge--${status}`">
-            <v-icon :icon="getStatusIcon(status)" size="10" />
-          </div>
-        </div>
 
         <!-- Hover Overlay com Botões -->
         <div class="hover-overlay">
@@ -29,7 +19,7 @@
               variant="elevated"
               color="primary"
               size="x-large"
-              class="overlay-btn overlay-btn--demo"
+              class="overlay-btn--demo"
               :href="demoUrl"
               target="_blank"
             >
@@ -39,9 +29,8 @@
               v-if="githubUrl"
               icon
               variant="elevated"
-              color="secondary"
               size="x-large"
-              class="overlay-btn overlay-btn--github"
+              class="overlay-btn--github"
               :href="githubUrl"
               target="_blank"
             >
@@ -56,13 +45,16 @@
     <div class="project-content">
       <!-- Project Title -->
       <h3 class="project-title">{{ title }}</h3>
-      
+
       <!-- Project Description -->
       <p class="project-description">{{ description }}</p>
-      
+
       <!-- Technologies -->
-      <div v-if="technologies && technologies.length" class="project-technologies">
-        <span 
+      <div
+        v-if="technologies && technologies.length"
+        class="project-technologies"
+      >
+        <span
           v-for="tech in technologies.slice(0, 4)"
           :key="tech"
           class="tech-chip"
@@ -78,59 +70,59 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 interface Props {
-  title?: string
-  description?: string
-  image?: string
-  imageAlt?: string
-  technologies?: string[]
-  demoUrl?: string
-  githubUrl?: string
-  lazy?: boolean
-  animationDelay?: number
-  featured?: boolean
-  status?: 'completed' | 'in-progress' | 'planning'
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  technologies?: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+  lazy?: boolean;
+  animationDelay?: number;
+  featured?: boolean;
+  status?: "completed" | "in-progress" | "planning";
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: '',
-  description: '',
-  image: '',
-  imageAlt: '',
+  title: "",
+  description: "",
+  image: "",
+  imageAlt: "",
   technologies: () => [],
-  demoUrl: '',
-  githubUrl: '',
+  demoUrl: "",
+  githubUrl: "",
   lazy: true,
   animationDelay: 0,
   featured: false,
-  status: 'completed'
-})
+  status: "completed",
+});
 
 // Helper methods
 const getStatusIcon = (status: string) => {
   const icons = {
-    'completed': 'mdi-check-circle',
-    'in-progress': 'mdi-clock-outline',
-    'planning': 'mdi-lightbulb-outline'
-  }
-  return icons[status as keyof typeof icons] || 'mdi-help-circle'
-}
+    completed: "mdi-check-circle",
+    "in-progress": "mdi-clock-outline",
+    planning: "mdi-lightbulb-outline",
+  };
+  return icons[status as keyof typeof icons] || "mdi-help-circle";
+};
 
 const getStatusLabel = (status: string) => {
   const labels = {
-    'completed': 'Concluído',
-    'in-progress': 'Em progresso',
-    'planning': 'Planejado'
-  }
-  return labels[status as keyof typeof labels] || 'Desconhecido'
-}
+    completed: "Concluído",
+    "in-progress": "Em progresso",
+    planning: "Planejado",
+  };
+  return labels[status as keyof typeof labels] || "Desconhecido";
+};
 
 // Computed properties
 const cardStyles = computed(() => ({
-  '--animation-delay': `${props.animationDelay}ms`
-}))
+  "--animation-delay": `${props.animationDelay}ms`,
+}));
 </script>
 
 <style scoped>
@@ -162,7 +154,11 @@ const cardStyles = computed(() => ({
   position: relative;
   height: 140px;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(6, 182, 212, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.05),
+    rgba(6, 182, 212, 0.05)
+  );
 }
 
 .image-wrapper {
@@ -289,7 +285,6 @@ const cardStyles = computed(() => ({
 
 .overlay-btn--github:hover {
   transform: scale(1.15);
-  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5) !important;
 }
 
 /* Project Content - padding aumentado */
@@ -345,18 +340,19 @@ const cardStyles = computed(() => ({
   font-size: 10px;
   font-weight: 500;
   white-space: nowrap;
+  background: rgba(var(--v-theme-primary), 0.1);
+  color: rgb(var(--v-theme-primary));
+  border: 1px solid rgba(var(--v-theme-primary), 0.3);
 }
-
 /* Cores variadas para os badges de tecnologia */
-.tech-chip:nth-child(1) { background: rgba(72, 169, 255, 0.15); color: rgb(72, 169, 255); border: 1px solid rgba(72, 169, 255, 0.3); }
+/* .tech-chip:nth-child(1) { background: rgba(72, 169, 255, 0.15); color: rgb(72, 169, 255); border: 1px solid rgba(72, 169, 255, 0.3); }
 .tech-chip:nth-child(2) { background: rgba(104, 184, 104, 0.15); color: rgb(104, 184, 104); border: 1px solid rgba(104, 184, 104, 0.3); }
 .tech-chip:nth-child(3) { background: rgba(140, 91, 212, 0.15); color: rgb(140, 91, 212); border: 1px solid rgba(140, 91, 212, 0.3); }
 .tech-chip:nth-child(4) { background: rgba(255, 169, 77, 0.15); color: rgb(255, 169, 77); border: 1px solid rgba(255, 169, 77, 0.3); }
-.tech-chip:nth-child(5) { background: rgba(77, 199, 237, 0.15); color: rgb(77, 199, 237); border: 1px solid rgba(77, 199, 237, 0.3); }
+.tech-chip:nth-child(5) { background: rgba(77, 199, 237, 0.15); color: rgb(77, 199, 237); border: 1px solid rgba(77, 199, 237, 0.3); } */
 
 .tech-more {
   padding: 3px 7px;
-  background: rgba(var(--v-theme-surface-variant), 0.3);
   color: rgb(var(--v-theme-on-surface-variant));
   border-radius: 4px;
   font-size: 10px;
@@ -381,21 +377,21 @@ const cardStyles = computed(() => ({
   .modern-project-card {
     min-height: 340px;
   }
-  
+
   .project-image {
     height: 120px;
   }
-  
+
   .project-content {
     padding: 14px 16px 14px;
   }
-  
+
   .project-title {
     font-size: 0.95rem;
     height: 2.4rem;
     margin-bottom: 8px;
   }
-  
+
   .project-description {
     font-size: 0.8rem;
     height: 3.4rem;

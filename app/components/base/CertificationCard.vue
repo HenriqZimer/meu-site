@@ -180,6 +180,8 @@ const contentStyles = computed(() => {
 
 .header-icon {
   animation: pulse-gentle 3s ease-in-out infinite;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .header-text {
