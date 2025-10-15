@@ -17,11 +17,11 @@
           >
             <div class="brand-content">
               <div class="brand-logo">
-                <img 
-              src="/logo.png" 
-              alt="Henrique Zimermann Logo" 
-              class="brand-logo-img"
-            />
+                <img
+                  src="/logo.png"
+                  alt="Henrique Zimermann Logo"
+                  class="brand-logo-img"
+                />
               </div>
               <div class="brand-info">
                 <div class="brand-name">Henrique</div>
@@ -44,12 +44,9 @@
               {{ item.label }}
             </button>
           </div>
-          
+
           <!-- CTA Button -->
-          <button
-            class="cta-btn"
-            @click="scrollToSection('contact')"
-          >
+          <button class="cta-btn" @click="scrollToSection('contact')">
             <span class="cta-text">Fale Comigo</span>
             <v-icon icon="mdi-arrow-right" size="18" class="cta-icon" />
           </button>
@@ -98,7 +95,7 @@
           <v-icon icon="mdi-close" />
         </v-btn>
       </div>
-      
+
       <div class="drawer-nav">
         <v-btn
           v-for="item in menuItems"
@@ -113,7 +110,7 @@
           <v-icon :icon="item.icon" start />
           {{ item.label }}
         </v-btn>
-        
+
         <v-btn
           variant="flat"
           color="primary"
@@ -131,96 +128,96 @@
 </template>
 
 <script setup lang="ts">
-import { useResponsive } from '~/composables/useResponsive'
+import { useResponsive } from "~/composables/useResponsive";
 
 // Types
 interface MenuItem {
-  id: string
-  label: string
-  icon: string
+  id: string;
+  label: string;
+  icon: string;
 }
 
 // Composables
-const { isMobile } = useResponsive()
+const { isMobile } = useResponsive();
 
 // Reactive state
-const scrolled = ref(false)
-const drawer = ref(false)
-const activeSection = ref('home')
+const scrolled = ref(false);
+const drawer = ref(false);
+const activeSection = ref("home");
 
 // Menu items configuration
 const menuItems: MenuItem[] = [
-  { id: 'about', label: 'Sobre', icon: 'mdi-account-circle' },
-  { id: 'portfolio', label: 'Projetos', icon: 'mdi-briefcase-variant' },
-  { id: 'certifications', label: 'Certificações', icon: 'mdi-certificate' },
-  { id: 'contact', label: 'Contato', icon: 'mdi-message-text' }
-]
+  { id: "about", label: "Sobre", icon: "mdi-account-circle" },
+  { id: "portfolio", label: "Projetos", icon: "mdi-briefcase-variant" },
+  { id: "certifications", label: "Certificações", icon: "mdi-certificate" },
+  { id: "contact", label: "Contato", icon: "mdi-message-text" },
+];
 
 // Navigation methods
 const scrollToSection = (id: string) => {
-  if (id === 'home') {
+  if (id === "home") {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
-    })
-    activeSection.value = 'home'
-    return
+      behavior: "smooth",
+    });
+    activeSection.value = "home";
+    return;
   }
 
-  const element = document.getElementById(id)
+  const element = document.getElementById(id);
   if (element) {
-    const offset = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
+    const offset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
 
     window.scrollTo({
       top: offsetPosition,
-      behavior: 'smooth'
-    })
-    
-    activeSection.value = id
+      behavior: "smooth",
+    });
+
+    activeSection.value = id;
   }
-}
+};
 
 const toggleDrawer = () => {
-  drawer.value = !drawer.value
-}
+  drawer.value = !drawer.value;
+};
 
 const handleDrawerItemClick = (id: string) => {
-  scrollToSection(id)
-  drawer.value = false
-}
+  scrollToSection(id);
+  drawer.value = false;
+};
 
 // Scroll detection
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 20
-  updateActiveSection()
-}
+  scrolled.value = window.scrollY > 20;
+  updateActiveSection();
+};
 
 const updateActiveSection = () => {
-  const sections = ['home', ...menuItems.map(item => item.id)]
-  const scrollPosition = window.scrollY + 100
-  
+  const sections = ["home", ...menuItems.map((item) => item.id)];
+  const scrollPosition = window.scrollY + 100;
+
   for (let i = sections.length - 1; i >= 0; i--) {
-    const sectionId = sections[i]
-    if (!sectionId) continue
-    const element = document.getElementById(sectionId)
+    const sectionId = sections[i];
+    if (!sectionId) continue;
+    const element = document.getElementById(sectionId);
     if (element && element.offsetTop <= scrollPosition) {
-      activeSection.value = sectionId
-      break
+      activeSection.value = sectionId;
+      break;
     }
   }
-}
+};
 
 // Lifecycle hooks
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  updateActiveSection()
-})
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  updateActiveSection();
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <style scoped>
@@ -264,11 +261,12 @@ onUnmounted(() => {
 .brand-section {
   flex-shrink: 0;
 }
-  
+
 .brand-btn {
   display: flex;
   align-items: center;
-  padding: 1px 8px;
+  justify-content: center;
+  padding: 8px;
   background: transparent;
   border: none;
   border-radius: 12px;
@@ -278,26 +276,25 @@ onUnmounted(() => {
 
 .brand-btn:hover {
   background: rgba(59, 130, 246, 0.08);
-  transform: translateX(-2px);
 }
 
 .brand-content {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
 }
 
-/* .brand-logo {
+.brand-logo {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
   transition: all 0.3s ease;
-} */
+}
 
 /* .brand-btn:hover .brand-logo {
   transform: scale(1.05);
@@ -364,7 +361,7 @@ onUnmounted(() => {
 }
 
 .nav-item::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 6px;
   left: 50%;
@@ -575,16 +572,16 @@ onUnmounted(() => {
   .header-container {
     padding: 0 20px;
   }
-  
+
   .brand-info {
     display: none;
   }
-  
+
   .brand-logo {
     width: 36px;
     height: 36px;
   }
-  
+
   .brand-initial {
     font-size: 18px;
   }
@@ -594,15 +591,13 @@ onUnmounted(() => {
   .header-container {
     padding: 0 16px;
   }
-  
+
   .drawer-header {
     padding: 20px;
   }
-  
+
   .drawer-nav {
     padding: 20px;
   }
 }
 </style>
-
-

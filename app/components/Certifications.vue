@@ -156,7 +156,7 @@ const obtainedCertifications: Certification[] = [
     name: 'Oracle Cloud Infrastructure - Foundations',
     issuer: 'Oracle',
     image: 'https://imagens.henriqzimer.com.br/oci-cloud-infrastructure-.png',
-    link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
+    link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=940F36B32BA531E98EE8D9A5C1B99E42EC8B5AFDC558E21B20C31D9FC2E5D9FB',
     color: 'orange'
   },
   // {

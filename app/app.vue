@@ -3,13 +3,13 @@
     <v-theme-provider>
       <!-- Header -->
       <Header />
-      
+
       <!-- Main content -->
       <v-main>
         <NuxtRouteAnnouncer />
         <NuxtPage />
       </v-main>
-      
+
       <!-- Footer -->
       <Footer />
     </v-theme-provider>
@@ -19,12 +19,12 @@
 <script setup lang="ts">
 // Configuração de SEO global
 useHead({
-  htmlAttrs: { lang: 'pt-BR' },
+  htmlAttrs: { lang: "pt-BR" },
   meta: [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-  ]
-})
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+  ],
+});
 </script>
 
 <style>

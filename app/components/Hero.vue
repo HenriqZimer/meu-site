@@ -8,16 +8,16 @@
             <div class="badge-indicator"></div>
             <span>Disponível para projetos</span>
           </div>
-          
+
           <h1 class="hero-title" data-animate="fade-up" data-delay="200">
             Olá, eu sou o
             <span class="hero-name">Henrique</span>
           </h1>
-          
+
           <h2 class="hero-subtitle" data-animate="fade-up" data-delay="300">
             DevOps & Cloud Engineer
           </h2>
-          
+
           <p class="hero-description" data-animate="fade-up" data-delay="400">
             Automatizo infraestruturas e otimizo processos de desenvolvimento.
             Especialista em CI/CD, containerização e orquestração na nuvem.
@@ -35,7 +35,7 @@
               <v-icon icon="mdi-briefcase-variant" start />
               Ver Projetos
             </v-btn>
-            
+
             <v-btn
               variant="outlined"
               color="primary"
@@ -99,69 +99,69 @@
 
 <script setup lang="ts">
 // Configuration
-const config = useRuntimeConfig()
-const siteFirstName = config.public.siteFirstName || 'Henrique'
-const email = config.public.email
-const githubUrl = config.public.githubUrl
-const linkedinUrl = config.public.linkedinUrl
+const config = useRuntimeConfig();
+const siteFirstName = config.public.siteFirstName || "Henrique";
+const email = config.public.email;
+const githubUrl = config.public.githubUrl;
+const linkedinUrl = config.public.linkedinUrl;
 
 // Scroll Animation
-const { observeElements } = useScrollAnimation()
+const { observeElements } = useScrollAnimation();
 
 onMounted(() => {
   observeElements({
     threshold: 0.2,
-    once: true
-  })
-})
+    once: true,
+  });
+});
 
 const socialLinks = [
-  { 
-    name: 'github', 
-    icon: 'mdi-github', 
+  {
+    name: "github",
+    icon: "mdi-github",
     url: githubUrl,
-    label: 'Visitar GitHub'
+    label: "Visitar GitHub",
   },
-  { 
-    name: 'linkedin', 
-    icon: 'mdi-linkedin', 
+  {
+    name: "linkedin",
+    icon: "mdi-linkedin",
     url: linkedinUrl,
-    label: 'Visitar LinkedIn'
+    label: "Visitar LinkedIn",
   },
-  { 
-    name: 'email', 
-    icon: 'mdi-email-outline', 
+  {
+    name: "email",
+    icon: "mdi-email-outline",
     url: `mailto:${email}`,
-    label: 'Enviar email'
-  }
-]
+    label: "Enviar email",
+  },
+];
 
-const imageAlt = `Foto profissional de ${siteFirstName}`
+const imageAlt = `Foto profissional de ${siteFirstName}`;
 
 // Methods
 const scrollToSection = (id: string) => {
-  const element = document.getElementById(id)
+  const element = document.getElementById(id);
   if (element) {
-    const offset = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
+    const offset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - offset;
 
     window.scrollTo({
       top: offsetPosition,
-      behavior: 'smooth'
-    })
+      behavior: "smooth",
+    });
   }
-}
+};
 
-const getImageUrl = (width: number, format: string = 'webp') => {
-  return `https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=${width}&f=${format}`
-}
+const getImageUrl = (width: number, format: string = "webp") => {
+  return `https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=${width}&f=${format}`;
+};
 </script>
 
 <style scoped>
 .modern-hero {
   position: relative;
-  min-height: 90vh;
+  min-height: 93vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,7 +377,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 }
 
 .avatar-wrapper::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -4px;
   background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
@@ -389,7 +389,8 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 }
 
 @keyframes borderGlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
     filter: brightness(1);
   }
@@ -470,20 +471,42 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .bg-pattern {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                    radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  background-image: radial-gradient(
+      circle at 25% 25%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 75% 75%,
+      rgba(6, 182, 212, 0.1) 0%,
+      transparent 50%
+    );
 }
 
 /* Animations */
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes scrollLine {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
 }
 
 /* Responsive Design */
@@ -493,16 +516,16 @@ const getImageUrl = (width: number, format: string = 'webp') => {
     gap: 60px;
     text-align: center;
   }
-  
+
   .hero-text {
     max-width: none;
     order: 2;
   }
-  
+
   .hero-visual {
     order: 1;
   }
-  
+
   .avatar-wrapper {
     width: 350px;
     height: 350px;
@@ -513,31 +536,31 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   .hero-container {
     padding: 100px 16px 40px;
   }
-  
+
   .hero-content {
     gap: 40px;
   }
-  
+
   .hero-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cta-primary,
   .cta-secondary {
     width: 100%;
     max-width: 280px;
   }
-  
+
   .avatar-wrapper {
     width: 300px;
     height: 300px;
   }
-  
+
   .social-links {
     justify-content: center;
   }
-  
+
   .scroll-indicator {
     display: none;
   }
@@ -548,11 +571,11 @@ const getImageUrl = (width: number, format: string = 'webp') => {
     font-size: 12px;
     padding: 6px 12px;
   }
-  
+
   .hero-description {
     font-size: 16px;
   }
-  
+
   .avatar-wrapper {
     width: 250px;
     height: 250px;

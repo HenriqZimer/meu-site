@@ -44,17 +44,17 @@
               </div>
               <div class="contact-details">
                 <span class="contact-label">Telefone</span>
-                <span class="contact-value">{{ phone }}</span>
+                <a :href="`tel:${phone}`" class="contact-value">{{ phone }}</a>
               </div>
             </div>
-            
+
             <div class="contact-item" data-animate="fade-in" data-delay="400">
               <div class="contact-icon">
                 <v-icon icon="mdi-whatsapp" size="20" />
               </div>
               <div class="contact-details">
                 <span class="contact-label">WhatsApp</span>
-                <span class="contact-value">{{ phone }}</span>
+                <a :href="`https://wa.me/5547992606276?text=Estou%20entrando%20em%20contato%20pelo%20seu%20site`" class="contact-value">{{ phone }}</a>
               </div>
             </div>
 
@@ -230,8 +230,10 @@ const handleSubmit = async () => {
   try {
     // Criar o corpo do email com os dados do formulário
     const emailBody = `Nome: ${formData.value.name}%0D%0AEmail: ${formData.value.email}%0D%0A%0D%0AMensagem:%0D%0A${formData.value.message}`;
-    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(formData.value.subject)}&body=${emailBody}`;
-    
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
+      formData.value.subject
+    )}&body=${emailBody}`;
+
     // Abrir cliente de email
     window.location.href = mailtoLink;
 
@@ -241,7 +243,9 @@ const handleSubmit = async () => {
     alert.value = {
       show: true,
       type: "success",
-      message: "Abrindo seu cliente de email! Se não abrir automaticamente, envie para: " + email,
+      message:
+        "Abrindo seu cliente de email! Se não abrir automaticamente, envie para: " +
+        email,
     };
 
     // Resetar formulário
@@ -262,7 +266,8 @@ const handleSubmit = async () => {
     alert.value = {
       show: true,
       type: "error",
-      message: "Erro ao abrir cliente de email. Envie diretamente para: " + email,
+      message:
+        "Erro ao abrir cliente de email. Envie diretamente para: " + email,
     };
   } finally {
     loading.value = false;
@@ -313,7 +318,6 @@ const handleSubmit = async () => {
   background-color: transparent !important;
   color: rgb(96, 165, 250) !important;
 }
-
 
 /* Content */
 .contact-content {
@@ -489,6 +493,8 @@ const handleSubmit = async () => {
 
 .form-field {
   margin-bottom: 16px;
+  background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* Fix para remover background estranho dos campos */

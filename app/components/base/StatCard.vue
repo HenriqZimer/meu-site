@@ -1,5 +1,5 @@
 <template>
-  <v-card 
+  <v-card
     :class="cardClasses"
     :elevation="elevation"
     :rounded="rounded"
@@ -10,7 +10,7 @@
   >
     <div :class="contentClasses">
       <!-- Ícone -->
-      <v-icon 
+      <v-icon
         v-if="icon"
         :color="iconColor"
         :size="iconSize"
@@ -20,19 +20,12 @@
       </v-icon>
 
       <!-- Valor principal -->
-      <div 
-        :class="valueClasses"
-        :data-target="value"
-        ref="valueElement"
-      >
+      <div :class="valueClasses" :data-target="value" ref="valueElement">
         {{ displayValue }}
       </div>
 
       <!-- Label/Descrição -->
-      <div 
-        v-if="label"
-        :class="labelClasses"
-      >
+      <div v-if="label" :class="labelClasses">
         {{ label }}
       </div>
 
@@ -46,178 +39,183 @@
 
 <script setup lang="ts">
 interface Props {
-  icon?: string
-  value: string | number
-  label?: string
-  color?: string
-  variant?: 'elevated' | 'flat' | 'tonal' | 'outlined' | 'text' | 'plain'
-  size?: 'small' | 'medium' | 'large'
-  elevation?: number | string
-  rounded?: boolean | string
-  hover?: boolean
-  animationDelay?: number
-  animated?: boolean
-  statsStyle?: boolean
+  icon?: string;
+  value: string | number;
+  label?: string;
+  color?: string;
+  variant?: "elevated" | "flat" | "tonal" | "outlined" | "text" | "plain";
+  size?: "small" | "medium" | "large";
+  elevation?: number | string;
+  rounded?: boolean | string;
+  hover?: boolean;
+  animationDelay?: number;
+  animated?: boolean;
+  statsStyle?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  icon: '',
-  label: '',
-  color: 'surface',
-  variant: 'flat',
+  icon: "",
+  label: "",
+  color: "surface",
+  variant: "flat",
   elevation: 6,
-  rounded: 'lg',
+  rounded: "lg",
   animated: true,
   animationDelay: 0,
-  size: 'medium',
+  size: "medium",
   hover: true,
-  statsStyle: false
-})
+  statsStyle: false,
+});
 
-const { getResponsiveClasses, isMobile } = useResponsive()
-const { animateCounter } = useCounterAnimation()
+const { getResponsiveClasses, isMobile } = useResponsive();
+const { animateCounter } = useCounterAnimation();
 
-const valueElement = ref<HTMLElement>()
-const displayValue = ref(props.value.toString())
-const hasAnimated = ref(false)
+const valueElement = ref<HTMLElement>();
+const displayValue = ref(props.value.toString());
+const hasAnimated = ref(false);
 
 // Classes do card
 const cardClasses = computed(() => {
-  const classes = ['stat-card', 'text-center', 'h-100']
-  
+  const classes = ["stat-card", "text-center", "h-100"];
+
   // Size
-  classes.push(`stat-card--${props.size}`)
-  
+  classes.push(`stat-card--${props.size}`);
+
   // Stats style
   if (props.statsStyle) {
-    classes.push('stat-card--stats')
+    classes.push("stat-card--stats");
   }
-  
+
   // Hover
   if (props.hover) {
-    classes.push('stat-card--hover')
+    classes.push("stat-card--hover");
   }
-  
-  return classes.join(' ')
-})
+
+  return classes.join(" ");
+});
 
 // Estilos do card
 const cardStyles = computed(() => ({
-  minHeight: '130px'
-}))
+  minHeight: "130px",
+}));
 
 // Classes do conteúdo
 const contentClasses = computed(() => {
   return getResponsiveClasses({
-    xs: 'pa-4 d-flex flex-column align-center justify-center h-100',
-    sm: 'pa-5 d-flex flex-column align-center justify-center h-100',
-    md: 'pa-6 d-flex flex-column align-center justify-center h-100',
-    default: 'pa-4 d-flex flex-column align-center justify-center h-100'
-  })
-})
+    xs: "pa-4 d-flex flex-column align-center justify-center h-100",
+    sm: "pa-5 d-flex flex-column align-center justify-center h-100",
+    md: "pa-6 d-flex flex-column align-center justify-center h-100",
+    default: "pa-4 d-flex flex-column align-center justify-center h-100",
+  });
+});
 
 // Configuração do ícone
 const iconSize = computed(() => {
   const sizeMap = {
     small: isMobile.value ? 32 : 36,
     medium: isMobile.value ? 36 : 40,
-    large: isMobile.value ? 40 : 48
-  }
-  return sizeMap[props.size]
-})
+    large: isMobile.value ? 40 : 48,
+  };
+  return sizeMap[props.size];
+});
 
 const iconColor = computed(() => {
-  return props.color === 'primary' ? 'white' : 'white'
-})
+  return props.color === "primary" ? "white" : "white";
+});
 
 const iconClasses = computed(() => {
-  const classes = ['stat-icon', 'mb-3']
-  return classes.join(' ')
-})
+  const classes = ["stat-icon", "mb-3"];
+  return classes.join(" ");
+});
 
 // Configuração do valor
 const valueClasses = computed(() => {
   const sizeClassMap = {
     small: getResponsiveClasses({
-      xs: 'text-h5 font-weight-bold mb-2',
-      md: 'text-h4 font-weight-bold mb-2',
-      default: 'text-h5 font-weight-bold mb-2'
+      xs: "text-h5 font-weight-bold mb-2",
+      md: "text-h4 font-weight-bold mb-2",
+      default: "text-h5 font-weight-bold mb-2",
     }),
     medium: getResponsiveClasses({
-      xs: 'text-h4 font-weight-bold mb-2',
-      md: 'text-h3 font-weight-bold mb-2',
-      default: 'text-h4 font-weight-bold mb-2'
+      xs: "text-h4 font-weight-bold mb-2",
+      md: "text-h3 font-weight-bold mb-2",
+      default: "text-h4 font-weight-bold mb-2",
     }),
     large: getResponsiveClasses({
-      xs: 'text-h3 font-weight-bold mb-2',
-      md: 'text-h2 font-weight-bold mb-2',
-      default: 'text-h3 font-weight-bold mb-2'
-    })
-  }
-  
-  const classes = [sizeClassMap[props.size], 'stat-value']
-  
+      xs: "text-h3 font-weight-bold mb-2",
+      md: "text-h2 font-weight-bold mb-2",
+      default: "text-h3 font-weight-bold mb-2",
+    }),
+  };
+
+  const classes = [sizeClassMap[props.size], "stat-value"];
+
   // Cor do texto baseada no fundo
-  if (props.color === 'primary') {
-    classes.push('text-white')
+  if (props.color === "primary") {
+    classes.push("text-white");
   } else {
-    classes.push('text-white')
+    classes.push("text-white");
   }
-  
-  return classes.join(' ')
-})
+
+  return classes.join(" ");
+});
 
 // Configuração do label
 const labelClasses = computed(() => {
-  const classes = ['stat-label', 'text-center']
-  
+  const classes = ["stat-label", "text-center"];
+
   // Tamanho responsivo
-  classes.push(getResponsiveClasses({
-    xs: 'text-caption',
-    sm: 'text-body-2',
-    default: 'text-caption'
-  }))
-  
+  classes.push(
+    getResponsiveClasses({
+      xs: "text-caption",
+      sm: "text-body-2",
+      default: "text-caption",
+    })
+  );
+
   // Cor do texto
-  if (props.color === 'primary') {
-    classes.push('text-white')
+  if (props.color === "primary") {
+    classes.push("text-white");
   } else {
-    classes.push('text-white')
+    classes.push("text-white");
   }
-  
-  return classes.join(' ')
-})
+
+  return classes.join(" ");
+});
 
 // Animação do contador
 const animateValue = () => {
-  if (!props.animated || hasAnimated.value || !valueElement.value) return
-  
-  const numericValue = parseInt(props.value.toString().replace(/\D/g, '')) || 0
-  const suffix = props.value.toString().replace(/\d/g, '')
-  
+  if (!props.animated || hasAnimated.value || !valueElement.value) return;
+
+  const numericValue = parseInt(props.value.toString().replace(/\D/g, "")) || 0;
+  const suffix = props.value.toString().replace(/\d/g, "");
+
   if (numericValue > 0) {
-    displayValue.value = '0' + suffix
-    animateCounter(valueElement.value, numericValue, 1500, suffix)
-    hasAnimated.value = true
+    displayValue.value = "0" + suffix;
+    animateCounter(valueElement.value, numericValue, 1500, suffix);
+    hasAnimated.value = true;
   }
-}
+};
 
 // Observer para ativar animação quando visível
 onMounted(() => {
   if (props.animated) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !hasAnimated.value) {
-          setTimeout(animateValue, props.animationDelay)
-        }
-      })
-    }, { threshold: 0.5 })
-    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated.value) {
+            setTimeout(animateValue, props.animationDelay);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
     if (valueElement.value) {
-      observer.observe(valueElement.value)
+      observer.observe(valueElement.value);
     }
   }
-})
+});
 </script>
 
 <style scoped>
@@ -255,7 +253,7 @@ onMounted(() => {
 }
 
 .stat-value {
-  font-family: 'Inter', sans-serif !important;
+  font-family: "Inter", sans-serif !important;
   font-weight: 800 !important;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -268,7 +266,7 @@ onMounted(() => {
 }
 
 .stat-label {
-  font-family: 'Inter', sans-serif !important;
+  font-family: "Inter", sans-serif !important;
   font-weight: 500 !important;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -297,7 +295,11 @@ onMounted(() => {
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {

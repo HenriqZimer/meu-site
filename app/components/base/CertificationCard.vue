@@ -1,25 +1,18 @@
 <template>
-  <div 
+  <div
     class="modern-certification-card"
     :class="cardClasses"
     :style="cardStyles"
   >
     <!-- Header do Card -->
-    <div 
-      class="certification-header"
-      :class="headerClasses"
-    >
+    <div class="certification-header" :class="headerClasses">
       <div class="header-content">
-        <v-icon 
-          :icon="icon" 
-          size="large" 
-          class="header-icon"
-        />
+        <v-icon :icon="icon" size="large" class="header-icon" />
         <div class="header-text">
           <span class="header-title">{{ title }}</span>
-          <v-chip 
-            class="count-badge" 
-            color="white" 
+          <v-chip
+            class="count-badge"
+            color="white"
             :text-color="color"
             size="small"
             variant="elevated"
@@ -30,16 +23,15 @@
       </div>
       <div class="header-decoration"></div>
     </div>
-    
+
     <!-- Content -->
-    <div 
-      class="certification-content"
-      :style="contentStyles"
-    >
-      <div 
+    <div class="certification-content" :style="contentStyles">
+      <div
         class="certifications-list"
-        role="list" 
-        :aria-label="`Lista de certificações ${type === 'obtained' ? 'obtidas' : 'planejadas'}`"
+        role="list"
+        :aria-label="`Lista de certificações ${
+          type === 'obtained' ? 'obtidas' : 'planejadas'
+        }`"
       >
         <CertificationItem
           v-for="(item, index) in items"
@@ -55,68 +47,66 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 // Types
 interface Certification {
-  name: string
-  issuer: string
-  icon?: string
-  color?: string
-  image?: string
-  link: string
+  name: string;
+  issuer: string;
+  icon?: string;
+  color?: string;
+  image?: string;
+  link: string;
 }
 
 // Props
 interface Props {
-  title: string
-  icon: string
-  color: string
-  items: Certification[]
-  count: number
-  type: 'obtained' | 'planned'
-  animationDelay?: number
-  elevation?: number | string
+  title: string;
+  icon: string;
+  color: string;
+  items: Certification[];
+  count: number;
+  type: "obtained" | "planned";
+  animationDelay?: number;
+  elevation?: number | string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   animationDelay: 0,
-  elevation: 8
-})
+  elevation: 8,
+});
 
 // Composables
-const { isMobile, isTablet, getResponsiveValue } = useResponsive()
+const { isMobile, isTablet, getResponsiveValue } = useResponsive();
 
 // Computed classes and styles
 const cardClasses = computed(() => [
   `certification-card--${props.type}`,
   {
-    'certification-card--mobile': isMobile.value,
-    'certification-card--tablet': isTablet.value
-  }
-])
+    "certification-card--mobile": isMobile.value,
+    "certification-card--tablet": isTablet.value,
+  },
+]);
 
-const headerClasses = computed(() => [
-  `certification-header--${props.color}`
-])
+const headerClasses = computed(() => [`certification-header--${props.color}`]);
 
 const cardStyles = computed(() => ({
-  '--header-color': `var(--v-theme-${props.color})`,
-  '--animation-delay': `${props.animationDelay}ms`
-}))
+  "--header-color": `var(--v-theme-${props.color})`,
+  "--animation-delay": `${props.animationDelay}ms`,
+}));
 
 const contentStyles = computed(() => {
   const maxHeight = getResponsiveValue({
-    mobile: '350px',
-    tablet: '400px',
-    desktop: '450px'
-  })
-  
+    mobile: "350px",
+    tablet: "400px",
+    desktop: "450px",
+  });
+
   return {
     maxHeight,
-    overflowY: 'auto' as const
-  }
-})
+    overflowY: "auto" as const,
+  };
+});
 </script>
 
 <style scoped>
@@ -147,8 +137,8 @@ const contentStyles = computed(() => {
   color: white;
   padding: 24px;
   background: linear-gradient(
-    135deg, 
-    rgb(var(--header-color)) 0%, 
+    135deg,
+    rgb(var(--header-color)) 0%,
     color-mix(in srgb, rgb(var(--header-color)) 80%, black 20%) 100%
   );
 }
@@ -208,9 +198,9 @@ const contentStyles = computed(() => {
   right: 0;
   bottom: 0;
   background: linear-gradient(
-    45deg, 
-    transparent, 
-    rgba(255, 255, 255, 0.1), 
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
     transparent
   );
   transform: translateX(-100%);
@@ -269,11 +259,12 @@ const contentStyles = computed(() => {
 }
 
 @keyframes pulse-gentle {
-  0%, 100% { 
-    transform: scale(1); 
+  0%,
+  100% {
+    transform: scale(1);
   }
-  50% { 
-    transform: scale(1.05); 
+  50% {
+    transform: scale(1.05);
   }
 }
 
@@ -282,19 +273,19 @@ const contentStyles = computed(() => {
   .certification-header {
     padding: 20px 16px;
   }
-  
+
   .header-content {
     gap: 12px;
   }
-  
+
   .header-title {
     font-size: 1.1rem;
   }
-  
+
   .certification-content {
     padding: 16px;
   }
-  
+
   .certifications-list {
     gap: 10px;
   }
@@ -305,7 +296,7 @@ const contentStyles = computed(() => {
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .header-text {
     flex-direction: column;
     gap: 8px;
@@ -321,7 +312,7 @@ const contentStyles = computed(() => {
     animation: none !important;
     transition: none !important;
   }
-  
+
   .modern-certification-card:hover {
     transform: none !important;
   }

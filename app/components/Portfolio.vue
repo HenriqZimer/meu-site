@@ -275,7 +275,7 @@ const projects: Project[] = [
     image: 'https://imagens.henriqzimer.com.br/portfolio-swarm-nfs-cloudflare.png',
     category: 'containerization',
     technologies: ['Docker', 'Docker Swarm', 'Cloudflare', 'NFS', 'DevOps'],
-    demoUrl: 'https://demo.example.com',
+    demoUrl: 'https://www.notion.so/wiki-henrique-zimermann/Docker-Swarm-Cluster-de-Alta-Disponibilidade-2520ca676c53809eb88cdf145f32257a',
     githubUrl: 'https://github.com/HenriqZimer/docker-swarm',
     featured: true,
     status: 'completed'
@@ -287,8 +287,8 @@ const projects: Project[] = [
     image: 'https://imagens.henriqzimer.com.br/portfolio-eks-terraform.png',
     category: 'infrastructure',
     technologies: ['EKS', 'Terraform', 'AWS', 'Kubernetes', 'IaC'],
-    demoUrl: 'https://demo.example.com',
-    githubUrl: 'https://github.com/HenriqZimer/comunidadedevops-terraform',
+    demoUrl: 'https://github.com/HenriqZimer/eks-terraform',
+    githubUrl: 'https://github.com/HenriqZimer/eks-terraform',
     featured: true,
     status: 'completed'
   },
@@ -299,7 +299,7 @@ const projects: Project[] = [
     image: 'https://imagens.henriqzimer.com.br/portfolio-powershell-ad-outlook.png',
     category: 'automation',
     technologies: ['PowerShell', 'HTML', 'Active Directory', 'Exchange'],
-    demoUrl: 'https://demo.example.com',
+    demoUrl: 'https://www.notion.so/wiki-henrique-zimermann/Assinatura-autom-tica-de-Email-Vis-o-Geral-2520ca676c538005bb5dd8ef6d83f1f3',
     githubUrl: 'https://github.com/HenriqZimer/AutomatedOutlookSignature',
     featured: false,
     status: 'completed'

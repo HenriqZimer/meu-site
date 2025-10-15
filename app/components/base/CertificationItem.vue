@@ -1,55 +1,42 @@
 <template>
-  <article 
-    :class="itemClasses"
-    :style="itemStyles"
-    role="listitem"
-  >
+  <article :class="itemClasses" :style="itemStyles" role="listitem">
     <div class="certification-item-inner">
       <!-- Avatar/Icon -->
       <div class="certification-avatar">
-        <v-avatar 
-          v-if="certification.image" 
+        <v-avatar
+          v-if="certification.image"
           :size="avatarSize"
           class="certification-avatar-img"
         >
-          <v-img 
-            :src="certification.image" 
+          <v-img
+            :src="certification.image"
             :alt="`Logo da certificação ${certification.name}`"
             :loading="index > 2 ? 'lazy' : 'eager'"
             transition="fade-transition"
           >
             <template #placeholder>
               <div class="d-flex align-center justify-center fill-height">
-                <v-icon 
-                  :color="certification.color || 'primary'" 
-                  size="large"
-                >
+                <v-icon :color="certification.color || 'primary'" size="large">
                   mdi-certificate
                 </v-icon>
               </div>
             </template>
           </v-img>
         </v-avatar>
-        
-        <div 
-          v-else
-          class="certification-icon-wrapper"
-        >
-          <v-icon 
-            :color="certification.color || 'primary'" 
-            :size="iconSize"
-          >
-            {{ certification.icon || 'mdi-certificate' }}
+
+        <div v-else class="certification-icon-wrapper">
+          <v-icon :color="certification.color || 'primary'" :size="iconSize">
+            {{ certification.icon || "mdi-certificate" }}
           </v-icon>
         </div>
       </div>
-      
+
       <!-- Content -->
       <div class="certification-content">
         <h4 class="certification-title">
           {{ certification.name }}
         </h4>
-        
+
         <p class="certification-issuer">
           {{ certification.issuer }}
         </p>
@@ -57,15 +44,17 @@
 
       <!-- Action Button -->
       <div class="certification-action">
-        <v-btn 
+        <v-btn
           :href="certification.link"
           target="_blank"
           :icon="actionIcon"
           :size="buttonSize"
-          variant="outlined" 
+          variant="outlined"
           :color="type === 'obtained' ? 'success' : 'primary'"
           class="certification-action-btn"
-          :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'} ${certification.name} em nova aba`"
+          :aria-label="`Abrir ${
+            type === 'obtained' ? 'certificação' : 'informações da certificação'
+          } ${certification.name} em nova aba`"
         />
       </div>
 
@@ -76,93 +65,95 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from "vue";
 
 // Types
 interface Certification {
-  name: string
-  issuer: string
-  icon?: string
-  color?: string
-  image?: string
-  link: string
+  name: string;
+  issuer: string;
+  icon?: string;
+  color?: string;
+  image?: string;
+  link: string;
 }
 
 // Props
 interface Props {
-  certification: Certification
-  index: number
-  animationDelay: number
-  type: 'obtained' | 'planned'
+  certification: Certification;
+  index: number;
+  animationDelay: number;
+  type: "obtained" | "planned";
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 // Composables
-const { isMobile, isTablet, getResponsiveValue } = useResponsive()
+const { isMobile, isTablet, getResponsiveValue } = useResponsive();
 
 // Computed properties
 const itemClasses = computed(() => [
-  'modern-certification-item',
+  "modern-certification-item",
   {
-    'certification-item--mobile': isMobile.value,
-    'certification-item--tablet': isTablet.value,
-    'certification-item--obtained': props.type === 'obtained',
-    'certification-item--planned': props.type === 'planned'
-  }
-])
+    "certification-item--mobile": isMobile.value,
+    "certification-item--tablet": isTablet.value,
+    "certification-item--obtained": props.type === "obtained",
+    "certification-item--planned": props.type === "planned",
+  },
+]);
 
 const itemStyles = computed(() => ({
-  '--animation-delay': `${props.animationDelay}ms`,
-  '--item-color': `var(--v-theme-${props.type === 'obtained' ? 'primary' : 'primary'})`
-}))
+  "--animation-delay": `${props.animationDelay}ms`,
+  "--item-color": `var(--v-theme-${
+    props.type === "obtained" ? "primary" : "primary"
+  })`,
+}));
 
 const titleClasses = computed(() => [
-  'font-weight-bold',
-  'mb-2',
+  "font-weight-bold",
+  "mb-2",
   getResponsiveValue({
-    mobile: 'text-body-1',
-    tablet: 'text-h6',
-    desktop: 'text-h6'
-  })
-])
+    mobile: "text-body-1",
+    tablet: "text-h6",
+    desktop: "text-h6",
+  }),
+]);
 
 const subtitleClasses = computed(() => [
-  'font-weight-medium',
+  "font-weight-medium",
   getResponsiveValue({
-    mobile: 'text-body-2',
-    tablet: 'text-body-1',
-    desktop: 'text-body-1'
-  })
-])
+    mobile: "text-body-2",
+    tablet: "text-body-1",
+    desktop: "text-body-1",
+  }),
+]);
 
-const avatarSize = computed(() => 
+const avatarSize = computed(() =>
   getResponsiveValue({
     mobile: 48,
     tablet: 56,
-    desktop: 56
+    desktop: 56,
   })
-)
+);
 
 const iconSize = computed(() =>
   getResponsiveValue({
-    mobile: 'large',
-    tablet: 'x-large',
-    desktop: 'x-large'
+    mobile: "large",
+    tablet: "x-large",
+    desktop: "x-large",
   })
-)
+);
 
 const buttonSize = computed(() =>
   getResponsiveValue({
-    mobile: 'small',
-    tablet: 'default',
-    desktop: 'default'
+    mobile: "small",
+    tablet: "default",
+    desktop: "default",
   })
-)
+);
 
-const actionIcon = computed(() => 
-  props.type === 'obtained' ? 'mdi-open-in-new' : 'mdi-information-outline'
-)
+const actionIcon = computed(() =>
+  props.type === "obtained" ? "mdi-open-in-new" : "mdi-information-outline"
+);
 </script>
 
 <style scoped>
@@ -361,20 +352,20 @@ const actionIcon = computed(() =>
     padding: 12px;
     gap: 12px;
   }
-  
+
   .certification-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .certification-title {
     font-size: 1rem;
   }
-  
+
   .certification-issuer {
     font-size: 0.85rem;
   }
-  
+
   .modern-certification-item:hover {
     transform: translateY(-2px);
   }
@@ -389,11 +380,11 @@ const actionIcon = computed(() =>
     animation: none !important;
     transition: none !important;
   }
-  
+
   .modern-certification-item:hover {
     transform: none !important;
   }
-  
+
   .modern-certification-item:hover .certification-avatar,
   .modern-certification-item:hover .certification-action-btn {
     transform: none !important;

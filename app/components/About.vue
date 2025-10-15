@@ -27,29 +27,43 @@
             </div>
             <h3 class="story-title">Minha História</h3>
             <p class="story-text">
-              Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva.
+              Mais de 6 anos de experiência em atendimento ao público, onde
+              desenvolvi habilidades essenciais como paciência, resolução de
+              problemas e comunicação efetiva.
             </p>
           </div>
 
           <!-- Present -->
-          <div class="story-card present" data-animate="fade-up" data-delay="500">
+          <div
+            class="story-card present"
+            data-animate="fade-up"
+            data-delay="500"
+          >
             <div class="story-icon">
               <v-icon icon="mdi-cogs" />
             </div>
             <h3 class="story-title">Presente</h3>
             <p class="story-text">
-              Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas.
+              Atualmente focado em infraestrutura de TI, trabalhando com redes,
+              ferramentas Microsoft, virtualização e automação. Apaixonado por
+              soluções práticas.
             </p>
           </div>
 
           <!-- Future -->
-          <div class="story-card future" data-animate="fade-up" data-delay="600">
+          <div
+            class="story-card future"
+            data-animate="fade-up"
+            data-delay="600"
+          >
             <div class="story-icon">
               <v-icon icon="mdi-rocket-launch" />
             </div>
             <h3 class="story-title">Futuro</h3>
             <p class="story-text">
-              Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes.
+              Estudando DevOps intensivamente, explorando containers, automação
+              e cloud computing para criar soluções mais inteligentes e
+              eficientes.
             </p>
           </div>
         </div>
@@ -57,7 +71,11 @@
         <!-- Stats Section -->
         <div class="stats-section">
           <div class="stats-grid">
-            <div class="stat-item" v-for="(stat, index) in stats" :key="stat.label">
+            <div
+              class="stat-item"
+              v-for="(stat, index) in stats"
+              :key="stat.label"
+            >
               <div class="stat-icon">
                 <v-icon :icon="stat.icon" />
               </div>
@@ -109,106 +127,119 @@
 
 <script setup lang="ts">
 // Scroll Animation
-const { observeElements } = useScrollAnimation()
+const { observeElements } = useScrollAnimation();
 
 onMounted(() => {
   observeElements({
     threshold: 0.15,
-    once: true
-  })
-})
+    once: true,
+  });
+});
 
 const stats = [
-  { 
-    value: '3+', 
-    label: 'Anos de Experiência',
-    icon: 'mdi-briefcase-outline',
-    color: 'primary'
+  {
+    value: "3+",
+    label: "Anos de Experiência",
+    icon: "mdi-briefcase-outline",
+    color: "primary",
   },
-  { 
-    value: '5+', 
-    label: 'Projetos Realizados',
-    icon: 'mdi-rocket-launch-outline',
-    color: 'primary'
+  {
+    value: "5+",
+    label: "Projetos Realizados",
+    icon: "mdi-rocket-launch-outline",
+    color: "primary",
   },
-  { 
-    value: '3+', 
-    label: 'Anos de Estudo',
-    icon: 'mdi-school-outline',
-    color: 'info'
+  {
+    value: "3+",
+    label: "Anos de Estudo",
+    icon: "mdi-school-outline",
+    color: "info",
   },
-  { 
-    value: '100%', 
-    label: 'Comprometimento',
-    icon: 'mdi-heart-outline',
-    color: 'error'
-  }
-]
+  {
+    value: "100%",
+    label: "Comprometimento",
+    icon: "mdi-heart-outline",
+    color: "error",
+  },
+];
 
 const values = [
-  'Estudo Contínuo',
-  'Qualidade',
-  'Inovação',
-  'Colaboração',
-  'Performance',
-  'Comprometimento'
-]
+  "Estudo Contínuo",
+  "Qualidade",
+  "Inovação",
+  "Colaboração",
+  "Performance",
+  "Comprometimento",
+];
 
 const valuesData = [
   {
-    title: 'Estudo Contínuo',
-    description: 'Sempre em busca de novos conhecimentos e tecnologias para me manter atualizado',
-    icon: 'mdi-school',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)'
+    title: "Estudo Contínuo",
+    description:
+      "Sempre em busca de novos conhecimentos e tecnologias para me manter atualizado",
+    icon: "mdi-school",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)",
   },
   {
-    title: 'Qualidade',
-    description: 'Compromisso com a excelência em cada linha de código e processo implementado',
-    icon: 'mdi-shield-check',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)'
+    title: "Qualidade",
+    description:
+      "Compromisso com a excelência em cada linha de código e processo implementado",
+    icon: "mdi-shield-check",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
   },
   {
-    title: 'Inovação',
-    description: 'Busco soluções criativas e modernas para resolver problemas complexos',
-    icon: 'mdi-rocket-launch',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)'
+    title: "Inovação",
+    description:
+      "Busco soluções criativas e modernas para resolver problemas complexos",
+    icon: "mdi-rocket-launch",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)",
   },
   {
-    title: 'Colaboração',
-    description: 'Trabalho em equipe e comunicação efetiva são fundamentais para o sucesso',
-    icon: 'mdi-account-group',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #3730a3 100%)'
+    title: "Colaboração",
+    description:
+      "Trabalho em equipe e comunicação efetiva são fundamentais para o sucesso",
+    icon: "mdi-account-group",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #3730a3 100%)",
   },
   {
-    title: 'Performance',
-    description: 'Otimização e eficiência são prioridades em todas as soluções que desenvolvo',
-    icon: 'mdi-lightning-bolt',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #4338ca 100%)'
+    title: "Performance",
+    description:
+      "Otimização e eficiência são prioridades em todas as soluções que desenvolvo",
+    icon: "mdi-lightning-bolt",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #4338ca 100%)",
   },
   {
-    title: 'Comprometimento',
-    description: 'Dedicação total para entregar resultados que superem as expectativas',
-    icon: 'mdi-target',
-    gradient: 'linear-gradient(135deg, #3b82f6 0%, #312e81 100%)'
-  }
-]
+    title: "Comprometimento",
+    description:
+      "Dedicação total para entregar resultados que superem as expectativas",
+    icon: "mdi-target",
+    gradient: "linear-gradient(135deg, #3b82f6 0%, #312e81 100%)",
+  },
+];
 
 const getValueIcon = (value: string) => {
   const iconMap: Record<string, string> = {
-    'Estudo Contínuo': 'mdi-school',
-    'Qualidade': 'mdi-shield-check',
-    'Inovação': 'mdi-rocket-launch',
-    'Colaboração': 'mdi-account-group',
-    'Performance': 'mdi-lightning-bolt',
-    'Comprometimento': 'mdi-target'
-  }
-  return iconMap[value] || 'mdi-circle'
-}
+    "Estudo Contínuo": "mdi-school",
+    Qualidade: "mdi-shield-check",
+    Inovação: "mdi-rocket-launch",
+    Colaboração: "mdi-account-group",
+    Performance: "mdi-lightning-bolt",
+    Comprometimento: "mdi-target",
+  };
+  return iconMap[value] || "mdi-circle";
+};
 
 const getValueColor = (index: number) => {
-  const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4']
-  return colors[index % colors.length]
-}
+  const colors = [
+    "#3b82f6",
+    "#10b981",
+    "#f59e0b",
+    "#ef4444",
+    "#8b5cf6",
+    "#06b6d4",
+  ];
+  return colors[index % colors.length];
+};
 </script>
 
 <style scoped>
@@ -259,7 +290,7 @@ const getValueColor = (index: number) => {
 }
 
 .story-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -433,7 +464,11 @@ const getValueColor = (index: number) => {
 
 /* Values Section */
 .values-section {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(16, 185, 129, 0.03));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.03),
+    rgba(16, 185, 129, 0.03)
+  );
   padding: 60px 48px;
   border-radius: 32px;
   border: 1px solid rgba(59, 130, 246, 0.1);
@@ -442,15 +477,22 @@ const getValueColor = (index: number) => {
 }
 
 .values-section::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+  background: radial-gradient(
+      circle at 20% 80%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(16, 185, 129, 0.1) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -622,7 +664,11 @@ const getValueColor = (index: number) => {
 
 /* Dark mode support */
 :global(.v-theme--dark) .values-section {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.05),
+    rgba(16, 185, 129, 0.05)
+  );
   border-color: rgba(59, 130, 246, 0.2);
 }
 
@@ -655,7 +701,7 @@ const getValueColor = (index: number) => {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     justify-content: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     justify-content: center;
@@ -668,7 +714,7 @@ const getValueColor = (index: number) => {
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(4, 1fr);
     justify-content: center;
@@ -681,7 +727,7 @@ const getValueColor = (index: number) => {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     justify-content: center;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -694,55 +740,55 @@ const getValueColor = (index: number) => {
   .modern-about {
     padding: 80px 0 60px;
   }
-  
+
   .about-container {
     padding: 0 16px;
   }
-  
+
   .about-header {
     margin-bottom: 60px;
   }
-  
+
   .story-grid {
     grid-template-columns: 1fr;
     gap: 24px;
     margin-bottom: 40px;
   }
-  
+
   .story-card {
     padding: 24px;
   }
-  
+
   .stats-section,
   .values-section {
     padding: 32px 24px;
     margin-bottom: 40px;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     justify-content: center;
   }
-  
+
   .stat-item {
     flex-direction: column;
     text-align: center;
     gap: 12px;
     padding: 16px;
   }
-  
+
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     justify-content: center;
   }
-  
+
   .value-card {
     padding: 20px 12px;
     min-height: 90px;
   }
-  
+
   .value-icon {
     width: 40px;
     height: 40px;
@@ -753,21 +799,21 @@ const getValueColor = (index: number) => {
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .story-card {
     padding: 20px;
   }
-  
+
   .stats-section,
   .values-section {
     padding: 24px 16px;
   }
-  
+
   .values-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
-  
+
   .value-card {
     padding: 16px 12px;
     min-height: 80px;
