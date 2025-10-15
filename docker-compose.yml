@@ -1,7 +1,7 @@
 services:
-  meu-site:
+  app:
     build: .
-    container_name: meu-site-portfolio
+    container_name: meu-site
     ports:
       - "3000:3000"
     env_file:
