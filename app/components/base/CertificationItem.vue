@@ -245,7 +245,7 @@ const actionIcon = computed(() =>
 }
 
 .certification-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
   margin-bottom: 4px;
@@ -285,6 +285,24 @@ const actionIcon = computed(() =>
 .modern-certification-item:hover .certification-action-btn {
   opacity: 1;
   transform: scale(1.1);
+}
+
+/* Borda verde no botão de certificações obtidas */
+.certification-item--obtained .certification-action-btn {
+  border-color: rgba(16, 185, 129, 0.5) !important;
+}
+
+.certification-item--obtained:hover .certification-action-btn {
+  border-color: #10b981 !important;
+}
+
+/* Borda azul no botão de certificações planejadas */
+.certification-item--planned .certification-action-btn {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+}
+
+.certification-item--planned:hover .certification-action-btn {
+  border-color: #3b82f6 !important;
 }
 
 /* Decorative Element */

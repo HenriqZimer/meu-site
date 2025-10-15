@@ -3,27 +3,27 @@
     <div class="hero-container">
       <div class="hero-content">
         <!-- Text Content -->
-        <div class="hero-text">
-          <div class="hero-badge">
+        <div class="hero-text" data-animate="fade-up">
+          <div class="hero-badge" data-animate="fade-in" data-delay="100">
             <div class="badge-indicator"></div>
             <span>Disponível para projetos</span>
           </div>
           
-          <h1 class="hero-title">
+          <h1 class="hero-title" data-animate="fade-up" data-delay="200">
             Olá, eu sou o
             <span class="hero-name">Henrique</span>
           </h1>
           
-          <h2 class="hero-subtitle">
+          <h2 class="hero-subtitle" data-animate="fade-up" data-delay="300">
             DevOps & Cloud Engineer
           </h2>
           
-          <p class="hero-description">
+          <p class="hero-description" data-animate="fade-up" data-delay="400">
             Automatizo infraestruturas e otimizo processos de desenvolvimento.
             Especialista em CI/CD, containerização e orquestração na nuvem.
           </p>
 
-          <div class="hero-actions">
+          <div class="hero-actions" data-animate="fade-up" data-delay="500">
             <v-btn
               variant="flat"
               color="primary"
@@ -49,7 +49,7 @@
             </v-btn>
           </div>
 
-          <div class="hero-social">
+          <div class="hero-social" data-animate="fade-up" data-delay="600">
             <p class="social-label">Conecte-se comigo</p>
             <div class="social-links">
               <a
@@ -68,7 +68,7 @@
         </div>
 
         <!-- Image Content -->
-        <div class="hero-visual">
+        <div class="hero-visual" data-animate="fade-left" data-delay="300">
           <div class="avatar-container">
             <div class="avatar-wrapper">
               <img
@@ -104,6 +104,16 @@ const siteFirstName = config.public.siteFirstName || 'Henrique'
 const email = config.public.email
 const githubUrl = config.public.githubUrl
 const linkedinUrl = config.public.linkedinUrl
+
+// Scroll Animation
+const { observeElements } = useScrollAnimation()
+
+onMounted(() => {
+  observeElements({
+    threshold: 0.2,
+    once: true
+  })
+})
 
 const socialLinks = [
   { 

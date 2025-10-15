@@ -2,22 +2,22 @@
   <section id="portfolio" class="modern-portfolio">
     <div class="portfolio-container">
       <!-- Header Section -->
-      <div class="portfolio-header">
-        <span class="section-badge">
+      <div class="portfolio-header" data-animate="fade-up">
+        <span class="section-badge" data-animate="fade-in" data-delay="100">
           <v-icon icon="mdi-briefcase" start size="16" />
           Portfólio
         </span>
-        <h2 class="section-title">
+        <h2 class="section-title" data-animate="fade-up" data-delay="200">
           Meus
           <span class="title-highlight">projetos</span>
         </h2>
-        <p class="section-description">
+        <p class="section-description" data-animate="fade-up" data-delay="300">
           Alguns dos meus trabalhos recentes e soluções desenvolvidas
         </p>
       </div>
 
       <!-- Filtros -->
-      <div class="portfolio-filters">
+      <div class="portfolio-filters" data-animate="fade-up" data-delay="400">
         <div class="filter-chips">
           <v-chip
             v-for="(filter, index) in filters"
@@ -231,6 +231,16 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+
+// Scroll Animation
+const { observeElements } = useScrollAnimation()
+
+onMounted(() => {
+  observeElements({
+    threshold: 0.1,
+    once: true
+  })
+})
 
 // Types
 interface Project {

@@ -2,21 +2,21 @@
   <section id="certifications" class="modern-certifications">
     <div class="certifications-container">
       <!-- Header Section -->
-      <div class="certifications-header">
-        <span class="section-badge primary-theme">
+      <div class="certifications-header" data-animate="fade-up">
+        <span class="section-badge primary-theme" data-animate="fade-in" data-delay="100">
           <v-icon icon="mdi-certificate" start size="16" />
           Certificações
         </span>
-        <h2 class="section-title">
+        <h2 class="section-title" data-animate="fade-up" data-delay="200">
           Minhas 
           <span class="title-highlight">Certificações</span>
         </h2>
-        <p class="section-description">
+        <p class="section-description" data-animate="fade-up" data-delay="300">
           Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps
         </p>
         
         <!-- Statistics Overview -->
-        <div class="stats-overview">
+        <div class="stats-overview" data-animate="fade-up" data-delay="400">
           <v-row justify="center">
             <v-col 
               v-for="(stat, index) in certificationStats" 
@@ -47,7 +47,7 @@
         </div>
 
         <!-- Progress Bar -->
-        <div class="progress-section">
+        <div class="progress-section" data-animate="fade-up" data-delay="500">
           <div class="progress-info">
             <span class="progress-label">Progresso da Jornada</span>
             <span class="progress-percentage">{{ Math.round((obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100) }}%</span>
@@ -66,7 +66,7 @@
       <!-- Grid responsivo das certificações -->
       <div class="certifications-grid">
         <!-- Certificações Obtidas -->
-        <div class="certification-section" data-animate="fade-right">
+        <div class="certification-section" data-animate="fade-up" data-delay="600">
           <CertificationCard
             title="Certificações Obtidas"
             icon="mdi-certificate"
@@ -79,7 +79,7 @@
         </div>
 
         <!-- Certificações Planejadas -->
-        <div class="certification-section" data-animate="fade-left">
+        <div class="certification-section" data-animate="fade-up" data-delay="700">
           <CertificationCard
             title="Próximas Metas"
             icon="mdi-target"
@@ -117,6 +117,16 @@ interface CertificationStat {
 
 // Composables
 const { isMobile, isTablet, isDesktop, getResponsiveValue } = useResponsive()
+
+// Scroll Animation
+const { observeElements } = useScrollAnimation()
+
+onMounted(() => {
+  observeElements({
+    threshold: 0.1,
+    once: true
+  })
+})
 
 // Responsive layouts
 const responsiveClasses = computed(() => ({

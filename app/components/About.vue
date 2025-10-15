@@ -2,16 +2,16 @@
   <section id="about" class="modern-about">
     <div class="about-container">
       <!-- Header Section -->
-      <div class="about-header">
-        <span class="section-badge">
+      <div class="about-header" data-animate="fade-up">
+        <span class="section-badge" data-animate="fade-in" data-delay="100">
           <v-icon icon="mdi-account-circle" start size="16" />
           Sobre Mim
         </span>
-        <h2 class="section-title">
+        <h2 class="section-title" data-animate="fade-up" data-delay="200">
           Conhecendo minha
           <span class="title-highlight">jornada</span>
         </h2>
-        <p class="section-description">
+        <p class="section-description" data-animate="fade-up" data-delay="300">
           Uma trajetória em constante evolução no mundo da tecnologia
         </p>
       </div>
@@ -21,7 +21,7 @@
         <!-- Story Grid -->
         <div class="story-grid">
           <!-- Past -->
-          <div class="story-card past">
+          <div class="story-card past" data-animate="fade-up" data-delay="400">
             <div class="story-icon">
               <v-icon icon="mdi-history" />
             </div>
@@ -32,7 +32,7 @@
           </div>
 
           <!-- Present -->
-          <div class="story-card present">
+          <div class="story-card present" data-animate="fade-up" data-delay="500">
             <div class="story-icon">
               <v-icon icon="mdi-cogs" />
             </div>
@@ -43,7 +43,7 @@
           </div>
 
           <!-- Future -->
-          <div class="story-card future">
+          <div class="story-card future" data-animate="fade-up" data-delay="600">
             <div class="story-icon">
               <v-icon icon="mdi-rocket-launch" />
             </div>
@@ -108,6 +108,16 @@
 </template>
 
 <script setup lang="ts">
+// Scroll Animation
+const { observeElements } = useScrollAnimation()
+
+onMounted(() => {
+  observeElements({
+    threshold: 0.15,
+    once: true
+  })
+})
+
 const stats = [
   { 
     value: '6+', 
