@@ -63,7 +63,7 @@
           :icon="actionIcon"
           :size="buttonSize"
           variant="outlined" 
-          :color="type === 'obtained' ? 'primary' : 'primary'"
+          :color="type === 'obtained' ? 'success' : 'primary'"
           class="certification-action-btn"
           :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'} ${certification.name} em nova aba`"
         />
