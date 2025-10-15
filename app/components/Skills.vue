@@ -37,19 +37,13 @@
               :key="skill.name"
               class="skill-item"
             >
-              <div class="skill-info">
+              <div class="skill-header">
                 <span class="skill-name">{{ skill.name }}</span>
-                <span class="skill-level">{{ skill.level }}%</span>
+                <span class="skill-badge" :class="`badge-${skill.level.toLowerCase()}`">
+                  {{ skill.level }}
+                </span>
               </div>
-              <div class="skill-bar">
-                <div 
-                  class="skill-progress"
-                  :style="{ 
-                    width: `${skill.level}%`,
-                    backgroundColor: `rgb(var(--v-theme-${category.color}))`
-                  }"
-                ></div>
-              </div>
+              <p class="skill-experience">{{ skill.experience }}</p>
             </div>
           </div>
         </div>
@@ -70,41 +64,18 @@
             :style="{ animationDelay: `${600 + index * 100}ms` }"
           >
             <div class="learning-content">
-              <div class="learning-info">
+              <div class="learning-header-info">
                 <div class="learning-icon">
-                  <v-icon :icon="item.icon" :color="item.color" size="20" />
+                  <v-icon :icon="item.icon" :color="item.color" size="24" />
                 </div>
                 <div class="learning-text">
                   <h4 class="learning-name">{{ item.name }}</h4>
                   <p class="learning-description">{{ item.description }}</p>
                 </div>
               </div>
-              <div class="learning-progress">
-                <div class="progress-circle">
-                  <svg width="48" height="48" viewBox="0 0 48 48">
-                    <circle
-                      cx="24"
-                      cy="24"
-                      r="20"
-                      fill="none"
-                      stroke="#e5e7eb"
-                      stroke-width="3"
-                    />
-                    <circle
-                      cx="24"
-                      cy="24"
-                      r="20"
-                      fill="none"
-                      :stroke="`rgb(var(--v-theme-${item.color}))`"
-                      stroke-width="3"
-                      stroke-linecap="round"
-                      :stroke-dasharray="`${2 * Math.PI * 20}`"
-                      :stroke-dashoffset="`${2 * Math.PI * 20 * (1 - item.progress / 100)}`"
-                      transform="rotate(-90 24 24)"
-                    />
-                  </svg>
-                  <span class="progress-text">{{ item.progress }}%</span>
-                </div>
+              <div class="learning-status">
+                <v-icon icon="mdi-school-outline" size="16" class="status-icon" />
+                <span class="status-text">{{ item.status }}</span>
               </div>
             </div>
           </div>
@@ -157,7 +128,8 @@
 // Types
 interface Skill {
   name: string
-  level: number
+  level: string
+  experience: string
 }
 
 interface SkillCategory {
@@ -170,7 +142,7 @@ interface SkillCategory {
 interface LearningItem {
   name: string
   description: string
-  progress: number
+  status: string
   icon: string
   color: string
 }
@@ -188,10 +160,10 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-cloud',
     color: 'primary',
     skills: [
-      { name: 'Docker', level: 85 },
-      { name: 'Git/GitHub', level: 90 },
-      { name: 'Linux', level: 80 },
-      { name: 'CI/CD', level: 75 }
+      { name: 'Docker', level: 'Avançado', experience: '2+ anos de uso prático' },
+      { name: 'Git/GitHub', level: 'Avançado', experience: 'Uso diário profissional' },
+      { name: 'Linux', level: 'Avançado', experience: 'Administração de servidores' },
+      { name: 'CI/CD', level: 'Intermediário', experience: 'Pipelines e automação' }
     ]
   },
   {
@@ -199,10 +171,10 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-server',
     color: 'primary',
     skills: [
-      { name: 'Virtualização', level: 88 },
-      { name: 'Redes', level: 82 },
-      { name: 'Microsoft Tools', level: 85 },
-      { name: 'Monitoramento', level: 70 }
+      { name: 'Virtualização', level: 'Avançado', experience: 'VMware, Hyper-V' },
+      { name: 'Redes', level: 'Avançado', experience: 'TCP/IP, DNS, DHCP' },
+      { name: 'Microsoft Tools', level: 'Avançado', experience: 'AD, Exchange, Office365' },
+      { name: 'Monitoramento', level: 'Intermediário', experience: 'Zabbix, Grafana' }
     ]
   },
   {
@@ -210,10 +182,10 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-code-tags',
     color: 'info',
     skills: [
-      { name: 'Python', level: 75 },
-      { name: 'Bash/Shell', level: 80 },
-      { name: 'YAML/JSON', level: 85 },
-      { name: 'APIs REST', level: 70 }
+      { name: 'Python', level: 'Intermediário', experience: 'Scripts e automação' },
+      { name: 'Bash/Shell', level: 'Avançado', experience: 'Automação Linux/Unix' },
+      { name: 'YAML/JSON', level: 'Avançado', experience: 'Configurações e APIs' },
+      { name: 'APIs REST', level: 'Intermediário', experience: 'Integração e consumo' }
     ]
   }
 ]
@@ -223,43 +195,43 @@ const learningItems: LearningItem[] = [
   {
     name: 'Kubernetes',
     description: 'Orquestração de containers',
-    progress: 65,
+    status: 'Em estudo - Prática',
     icon: 'mdi-kubernetes',
     color: 'primary'
   },
   {
     name: 'Terraform',
     description: 'Infrastructure as Code',
-    progress: 50,
+    status: 'Estudando conceitos',
     icon: 'mdi-terraform',
     color: 'warning'
   },
   {
     name: 'Azure DevOps',
     description: 'Plataforma DevOps Microsoft',
-    progress: 70,
+    status: 'Uso e aprendizado',
     icon: 'mdi-microsoft-azure-devops',
     color: 'info'
   },
   {
     name: 'Ansible',
     description: 'Automação e configuração',
-    progress: 40,
+    status: 'Estudando fundamentos',
     icon: 'mdi-ansible',
     color: 'error'
   },
   {
-    name: 'Azure DevOps',
-    description: 'Plataforma DevOps Microsoft',
-    progress: 70,
-    icon: 'mdi-microsoft-azure-devops',
-    color: 'info'
+    name: 'AWS',
+    description: 'Amazon Web Services',
+    status: 'Certificação em andamento',
+    icon: 'mdi-aws',
+    color: 'warning'
   },
   {
-    name: 'Ansible',
-    description: 'Automação e configuração',
-    progress: 40,
-    icon: 'mdi-ansible',
+    name: 'Jenkins',
+    description: 'CI/CD e automação',
+    status: 'Conhecimento básico',
+    icon: 'mdi-jenkins',
     color: 'error'
   }
 ]
@@ -399,45 +371,73 @@ const otherTechs: TechItem[] = [
 .skills-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .skill-item {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 16px;
+  background: rgba(var(--v-theme-surface-bright), 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-outline), 0.1);
+  transition: all 0.3s ease;
 }
 
-.skill-info {
+.skill-item:hover {
+  background: rgba(var(--v-theme-surface-bright), 0.5);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateX(4px);
+}
+
+.skill-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
 }
 
 .skill-name {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface-variant));
-}
-
-.skill-level {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
 }
 
-.skill-bar {
-  height: 6px;
-  background: rgb(var(--v-theme-surface-bright));
-  border-radius: 3px;
-  overflow: hidden;
+.skill-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
-.skill-progress {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 1s ease;
-  background: #3b82f6;
+.badge-avançado {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-intermediário {
+  background: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge-básico {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.skill-experience {
+  font-size: 13px;
+  color: rgb(var(--v-theme-on-surface-variant));
+  margin: 0;
+  line-height: 1.4;
 }
 
 /* Learning Section */
@@ -489,28 +489,32 @@ const otherTechs: TechItem[] = [
 
 .learning-content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   gap: 16px;
 }
 
-.learning-info {
+.learning-header-info {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
 }
 
 .learning-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: rgb(var(--v-theme-surface-bright));
   border: 1px solid rgb(var(--v-theme-surface-light));
-  border-radius: 10px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.learning-card:hover .learning-icon {
+  transform: scale(1.05);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .learning-text {
@@ -519,7 +523,7 @@ const otherTechs: TechItem[] = [
 }
 
 .learning-name {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
   margin-bottom: 4px;
@@ -530,25 +534,29 @@ const otherTechs: TechItem[] = [
   font-size: 13px;
   color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
-.learning-progress {
+.learning-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(var(--v-theme-surface-bright), 0.3);
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+}
+
+.status-icon {
+  color: #3b82f6;
   flex-shrink: 0;
 }
 
-.progress-circle {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.progress-text {
-  position: absolute;
-  font-size: 11px;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
+.status-text {
+  font-size: 13px;
+  color: rgb(var(--v-theme-on-surface-variant));
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 /* Technologies Section */
