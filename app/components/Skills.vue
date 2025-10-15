@@ -37,13 +37,10 @@
               :key="skill.name"
               class="skill-item"
             >
-              <div class="skill-header">
-                <span class="skill-name">{{ skill.name }}</span>
-                <span class="skill-badge" :class="`badge-${skill.level.toLowerCase()}`">
-                  {{ skill.level }}
-                </span>
-              </div>
-              <p class="skill-experience">{{ skill.experience }}</p>
+              <span class="skill-name">{{ skill.name }}</span>
+              <span class="skill-badge" :class="`badge-${skill.level.toLowerCase()}`">
+                {{ skill.level }}
+              </span>
             </div>
           </div>
         </div>
@@ -64,19 +61,10 @@
             :style="{ animationDelay: `${600 + index * 100}ms` }"
           >
             <div class="learning-content">
-              <div class="learning-header-info">
-                <div class="learning-icon">
-                  <v-icon :icon="item.icon" :color="item.color" size="24" />
-                </div>
-                <div class="learning-text">
-                  <h4 class="learning-name">{{ item.name }}</h4>
-                  <p class="learning-description">{{ item.description }}</p>
-                </div>
+              <div class="learning-icon">
+                <v-icon :icon="item.icon" :color="item.color" size="28" />
               </div>
-              <div class="learning-status">
-                <v-icon icon="mdi-school-outline" size="16" class="status-icon" />
-                <span class="status-text">{{ item.status }}</span>
-              </div>
+              <h4 class="learning-name">{{ item.name }}</h4>
             </div>
           </div>
         </div>
@@ -129,7 +117,6 @@
 interface Skill {
   name: string
   level: string
-  experience: string
 }
 
 interface SkillCategory {
@@ -141,8 +128,6 @@ interface SkillCategory {
 
 interface LearningItem {
   name: string
-  description: string
-  status: string
   icon: string
   color: string
 }
@@ -160,10 +145,11 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-cloud',
     color: 'primary',
     skills: [
-      { name: 'Docker', level: 'Avançado', experience: '2+ anos de uso prático' },
-      { name: 'Git/GitHub', level: 'Avançado', experience: 'Uso diário profissional' },
-      { name: 'Linux', level: 'Avançado', experience: 'Administração de servidores' },
-      { name: 'CI/CD', level: 'Intermediário', experience: 'Pipelines e automação' }
+      { name: 'Docker', level: 'Avançado' },
+      { name: 'Git/GitHub', level: 'Avançado' },
+      { name: 'Linux', level: 'Avançado' },
+      { name: 'CI/CD', level: 'Intermediário' },
+      { name: 'Kubernetes', level: 'Básico' }
     ]
   },
   {
@@ -171,10 +157,11 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-server',
     color: 'primary',
     skills: [
-      { name: 'Virtualização', level: 'Avançado', experience: 'VMware, Hyper-V' },
-      { name: 'Redes', level: 'Avançado', experience: 'TCP/IP, DNS, DHCP' },
-      { name: 'Microsoft Tools', level: 'Avançado', experience: 'AD, Exchange, Office365' },
-      { name: 'Monitoramento', level: 'Intermediário', experience: 'Zabbix, Grafana' }
+      { name: 'Virtualização', level: 'Avançado' },
+      { name: 'Redes', level: 'Avançado' },
+      { name: 'Microsoft Tools', level: 'Avançado' },
+      { name: 'Monitoramento', level: 'Intermediário' },
+      { name: 'Backup & Recovery', level: 'Avançado' }
     ]
   },
   {
@@ -182,10 +169,11 @@ const skillCategories: SkillCategory[] = [
     icon: 'mdi-code-tags',
     color: 'info',
     skills: [
-      { name: 'Python', level: 'Intermediário', experience: 'Scripts e automação' },
-      { name: 'Bash/Shell', level: 'Avançado', experience: 'Automação Linux/Unix' },
-      { name: 'YAML/JSON', level: 'Avançado', experience: 'Configurações e APIs' },
-      { name: 'APIs REST', level: 'Intermediário', experience: 'Integração e consumo' }
+      { name: 'Python', level: 'Intermediário' },
+      { name: 'Bash/Shell', level: 'Avançado' },
+      { name: 'YAML/JSON', level: 'Avançado' },
+      { name: 'APIs REST', level: 'Intermediário' },
+      { name: 'PowerShell', level: 'Intermediário' }
     ]
   }
 ]
@@ -193,46 +181,34 @@ const skillCategories: SkillCategory[] = [
 // Current Learning Items
 const learningItems: LearningItem[] = [
   {
-    name: 'Kubernetes',
-    description: 'Orquestração de containers',
-    status: 'Em estudo - Prática',
-    icon: 'mdi-kubernetes',
-    color: 'primary'
-  },
-  {
     name: 'Terraform',
-    description: 'Infrastructure as Code',
-    status: 'Estudando conceitos',
     icon: 'mdi-terraform',
     color: 'warning'
   },
   {
-    name: 'Azure DevOps',
-    description: 'Plataforma DevOps Microsoft',
-    status: 'Uso e aprendizado',
-    icon: 'mdi-microsoft-azure-devops',
+    name: 'Azure',
+    icon: 'mdi-microsoft-azure',
     color: 'info'
   },
   {
     name: 'Ansible',
-    description: 'Automação e configuração',
-    status: 'Estudando fundamentos',
     icon: 'mdi-ansible',
     color: 'error'
   },
   {
     name: 'AWS',
-    description: 'Amazon Web Services',
-    status: 'Certificação em andamento',
     icon: 'mdi-aws',
     color: 'warning'
   },
   {
     name: 'Jenkins',
-    description: 'CI/CD e automação',
-    status: 'Conhecimento básico',
     icon: 'mdi-jenkins',
     color: 'error'
+  },
+  {
+    name: 'ArgoCD',
+    icon: 'mdi-argo',
+    color: 'primary'
   }
 ]
 
@@ -371,43 +347,37 @@ const otherTechs: TechItem[] = [
 .skills-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
 }
 
 .skill-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  background: rgba(var(--v-theme-surface-bright), 0.3);
-  border-radius: 12px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(var(--v-theme-surface-bright), 0.2);
+  border-radius: 10px;
   border: 1px solid rgba(var(--v-theme-outline), 0.1);
   transition: all 0.3s ease;
 }
 
 .skill-item:hover {
-  background: rgba(var(--v-theme-surface-bright), 0.5);
+  background: rgba(var(--v-theme-surface-bright), 0.4);
   border-color: rgba(59, 130, 246, 0.3);
   transform: translateX(4px);
 }
 
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
 .skill-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
 }
 
 .skill-badge {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -431,13 +401,6 @@ const otherTechs: TechItem[] = [
   background: rgba(245, 158, 11, 0.15);
   color: #f59e0b;
   border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.skill-experience {
-  font-size: 13px;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin: 0;
-  line-height: 1.4;
 }
 
 /* Learning Section */
@@ -466,45 +429,43 @@ const otherTechs: TechItem[] = [
 
 .learning-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
   justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .learning-card {
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgb(var(--v-theme-surface-bright));
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 14px;
+  padding: 20px 16px;
   transition: all 0.3s ease;
   opacity: 0;
   animation: slideInUp 0.6s ease forwards;
 }
 
 .learning-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
-  border-color: #3b82f6;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .learning-content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.learning-header-info {
-  display: flex;
   align-items: center;
   gap: 12px;
+  text-align: center;
 }
 
 .learning-icon {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   background: rgb(var(--v-theme-surface-bright));
   border: 1px solid rgb(var(--v-theme-surface-light));
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -513,49 +474,16 @@ const otherTechs: TechItem[] = [
 }
 
 .learning-card:hover .learning-icon {
-  transform: scale(1.05);
-  border-color: rgba(59, 130, 246, 0.3);
-}
-
-.learning-text {
-  flex: 1;
-  min-width: 0;
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
 }
 
 .learning-name {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 600;
   color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 4px;
-  line-height: 1.2;
-}
-
-.learning-description {
-  font-size: 13px;
-  color: rgb(var(--v-theme-on-surface-variant));
   margin: 0;
-  line-height: 1.4;
-}
-
-.learning-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: rgba(var(--v-theme-surface-bright), 0.3);
-  border-radius: 8px;
-  border-left: 3px solid #3b82f6;
-}
-
-.status-icon {
-  color: #3b82f6;
-  flex-shrink: 0;
-}
-
-.status-text {
-  font-size: 13px;
-  color: rgb(var(--v-theme-on-surface-variant));
-  font-weight: 500;
   line-height: 1.3;
 }
 
