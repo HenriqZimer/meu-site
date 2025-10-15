@@ -27,7 +27,6 @@
             :color="selectedFilter === filter.value ? 'primary' : 'default'"
             :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'"
             size="large"
-            :style="{ animationDelay: `${300 + index * 100}ms` }"
             @click="setFilter(filter.value)"
           >
             <v-icon start size="18">{{ filter.icon }}</v-icon>
@@ -35,7 +34,7 @@
             <v-badge 
               v-if="filter.count > 0" 
               :content="filter.count" 
-              color="primary" 
+              :color="selectedFilter === filter.value ? 'secondary' : 'primary'"
               inline
               class="ml-2"
             />
@@ -43,32 +42,78 @@
         </div>
       </div>
 
-      <!-- Grid de Projetos -->
+      <!-- Carrossel de Projetos -->
       <div class="portfolio-content">
-        <div class="portfolio-grid" :key="selectedFilter">
-          <div
-            v-for="(project, index) in filteredProjects"
-            :key="project.id"
-            class="portfolio-item"
-            :style="{ 
-              animationDelay: `${index * 100}ms`,
-              animation: 'fadeInUp 0.6s ease forwards'
-            }"
+        <div v-if="filteredProjects.length > 0" class="carousel-container">
+          <!-- Botão Anterior -->
+          <button 
+            class="carousel-nav carousel-nav--prev"
+            :disabled="currentPage === 0"
+            @click="previousPage"
+            aria-label="Projetos anteriores"
           >
-            <ProjectCard
-              :title="project.title"
-              :description="project.description"
-              :image="project.image"
-              :technologies="project.technologies"
-              :demo-url="project.demoUrl"
-              :github-url="project.githubUrl"
-              :featured="project.featured"
-              :status="project.status"
-              size="medium"
-              :lazy="index > 2"
-              class="project-card"
-            />
+            <v-icon icon="mdi-chevron-left" size="32" />
+          </button>
+
+          <!-- Carrossel -->
+          <div class="carousel-wrapper">
+            <div 
+              class="carousel-track"
+              :style="{ transform: `translateX(-${currentPage * 100}%)` }"
+            >
+              <div
+                v-for="(page, pageIndex) in paginatedProjects"
+                :key="pageIndex"
+                class="carousel-page"
+              >
+                <div class="carousel-grid">
+                  <div
+                    v-for="(project, index) in page"
+                    :key="project.id"
+                    class="carousel-item"
+                  >
+                    <ProjectCard
+                      :title="project.title"
+                      :description="project.description"
+                      :image="project.image"
+                      :technologies="project.technologies"
+                      :demo-url="project.demoUrl"
+                      :github-url="project.githubUrl"
+                      :featured="project.featured"
+                      :status="project.status"
+                      size="medium"
+                      :lazy="pageIndex > 0"
+                      class="project-card"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+          <!-- Botão Próximo -->
+          <button 
+            class="carousel-nav carousel-nav--next"
+            :disabled="currentPage === totalPages - 1"
+            @click="nextPage"
+            aria-label="Próximos projetos"
+          >
+            <v-icon icon="mdi-chevron-right" size="32" />
+          </button>
+        </div>
+
+        <!-- Indicadores de Página -->
+        <div v-if="totalPages > 1" class="carousel-indicators">
+          <button
+            v-for="(page, index) in totalPages"
+            :key="index"
+            class="indicator"
+            :class="{ 'indicator--active': currentPage === index }"
+            @click="goToPage(index)"
+            :aria-label="`Ir para página ${index + 1}`"
+          >
+          </button>
+          <span class="page-counter">{{ currentPage + 1 }} / {{ totalPages }}</span>
         </div>
       
         <!-- Empty State -->
@@ -133,7 +178,7 @@
       </div> -->
 
       <!-- Call to Action -->
-      <div class="portfolio-cta">
+      <!-- <div class="portfolio-cta">
         <div class="cta-card">
           <div class="cta-content">
             <h3 class="cta-title">
@@ -178,14 +223,14 @@
               </v-btn>
             </div>
           </div>
-        </div>
-      </div>
+        </div> 
+      </div> -->
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 // Types
 interface Project {
@@ -387,25 +432,78 @@ const filteredProjects = computed(() => {
     })
 })
 
+// Carousel state
+const currentPage = ref(0)
+const itemsPerPage = ref(3)
+
+// Update items per page based on window width
+if (typeof window !== 'undefined') {
+  const updateItemsPerPage = () => {
+    if (window.innerWidth <= 768) {
+      itemsPerPage.value = 1
+    } else if (window.innerWidth <= 1024) {
+      itemsPerPage.value = 2
+    } else {
+      itemsPerPage.value = 3
+    }
+  }
+  
+  updateItemsPerPage()
+  window.addEventListener('resize', updateItemsPerPage)
+}
+
+// Computed carousel
+const paginatedProjects = computed(() => {
+  const projects = filteredProjects.value
+  const pages = []
+  
+  for (let i = 0; i < projects.length; i += itemsPerPage.value) {
+    pages.push(projects.slice(i, i + itemsPerPage.value))
+  }
+  
+  return pages
+})
+
+const totalPages = computed(() => paginatedProjects.value.length)
+
+// Carousel methods
+const nextPage = () => {
+  if (currentPage.value < totalPages.value - 1) {
+    currentPage.value++
+  }
+}
+
+const previousPage = () => {
+  if (currentPage.value > 0) {
+    currentPage.value--
+  }
+}
+
+const goToPage = (page: number) => {
+  currentPage.value = page
+}
+
+// Reset page when filter changes
+watch(selectedFilter, () => {
+  currentPage.value = 0
+})
+
+// Keyboard navigation
+if (typeof window !== 'undefined') {
+  const handleKeyboard = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowLeft') {
+      previousPage()
+    } else if (event.key === 'ArrowRight') {
+      nextPage()
+    }
+  }
+  
+  window.addEventListener('keydown', handleKeyboard)
+}
+
 // Methods
 const setFilter = (value: string) => {
-  // Adiciona uma pequena animação de fade
-  const portfolioGrid = document.querySelector('.portfolio-grid') as HTMLElement
-  if (portfolioGrid) {
-    portfolioGrid.style.opacity = '0.5'
-    portfolioGrid.style.transform = 'translateY(10px)'
-    
-    setTimeout(() => {
-      selectedFilter.value = value
-      
-      nextTick(() => {
-        portfolioGrid.style.opacity = '1'
-        portfolioGrid.style.transform = 'translateY(0)'
-      })
-    }, 150)
-  } else {
-    selectedFilter.value = value
-  }
+  selectedFilter.value = value
 }
 
 const scrollToContact = () => {
@@ -418,9 +516,9 @@ const scrollToContact = () => {
 
 <style scoped>
 .modern-portfolio {
-  padding: 0px 0 40px;
+  padding: 40px 40px 0px 40px;
   background: rgb(var(--v-theme-background));
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }
@@ -433,49 +531,10 @@ const scrollToContact = () => {
 }
 
 /* Header Section */
+/* Header usa classes globais: .section-badge, .section-title, .title-highlight, .section-description */
 .portfolio-header {
   text-align: center;
-  margin-bottom: 64px;
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
-  padding: 8px 16px;
-  border-radius: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  backdrop-filter: blur(10px);
-}
-
-.section-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-background));
-  margin-bottom: 16px;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-
-.title-highlight {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.section-description {
-  font-size: 1.2rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
+  margin-bottom: 32px;
 }
 
 /* Filtros */
@@ -492,39 +551,146 @@ const scrollToContact = () => {
 
 .filter-chip {
   transition: all 0.3s ease;
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
   border-radius: 12px !important;
+  border: 2px solid transparent !important;
+}
+
+.filter-chip .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .filter-chip:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
 }
 
 .filter-chip--active {
   transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  border-color: rgb(241, 245, 249) !important;
+}
+
+/* Badge customization for active filter */
+.filter-chip--active .v-badge__badge {
+  background-color: rgb(168, 85, 247) !important;
+  color: white !important;
 }
 
 /* Portfolio Content */
 .portfolio-content {
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.4s;
-  opacity: 0;
+  position: relative;
 }
 
-.portfolio-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 32px;
-  margin-bottom: 48px;
+/* Carousel Container */
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--v-theme-outline), 0.2);
+  color: rgb(var(--v-theme-primary));
+  display: flex;
+  align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
 }
 
-.portfolio-item {
-  opacity: 0;
-  animation: fadeInUp 0.6s ease forwards;
+.carousel-nav .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.carousel-nav:hover:not(:disabled) {
+  background: rgb(var(--v-theme-primary));
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.carousel-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Carousel Wrapper */
+.carousel-wrapper {
+  flex: 1;
+  overflow-x: hidden;
+  overflow-y: visible;
+  position: relative;
+  padding: 30px 0;
+  margin: -30px 0;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  width: 100%;
+}
+
+.carousel-page {
+  flex: 0 0 100%;
+  min-width: 0;
+  padding: 0;
+}
+
+.carousel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 0;
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(var(--v-theme-outline), 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.indicator:hover {
+  background: rgba(59, 130, 246, 0.5);
+  transform: scale(1.2);
+}
+
+.indicator--active {
+  width: 24px;
+  border-radius: 4px;
+  background: rgb(var(--v-theme-primary));
+}
+
+.page-counter {
+  margin-left: 8px;
+  font-size: 0.875rem;
+  color: rgb(var(--v-theme-on-surface-variant));
+  font-weight: 500;
 }
 
 /* Empty State */
@@ -566,10 +732,10 @@ const scrollToContact = () => {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(59, 130, 246, 0.15);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: rgb(96, 165, 250);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
@@ -581,14 +747,14 @@ const scrollToContact = () => {
 .technologies-title {
   font-size: clamp(2rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: rgb(var(--v-theme-on-background));
+  color: rgb(241, 245, 249);
   margin: 16px 0;
   line-height: 1.2;
   animation: fadeInUp 0.8s ease forwards;
 }
 
 .tech-highlight {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(59, 130, 246));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -596,7 +762,7 @@ const scrollToContact = () => {
 
 .technologies-subtitle {
   font-size: 1.125rem;
-  color: rgba(var(--v-theme-on-background), 0.7);
+  color: rgb(203, 213, 225);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -841,41 +1007,44 @@ const scrollToContact = () => {
   box-shadow: 0 8px 20px rgba(var(--v-theme-primary), 0.3);
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animations definidas em assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 1024px) {
   .modern-portfolio {
-    padding: 60px 0 60px;
+    padding: 0;
   }
   
   .portfolio-container {
     padding: 0 20px;
   }
   
-  .portfolio-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+  .portfolio-header {
+    margin-bottom: 24px;
+  }
+  
+  .portfolio-filters {
+    margin-bottom: 40px;
+  }
+  
+  .carousel-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
   }
 }
 
 @media (max-width: 768px) {
   .modern-portfolio {
-    padding: 50px 0 60px;
+    padding: 0;
   }
   
   .portfolio-header {
-    margin-bottom: 48px;
+    margin-bottom: 20px;
   }
   
   .section-title {
@@ -887,9 +1056,22 @@ const scrollToContact = () => {
     justify-content: center;
   }
   
-  .portfolio-grid {
+  .portfolio-filters {
+    margin-bottom: 32px;
+  }
+  
+  .carousel-container {
+    gap: 8px;
+  }
+  
+  .carousel-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
+  }
+  
+  .carousel-nav {
+    width: 36px;
+    height: 36px;
   }
   
   .cta-content {
@@ -914,11 +1096,15 @@ const scrollToContact = () => {
 
 @media (max-width: 480px) {
   .modern-portfolio {
-    padding: 40px 0 40px;
+    padding: 0;
   }
   
   .portfolio-container {
     padding: 0 16px;
+  }
+  
+  .portfolio-header {
+    margin-bottom: 16px;
   }
   
   .section-title {
@@ -928,6 +1114,19 @@ const scrollToContact = () => {
   .filter-chips {
     justify-content: center;
     gap: 6px;
+  }
+  
+  .portfolio-filters {
+    margin-bottom: 24px;
+  }
+  
+  .carousel-container {
+    gap: 4px;
+  }
+  
+  .carousel-nav {
+    width: 32px;
+    height: 32px;
   }
   
   .cta-content {
@@ -947,16 +1146,7 @@ const scrollToContact = () => {
   animation-fill-mode: forwards;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animation fadeInUp definida em assets/css/components.css */
 
 /* Filter transition effect */
 .portfolio-grid {

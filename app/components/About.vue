@@ -23,7 +23,7 @@
           <!-- Past -->
           <div class="story-card past">
             <div class="story-icon">
-              <v-icon icon="mdi-history" color="primary" size="24" />
+              <v-icon icon="mdi-history" />
             </div>
             <h3 class="story-title">Minha História</h3>
             <p class="story-text">
@@ -34,7 +34,7 @@
           <!-- Present -->
           <div class="story-card present">
             <div class="story-icon">
-              <v-icon icon="mdi-cogs" color="primary" size="24" />
+              <v-icon icon="mdi-cogs" />
             </div>
             <h3 class="story-title">Presente</h3>
             <p class="story-text">
@@ -45,7 +45,7 @@
           <!-- Future -->
           <div class="story-card future">
             <div class="story-icon">
-              <v-icon icon="mdi-rocket-launch" color="warning" size="24" />
+              <v-icon icon="mdi-rocket-launch" />
             </div>
             <h3 class="story-title">Futuro</h3>
             <p class="story-text">
@@ -59,7 +59,7 @@
           <div class="stats-grid">
             <div class="stat-item" v-for="(stat, index) in stats" :key="stat.label">
               <div class="stat-icon">
-                <v-icon :icon="stat.icon" :color="stat.color" size="20" />
+                <v-icon :icon="stat.icon" />
               </div>
               <div class="stat-content">
                 <div class="stat-value">{{ stat.value }}</div>
@@ -70,7 +70,7 @@
         </div>
 
         <!-- Values Section -->
-        <div class="values-section">
+        <!-- <div class="values-section">
           <div class="values-header">
             <div class="values-badge">
               <v-icon icon="mdi-heart" start size="14" />
@@ -89,7 +89,7 @@
               <div class="value-card-inner">
                 <div class="value-icon-wrapper">
                   <div class="value-icon" :style="{ background: value.gradient }">
-                    <v-icon :icon="value.icon" size="24" color="white" />
+                    <v-icon :icon="value.icon" />
                   </div>
                   <div class="value-glow" :style="{ background: value.gradient }"></div>
                 </div>
@@ -101,7 +101,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
@@ -203,7 +203,7 @@ const getValueColor = (index: number) => {
 
 <style scoped>
 .modern-about {
-  padding: 120px 0 80px;
+  padding: 40px;
   background: rgb(var(--v-theme-background));
   min-height: 100vh;
   display: flex;
@@ -218,47 +218,10 @@ const getValueColor = (index: number) => {
 }
 
 /* Header Section */
+/* Header usa classes globais: .section-badge, .section-title, .title-highlight, .section-description */
 .about-header {
   text-align: center;
   margin-bottom: 80px;
-}
-
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #3b82f6;
-  margin-bottom: 24px;
-}
-
-.section-title {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 800;
-  color: rgb(var(--v-theme-on-background));
-  margin-bottom: 16px;
-  letter-spacing: -0.025em;
-  line-height: 1.1;
-}
-
-.title-highlight {
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.section-description {
-  font-size: 18px;
-  color: rgb(var(--v-theme-on-surface-variant));
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
 }
 
 /* Content Section */
@@ -272,7 +235,6 @@ const getValueColor = (index: number) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 32px;
-  margin-bottom: 60px;
   justify-content: center;
 }
 
@@ -304,15 +266,16 @@ const getValueColor = (index: number) => {
 
 .story-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-  border-color: #3b82f6;
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
+  border-color: rgb(96, 165, 250);
 }
 
 .story-icon {
   width: 56px;
   height: 56px;
-  background: rgb(var(--v-theme-surface-bright));
-  border: 2px solid rgb(var(--v-theme-surface-light));
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 2px solid;
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -322,8 +285,46 @@ const getValueColor = (index: number) => {
 }
 
 .story-card:hover .story-icon {
-  background: rgba(59, 130, 246, 0.1);
-  border-color: #3b82f6;
+  background: transparent !important;
+  background-color: transparent !important;
+  transform: scale(1.1);
+}
+
+/* Story Icons - Cores individuais */
+.story-card.past .story-icon {
+  border-color: rgb(139, 92, 246);
+}
+
+.story-card.past .story-icon .v-icon {
+  color: rgb(139, 92, 246) !important;
+}
+
+.story-card.present .story-icon {
+  border-color: rgb(59, 130, 246);
+}
+
+.story-card.present .story-icon .v-icon {
+  color: rgb(59, 130, 246) !important;
+}
+
+.story-card.future .story-icon {
+  border-color: rgb(34, 211, 238);
+}
+
+.story-card.future .story-icon .v-icon {
+  color: rgb(34, 211, 238) !important;
+}
+
+.story-icon .v-icon {
+  font-size: 28px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+.story-icon .v-icon::before,
+.story-icon .v-icon::after {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .story-title {
@@ -347,7 +348,6 @@ const getValueColor = (index: number) => {
   padding: 40px;
   border-radius: 24px;
   border: 1px solid rgb(var(--v-theme-surface-bright));
-  margin-bottom: 60px;
 }
 
 .stats-grid {
@@ -375,13 +375,32 @@ const getValueColor = (index: number) => {
 .stat-icon {
   width: 48px;
   height: 48px;
-  background: rgb(var(--v-theme-surface));
-  border: 2px solid rgb(var(--v-theme-surface-light));
+  background: rgba(59, 130, 246, 0.05) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover .stat-icon {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.stat-icon .v-icon {
+  font-size: 24px !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgb(96, 165, 250) !important;
+}
+
+.stat-icon .v-icon::before,
+.stat-icon .v-icon::after {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .stat-content {
@@ -436,27 +455,27 @@ const getValueColor = (index: number) => {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.15);
+  color: rgb(96, 165, 250);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 16px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .values-title {
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
+  color: rgb(241, 245, 249);
   margin-bottom: 12px;
   letter-spacing: -0.025em;
   line-height: 1.2;
 }
 
 .values-highlight {
-  background: linear-gradient(135deg, #3b82f6, #10b981);
+  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(16, 185, 129));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -464,7 +483,7 @@ const getValueColor = (index: number) => {
 
 .values-subtitle {
   font-size: 1.1rem;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(203, 213, 225);
   margin: 0;
   max-width: 600px;
   margin: 0 auto;
@@ -529,12 +548,12 @@ const getValueColor = (index: number) => {
   position: relative;
   z-index: 2;
   transition: all 0.3s ease;
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
 }
 
 .value-card:hover .value-icon {
   transform: scale(1.1);
-  background: rgba(59, 130, 246, 0.15);
+  background: rgba(59, 130, 246, 0.2);
 }
 
 .value-glow {
@@ -618,17 +637,7 @@ const getValueColor = (index: number) => {
   line-height: 1.2;
 }
 
-/* Animations */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animations definidas em assets/css/components.css */
 
 /* Tablet adjustments */
 @media (max-width: 1024px) and (min-width: 769px) {

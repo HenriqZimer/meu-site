@@ -68,7 +68,8 @@ export default defineNuxtConfig({
   css: [
     'assets/css/design-tokens.css',
     'assets/css/critical.css',
-    'assets/css/animations.css'
+    'assets/css/animations.css',
+    'assets/css/components.css'
   ],
 
   components: {

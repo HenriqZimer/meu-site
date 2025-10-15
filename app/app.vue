@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-theme-provider theme="light">
+    <v-theme-provider>
       <!-- Header -->
       <Header />
       

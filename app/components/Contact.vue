@@ -8,10 +8,10 @@
           <span>Contato</span>
         </div>
         <h2 class="section-title">
-          Interessado em 
+          Interessado em
           <span class="title-highlight">trabalhar comigo</span>?
         </h2>
-        <p class="section-subtitle">
+        <p class="section-description">
           Vamos conversar sobre seu próximo projeto
         </p>
       </div>
@@ -20,7 +20,9 @@
         <div class="contact-info-card" data-animate="slide-up" data-delay="200">
           <div class="card-header">
             <h3 class="card-title">Entre em Contato</h3>
-            <p class="card-subtitle">Estou sempre disponível para novos projetos</p>
+            <p class="card-subtitle">
+              Estou sempre disponível para novos projetos
+            </p>
           </div>
 
           <div class="contact-list">
@@ -30,7 +32,9 @@
               </div>
               <div class="contact-details">
                 <span class="contact-label">Email</span>
-                <a :href="`mailto:${email}`" class="contact-value">{{ email }}</a>
+                <a :href="`mailto:${email}`" class="contact-value">{{
+                  email
+                }}</a>
               </div>
             </div>
 
@@ -40,6 +44,16 @@
               </div>
               <div class="contact-details">
                 <span class="contact-label">Telefone</span>
+                <span class="contact-value">{{ phone }}</span>
+              </div>
+            </div>
+            
+            <div class="contact-item" data-animate="fade-in" data-delay="400">
+              <div class="contact-icon">
+                <v-icon icon="mdi-whatsapp" size="20" />
+              </div>
+              <div class="contact-details">
+                <span class="contact-label">WhatsApp</span>
                 <span class="contact-value">{{ phone }}</span>
               </div>
             </div>
@@ -88,7 +102,12 @@
             <p class="card-subtitle">Descreva seu projeto e vamos conversar</p>
           </div>
 
-          <v-form ref="form" v-model="valid" @submit.prevent="handleSubmit" class="contact-form">
+          <v-form
+            ref="form"
+            v-model="valid"
+            @submit.prevent="handleSubmit"
+            class="contact-form"
+          >
             <div class="form-row">
               <v-text-field
                 v-model="formData.name"
@@ -156,94 +175,92 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
 // Variáveis de ambiente
-const email = useRuntimeConfig().public.email
-const phone = useRuntimeConfig().public.phone
-const location = useRuntimeConfig().public.location
-const githubUrl = useRuntimeConfig().public.githubUrl
-const linkedinUrl = useRuntimeConfig().public.linkedinUrl
+const email = useRuntimeConfig().public.email;
+const phone = useRuntimeConfig().public.phone;
+const location = useRuntimeConfig().public.location;
+const githubUrl = useRuntimeConfig().public.githubUrl;
+const linkedinUrl = useRuntimeConfig().public.linkedinUrl;
 
-const valid = ref(false)
-const loading = ref(false)
-const form = ref(null)
+const valid = ref(false);
+const loading = ref(false);
+const form = ref(null);
 
 const formData = ref({
-  name: '',
-  email: '',
-  subject: '',
-  message: ''
-})
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+});
 
 const alert = ref<{
-  show: boolean
-  type: 'success' | 'error' | 'warning' | 'info'
-  message: string
+  show: boolean;
+  type: "success" | "error" | "warning" | "info";
+  message: string;
 }>({
   show: false,
-  type: 'success',
-  message: ''
-})
+  type: "success",
+  message: "",
+});
 
 const nameRules = [
-  (v: string) => !!v || 'Nome é obrigatório',
-  (v: string) => v.length >= 3 || 'Nome deve ter pelo menos 3 caracteres'
-]
+  (v: string) => !!v || "Nome é obrigatório",
+  (v: string) => v.length >= 3 || "Nome deve ter pelo menos 3 caracteres",
+];
 
 const emailRules = [
-  (v: string) => !!v || 'Email é obrigatório',
-  (v: string) => /.+@.+\..+/.test(v) || 'Email deve ser válido'
-]
+  (v: string) => !!v || "Email é obrigatório",
+  (v: string) => /.+@.+\..+/.test(v) || "Email deve ser válido",
+];
 
-const subjectRules = [
-  (v: string) => !!v || 'Assunto é obrigatório'
-]
+const subjectRules = [(v: string) => !!v || "Assunto é obrigatório"];
 
 const messageRules = [
-  (v: string) => !!v || 'Mensagem é obrigatória',
-  (v: string) => v.length >= 10 || 'Mensagem deve ter pelo menos 10 caracteres'
-]
+  (v: string) => !!v || "Mensagem é obrigatória",
+  (v: string) => v.length >= 10 || "Mensagem deve ter pelo menos 10 caracteres",
+];
 
 const handleSubmit = async () => {
-  if (!valid.value) return
+  if (!valid.value) return;
 
-  loading.value = true
+  loading.value = true;
 
   try {
     // Simular envio do formulário
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     alert.value = {
       show: true,
-      type: 'success',
-      message: 'Mensagem enviada com sucesso! Responderei em breve.'
-    }
+      type: "success",
+      message: "Mensagem enviada com sucesso! Responderei em breve.",
+    };
 
     // Resetar formulário
     formData.value = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    }
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
 
     if (form.value) {
       // Reset do formulário usando interface adequada
-      const formElement = form.value as HTMLFormElement
-      formElement.reset()
+      const formElement = form.value as HTMLFormElement;
+      formElement.reset();
     }
   } catch {
     // Erro capturado mas não utilizado diretamente
     alert.value = {
       show: true,
-      type: 'error',
-      message: 'Erro ao enviar mensagem. Tente novamente.'
-    }
+      type: "error",
+      message: "Erro ao enviar mensagem. Tente novamente.",
+    };
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 </script>
 
 <style scoped>
@@ -271,44 +288,25 @@ const handleSubmit = async () => {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: rgba(var(--v-theme-primary), 0.1);
-  border: 1px solid rgba(var(--v-theme-primary), 0.2);
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
   border-radius: 24px;
-  color: rgb(var(--v-theme-primary));
-  font-size: 0.9rem;
+  color: rgb(96, 165, 250) !important;
+  font-size: 14px;
   font-weight: 500;
   margin-bottom: 24px;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.6s ease forwards;
+  backdrop-filter: blur(10px);
 }
 
-.section-title {
-  font-size: 3rem;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-background));
-  margin-bottom: 16px;
-  line-height: 1.2;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 0.6s ease 0.2s forwards;
+.section-badge .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgb(96, 165, 250) !important;
 }
 
-.title-highlight {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.section-subtitle {
-  font-size: 1.25rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin-bottom: 0;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeInUp 0.6s ease 0.4s forwards;
-}
 
 /* Content */
 .contact-content {
@@ -321,13 +319,21 @@ const handleSubmit = async () => {
 /* Cards */
 .contact-info-card,
 .contact-form-card {
-  background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-surface-bright));
-  border-radius: 16px;
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--v-theme-outline), 0.15);
+  border-radius: 20px;
   padding: 32px;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
+  transition: all 0.3s ease;
+}
+
+.contact-info-card:hover,
+.contact-form-card:hover {
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
 }
 
 .contact-form-card {
@@ -360,7 +366,7 @@ const handleSubmit = async () => {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 12px 0;
+  padding: 16px 0;
   border-bottom: 1px solid rgb(var(--v-theme-surface-bright));
   transition: all 0.3s ease;
 }
@@ -378,12 +384,26 @@ const handleSubmit = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(var(--v-theme-primary), 0.1);
-  border-radius: 8px;
-  color: rgb(var(--v-theme-primary));
+  width: 48px;
+  height: 48px;
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  color: rgb(96, 165, 250) !important;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover .contact-icon {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: scale(1.1);
+}
+
+.contact-icon .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: rgb(96, 165, 250) !important;
 }
 
 .contact-details {
@@ -429,15 +449,24 @@ const handleSubmit = async () => {
 }
 
 .social-btn {
-  border-radius: 8px !important;
+  border-radius: 12px !important;
   text-transform: none !important;
   font-weight: 500 !important;
+  border: 2px solid rgb(59, 130, 246) !important;
+  color: rgb(96, 165, 250) !important;
   transition: all 0.3s ease !important;
 }
 
 .social-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(var(--v-theme-primary), 0.2);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgb(96, 165, 250) !important;
+}
+
+.social-btn .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Form */
@@ -455,18 +484,53 @@ const handleSubmit = async () => {
   margin-bottom: 16px;
 }
 
+/* Fix para remover background estranho dos campos */
+.contact-form :deep(.v-field) {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.contact-form :deep(.v-field__overlay) {
+  background-color: transparent !important;
+  opacity: 0 !important;
+}
+
+.contact-form :deep(.v-field__field) {
+  background-color: transparent !important;
+}
+
+.contact-form :deep(.v-field--variant-outlined .v-field__outline) {
+  color: rgba(var(--v-theme-outline), 0.3);
+}
+
+.contact-form :deep(.v-field--focused .v-field__outline) {
+  color: rgb(59, 130, 246);
+}
+
+.contact-form :deep(.v-field--variant-outlined:hover .v-field__outline) {
+  color: rgba(var(--v-theme-outline), 0.5);
+}
+
 .submit-btn {
   width: 100%;
-  border-radius: 8px !important;
+  border-radius: 16px !important;
   text-transform: none !important;
   font-weight: 600 !important;
-  padding: 12px 24px !important;
+  padding: 14px 28px !important;
+  background: rgb(59, 130, 246) !important;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
   transition: all 0.3s ease !important;
 }
 
 .submit-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
+  background: rgb(37, 99, 235) !important;
+}
+
+.submit-btn .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .form-alert {
@@ -491,49 +555,37 @@ const handleSubmit = async () => {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-  
-  .section-title {
-    font-size: 2.5rem;
-  }
 }
 
 @media (max-width: 768px) {
   .contact-section {
     padding: 60px 0;
   }
-  
+
   .contact-container {
     padding: 0 16px;
   }
-  
+
   .section-header {
     margin-bottom: 60px;
   }
-  
-  .section-title {
-    font-size: 2rem;
-  }
-  
+
   .contact-info-card,
   .contact-form-card {
     padding: 24px;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
     gap: 0;
   }
-  
+
   .social-buttons {
     flex-direction: column;
   }
 }
 
 @media (max-width: 480px) {
-  .section-title {
-    font-size: 1.75rem;
-  }
-  
   .contact-info-card,
   .contact-form-card {
     padding: 20px;

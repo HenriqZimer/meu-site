@@ -85,7 +85,7 @@
           </div>
           <div class="tech-stack">
             <span>Desenvolvido com</span>
-            <v-icon icon="mdi-heart" size="14" color="#ef4444" />
+            <v-icon icon="mdi-heart" size="14" class="heart-icon" />
             <span>usando</span>
             <span class="tech-highlight">Vue.js</span>
             <span>&</span>
@@ -281,7 +281,7 @@ onUnmounted(() => {
 }
 
 .nav-link:hover {
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
   transform: translateX(4px);
 }
 
@@ -295,7 +295,7 @@ onUnmounted(() => {
 .contact-title {
   font-size: 16px;
   font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
+  color: rgb(241, 245, 249);
   margin: 0 0 4px 0;
   letter-spacing: -0.025em;
 }
@@ -311,14 +311,14 @@ onUnmounted(() => {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(203, 213, 225);
   text-decoration: none;
   transition: all 0.2s ease;
   font-weight: 500;
 }
 
 .contact-item:hover {
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
 }
 
 /* Social Section */
@@ -347,19 +347,19 @@ onUnmounted(() => {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 12px;
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .social-link:hover {
-  background: #3b82f6;
+  background: rgb(59, 130, 246);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 /* Bottom Bar */
@@ -381,12 +381,12 @@ onUnmounted(() => {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #94a3b8;
+  color: rgb(148, 163, 184);
   font-weight: 500;
 }
 
 .separator {
-  color: #64748b;
+  color: rgb(100, 116, 139);
 }
 
 .tech-stack {
@@ -394,12 +394,12 @@ onUnmounted(() => {
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  color: #94a3b8;
+  color: rgb(148, 163, 184);
   font-weight: 500;
 }
 
 .tech-highlight {
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
   font-weight: 600;
 }
 

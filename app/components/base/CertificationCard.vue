@@ -154,19 +154,19 @@ const contentStyles = computed(() => {
 }
 
 .certification-header--primary {
-  --header-color: var(--v-theme-primary);
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
 }
 
 .certification-header--success {
-  --header-color: var(--v-theme-primary);
+  background: linear-gradient(135deg, #10b981, #059669) !important;
 }
 
 .certification-header--warning {
-  --header-color: var(--v-theme-warning);
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
 }
 
 .certification-header--info {
-  --header-color: var(--v-theme-info);
+  background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
 }
 
 .header-content {

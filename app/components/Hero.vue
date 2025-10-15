@@ -157,14 +157,17 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   justify-content: center;
   overflow: hidden;
   background: rgb(var(--v-theme-background));
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 .hero-container {
   max-width: 1400px;
   width: 100%;
-  padding: 120px 24px 60px;
+  padding: 100px 24px 60px;
   position: relative;
   z-index: 2;
+  margin-top: 0 !important;
 }
 
 .hero-content {
@@ -184,19 +187,24 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 24px;
   font-size: 14px;
   font-weight: 500;
-  color: #3b82f6;
+  color: rgb(96, 165, 250);
   margin-bottom: 32px;
+}
+
+.hero-badge .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .badge-indicator {
   width: 8px;
   height: 8px;
-  background: #10b981;
+  background: rgb(16, 185, 129);
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
@@ -205,13 +213,13 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 800;
   line-height: 1.1;
-  color: rgb(var(--v-theme-on-background));
+  color: rgb(241, 245, 249);
   margin-bottom: 16px;
   letter-spacing: -0.025em;
 }
 
 .hero-name {
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(34, 211, 238));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -221,7 +229,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .hero-subtitle {
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 600;
-  color: rgb(var(--v-theme-on-background-variant));
+  color: rgb(203, 213, 225);
   margin-bottom: 24px;
   letter-spacing: -0.025em;
 }
@@ -229,7 +237,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .hero-description {
   font-size: 18px;
   line-height: 1.7;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(203, 213, 225);
   margin-bottom: 40px;
   max-width: 480px;
 }
@@ -247,13 +255,21 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   font-size: 16px;
   font-weight: 600;
   border-radius: 16px !important;
+  background: rgb(59, 130, 246) !important;
   box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
   transition: all 0.3s ease;
+  text-transform: none !important;
+}
+
+.cta-primary .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .cta-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+  background: rgb(37, 99, 235) !important;
 }
 
 .cta-secondary {
@@ -262,13 +278,21 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   font-size: 16px;
   font-weight: 600;
   border-radius: 16px !important;
-  border-width: 2px !important;
+  border: 2px solid rgb(59, 130, 246) !important;
+  color: rgb(96, 165, 250) !important;
   transition: all 0.3s ease;
+  text-transform: none !important;
+}
+
+.cta-secondary .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .cta-secondary:hover {
   transform: translateY(-2px);
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(59, 130, 246, 0.1) !important;
+  border-color: rgb(96, 165, 250) !important;
 }
 
 .hero-social {
@@ -280,7 +304,7 @@ const getImageUrl = (width: number, format: string = 'webp') => {
 .social-label {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(148, 163, 184);
   margin: 0;
   letter-spacing: 0.025em;
   text-transform: uppercase;
@@ -297,19 +321,24 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: rgb(var(--v-theme-surface));
-  border: 2px solid rgb(var(--v-theme-surface-bright));
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid rgba(59, 130, 246, 0.3);
   border-radius: 16px;
-  color: rgb(var(--v-theme-on-surface-variant));
+  color: rgb(96, 165, 250);
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
+.social-link .v-icon {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 .social-link:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+  border-color: rgb(96, 165, 250);
+  background: rgba(59, 130, 246, 0.15);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
 
 /* Visual Content */
@@ -331,18 +360,58 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   position: relative;
   width: 400px;
   height: 400px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  padding: 8px;
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+  border-radius: 32px;
+  overflow: visible;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.avatar-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
+  border-radius: 36px;
+  z-index: -1;
+  opacity: 0.8;
+  transition: all 0.5s ease;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    opacity: 0.6;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.2);
+  }
+}
+
+.avatar-wrapper:hover::before {
+  opacity: 1;
+  inset: -6px;
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+}
+
+.avatar-wrapper:hover {
+  transform: translateY(-12px) scale(1.02);
 }
 
 .hero-avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 32px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
+  transition: all 0.5s ease;
+}
+
+.avatar-wrapper:hover .hero-avatar {
+  box-shadow: 0 30px 80px rgba(59, 130, 246, 0.6);
 }
 
 /* Scroll Indicator */
@@ -386,7 +455,6 @@ const getImageUrl = (width: number, format: string = 'webp') => {
   right: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(6, 182, 212, 0.05));
 }
 
 .bg-pattern {

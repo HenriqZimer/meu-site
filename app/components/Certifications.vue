@@ -8,8 +8,8 @@
           Certificações
         </span>
         <h2 class="section-title">
-          Minha jornada de
-          <span class="title-highlight primary-theme">aprendizado</span>
+          Minhas 
+          <span class="title-highlight">Certificações</span>
         </h2>
         <p class="section-description">
           Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps
@@ -70,7 +70,7 @@
           <CertificationCard
             title="Certificações Obtidas"
             icon="mdi-certificate"
-            color="primary"
+            color="success"
             :items="obtainedCertifications"
             :count="obtainedCertifications.length"
             type="obtained"
@@ -230,7 +230,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
     icon: 'mdi-check-circle',
     value: obtainedCertifications.length,
     label: 'Obtidas',
-    color: 'primary'
+    color: 'success'
   },
   {
     icon: 'mdi-target',
@@ -255,8 +255,8 @@ const certificationStats = computed<CertificationStat[]>(() => [
 
 <style>
 .modern-certifications {
-  padding: 80px 0 80px;
-  background: rgb(var(--v-theme-surface));
+  padding: 40px;
+  background: rgb(var(--v-theme-background));
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -282,55 +282,33 @@ const certificationStats = computed<CertificationStat[]>(() => [
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
-  background: rgba(59, 130, 246, 0.1) !important;
-  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: rgb(96, 165, 250) !important;
   padding: 8px 16px !important;
   border-radius: 24px !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   margin-bottom: 16px !important;
-  border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
   backdrop-filter: blur(10px) !important;
 }
 
 .modern-certifications .section-badge .v-icon {
-  color: #3b82f6 !important;
+  color: rgb(96, 165, 250) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .modern-certifications .section-badge.primary-theme {
-  background: rgba(59, 130, 246, 0.1) !important;
-  color: #3b82f6 !important;
-  border-color: rgba(59, 130, 246, 0.2) !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: rgb(96, 165, 250) !important;
+  border-color: rgba(59, 130, 246, 0.3) !important;
 }
 
 .modern-certifications .section-badge.primary-theme .v-icon {
-  color: #3b82f6 !important;
-}
-
-.modern-certifications .section-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 16px;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-}
-
-.modern-certifications .title-highlight {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
-  background-clip: text !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
-}
-
-.modern-certifications .title-highlight.primary-theme {
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
-  background-clip: text !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  color: transparent !important;
-  display: inline-block;
+  color: rgb(96, 165, 250) !important;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .modern-certifications .section-description {
@@ -360,13 +338,13 @@ const certificationStats = computed<CertificationStat[]>(() => [
 .modern-certifications .stat-item[data-animate-delay="300"] { animation-delay: 1.1s; }
 
 .modern-certifications .stat-card {
-  background: rgba(var(--v-theme-surface-variant), 0.5);
-  border: 1px solid rgba(var(--v-theme-outline-variant), 0.2);
+  background: rgba(var(--v-theme-surface), 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(var(--v-theme-outline), 0.15);
   border-radius: 16px;
   padding: 20px;
   text-align: center;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
 }
@@ -378,19 +356,20 @@ const certificationStats = computed<CertificationStat[]>(() => [
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #1d4ed8) !important;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  background: linear-gradient(90deg, rgb(59, 130, 246), rgb(96, 165, 250)) !important;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .modern-certifications .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(var(--v-theme-shadow), 0.15);
-  border-color: rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
+  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(var(--v-theme-surface), 0.95);
 }
 
 .modern-certifications .stat-card:hover::before {
-  opacity: 1;
+  transform: scaleX(1);
 }
 
 .modern-certifications .stat-icon-wrapper {
@@ -400,18 +379,90 @@ const certificationStats = computed<CertificationStat[]>(() => [
   width: 56px;
   height: 56px;
   border-radius: 12px;
-  background: rgba(var(--v-theme-primary), 0.1);
   margin-bottom: 12px;
   transition: all 0.3s ease;
 }
 
-.modern-certifications .stat-card:hover .stat-icon-wrapper {
-  transform: scale(1.1);
-  background: rgba(var(--v-theme-primary), 0.15);
+/* Success color (Obtidas) */
+.modern-certifications .stat-item:nth-child(1) .stat-icon-wrapper {
+  background: rgba(16, 185, 129, 0.1) !important;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.modern-certifications .stat-item:nth-child(1) .stat-card:hover .stat-icon-wrapper {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.modern-certifications .stat-item:nth-child(1) .stat-icon {
+  color: #10b981 !important;
+}
+
+.modern-certifications .stat-item:nth-child(1) .stat-value {
+  color: #10b981 !important;
+}
+
+/* Primary color (Planejadas) */
+.modern-certifications .stat-item:nth-child(2) .stat-icon-wrapper {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.modern-certifications .stat-item:nth-child(2) .stat-card:hover .stat-icon-wrapper {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.modern-certifications .stat-item:nth-child(2) .stat-icon {
+  color: #3b82f6 !important;
+}
+
+.modern-certifications .stat-item:nth-child(2) .stat-value {
+  color: #3b82f6 !important;
+}
+
+/* Info color (Progresso) */
+.modern-certifications .stat-item:nth-child(3) .stat-icon-wrapper {
+  background: rgba(6, 182, 212, 0.1) !important;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.modern-certifications .stat-item:nth-child(3) .stat-card:hover .stat-icon-wrapper {
+  background: rgba(6, 182, 212, 0.2) !important;
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.modern-certifications .stat-item:nth-child(3) .stat-icon {
+  color: #06b6d4 !important;
+}
+
+.modern-certifications .stat-item:nth-child(3) .stat-value {
+  color: #06b6d4 !important;
+}
+
+/* Warning color (Total) */
+.modern-certifications .stat-item:nth-child(4) .stat-icon-wrapper {
+  background: rgba(245, 158, 11, 0.1) !important;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.modern-certifications .stat-item:nth-child(4) .stat-card:hover .stat-icon-wrapper {
+  background: rgba(245, 158, 11, 0.2) !important;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.modern-certifications .stat-item:nth-child(4) .stat-icon {
+  color: #f59e0b !important;
+}
+
+.modern-certifications .stat-item:nth-child(4) .stat-value {
+  color: #f59e0b !important;
 }
 
 .modern-certifications .stat-icon {
   transition: all 0.3s ease;
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 .modern-certifications .stat-card:hover .stat-icon {
@@ -427,6 +478,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
   font-weight: 700;
   line-height: 1;
   margin-bottom: 4px;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .modern-certifications .stat-label {
@@ -464,7 +516,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
 .modern-certifications .progress-percentage {
   font-size: 1.25rem;
   font-weight: 700;
-  color: rgb(var(--v-theme-primary)) !important;
+  color: rgb(96, 165, 250) !important;
 }
 
 .modern-certifications .progress-bar {
@@ -547,10 +599,6 @@ const certificationStats = computed<CertificationStat[]>(() => [
     margin-bottom: 64px;
   }
   
-  .section-title {
-    font-size: 2.5rem;
-  }
-  
   .stats-overview {
     margin-bottom: 32px;
   }
@@ -587,9 +635,6 @@ const certificationStats = computed<CertificationStat[]>(() => [
     padding: 0 16px;
   }
   
-  .section-title {
-    font-size: 2rem;
-  }
   
   .stats-overview {
     margin-bottom: 24px;
