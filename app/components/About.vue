@@ -120,13 +120,13 @@ onMounted(() => {
 
 const stats = [
   { 
-    value: '6+', 
+    value: '3+', 
     label: 'Anos de Experiência',
     icon: 'mdi-briefcase-outline',
     color: 'primary'
   },
   { 
-    value: '50+', 
+    value: '5+', 
     label: 'Projetos Realizados',
     icon: 'mdi-rocket-launch-outline',
     color: 'primary'

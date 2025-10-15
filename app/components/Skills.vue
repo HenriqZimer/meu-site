@@ -87,44 +87,44 @@ const technologies: Technology[] = [
   { name: 'Terraform', category: 'IaC', icon: 'mdi-terraform', color: '#7B42BC', bgColor: '#f3e5f5' },
   { name: 'AWS', category: 'Cloud Provider', icon: 'mdi-aws', color: '#FF9900', bgColor: '#fff3e0' },
   { name: 'Helm', category: 'Package Manager', icon: 'mdi-ship-wheel', color: '#0F1689', bgColor: '#e8eaf6' },
-  { name: 'Ansible', category: 'Automação', icon: 'mdi-ansible', color: '#EE0000', bgColor: '#ffebee' },
+  // { name: 'Ansible', category: 'Automação', icon: 'mdi-ansible', color: '#EE0000', bgColor: '#ffebee' },
   
   // Desenvolvimento
-  { name: 'Python', category: 'Linguagem', icon: 'mdi-language-python', color: '#3776AB', bgColor: '#e3f2fd' },
+  // { name: 'Python', category: 'Linguagem', icon: 'mdi-language-python', color: '#3776AB', bgColor: '#e3f2fd' },
   { name: 'Node.js', category: 'Runtime', icon: 'mdi-nodejs', color: '#339933', bgColor: '#e8f5e9' },
-  { name: 'Go', category: 'Linguagem', icon: 'mdi-language-go', color: '#00ADD8', bgColor: '#e0f7fa' },
-  { name: 'TypeScript', category: 'Linguagem', icon: 'mdi-language-typescript', color: '#3178C6', bgColor: '#e3f2fd' },
-  { name: 'Rust', category: 'Linguagem', icon: 'mdi-cog', color: '#CE422B', bgColor: '#ffebee' },
+  // { name: 'Go', category: 'Linguagem', icon: 'mdi-language-go', color: '#00ADD8', bgColor: '#e0f7fa' },
+  // { name: 'TypeScript', category: 'Linguagem', icon: 'mdi-language-typescript', color: '#3178C6', bgColor: '#e3f2fd' },
+  // { name: 'Rust', category: 'Linguagem', icon: 'mdi-cog', color: '#CE422B', bgColor: '#ffebee' },
   
   // DevOps & CI/CD
-  { name: 'GitLab CI', category: 'CI/CD', icon: 'mdi-gitlab', color: '#FC6D26', bgColor: '#fff3e0' },
-  { name: 'GitHub Actions', category: 'CI/CD', icon: 'mdi-github', color: '#2088FF', bgColor: '#e3f2fd' },
-  { name: 'ArgoCD', category: 'GitOps', icon: 'mdi-git', color: '#EF7B4D', bgColor: '#fff3e0' },
-  { name: 'Jenkins', category: 'CI/CD', icon: 'mdi-pipe', color: '#D24939', bgColor: '#ffebee' },
+  // { name: 'GitLab CI', category: 'CI/CD', icon: 'mdi-gitlab', color: '#FC6D26', bgColor: '#fff3e0' },
+  // { name: 'GitHub Actions', category: 'CI/CD', icon: 'mdi-github', color: '#2088FF', bgColor: '#e3f2fd' },
+  // { name: 'ArgoCD', category: 'GitOps', icon: 'mdi-git', color: '#EF7B4D', bgColor: '#fff3e0' },
+  // { name: 'Jenkins', category: 'CI/CD', icon: 'mdi-pipe', color: '#D24939', bgColor: '#ffebee' },
   
   // Observabilidade
-  { name: 'Prometheus', category: 'Monitoring', icon: 'mdi-chart-line', color: '#E6522C', bgColor: '#ffebee' },
+  // { name: 'Prometheus', category: 'Monitoring', icon: 'mdi-chart-line', color: '#E6522C', bgColor: '#ffebee' },
   { name: 'Grafana', category: 'Visualização', icon: 'mdi-chart-box', color: '#F46800', bgColor: '#fff3e0' },
-  { name: 'ELK Stack', category: 'Logs', icon: 'mdi-math-log', color: '#005571', bgColor: '#e0f2f1' },
-  { name: 'Datadog', category: 'APM', icon: 'mdi-dog', color: '#632CA6', bgColor: '#f3e5f5' },
-  { name: 'OpenTelemetry', category: 'Observabilidade', icon: 'mdi-chart-box', color: '#F5A800', bgColor: '#fff3e0' },
+  // { name: 'ELK Stack', category: 'Logs', icon: 'mdi-math-log', color: '#005571', bgColor: '#e0f2f1' },
+  // { name: 'Datadog', category: 'APM', icon: 'mdi-dog', color: '#632CA6', bgColor: '#f3e5f5' },
+  // { name: 'OpenTelemetry', category: 'Observabilidade', icon: 'mdi-chart-box', color: '#F5A800', bgColor: '#fff3e0' },
   
   // Databases & Messaging
   { name: 'PostgreSQL', category: 'Database', icon: 'mdi-database', color: '#336791', bgColor: '#e3f2fd' },
   { name: 'Redis', category: 'Cache', icon: 'mdi-memory', color: '#DC382D', bgColor: '#ffebee' },
-  { name: 'RabbitMQ', category: 'Message Broker', icon: 'mdi-rabbit', color: '#FF6600', bgColor: '#fff3e0' },
-  { name: 'Kafka', category: 'Event Streaming', icon: 'mdi-message-processing', color: '#231F20', bgColor: '#f5f5f5' },
+  // { name: 'RabbitMQ', category: 'Message Broker', icon: 'mdi-rabbit', color: '#FF6600', bgColor: '#fff3e0' },
+  // { name: 'Kafka', category: 'Event Streaming', icon: 'mdi-message-processing', color: '#231F20', bgColor: '#f5f5f5' },
   
   // Security & Networking
-  { name: 'Vault', category: 'Secrets Management', icon: 'mdi-shield-key', color: '#FFD814', bgColor: '#fffde7' },
-  { name: 'Consul', category: 'Service Mesh', icon: 'mdi-server-network', color: '#E03875', bgColor: '#fce4ec' },
-  { name: 'Cilium', category: 'Network Security', icon: 'mdi-security-network', color: '#F8C517', bgColor: '#fffde7' },
-  { name: 'eBPF', category: 'Kernel Technology', icon: 'mdi-memory', color: '#F7931E', bgColor: '#fff3e0' },
+  // { name: 'Vault', category: 'Secrets Management', icon: 'mdi-shield-key', color: '#FFD814', bgColor: '#fffde7' },
+  // { name: 'Consul', category: 'Service Mesh', icon: 'mdi-server-network', color: '#E03875', bgColor: '#fce4ec' },
+  // { name: 'Cilium', category: 'Network Security', icon: 'mdi-security-network', color: '#F8C517', bgColor: '#fffde7' },
+  // { name: 'eBPF', category: 'Kernel Technology', icon: 'mdi-memory', color: '#F7931E', bgColor: '#fff3e0' },
   
   // Tools & Others
   { name: 'Git', category: 'Version Control', icon: 'mdi-git', color: '#F05032', bgColor: '#ffebee' },
   { name: 'Linux', category: 'Operating System', icon: 'mdi-linux', color: '#FCC624', bgColor: '#fffde7' },
-  { name: 'WebAssembly', category: 'Web Technology', icon: 'mdi-web', color: '#654FF0', bgColor: '#ede7f6' }
+  // { name: 'WebAssembly', category: 'Web Technology', icon: 'mdi-web', color: '#654FF0', bgColor: '#ede7f6' }
 ]
 </script>
 

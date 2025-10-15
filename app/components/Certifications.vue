@@ -159,6 +159,30 @@ const obtainedCertifications: Certification[] = [
     link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
     color: 'orange'
   },
+  // {
+  //   name: 'AWS Cloud Practitioner - Foundational',
+  //   issuer: 'Amazon Web Services',
+  //   image: 'https://imagens.henriqzimer.com.br/aws-cloud-practioner.png',
+  //   link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
+  //   color: 'orange'
+  // },
+  // {
+  //   name: 'Google Cloud Engineer - Associate',
+  //   issuer: 'Google Cloud',
+  //   image: 'https://imagens.henriqzimer.com.br/gcp-cloud-associate.png',
+  //   link: 'https://cloud.google.com/certification/cloud-engineer',
+  //   color: 'blue'
+  // },
+  // {
+  //   name: 'GitHub Fundamentals',
+  //   issuer: 'GitHub',
+  //   image: 'https://imagens.henriqzimer.com.br/github-fundations.png',
+  //   link: 'https://www.github.com/certification/',
+  //   color: 'grey-darken-4'
+  // }
+]
+
+const plannedCertifications: Certification[] = [
   {
     name: 'AWS Cloud Practitioner - Foundational',
     issuer: 'Amazon Web Services',
@@ -179,10 +203,7 @@ const obtainedCertifications: Certification[] = [
     image: 'https://imagens.henriqzimer.com.br/github-fundations.png',
     link: 'https://www.github.com/certification/',
     color: 'grey-darken-4'
-  }
-]
-
-const plannedCertifications: Certification[] = [
+  },
   {
     name: 'AWS AI Practitioner - Foundational',
     issuer: 'Amazon Web Services',

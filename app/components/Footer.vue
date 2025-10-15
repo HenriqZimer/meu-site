@@ -69,7 +69,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <v-icon :icon="social.icon" size="20" />
+              <v-icon :icon="social.icon" class="social-icons" size="20" />
             </a>
           </div>
         </div>
@@ -360,6 +360,11 @@ onUnmounted(() => {
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.social-icons {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Bottom Bar */
