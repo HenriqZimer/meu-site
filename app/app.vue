@@ -25,10 +25,6 @@ useHead({
     { name: "viewport", content: "width=device-width, initial-scale=1" },
   ],
 });
-  // Importar Header e Footer estaticamente para evitar chunk/dynamic-import warnings do Vite
-  // Header and Footer are auto-registered by Nuxt's components module.
-  // Removed explicit static imports to avoid Vite warning about the same
-  // component being imported both statically and dynamically.
 </script>
 
 <style>

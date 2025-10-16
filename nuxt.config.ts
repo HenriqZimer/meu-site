@@ -1,7 +1,4 @@
 export default defineNuxtConfig({
-  nitro: {
-    preset: 'cloudflare-worker'
-  },
   compatibilityDate: '2025-07-15',
   srcDir: 'app/',
   
@@ -9,7 +6,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteName: 'Henrique Zimermann',
+      siteName: 'Henrique Pereira Zimermann',
       siteFirstName: 'Henrique',
       siteDescription: 'DevOps & Cloud Engineer',
       siteUrl: 'https://henriqzimer.com.br',
@@ -25,17 +22,9 @@ export default defineNuxtConfig({
     }
   },
 
-  // Conditionally include server-only modules. '@artmizu/nuxt-prometheus' pulls
-  // in Node-specific deps that can cause issues when targeting Cloudflare Workers.
-  modules: (() => {
-    const base = ['vuetify-nuxt-module'] as string[]
-    // @ts-ignore - process.env.NITRO_PRESET may be set by build pipeline
-    const nitroPreset = process.env.NITRO_PRESET || 'cloudflare-worker'
-    if (nitroPreset !== 'cloudflare-worker') {
-      base.push('@artmizu/nuxt-prometheus')
-    }
-    return base
-  })(),
+  modules: [
+    'vuetify-nuxt-module'
+  ],
 
   vuetify: {
     vuetifyOptions: {
