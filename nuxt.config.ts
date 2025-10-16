@@ -22,9 +22,7 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: [
-    'vuetify-nuxt-module'
-  ],
+  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus'],
 
   vuetify: {
     vuetifyOptions: {
