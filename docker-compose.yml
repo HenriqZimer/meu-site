@@ -1,28 +1,22 @@
 services:
   app:
-    build: .
-    container_name: meu-site
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    environment:
-      - NODE_ENV=production
-    restart: unless-stopped
+    image: henriqzimer08/meu-site:latest
+    networks:
+      - site-network
+      - traefik-proxy
+      - cloudflared-proxy
     healthcheck:
-      test:
-        - CMD-SHELL
-        - wget http://localhost:3000/-/healthy || exit 1
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
     deploy:
       mode: replicated
-      replicas: 1
+      replicas: 2
       placement:
         constraints:
-          - node.role == manager
+          - node.role == worker
       restart_policy:
         condition: on-failure
         delay: 10s
@@ -38,16 +32,29 @@ services:
         delay: 30s
       resources:
         limits:
-          cpus: '2.0'
-          memory: 2G
+          cpus: "1.0"
+          memory: 1G
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
       labels:
         - traefik.enable=true
-        - traefik.http.routers.prometheus.rule=Host(`meu-site.henriqzimer.com.br`)
-        - traefik.http.routers.prometheus.entrypoints=websecure
-        - traefik.http.routers.prometheus.tls=true
-        - traefik.http.routers.prometheus.tls.certresolver=cloudflare
-        - traefik.http.routers.prometheus.middlewares=web-chain@file
-        - traefik.http.services.prometheus.loadbalancer.server.port=3000
+        - traefik.http.routers.meu-site.rule=Host(`meu-site.henriqzimer.com.br`)
+        - traefik.http.routers.meu-site.entrypoints=websecure
+        - traefik.http.routers.meu-site.tls=true
+        - traefik.http.routers.meu-site.tls.certresolver=cloudflare
+        - traefik.http.routers.meu-site.middlewares=web-chain@file
+        - traefik.http.services.meu-site.loadbalancer.server.port=3000
+
+networks:
+  site-network:
+    driver: overlay
+    driver_opts:
+      encrypted: "true"
+    attachable: true
+  traefik-proxy:
+    external: true
+    name: traefik_proxy-network
+  cloudflared-proxy:
+    external: true
+    name: cloudflared_proxy-network

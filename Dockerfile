@@ -1,6 +1,10 @@
 # Use Node.js 22 Alpine image
 FROM node:22-alpine
 
+# O Alpine usa o gerenciador de pacotes 'apk'.
+# Usamos '--no-cache' para evitar aumentar o tamanho final da imagem.
+RUN apk add --no-cache curl
+
 # Set working directory
 WORKDIR /app
 
@@ -16,7 +20,7 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Expose port
+# Expose port (Importante para que o Traefik e o healthcheck acessem internamente)
 EXPOSE 3000
 
 # Start the application
