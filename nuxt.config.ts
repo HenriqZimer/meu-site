@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+  nitro: {
+    preset: 'cloudflare-worker'
+  },
   compatibilityDate: '2025-07-15',
   srcDir: 'app/',
   
@@ -22,7 +25,17 @@ export default defineNuxtConfig({
     }
   },
 
-  modules: ['vuetify-nuxt-module', '@artmizu/nuxt-prometheus'],
+  // Conditionally include server-only modules. '@artmizu/nuxt-prometheus' pulls
+  // in Node-specific deps that can cause issues when targeting Cloudflare Workers.
+  modules: (() => {
+    const base = ['vuetify-nuxt-module'] as string[]
+    // @ts-ignore - process.env.NITRO_PRESET may be set by build pipeline
+    const nitroPreset = process.env.NITRO_PRESET || 'cloudflare-worker'
+    if (nitroPreset !== 'cloudflare-worker') {
+      base.push('@artmizu/nuxt-prometheus')
+    }
+    return base
+  })(),
 
   vuetify: {
     vuetifyOptions: {
@@ -88,7 +101,7 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#3b82f6' }
       ],
       link: [
-        { rel: 'apple-touch-icon', href: '/favicon.png', sizes: '180x180' }
+        { rel: 'apple-touch-icon', href: '/favicon.ico', sizes: '180x180' }
       ]
     }
   }
