@@ -6,7 +6,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteName: 'Henrique Pereira Zimermann',
+      siteName: 'Henrique Zimermann',
       siteFirstName: 'Henrique',
       siteDescription: 'DevOps & Cloud Engineer',
       siteUrl: 'https://henriqzimer.com.br',
