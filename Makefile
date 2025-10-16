@@ -1,5 +1,5 @@
 build: 
-	@docker build -t henriqzimer08/meu-site:latest .
+	@docker build --no-cache -t henriqzimer08/meu-site:latest .
 
 push: build
 	@docker push henriqzimer08/meu-site:latest

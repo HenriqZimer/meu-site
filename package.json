@@ -50,6 +50,7 @@
     "cleanup:docker": "./scripts/cleanup.sh docker"
   },
   "dependencies": {
+    "@artmizu/nuxt-prometheus": "^2.7.0",
     "@googlemaps/markerclusterer": "^2.6.2",
     "@mdi/font": "^7.4.47",
     "@nuxt/image": "^1.11.0",
