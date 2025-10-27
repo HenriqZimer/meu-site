@@ -1,12 +1,14 @@
 services:
   app:
-    image: henriqzimer08/meu-site:latest
+    image: henriquezimermann/meu-site:latest
     networks:
       - site-network
       - traefik-proxy
       - cloudflared-proxy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000/health || exit 1"]
+      test:
+        - CMD-SHELL
+        - curl -f http://localhost:3000/health || exit 1
       interval: 30s
       timeout: 10s
       retries: 3
@@ -32,10 +34,10 @@ services:
         delay: 30s
       resources:
         limits:
-          cpus: "1.0"
+          cpus: '1.0'
           memory: 1G
         reservations:
-          cpus: "0.5"
+          cpus: '0.5'
           memory: 512M
       labels:
         - traefik.enable=true
@@ -50,7 +52,7 @@ networks:
   site-network:
     driver: overlay
     driver_opts:
-      encrypted: "true"
+      encrypted: 'true'
     attachable: true
   traefik-proxy:
     external: true

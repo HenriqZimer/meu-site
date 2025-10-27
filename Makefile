@@ -1,8 +1,8 @@
 build: 
-	@docker build --no-cache -t henriqzimer08/meu-site:latest .
+	@docker build --no-cache -t henriquezimermann/meu-site:latest .
 
 push: build
-	@docker push henriqzimer08/meu-site:latest
+	@docker push henriquezimermann/meu-site:latest
 
 deploy: push
 	@docker stack deploy -c docker-compose.yml meu-site
