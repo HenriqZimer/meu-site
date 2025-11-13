@@ -2,94 +2,30 @@
   <section id="certifications" class="modern-certifications">
     <div class="certifications-container">
       <!-- Header Section -->
-      <div class="certifications-header" data-animate="fade-up">
-        <span class="section-badge primary-theme" data-animate="fade-in" data-delay="100">
-          <v-icon icon="mdi-certificate" start size="16" />
-          Certificações
-        </span>
-        <h2 class="section-title" data-animate="fade-up" data-delay="200">
-          Minhas 
-          <span class="title-highlight">Certificações</span>
-        </h2>
-        <p class="section-description" data-animate="fade-up" data-delay="300">
-          Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps
-        </p>
-        
+      <SectionHeader
+        badge="Certificações"
+        icon="mdi-certificate"
+        title-prefix="Minhas"
+        title-highlight="Certificações"
+        description="Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps"
+        theme="primary"
+      >
         <!-- Statistics Overview -->
-        <div class="stats-overview" data-animate="fade-up" data-delay="400">
-          <v-row justify="center">
-            <v-col 
-              v-for="(stat, index) in certificationStats" 
-              :key="index"
-              cols="6" 
-              sm="3"
-              class="stat-item"
-              :data-animate-delay="index * 100"
-            >
-              <div class="stat-card">
-                <div class="stat-icon-wrapper">
-                  <v-icon 
-                    :icon="stat.icon" 
-                    :color="stat.color"
-                    size="32"
-                    class="stat-icon"
-                  />
-                </div>
-                <div class="stat-content">
-                  <div class="stat-value" :class="`text-${stat.color}`">
-                    {{ stat.value }}
-                  </div>
-                  <div class="stat-label">{{ stat.label }}</div>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
+        <StatsGrid 
+          :stats="certificationStats" 
+          :base-delay="400"
+          custom-class="mt-8"
+        />
+      </SectionHeader>
 
-        <!-- Progress Bar -->
-        <div class="progress-section" data-animate="fade-up" data-delay="500">
-          <div class="progress-info">
-            <span class="progress-label">Progresso da Jornada</span>
-            <span class="progress-percentage">{{ Math.round((obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100) }}%</span>
-          </div>
-          <v-progress-linear
-            :model-value="(obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100"
-            color="primary"
-            bg-color="surface-variant"
-            height="8"
-            rounded
-            class="progress-bar"
-          />
-        </div>
-      </div>
-
-      <!-- Grid responsivo das certificações -->
-      <div class="certifications-grid">
-        <!-- Certificações Obtidas -->
-        <div class="certification-section" data-animate="fade-up" data-delay="600">
-          <CertificationCard
-            title="Certificações Obtidas"
-            icon="mdi-certificate"
-            color="success"
-            :items="obtainedCertifications"
-            :count="obtainedCertifications.length"
-            type="obtained"
-            :animation-delay="300"
-          />
-        </div>
-
-        <!-- Certificações Planejadas -->
-        <div class="certification-section" data-animate="fade-up" data-delay="700">
-          <CertificationCard
-            title="Próximas Metas"
-            icon="mdi-target"
-            color="primary"
-            :items="plannedCertifications"
-            :count="plannedCertifications.length"
-            type="planned"
-            :animation-delay="500"
-          />
-        </div>
+      <!-- Badges -->
+      <div class="certifications-content" data-animate="fade-up" data-delay="600">
+        <CredlyBadgeGrid
+          :badges="credlyBadges"
+          :show-header="false"
+          :columns="responsiveColumns"
+          :animation-delay="600"
+        />
       </div>
     </div>
   </section>
@@ -97,8 +33,18 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { Stat } from '~/components/base/StatsGrid.vue'
 
 // Types & Interfaces
+interface Badge {
+  name: string
+  issuer: string
+  image: string
+  link: string
+  date?: string
+  skills?: number
+}
+
 interface Certification {
   name: string
   issuer: string
@@ -106,13 +52,6 @@ interface Certification {
   color?: string
   image?: string
   link: string
-}
-
-interface CertificationStat {
-  icon: string
-  value: string | number
-  label: string
-  color: string
 }
 
 // Composables
@@ -128,58 +67,41 @@ onMounted(() => {
   })
 })
 
-// Responsive layouts
-const responsiveClasses = computed(() => ({
-  'certification-grid--mobile': isMobile.value,
-  'certification-grid--tablet': isTablet.value,
-  'certification-grid--desktop': isDesktop.value
-}))
+// Responsive columns
+const responsiveColumns = computed(() => {
+  if (isMobile.value) return 1
+  if (isTablet.value) return 2
+  return 4
+})
 
-const gridLayout = computed(() => ({
-  md: getResponsiveValue({ mobile: 12, tablet: 6, desktop: 6 }),
-  lg: getResponsiveValue({ mobile: 12, tablet: 6, desktop: 6 })
-}))
-
-const statsLayout = computed(() => ({
-  md: getResponsiveValue({ mobile: 12, tablet: 10, desktop: 8 }),
-  lg: getResponsiveValue({ mobile: 12, tablet: 10, desktop: 8 })
-}))
-
-const statsItemLayout = computed(() => ({
-  sm: getResponsiveValue({ mobile: 6, tablet: 3, desktop: 3 }),
-  md: getResponsiveValue({ mobile: 6, tablet: 3, desktop: 3 })
-}))
-
-// Data
-const obtainedCertifications: Certification[] = [
+// Badges obtidas (com informações completas)
+const credlyBadges: Badge[] = [
   {
-    name: 'Oracle Cloud Infrastructure - Foundations',
+    name: 'Oracle Cloud Infrastructure 2025 Certified Foundations Associate',
     issuer: 'Oracle',
-    image: 'https://imagens.henriqzimer.com.br/oci-cloud-infrastructure-.png',
+    image: 'https://images.credly.com/images/6e546fd3-414b-4396-9b91-2b5cf7accedf/OCI25FNDCFAV1_cached_image_20250926-30-gc8qc8.png',
     link: 'https://catalog-education.oracle.com/ords/certview/sharebadge?id=940F36B32BA531E98EE8D9A5C1B99E42EC8B5AFDC558E21B20C31D9FC2E5D9FB',
-    color: 'orange'
+    date: 'Set 2025',
+    skills: 16
   },
+  {
+    name: 'AWS Certified Cloud Practitioner',
+    issuer: 'Amazon Web Services',
+    image: 'https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
+    link: 'https://www.credly.com/badges/c0a133ca-557a-4c9d-ba13-84b8c26e0a4f',
+    date: 'Out 2025',
+    skills: 8
+  },
+  // Adicione mais badges aqui conforme obtiver novas certificações
+  // Exemplo:
   // {
-  //   name: 'AWS Cloud Practitioner - Foundational',
-  //   issuer: 'Amazon Web Services',
-  //   image: 'https://imagens.henriqzimer.com.br/aws-cloud-practioner.png',
-  //   link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
-  //   color: 'orange'
+  //   name: 'Nome Completo da Certificação',
+  //   issuer: 'Nome da Empresa Certificadora',
+  //   image: 'URL da imagem do badge (Credly: 340x340)',
+  //   link: 'Link público da certificação na Credly',
+  //   date: 'Mês Ano', // Opcional
+  //   skills: 10 // Número de skills (Opcional)
   // },
-  // {
-  //   name: 'Google Cloud Engineer - Associate',
-  //   issuer: 'Google Cloud',
-  //   image: 'https://imagens.henriqzimer.com.br/gcp-cloud-associate.png',
-  //   link: 'https://cloud.google.com/certification/cloud-engineer',
-  //   color: 'blue'
-  // },
-  // {
-  //   name: 'GitHub Fundamentals',
-  //   issuer: 'GitHub',
-  //   image: 'https://imagens.henriqzimer.com.br/github-fundations.png',
-  //   link: 'https://www.github.com/certification/',
-  //   color: 'grey-darken-4'
-  // }
 ]
 
 const plannedCertifications: Certification[] = [
@@ -256,30 +178,12 @@ const plannedCertifications: Certification[] = [
 ]
 
 // Computed stats
-const certificationStats = computed<CertificationStat[]>(() => [
+const certificationStats = computed<Stat[]>(() => [
   {
-    icon: 'mdi-check-circle',
-    value: obtainedCertifications.length,
-    label: 'Obtidas',
+    icon: 'mdi-certificate',
+    value: credlyBadges.length,
+    label: 'Certificações',
     color: 'success'
-  },
-  {
-    icon: 'mdi-target',
-    value: plannedCertifications.length,
-    label: 'Planejadas',
-    color: 'primary'
-  },
-  {
-    icon: 'mdi-chart-line',
-    value: `${Math.round((obtainedCertifications.length / (obtainedCertifications.length + plannedCertifications.length)) * 100)}%`,
-    label: 'Progresso',
-    color: 'info'
-  },
-  {
-    icon: 'mdi-trophy',
-    value: obtainedCertifications.length + plannedCertifications.length,
-    label: 'Total',
-    color: 'warning'
   }
 ])
 </script>
@@ -566,6 +470,26 @@ const certificationStats = computed<CertificationStat[]>(() => [
   opacity: 0;
 }
 
+/* Certifications Content (Credly Badges) */
+.modern-certifications .certifications-content {
+  margin-top: 60px;
+  margin-bottom: 60px;
+  padding: 0 20px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+  display: flex;
+  justify-content: center;
+}
+
+/* Planned Section */
+.modern-certifications .planned-section {
+  margin-top: 60px;
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.8s;
+}
+
 .modern-certifications .certification-section {
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
@@ -580,27 +504,7 @@ const certificationStats = computed<CertificationStat[]>(() => [
 }
 
 /* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* fadeInUp and fadeInScale moved to /assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 1024px) {

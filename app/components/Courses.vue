@@ -2,50 +2,21 @@
   <section id="courses" class="modern-courses">
     <div class="courses-container">
       <!-- Header Section -->
-      <div class="courses-header" data-animate="fade-up">
-        <span class="section-badge primary-theme" data-animate="fade-in" data-delay="100">
-          <v-icon icon="mdi-school" start size="16" />
-          Cursos
-        </span>
-        <h2 class="section-title" data-animate="fade-up" data-delay="200">
-          Meus
-          <span class="title-highlight">Cursos Concluídos</span>
-        </h2>
-        <p class="section-description" data-animate="fade-up" data-delay="300">
-          Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online
-        </p>
-
+      <SectionHeader
+        badge="Cursos"
+        icon="mdi-school"
+        title-prefix="Meus"
+        title-highlight="Cursos Concluídos"
+        description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
+        theme="primary"
+      >
         <!-- Statistics Overview -->
-        <div class="stats-overview" data-animate="fade-up" data-delay="400">
-          <v-row justify="center">
-            <v-col v-for="(stat, index) in courseStats" :key="index" cols="6" sm="3" class="stat-item"
-              :data-animate-delay="index * 100">
-              <div class="stat-card">
-                <div class="stat-icon-wrapper">
-                  <v-icon :icon="stat.icon" :color="stat.color" size="32" class="stat-icon" />
-                </div>
-                <div class="stat-content">
-                  <div class="stat-value" :class="`text-${stat.color}`">
-                    {{ stat.value }}
-                  </div>
-                  <div class="stat-label">{{ stat.label }}</div>
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="progress-section" data-animate="fade-up" data-delay="500">
-          <div class="progress-info">
-            <span class="progress-label">Progresso da Jornada</span>
-            <span class="progress-percentage">{{ Math.round((completedCourses.length / allCourses.length) * 100)
-            }}%</span>
-          </div>
-          <v-progress-linear :model-value="(completedCourses.length / allCourses.length) * 100" color="primary"
-            bg-color="surface-variant" height="8" rounded class="progress-bar" />
-        </div>
-      </div>
+        <StatsGrid 
+          :stats="courseStats" 
+          :base-delay="400"
+          custom-class="mt-8"
+        />
+      </SectionHeader>
 
       <!-- Expansion Panels por Ano -->
       <div class="courses-timeline" data-animate="fade-up" data-delay="600">
@@ -87,7 +58,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { IMAGE_URLS } from '~/constants'
 import CertificationItem from '~/components/base/CertificationItem.vue'
+import type { Stat } from '~/components/base/StatsGrid.vue'
 
 // Types & Interfaces
 interface Course {
@@ -105,13 +78,6 @@ interface Course {
 interface YearGroup {
   year: string
   courses: Course[]
-}
-
-interface CourseStat {
-  icon: string
-  value: string | number
-  label: string
-  color: string
 }
 
 // Composables
@@ -135,7 +101,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '12h',
-    image: 'https://imagens.henriqzimer.com.br/linux-tips.png',
+    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
     link: 'https://www.credential.net/c5958e12-4cca-400c-a0a2-10f2334b4666#acc.aInvtZbs/',
     color: 'blue',
     year: '2025'
@@ -145,7 +111,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '6h',
-    image: 'https://imagens.henriqzimer.com.br/linux-tips.png',
+    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
     link: 'https://mycourse.app/chvdwqAVGHUBCqQE7',
     color: 'blue',
     year: '2025'
@@ -155,7 +121,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Rafael Gomes',
     duration: '6h',
-    image: 'https://imagens.henriqzimer.com.br/linux-tips.png',
+    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
     link: 'https://mycourse.app/Mg0hRASgoL3dL7nUJ',
     color: 'blue',
     year: '2025'
@@ -165,7 +131,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '6h',
-    image: 'https://imagens.henriqzimer.com.br/linux-tips.png',
+    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
     link: 'https://mycourse.app/cbNZ3gsD2CmzKHhOB',
     color: 'blue',
     year: '2025'
@@ -175,7 +141,7 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Andre Iacono',
     duration: '16.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: IMAGE_URLS.PLATFORM_UDEMY,
     link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
     color: 'blue',
     year: '2025'
@@ -283,11 +249,14 @@ const allCourses: Course[] = [
     year: '2023'
   },
   {
-    "name": "Trilha WEB E FRONT-END, do evento TDC 2023 INNOVATION",
-    "platform": null,
-    "instructor": null,
-    "duration": "8 horas",
-    "year": "2023"
+    name: 'Git e GitHub do básico ao avançado (c/ gist e GitHub Pages)',
+    platform: 'Udemy',
+    instructor: 'Matheus Battisti, Hora de Codar',
+    duration: '8.5h',
+    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    link: 'https://www.udemy.com/certificate/UC-3e4b68f3-3ac9-43b4-a2d1-ff78fd294ed9/',
+    color: 'purple',
+    year: '2023'
   },
   // Planejados
   // {
@@ -352,30 +321,18 @@ const coursesByYear = computed<YearGroup[]>(() => {
 const completedCourses = computed(() => allCourses.filter(c => c.year !== 'Planejados'))
 const plannedCourses = computed(() => allCourses.filter(c => c.year === 'Planejados'))
 
-const courseStats = computed<CourseStat[]>(() => [
+const courseStats = computed<Stat[]>(() => [
   {
     icon: 'mdi-school',
-    value: allCourses.length,
-    label: 'Total',
-    color: 'primary'
-  },
-  {
-    icon: 'mdi-check-circle',
     value: completedCourses.value.length,
-    label: 'Concluídos',
+    label: 'Cursos',
     color: 'success'
-  },
-  {
-    icon: 'mdi-target',
-    value: plannedCourses.value.length,
-    label: 'Planejados',
-    color: 'info'
   },
   {
     icon: 'mdi-clock-outline',
     value: `${completedCourses.value.reduce((acc: number, course: Course) => acc + parseInt(course.duration || '0'), 0)}h`,
     label: 'Horas',
-    color: 'warning'
+    color: 'primary'
   }
 ])
 </script>
@@ -790,29 +747,7 @@ const courseStats = computed<CourseStat[]>(() => [
 }
 
 /* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+/* fadeInUp and fadeInScale moved to /assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 1024px) {

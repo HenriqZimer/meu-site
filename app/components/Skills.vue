@@ -2,19 +2,12 @@
   <section id="skills" class="modern-skills">
     <div class="skills-container">
       <!-- Header Section -->
-      <div class="skills-header">
-        <!-- <span class="section-badge">
-          <v-icon icon="mdi-brain" start size="16" />
-          Tecnologias
-        </span> -->
-        <h2 class="section-title">
-          Minha Stack
-          <span class="title-highlight">Tecnológica</span>
-        </h2>
-        <p class="section-description">
-          Ferramentas e tecnologias que domino e estou estudando
-        </p>
-      </div>
+      <SectionHeader
+        title-prefix="Minha Stack"
+        title-highlight="Tecnológica"
+        description="Ferramentas e tecnologias que domino e estou estudando"
+        custom-class="skills-header"
+      />
 
       <!-- Tech Carousel -->
       <div class="tech-carousel-container">

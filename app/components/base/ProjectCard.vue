@@ -360,17 +360,7 @@ const cardStyles = computed(() => ({
   border: 1px solid rgba(var(--v-theme-outline), 0.2);
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* fadeInUp animation available in /assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 768px) {

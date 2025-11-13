@@ -12,3 +12,6 @@ redeploy: deploy
 
 remove:
 	@docker stack rm meu-site
+
+docker:
+	@docker compose -f 'docker-compose-teste.yml' up -d

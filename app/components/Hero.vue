@@ -49,21 +49,11 @@
             </v-btn>
           </div>
 
-          <div class="hero-social" data-animate="fade-up" data-delay="600">
-            <p class="social-label">Conecte-se comigo</p>
-            <div class="social-links">
-              <a
-                v-for="social in socialLinks"
-                :key="social.name"
-                :href="social.url"
-                :aria-label="social.label"
-                class="social-link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <v-icon :icon="social.icon" size="20" />
-              </a>
-            </div>
+          <div data-animate="fade-up" data-delay="600">
+            <SocialLinks
+              :links="socialLinks"
+              label="Conecte-se comigo"
+            />
           </div>
         </div>
 
@@ -81,12 +71,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Scroll Indicator -->
-      <div class="scroll-indicator">
-        <div class="scroll-line"></div>
-        <div class="scroll-text">Role para explorar</div>
-      </div>
     </div>
 
     <!-- Background Elements -->
@@ -98,12 +82,18 @@
 </template>
 
 <script setup lang="ts">
+import { IMAGE_URLS } from "~/constants";
+import { useNavigation } from "~/composables/useNavigation";
+import { useSocialLinks } from "~/composables/useSocialLinks";
+import { getProfilePhotoUrl } from "~/utils/image";
+
 // Configuration
 const config = useRuntimeConfig();
 const siteFirstName = config.public.siteFirstName || "Henrique";
-const email = config.public.email;
-const githubUrl = config.public.githubUrl;
-const linkedinUrl = config.public.linkedinUrl;
+
+// Composables
+const { scrollToSection } = useNavigation();
+const { socialLinks } = useSocialLinks();
 
 // Scroll Animation
 const { observeElements } = useScrollAnimation();
@@ -115,47 +105,11 @@ onMounted(() => {
   });
 });
 
-const socialLinks = [
-  {
-    name: "github",
-    icon: "mdi-github",
-    url: githubUrl,
-    label: "Visitar GitHub",
-  },
-  {
-    name: "linkedin",
-    icon: "mdi-linkedin",
-    url: linkedinUrl,
-    label: "Visitar LinkedIn",
-  },
-  {
-    name: "email",
-    icon: "mdi-email-outline",
-    url: `mailto:${email}`,
-    label: "Enviar email",
-  },
-];
-
 const imageAlt = `Foto profissional de ${siteFirstName}`;
 
-// Methods
-const scrollToSection = (id: string) => {
-  const element = document.getElementById(id);
-  if (element) {
-    const offset = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
-  }
-};
-
-const getImageUrl = (width: number, format: string = "webp") => {
-  return `https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg?w=${width}&f=${format}`;
-};
+// Use utility function
+const getImageUrl = (width: number, format: string = "webp") => 
+  getProfilePhotoUrl(width, format);
 </script>
 
 <style scoped>
@@ -259,7 +213,7 @@ const getImageUrl = (width: number, format: string = "webp") => {
   margin-bottom: 48px;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .cta-primary {
@@ -428,33 +382,6 @@ const getImageUrl = (width: number, format: string = "webp") => {
   box-shadow: 0 30px 80px rgba(59, 130, 246, 0.6);
 }
 
-/* Scroll Indicator */
-.scroll-indicator {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  color: rgb(var(--v-theme-on-surface-variant));
-}
-
-.scroll-line {
-  width: 1px;
-  height: 40px;
-  background: linear-gradient(to bottom, #3b82f6, transparent);
-  animation: scrollLine 2s ease-in-out infinite;
-}
-
-.scroll-text {
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
 /* Background Elements */
 .hero-background {
   position: absolute;
@@ -486,31 +413,7 @@ const getImageUrl = (width: number, format: string = "webp") => {
     );
 }
 
-/* Animations */
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes scrollLine {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  50% {
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-  }
-}
+/* Animations available in /assets/css/animations.css */
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -527,6 +430,10 @@ const getImageUrl = (width: number, format: string = "webp") => {
 
   .hero-visual {
     order: 1;
+  }
+
+  .hero-actions {
+    justify-content: center;
   }
 
   .avatar-wrapper {
@@ -547,6 +454,7 @@ const getImageUrl = (width: number, format: string = "webp") => {
   .hero-actions {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   .cta-primary,
@@ -562,10 +470,6 @@ const getImageUrl = (width: number, format: string = "webp") => {
 
   .social-links {
     justify-content: center;
-  }
-
-  .scroll-indicator {
-    display: none;
   }
 }
 

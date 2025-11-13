@@ -2,90 +2,48 @@
   <section id="about" class="modern-about">
     <div class="about-container">
       <!-- Header Section -->
-      <div class="about-header" data-animate="fade-up">
-        <span class="section-badge" data-animate="fade-in" data-delay="100">
-          <v-icon icon="mdi-account-circle" start size="16" />
-          Sobre Mim
-        </span>
-        <h2 class="section-title" data-animate="fade-up" data-delay="200">
-          Conhecendo minha
-          <span class="title-highlight">jornada</span>
-        </h2>
-        <p class="section-description" data-animate="fade-up" data-delay="300">
-          Uma trajetória em constante evolução no mundo da tecnologia
-        </p>
-      </div>
+      <SectionHeader
+        badge="Sobre Mim"
+        icon="mdi-account-circle"
+        title-prefix="Conhecendo minha"
+        title-highlight="jornada"
+        description="Uma trajetória em constante evolução no mundo da tecnologia"
+      />
 
       <!-- Main Content -->
       <div class="about-content">
         <!-- Story Grid -->
         <div class="story-grid">
           <!-- Past -->
-          <div class="story-card past" data-animate="fade-up" data-delay="400">
-            <div class="story-icon">
-              <v-icon icon="mdi-history" />
-            </div>
-            <h3 class="story-title">Minha História</h3>
-            <p class="story-text">
-              Mais de 6 anos de experiência em atendimento ao público, onde
-              desenvolvi habilidades essenciais como paciência, resolução de
-              problemas e comunicação efetiva.
-            </p>
-          </div>
+          <StoryCard
+            variant="past"
+            icon="mdi-history"
+            title="Minha História"
+            description="Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva."
+            :delay="400"
+          />
 
           <!-- Present -->
-          <div
-            class="story-card present"
-            data-animate="fade-up"
-            data-delay="500"
-          >
-            <div class="story-icon">
-              <v-icon icon="mdi-cogs" />
-            </div>
-            <h3 class="story-title">Presente</h3>
-            <p class="story-text">
-              Atualmente focado em infraestrutura de TI, trabalhando com redes,
-              ferramentas Microsoft, virtualização e automação. Apaixonado por
-              soluções práticas.
-            </p>
-          </div>
+          <StoryCard
+            variant="present"
+            icon="mdi-cogs"
+            title="Presente"
+            description="Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas."
+            :delay="500"
+          />
 
           <!-- Future -->
-          <div
-            class="story-card future"
-            data-animate="fade-up"
-            data-delay="600"
-          >
-            <div class="story-icon">
-              <v-icon icon="mdi-rocket-launch" />
-            </div>
-            <h3 class="story-title">Futuro</h3>
-            <p class="story-text">
-              Estudando DevOps intensivamente, explorando containers, automação
-              e cloud computing para criar soluções mais inteligentes e
-              eficientes.
-            </p>
-          </div>
+          <StoryCard
+            variant="future"
+            icon="mdi-rocket-launch"
+            title="Futuro"
+            description="Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes."
+            :delay="600"
+          />
         </div>
 
         <!-- Stats Section -->
-        <div class="stats-section">
-          <div class="stats-grid">
-            <div
-              class="stat-item"
-              v-for="(stat, index) in stats"
-              :key="stat.label"
-            >
-              <div class="stat-icon">
-                <v-icon :icon="stat.icon" />
-              </div>
-              <div class="stat-content">
-                <div class="stat-value">{{ stat.value }}</div>
-                <div class="stat-label">{{ stat.label }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <StatsGrid :stats="stats" />
 
         <!-- Values Section -->
         <!-- <div class="values-section">
@@ -126,6 +84,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Stat } from "~/components/base/StatsGrid.vue";
+
 // Scroll Animation
 const { observeElements } = useScrollAnimation();
 
@@ -136,7 +96,7 @@ onMounted(() => {
   });
 });
 
-const stats = [
+const stats: Stat[] = [
   {
     value: "3+",
     label: "Anos de Experiência",
@@ -155,12 +115,12 @@ const stats = [
     icon: "mdi-school-outline",
     color: "info",
   },
-  {
-    value: "100%",
-    label: "Comprometimento",
-    icon: "mdi-heart-outline",
-    color: "error",
-  },
+  // {
+  //   value: "100%",
+  //   label: "Comprometimento",
+  //   icon: "mdi-heart-outline",
+  //   color: "error",
+  // },
 ];
 
 const values = [
@@ -277,110 +237,6 @@ const getValueColor = (index: number) => {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 32px;
   justify-content: center;
-}
-
-.story-card {
-  background: rgb(var(--v-theme-surface));
-  padding: 32px;
-  border-radius: 24px;
-  border: 1px solid rgb(var(--v-theme-surface-bright));
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.story-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.story-card:hover::before {
-  transform: scaleX(1);
-}
-
-.story-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
-  border-color: rgb(96, 165, 250);
-}
-
-.story-icon {
-  width: 56px;
-  height: 56px;
-  background: transparent !important;
-  background-color: transparent !important;
-  border: 2px solid;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  transition: all 0.3s ease;
-}
-
-.story-card:hover .story-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-  transform: scale(1.1);
-}
-
-/* Story Icons - Cores individuais */
-.story-card.past .story-icon {
-  border-color: rgb(139, 92, 246);
-}
-
-.story-card.past .story-icon .v-icon {
-  color: rgb(139, 92, 246) !important;
-}
-
-.story-card.present .story-icon {
-  border-color: rgb(59, 130, 246);
-}
-
-.story-card.present .story-icon .v-icon {
-  color: rgb(59, 130, 246) !important;
-}
-
-.story-card.future .story-icon {
-  border-color: rgb(34, 211, 238);
-}
-
-.story-card.future .story-icon .v-icon {
-  color: rgb(34, 211, 238) !important;
-}
-
-.story-icon .v-icon {
-  font-size: 28px !important;
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.story-icon .v-icon::before,
-.story-icon .v-icon::after {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.story-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 16px;
-  letter-spacing: -0.025em;
-}
-
-.story-text {
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin: 0;
 }
 
 /* Stats Section */
@@ -755,10 +611,6 @@ const getValueColor = (index: number) => {
     margin-bottom: 40px;
   }
 
-  .story-card {
-    padding: 24px;
-  }
-
   .stats-section,
   .values-section {
     padding: 32px 24px;
@@ -798,10 +650,6 @@ const getValueColor = (index: number) => {
 @media (max-width: 480px) {
   .stats-grid {
     grid-template-columns: 1fr;
-  }
-
-  .story-card {
-    padding: 20px;
   }
 
   .stats-section,

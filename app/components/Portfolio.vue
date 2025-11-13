@@ -2,19 +2,13 @@
   <section id="portfolio" class="modern-portfolio">
     <div class="portfolio-container">
       <!-- Header Section -->
-      <div class="portfolio-header" data-animate="fade-up">
-        <span class="section-badge" data-animate="fade-in" data-delay="100">
-          <v-icon icon="mdi-briefcase" start size="16" />
-          Portfólio
-        </span>
-        <h2 class="section-title" data-animate="fade-up" data-delay="200">
-          Meus
-          <span class="title-highlight">projetos</span>
-        </h2>
-        <p class="section-description" data-animate="fade-up" data-delay="300">
-          Alguns dos meus trabalhos recentes e soluções desenvolvidas
-        </p>
-      </div>
+      <SectionHeader
+        badge="Portfólio"
+        icon="mdi-briefcase"
+        title-prefix="Meus"
+        title-highlight="projetos"
+        description="Alguns dos meus trabalhos recentes e soluções desenvolvidas"
+      />
 
       <!-- Filtros -->
       <div class="portfolio-filters" data-animate="fade-up" data-delay="400">
@@ -231,6 +225,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+import { PROJECT_FILTERS, PROJECT_STATUS } from '~/constants'
 
 // Scroll Animation
 const { observeElements } = useScrollAnimation()
@@ -364,39 +359,15 @@ const otherTechnologies = [
   }
 ]
 
-// Computed filters with counts
-const filters = computed<Filter[]>(() => [
-  {
-    value: 'all',
-    label: 'Todos',
-    icon: 'mdi-view-grid',
-    count: projects.length
-  },
-  {
-    value: 'containerization',
-    label: 'Containerização',
-    icon: 'mdi-docker',
-    count: projects.filter(p => p.category === 'containerization').length
-  },
-  {
-    value: 'infrastructure',
-    label: 'Infraestrutura',
-    icon: 'mdi-server',
-    count: projects.filter(p => p.category === 'infrastructure').length
-  },
-  {
-    value: 'automation',
-    label: 'Automação',
-    icon: 'mdi-cog',
-    count: projects.filter(p => p.category === 'automation').length
-  },
-  {
-    value: 'frontend',
-    label: 'Frontend',
-    icon: 'mdi-monitor',
-    count: projects.filter(p => p.category === 'frontend').length
-  }
-])
+// Computed filters with counts - using constants base
+const filters = computed<Filter[]>(() => 
+  PROJECT_FILTERS.map(filter => ({
+    ...filter,
+    count: filter.value === 'all' 
+      ? projects.length 
+      : projects.filter(p => p.category === filter.value).length
+  }))
+)
 
 // Computed filtered projects
 const filteredProjects = computed(() => {
@@ -933,14 +904,7 @@ const scrollToContact = () => {
   color: white !important;
 }
 
-@keyframes pulse-gentle {
-  0%, 100% { 
-    transform: scale(1); 
-  }
-  50% { 
-    transform: scale(1.05); 
-  }
-}
+/* pulse-gentle available in /assets/css/components.css */
 
 .cta-title {
   font-size: 1.8rem;
