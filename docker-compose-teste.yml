@@ -1,0 +1,13 @@
+# Salve como: docker-compose.yml
+services:
+  app:
+    image: node:lts-alpine
+    container_name: meu-site-node
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    environment:
+      - NODE_ENV=development
