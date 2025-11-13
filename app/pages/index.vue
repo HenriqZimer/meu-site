@@ -11,6 +11,9 @@
   <!-- Skills Section -->
   <Skills />
 
+  <!-- Courses Section -->
+  <Courses />
+
   <!-- Certifications Section -->
   <Certifications />
 

@@ -131,6 +131,7 @@ const quickLinks = [
   { label: 'Sobre', href: 'about' },
   { label: 'Skills', href: 'skills' },
   { label: 'Projetos', href: 'portfolio' },
+  { label: 'Cursos', href: 'courses' },
   { label: 'Certificações', href: 'certifications' },
   { label: 'Contato', href: 'contact' }
 ]

@@ -6,28 +6,36 @@
     :count="count"
     :type="type"
     :animation-delay="animationDelay"
-    :aria-label="`Lista de certificações ${type === 'obtained' ? 'obtidas' : 'planejadas'}`"
+    :aria-label="`Lista de cursos ${
+      type === 'completed' ? 'concluídos' : type === 'planned' ? 'planejados' : 'em andamento'
+    }`"
   >
-    <CertificationItem
+    <CourseItem
       v-for="(item, index) in items"
       :key="`${item.name}-${index}`"
-      :certification="item"
+      :course="item"
       :index="index"
       :animation-delay="animationDelay + 400 + index * 100"
       :type="type"
+      :show-status="showStatus"
     />
   </BaseCard>
 </template>
 
 <script setup lang="ts">
+import CourseItem from '~/components/base/CourseItem.vue'
+
 // Types
-interface Certification {
+interface Course {
   name: string;
-  issuer: string;
+  platform: string;
+  instructor?: string;
+  duration?: string;
   icon?: string;
   color?: string;
   image?: string;
   link: string;
+  progress?: number;
 }
 
 // Props
@@ -35,14 +43,16 @@ interface Props {
   title: string;
   icon: string;
   color: string;
-  items: Certification[];
+  items: Course[];
   count: number;
-  type: "obtained" | "planned";
+  type: "completed" | "in-progress" | "planned";
+  showStatus?: boolean;
   animationDelay?: number;
   elevation?: number | string;
 }
 
 withDefaults(defineProps<Props>(), {
+  showStatus: true,
   animationDelay: 0,
   elevation: 8,
 });

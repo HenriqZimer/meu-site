@@ -295,6 +295,12 @@ const handleSubmit = async () => {
   margin-bottom: 80px;
 }
 
+.contact-section .section-title {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
 .section-badge {
   display: inline-flex;
   align-items: center;
