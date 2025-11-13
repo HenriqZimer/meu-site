@@ -190,6 +190,8 @@ const getImageUrl = (width: number, format: string = "webp") => {
 /* Text Content */
 .hero-text {
   max-width: 540px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .hero-badge {
@@ -249,7 +251,6 @@ const getImageUrl = (width: number, format: string = "webp") => {
   line-height: 1.7;
   color: rgb(203, 213, 225);
   margin-bottom: 40px;
-  max-width: 480px;
 }
 
 .hero-actions {
@@ -257,6 +258,8 @@ const getImageUrl = (width: number, format: string = "webp") => {
   gap: 16px;
   margin-bottom: 48px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .cta-primary {
