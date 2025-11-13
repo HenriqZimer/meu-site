@@ -71,8 +71,8 @@ const cardClasses = computed(() => [
   overflow: hidden;
   transition: all 0.3s ease;
   height: 100%;
-  min-height: 340px;
-  max-width: 340px;
+  min-height: 200px;
+  max-width: 300px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }

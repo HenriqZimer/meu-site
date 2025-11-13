@@ -69,11 +69,13 @@ export default defineNuxtConfig({
     },
   },
 
-  css: [
-    "assets/css/design-tokens.css",
-    "assets/css/critical.css",
-    "assets/css/animations.css",
-    "assets/css/components.css",
+    css: [
+    '~/assets/css/design-tokens.css',
+    '~/assets/css/critical.css',
+    '~/assets/css/animations.css',
+    '~/assets/css/sections.css',
+    '~/assets/css/components.css',
+    '~/assets/css/vuetify.css',
   ],
 
   components: {

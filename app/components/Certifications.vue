@@ -70,96 +70,13 @@ const credlyBadges: Badge[] = [
     skills: 16
   },
   {
-    name: 'AWS Certified Cloud Practitioner',
+    name: 'AWS Certified Cloud Practitioner Foundation',
     issuer: 'Amazon Web Services',
     image: 'https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
     link: 'https://www.credly.com/badges/c0a133ca-557a-4c9d-ba13-84b8c26e0a4f',
     date: 'Out 2025',
     skills: 8
   },
-  // Adicione mais badges aqui conforme obtiver novas certificações
-  // Exemplo:
-  // {
-  //   name: 'Nome Completo da Certificação',
-  //   issuer: 'Nome da Empresa Certificadora',
-  //   image: 'URL da imagem do badge (Credly: 340x340)',
-  //   link: 'Link público da certificação na Credly',
-  //   date: 'Mês Ano', // Opcional
-  //   skills: 10 // Número de skills (Opcional)
-  // },
-]
-
-const plannedCertifications: Certification[] = [
-  {
-    name: 'AWS Cloud Practitioner - Foundational',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-cloud-practioner.png',
-    link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
-    color: 'orange'
-  },
-  {
-    name: 'Google Cloud Engineer - Associate',
-    issuer: 'Google Cloud',
-    image: 'https://imagens.henriqzimer.com.br/gcp-cloud-associate.png',
-    link: 'https://cloud.google.com/certification/cloud-engineer',
-    color: 'blue'
-  },
-  {
-    name: 'GitHub Fundamentals',
-    issuer: 'GitHub',
-    image: 'https://imagens.henriqzimer.com.br/github-fundations.png',
-    link: 'https://www.github.com/certification/',
-    color: 'grey-darken-4'
-  },
-  {
-    name: 'AWS AI Practitioner - Foundational',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-ai-practioner.png',
-    link: 'https://aws.amazon.com/certification/certified-ai-practitioner/',
-    color: 'orange'
-  },
-  {
-    name: 'AWS Solutions Architect - Associate',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-solutions-architect-associate.png',
-    link: 'https://aws.amazon.com/certification/certified-solutions-architect-associate/',
-    color: 'orange'
-  },
-  {
-    name: 'AWS Developer - Associate',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-developer-associate.png',
-    link: 'https://aws.amazon.com/certification/certified-developer-associate/',
-    color: 'orange'
-  },
-  {
-    name: 'Terraform Associate',
-    issuer: 'HashiCorp',
-    image: 'https://imagens.henriqzimer.com.br/terraform-associate.png',
-    link: 'https://www.cncf.io/certification/cka/',
-    color: 'purple'
-  },
-  {
-    name: 'GitHub Copilot',
-    issuer: 'GitHub',
-    image: 'https://imagens.henriqzimer.com.br/github-copilot.png',
-    link: 'https://www.github.com/certification/',
-    color: 'grey-darken-4'
-  },
-  {
-    name: 'Azure DevOps Engineer - Associate',
-    issuer: 'Microsoft',
-    image: 'https://imagens.henriqzimer.com.br/azure-devops.png',
-    link: 'https://docs.microsoft.com/en-us/learn/certifications/devops-engineer/',
-    color: 'blue'
-  },
-  {
-    name: 'Azure Administrator - Associate',
-    issuer: 'Microsoft',
-    image: 'https://imagens.henriqzimer.com.br/azure-administrator.png',
-    link: 'https://docs.microsoft.com/en-us/learn/certifications/azure-administrator/',
-    color: 'blue'
-  }
 ]
 
 // Computed stats
@@ -175,9 +92,9 @@ const certificationStats = computed<Stat[]>(() => [
 
 <style>
 .modern-certifications {
-  padding: 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }

@@ -69,108 +69,6 @@
           <p class="empty-description">Tente selecionar uma categoria diferente</p>
         </div>
       </div>
-
-      <!-- Technologies Section -->
-      <!-- <div class="technologies-section">
-        <div class="technologies-header">
-          <div class="tech-badge">
-            <v-icon icon="mdi-cog" start size="14" />
-            Stack Tecnológico
-          </div>
-          <h3 class="technologies-title">
-            Outras <span class="tech-highlight">tecnologias</span> que utilizo
-          </h3>
-          <p class="technologies-subtitle">
-            Ferramentas e frameworks que complementam meu arsenal de desenvolvimento
-          </p>
-        </div>
-        
-        <div class="technologies-grid">
-          <div 
-            v-for="(tech, index) in otherTechnologies" 
-            :key="tech.name"
-            class="tech-card"
-            :style="{ animationDelay: `${index * 100}ms` }"
-          >
-            <div class="tech-card-inner">
-              <div class="tech-icon-wrapper">
-                <v-icon 
-                  :icon="tech.icon" 
-                  :color="tech.color"
-                  size="32"
-                  class="tech-icon"
-                />
-              </div>
-              <div class="tech-content">
-                <h4 class="tech-name">{{ tech.name }}</h4>
-                <p class="tech-description">{{ tech.description }}</p>
-                <div class="tech-level">
-                  <span class="tech-level-label">Nível:</span>
-                  <div class="tech-level-bar">
-                    <div 
-                      class="tech-level-fill" 
-                      :style="{ 
-                        width: `${tech.level}%`,
-                        background: tech.color 
-                      }"
-                    ></div>
-                  </div>
-                  <span class="tech-level-value">{{ tech.level }}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- Call to Action -->
-      <!-- <div class="portfolio-cta">
-        <div class="cta-card">
-          <div class="cta-content">
-            <h3 class="cta-title">
-              <v-icon color="white" size="32" class="cta-icon">mdi-rocket-launch</v-icon>
-              Interessado em trabalhar comigo?
-            </h3>
-            <p class="cta-description">
-              Tenho experiência em criar soluções inovadoras e estou sempre aberto a novos desafios.
-            </p>
-            <div class="cta-actions">
-              <v-btn
-                color="primary"
-                size="large"
-                variant="elevated"
-                class="cta-button"
-                @click="scrollToContact"
-              >
-                <v-icon start>mdi-email</v-icon>
-                Email
-              </v-btn>
-              <v-btn
-                color="secondary"
-                size="large"
-                variant="outlined"
-                class="cta-button"
-                href="https://github.com/HenriqZimer"
-                target="_blank"
-              >
-                <v-icon start>mdi-github</v-icon>
-                Ver no GitHub
-              </v-btn>
-              <v-btn
-                color="info"
-                size="large"
-                variant="tonal"
-                class="cta-button"
-                href="https://linkedin.com/in/henriquezimer"
-                target="_blank"
-              >
-                <v-icon start>mdi-linkedin</v-icon>
-                LinkedIn
-              </v-btn>
-            </div>
-          </div>
-        </div> 
-      </div> -->
     </div>
   </section>
 </template>
@@ -425,7 +323,7 @@ const scrollToContact = () => {
 
 <style scoped>
 .modern-portfolio {
-  padding: 40px 40px 0px 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
   min-height: 80vh;
   display: flex;

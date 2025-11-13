@@ -11,11 +11,11 @@
   <!-- Skills Section -->
   <Skills />
 
-  <!-- Courses Section -->
-  <Courses />
-
   <!-- Certifications Section -->
   <Certifications />
+
+  <!-- Courses Section -->
+  <Courses />
 
   <!-- Contact Section -->
   <Contact />

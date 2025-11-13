@@ -2,7 +2,7 @@
   <section id="skills" class="modern-skills">
     <div class="skills-container">
       <!-- Header Section -->
-      <SectionHeader title-prefix="Minha Stack" title-highlight="Tecnológica"
+      <SectionHeader icon="mdi-briefcase" title-prefix="Minha Stack" title-highlight="Tecnológica"
         description="Ferramentas e tecnologias que domino e estou estudando" custom-class="skills-header" />
 
       <!-- Tech Carousel -->
@@ -49,7 +49,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 
 // Types
 interface Technology {
@@ -99,10 +98,6 @@ const technologies: Technology[] = [
     color: "#0F1689",
     bgColor: "#e8eaf6",
   },
-  // { name: 'Ansible', category: 'Automação', icon: 'mdi-ansible', color: '#EE0000', bgColor: '#ffebee' },
-
-  // Desenvolvimento
-  // { name: 'Python', category: 'Linguagem', icon: 'mdi-language-python', color: '#3776AB', bgColor: '#e3f2fd' },
   {
     name: "Node.js",
     category: "Runtime",
@@ -110,18 +105,6 @@ const technologies: Technology[] = [
     color: "#339933",
     bgColor: "#e8f5e9",
   },
-  // { name: 'Go', category: 'Linguagem', icon: 'mdi-language-go', color: '#00ADD8', bgColor: '#e0f7fa' },
-  // { name: 'TypeScript', category: 'Linguagem', icon: 'mdi-language-typescript', color: '#3178C6', bgColor: '#e3f2fd' },
-  // { name: 'Rust', category: 'Linguagem', icon: 'mdi-cog', color: '#CE422B', bgColor: '#ffebee' },
-
-  // DevOps & CI/CD
-  // { name: 'GitLab CI', category: 'CI/CD', icon: 'mdi-gitlab', color: '#FC6D26', bgColor: '#fff3e0' },
-  // { name: 'GitHub Actions', category: 'CI/CD', icon: 'mdi-github', color: '#2088FF', bgColor: '#e3f2fd' },
-  // { name: 'ArgoCD', category: 'GitOps', icon: 'mdi-git', color: '#EF7B4D', bgColor: '#fff3e0' },
-  // { name: 'Jenkins', category: 'CI/CD', icon: 'mdi-pipe', color: '#D24939', bgColor: '#ffebee' },
-
-  // Observabilidade
-  // { name: 'Prometheus', category: 'Monitoring', icon: 'mdi-chart-line', color: '#E6522C', bgColor: '#ffebee' },
   {
     name: "Grafana",
     category: "Visualização",
@@ -129,10 +112,6 @@ const technologies: Technology[] = [
     color: "#F46800",
     bgColor: "#fff3e0",
   },
-  // { name: 'ELK Stack', category: 'Logs', icon: 'mdi-math-log', color: '#005571', bgColor: '#e0f2f1' },
-  // { name: 'Datadog', category: 'APM', icon: 'mdi-dog', color: '#632CA6', bgColor: '#f3e5f5' },
-  // { name: 'OpenTelemetry', category: 'Observabilidade', icon: 'mdi-chart-box', color: '#F5A800', bgColor: '#fff3e0' },
-
   // Databases & Messaging
   {
     name: "PostgreSQL",
@@ -148,15 +127,6 @@ const technologies: Technology[] = [
     color: "#DC382D",
     bgColor: "#ffebee",
   },
-  // { name: 'RabbitMQ', category: 'Message Broker', icon: 'mdi-rabbit', color: '#FF6600', bgColor: '#fff3e0' },
-  // { name: 'Kafka', category: 'Event Streaming', icon: 'mdi-message-processing', color: '#231F20', bgColor: '#f5f5f5' },
-
-  // Security & Networking
-  // { name: 'Vault', category: 'Secrets Management', icon: 'mdi-shield-key', color: '#FFD814', bgColor: '#fffde7' },
-  // { name: 'Consul', category: 'Service Mesh', icon: 'mdi-server-network', color: '#E03875', bgColor: '#fce4ec' },
-  // { name: 'Cilium', category: 'Network Security', icon: 'mdi-security-network', color: '#F8C517', bgColor: '#fffde7' },
-  // { name: 'eBPF', category: 'Kernel Technology', icon: 'mdi-memory', color: '#F7931E', bgColor: '#fff3e0' },
-
   // Tools & Others
   {
     name: "Git",
@@ -172,7 +142,6 @@ const technologies: Technology[] = [
     color: "#FCC624",
     bgColor: "#fffde7",
   },
-  // { name: 'WebAssembly', category: 'Web Technology', icon: 'mdi-web', color: '#654FF0', bgColor: '#ede7f6' }
 ];
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card :class="cardClasses" :elevation="elevation" :rounded="rounded" :color="color" :style="cardStyles"
+  <v-card class="ma-8" :class="cardClasses" :elevation="elevation" :rounded="rounded" :color="color" :style="cardStyles"
     data-animate="scale-up" :data-delay="animationDelay">
     <div :class="contentClasses">
       <!-- Ícone -->

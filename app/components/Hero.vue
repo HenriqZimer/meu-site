@@ -55,8 +55,8 @@
 
     <!-- Background Elements -->
     <div class="hero-background">
-      <div class="bg-gradient"></div>
-      <div class="bg-pattern"></div>
+      <div class="bg-gradient" />
+      <div class="bg-pattern" />
     </div>
   </section>
 </template>

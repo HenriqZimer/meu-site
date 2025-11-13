@@ -70,7 +70,6 @@ const iconClass = computed(() =>
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: center;
 }
 
 .social-link {
@@ -107,11 +106,11 @@ const iconClass = computed(() =>
 }
 
 /* Responsivo */
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .social-links {
     justify-content: center;
+    align-items: center;
   }
-
   .social-link {
     width: 36px;
     height: 36px;
