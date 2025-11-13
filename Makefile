@@ -7,11 +7,11 @@ push: build
 deploy: push
 	@docker stack deploy -c docker-compose.yml meu-site
 
-redeploy: deploy
+redeploy:
 	@docker service update --force meu-site_app
 
 remove:
 	@docker stack rm meu-site
 
 docker:
-	@docker compose -f 'docker-compose-teste.yml' up -d
+	@docker compose -f docker-compose-teste.yml up -d

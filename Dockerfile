@@ -1,9 +1,8 @@
 # Use Node.js 22 Alpine image
-FROM node:22-alpine
+FROM node:lts-alpine3.22
 
-# O Alpine usa o gerenciador de pacotes 'apk'.
-# Usamos '--no-cache' para evitar aumentar o tamanho final da imagem.
-RUN apk add --no-cache curl
+# Update package index and install curl
+RUN apk update && apk add --no-cache curl
 
 # Set working directory
 WORKDIR /app
