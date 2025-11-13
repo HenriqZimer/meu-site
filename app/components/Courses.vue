@@ -282,6 +282,13 @@ const allCourses: Course[] = [
     color: 'purple',
     year: '2023'
   },
+  {
+    "name": "Trilha WEB E FRONT-END, do evento TDC 2023 INNOVATION",
+    "platform": null,
+    "instructor": null,
+    "duration": "8 horas",
+    "year": "2023"
+  },
   // Planejados
   // {
   //   name: 'AWS: Amazon Web Services',
