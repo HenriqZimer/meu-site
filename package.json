@@ -29,6 +29,7 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
+    "docker": "docker compose -f 'docker-compose-teste.yml' up -d",
     "dev": "nuxt dev",
     "dev:prod": "nuxt preview",
     "build": "nuxt build",
