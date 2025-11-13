@@ -3,37 +3,17 @@
     <!-- Project Image -->
     <div v-if="image || $slots.image" class="project-image">
       <div class="image-wrapper">
-        <img
-          class="project-img"
-          :src="image"
-          :alt="imageAlt"
-          :loading="lazy ? 'lazy' : 'eager'"
-        />
+        <img class="project-img" :src="image" :alt="imageAlt" :loading="lazy ? 'lazy' : 'eager'" />
 
         <!-- Hover Overlay com Botões -->
         <div class="hover-overlay">
           <div class="overlay-buttons">
-            <v-btn
-              v-if="demoUrl"
-              icon
-              variant="elevated"
-              color="primary"
-              size="x-large"
-              class="overlay-btn--demo"
-              :href="demoUrl"
-              target="_blank"
-            >
+            <v-btn v-if="demoUrl" icon variant="elevated" color="primary" size="x-large" class="overlay-btn--demo"
+              :href="demoUrl" target="_blank">
               <v-icon icon="mdi-open-in-new" size="24" />
             </v-btn>
-            <v-btn
-              v-if="githubUrl"
-              icon
-              variant="elevated"
-              size="x-large"
-              class="overlay-btn--github"
-              :href="githubUrl"
-              target="_blank"
-            >
+            <v-btn v-if="githubUrl" icon variant="elevated" size="x-large" class="overlay-btn--github" :href="githubUrl"
+              target="_blank">
               <v-icon icon="mdi-github" size="24" />
             </v-btn>
           </div>
@@ -50,15 +30,8 @@
       <p class="project-description">{{ description }}</p>
 
       <!-- Technologies -->
-      <div
-        v-if="technologies && technologies.length"
-        class="project-technologies"
-      >
-        <span
-          v-for="tech in technologies.slice(0, 4)"
-          :key="tech"
-          class="tech-chip"
-        >
+      <div v-if="technologies && technologies.length" class="project-technologies">
+        <span v-for="tech in technologies.slice(0, 4)" :key="tech" class="tech-chip">
           {{ tech }}
         </span>
         <span v-if="technologies.length > 4" class="tech-more">
@@ -154,11 +127,9 @@ const cardStyles = computed(() => ({
   position: relative;
   height: 140px;
   overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.05),
-    rgba(6, 182, 212, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.05),
+      rgba(6, 182, 212, 0.05));
 }
 
 .image-wrapper {
@@ -344,6 +315,7 @@ const cardStyles = computed(() => ({
   color: rgb(var(--v-theme-primary));
   border: 1px solid rgba(var(--v-theme-primary), 0.3);
 }
+
 /* Cores variadas para os badges de tecnologia */
 /* .tech-chip:nth-child(1) { background: rgba(72, 169, 255, 0.15); color: rgb(72, 169, 255); border: 1px solid rgba(72, 169, 255, 0.3); }
 .tech-chip:nth-child(2) { background: rgba(104, 184, 104, 0.15); color: rgb(104, 184, 104); border: 1px solid rgba(104, 184, 104, 0.3); }

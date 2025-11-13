@@ -6,11 +6,7 @@
         <!-- Brand Section -->
         <div class="footer-brand">
           <div class="brand-logo">
-            <img 
-              :src="IMAGE_URLS.LOGO"
-              alt="Henrique Zimermann Logo" 
-              class="brand-logo-img"
-            />
+            <img :src="IMAGE_URLS.LOGO" alt="Henrique Zimermann Logo" class="brand-logo-img" />
             <div class="brand-text">
               <div class="brand-name">Henrique Zimermann</div>
               <div class="brand-tagline">DevOps & Cloud Engineer</div>
@@ -26,12 +22,7 @@
         <div class="footer-links">
           <h4 class="links-title">Navegação</h4>
           <nav class="links-nav">
-            <a
-              v-for="link in quickLinks"
-              :key="link.label"
-              @click="scrollToSection(link.href)"
-              class="nav-link"
-            >
+            <a v-for="link in quickLinks" :key="link.label" @click="scrollToSection(link.href)" class="nav-link">
               {{ link.label }}
             </a>
           </nav>
@@ -60,15 +51,8 @@
         <div class="footer-social">
           <h4 class="social-title">Conecte-se</h4>
           <div class="social-links">
-            <a
-              v-for="social in socialLinks"
-              :key="social.name"
-              :href="social.href"
-              :aria-label="`Visitar ${social.name}`"
-              class="social-link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a v-for="social in socialLinks" :key="social.name" :href="social.href"
+              :aria-label="`Visitar ${social.name}`" class="social-link" target="_blank" rel="noopener noreferrer">
               <v-icon :icon="social.icon" class="social-icons" size="20" />
             </a>
           </div>
@@ -96,14 +80,7 @@
     </div>
 
     <!-- Scroll to Top Button -->
-    <v-btn
-      v-if="showScrollTop"
-      @click="scrollToTop"
-      class="scroll-top-btn"
-      :ripple="false"
-      fab
-      fixed
-    >
+    <v-btn v-if="showScrollTop" @click="scrollToTop" class="scroll-top-btn" :ripple="false" fab fixed>
       <v-icon icon="mdi-arrow-up" size="20" />
     </v-btn>
   </footer>
@@ -407,7 +384,7 @@ onUnmounted(() => {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
   }
-  
+
   .footer-brand {
     grid-column: 1 / -1;
     max-width: none;
@@ -418,29 +395,29 @@ onUnmounted(() => {
   .footer-container {
     padding: 0 16px;
   }
-  
+
   .footer-content {
     grid-template-columns: 1fr;
     gap: 32px;
     padding: 60px 0 40px;
   }
-  
+
   .brand-logo {
     flex-direction: row;
     text-align: left;
   }
-  
+
   .brand-logo-img {
     width: 40px;
     height: 40px;
   }
-  
+
   .bottom-content {
     flex-direction: column;
     text-align: center;
     gap: 12px;
   }
-  
+
   .scroll-top-btn {
     bottom: 24px !important;
     right: 24px !important;
@@ -453,11 +430,11 @@ onUnmounted(() => {
   .footer-content {
     padding: 48px 0 32px;
   }
-  
+
   .social-links {
     justify-content: flex-start;
   }
-  
+
   .tech-stack {
     flex-wrap: wrap;
     justify-content: center;

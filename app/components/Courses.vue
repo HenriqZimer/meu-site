@@ -1,21 +1,18 @@
 <template>
-  <section id="courses" class="modern-courses">
-    <div class="courses-container">
+  <section id="courses" class="section-modern">
+    <div class="section-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Cursos"
-        icon="mdi-school"
-        title-prefix="Meus"
-        title-highlight="Cursos Concluídos"
+      <SectionHeader badge="Cursos" icon="mdi-school" title-prefix="Meus" title-highlight="Cursos Concluídos"
         description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
-        theme="primary"
-      >
+        theme="primary">
         <!-- Statistics Overview -->
-        <StatsGrid 
-          :stats="courseStats" 
-          :base-delay="400"
-          custom-class="mt-8"
-        />
+        <!-- Main Content -->
+        <div class="about-content">
+
+          <!-- Stats Section -->
+          <StatsGrid class="teste" :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }" :base-delay="200"
+            :delay-increment="100" custom-class="stats-section" />
+        </div>
       </SectionHeader>
 
       <!-- Expansion Panels por Ano -->
@@ -24,21 +21,23 @@
           <v-expansion-panel v-for="yearGroup in coursesByYear" :key="yearGroup.year" class="year-panel"
             :class="yearGroup.year === 'Planejados' ? 'year-panel--planned' : 'year-panel--completed'">
             <v-expansion-panel-title class="year-panel-title">
-              <div class="year-header">
+              <template v-slot:default>
                 <div class="year-info">
-                  <v-icon icon="mdi-calendar" size="24" class="year-icon" />
+                  <v-icon icon="mdi-calendar" size="24" class="year-icon ma-2" />
                   <span class="year-text">{{ yearGroup.year }}</span>
                 </div>
+              </template>
+              <template v-slot:actions>
                 <v-chip :color="yearGroup.year === 'Planejados' ? 'primary' : 'success'" size="small" variant="flat"
-                  class="year-badge ma-2">
+                  class="year-badge">
                   {{ yearGroup.courses.length }} {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
                 </v-chip>
-              </div>
+              </template>
             </v-expansion-panel-title>
 
             <v-expansion-panel-text class="year-panel-content">
               <div class="courses-list">
-                <CertificationItem v-for="(course, index) in yearGroup.courses" :key="`${course.name}-${index}`"
+                <CertificationItem class="ma-4" v-for="(course, index) in yearGroup.courses" :key="`${course.name}-${index}`"
                   :certification="{
                     name: course.name,
                     issuer: course.platform + (course.instructor ? ' • ' + course.instructor : '') + (course.duration ? ' • ' + course.duration : ''),
@@ -79,6 +78,35 @@ interface YearGroup {
   year: string
   courses: Course[]
 }
+
+// Cursos completados (excluindo planejados)
+const completedCourses = computed(() => 
+  allCourses.filter(course => course.year !== 'Planejados')
+);
+
+// Total de horas dos cursos
+const totalHours = computed(() => {
+  return completedCourses.value.reduce((acc, course) => {
+    const hours = parseFloat(course.duration?.replace(/[^0-9.]/g, '') || '0');
+    return acc + hours;
+  }, 0);
+});
+
+// Stats dos cursos
+const stats = computed<Stat[]>(() => [
+  {
+    icon: 'mdi-school',
+    value: completedCourses.value.length,
+    label: 'Cursos Concluídos',
+    color: 'primary'
+  },
+  {
+    icon: 'mdi-clock-outline',
+    value: `${Math.round(totalHours.value)}h`,
+    label: 'Horas de Estudo',
+    color: 'success'
+  }
+]);
 
 // Composables
 const { isMobile, isTablet, isDesktop, getResponsiveValue } = useResponsive()
@@ -258,37 +286,6 @@ const allCourses: Course[] = [
     color: 'purple',
     year: '2023'
   },
-  // Planejados
-  // {
-  //   name: 'AWS: Amazon Web Services',
-  //   platform: 'Alura',
-  //   instructor: 'Ricardo Merces',
-  //   duration: '40h',
-  //   image: 'https://imagens.henriqzimer.com.br/udemy.png',
-  //   link: 'https://www.alura.com.br',
-  //   color: 'orange',
-  //   year: 'Planejados'
-  // },
-  // {
-  //   name: 'Terraform: Infraestrutura como Código',
-  //   platform: 'Alura',
-  //   instructor: 'Daniel Artine',
-  //   duration: '10h',
-  //   image: 'https://imagens.henriqzimer.com.br/udemy.png',
-  //   link: 'https://www.alura.com.br',
-  //   color: 'purple',
-  //   year: 'Planejados'
-  // },
-  // {
-  //   name: 'Observabilidade: Prometheus e Grafana',
-  //   platform: 'Alura',
-  //   instructor: 'Leonardo Sartorello',
-  //   duration: '8h',
-  //   image: 'https://imagens.henriqzimer.com.br/udemy.png',
-  //   link: 'https://www.alura.com.br',
-  //   color: 'blue',
-  //   year: 'Planejados'
-  // }
 ]
 
 // Agrupar cursos por ano
@@ -316,31 +313,14 @@ const coursesByYear = computed<YearGroup[]>(() => {
     courses: grouped[year] || []
   }))
 })
-
-// Computed stats
-const completedCourses = computed(() => allCourses.filter(c => c.year !== 'Planejados'))
-const plannedCourses = computed(() => allCourses.filter(c => c.year === 'Planejados'))
-
-const courseStats = computed<Stat[]>(() => [
-  {
-    icon: 'mdi-school',
-    value: completedCourses.value.length,
-    label: 'Cursos',
-    color: 'success'
-  },
-  {
-    icon: 'mdi-clock-outline',
-    value: `${completedCourses.value.reduce((acc: number, course: Course) => acc + parseInt(course.duration || '0'), 0)}h`,
-    label: 'Horas',
-    color: 'primary'
-  }
-])
 </script>
 
 <style>
+
 .modern-courses {
-  padding: 80px 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }
@@ -668,13 +648,6 @@ const courseStats = computed<Stat[]>(() => [
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06)) !important;
 }
 
-.modern-courses .year-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
 .modern-courses .year-info {
   display: flex;
   align-items: center;
@@ -685,10 +658,6 @@ const courseStats = computed<Stat[]>(() => [
   color: rgb(96, 165, 250) !important;
   background-color: transparent !important;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.modern-courses .year-panel:hover .year-icon {
-  transform: rotate(5deg) scale(1.05);
 }
 
 .modern-courses .year-text {
@@ -706,6 +675,7 @@ const courseStats = computed<Stat[]>(() => [
   font-weight: 600;
   letter-spacing: 0.5px;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 12px;
 }
 
 .modern-courses .year-panel:hover .year-badge {
@@ -713,7 +683,7 @@ const courseStats = computed<Stat[]>(() => [
 }
 
 .modern-courses .year-panel-content {
-  padding: 20px 24px 24px 24px !important;
+  padding: 24px 24px 24px 24px !important;
   background: transparent !important;
 }
 
@@ -730,8 +700,9 @@ const courseStats = computed<Stat[]>(() => [
 .modern-courses .courses-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   animation: fadeInContent 0.6s ease forwards;
+  padding: 8px 0;
 }
 
 @keyframes fadeInContent {

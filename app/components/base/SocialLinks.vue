@@ -2,16 +2,9 @@
   <div :class="containerClasses">
     <p v-if="label" class="social-label">{{ label }}</p>
     <div class="social-links">
-      <a
-        v-for="social in links"
-        :key="social.name"
-        :href="social.url || social.href"
-        :aria-label="social.label || `Visitar ${social.name}`"
-        class="social-link"
-        :class="linkClass"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a v-for="social in links" :key="social.name" :href="social.url || social.href"
+        :aria-label="social.label || `Visitar ${social.name}`" class="social-link" :class="linkClass" target="_blank"
+        rel="noopener noreferrer">
         <v-icon :icon="social.icon" :size="iconSize" :class="iconClass" />
       </a>
     </div>
@@ -77,7 +70,6 @@ const iconClass = computed(() =>
   display: flex;
   gap: 12px;
   align-items: center;
-  justify-content: center;
 }
 
 .social-link {
@@ -114,11 +106,11 @@ const iconClass = computed(() =>
 }
 
 /* Responsivo */
-@media (max-width: 599px) {
+@media (max-width: 999px) {
   .social-links {
     justify-content: center;
+    align-items: center;
   }
-
   .social-link {
     width: 36px;
     height: 36px;

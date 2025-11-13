@@ -1,21 +1,9 @@
 <template>
-  <v-card
-    :class="cardClasses"
-    :elevation="elevation"
-    :rounded="rounded"
-    :color="color"
-    :style="cardStyles"
-    data-animate="scale-up"
-    :data-delay="animationDelay"
-  >
+  <v-card class="ma-8" :class="cardClasses" :elevation="elevation" :rounded="rounded" :color="color" :style="cardStyles"
+    data-animate="scale-up" :data-delay="animationDelay">
     <div :class="contentClasses">
       <!-- Ícone -->
-      <v-icon
-        v-if="icon"
-        :color="iconColor"
-        :size="iconSize"
-        :class="iconClasses"
-      >
+      <v-icon v-if="icon" :color="iconColor" :size="iconSize" :class="iconClasses">
         {{ icon }}
       </v-icon>
 
@@ -295,6 +283,7 @@ onMounted(() => {
 }
 
 @keyframes bounce {
+
   0%,
   20%,
   50%,
@@ -302,9 +291,11 @@ onMounted(() => {
   100% {
     transform: translateY(0);
   }
+
   40% {
     transform: translateY(-10px);
   }
+
   60% {
     transform: translateY(-5px);
   }

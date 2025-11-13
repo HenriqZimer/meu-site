@@ -2,30 +2,15 @@
   <section id="certifications" class="modern-certifications">
     <div class="certifications-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Certificações"
-        icon="mdi-certificate"
-        title-prefix="Minhas"
-        title-highlight="Certificações"
+      <SectionHeader badge="Certificações" icon="mdi-certificate" title-prefix="Minhas" title-highlight="Certificações"
         description="Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps"
-        theme="primary"
-      >
-        <!-- Statistics Overview -->
-        <StatsGrid 
-          :stats="certificationStats" 
-          :base-delay="400"
-          custom-class="mt-8"
-        />
+        theme="primary">
       </SectionHeader>
 
       <!-- Badges -->
       <div class="certifications-content" data-animate="fade-up" data-delay="600">
-        <CredlyBadgeGrid
-          :badges="credlyBadges"
-          :show-header="false"
-          :columns="responsiveColumns"
-          :animation-delay="600"
-        />
+        <CredlyBadgeGrid :badges="credlyBadges" :show-header="false" :columns="responsiveColumns"
+          :animation-delay="600" />
       </div>
     </div>
   </section>
@@ -85,96 +70,13 @@ const credlyBadges: Badge[] = [
     skills: 16
   },
   {
-    name: 'AWS Certified Cloud Practitioner',
+    name: 'AWS Certified Cloud Practitioner Foundation',
     issuer: 'Amazon Web Services',
     image: 'https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
     link: 'https://www.credly.com/badges/c0a133ca-557a-4c9d-ba13-84b8c26e0a4f',
     date: 'Out 2025',
     skills: 8
   },
-  // Adicione mais badges aqui conforme obtiver novas certificações
-  // Exemplo:
-  // {
-  //   name: 'Nome Completo da Certificação',
-  //   issuer: 'Nome da Empresa Certificadora',
-  //   image: 'URL da imagem do badge (Credly: 340x340)',
-  //   link: 'Link público da certificação na Credly',
-  //   date: 'Mês Ano', // Opcional
-  //   skills: 10 // Número de skills (Opcional)
-  // },
-]
-
-const plannedCertifications: Certification[] = [
-  {
-    name: 'AWS Cloud Practitioner - Foundational',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-cloud-practioner.png',
-    link: 'https://aws.amazon.com/certification/certified-cloud-practitioner/',
-    color: 'orange'
-  },
-  {
-    name: 'Google Cloud Engineer - Associate',
-    issuer: 'Google Cloud',
-    image: 'https://imagens.henriqzimer.com.br/gcp-cloud-associate.png',
-    link: 'https://cloud.google.com/certification/cloud-engineer',
-    color: 'blue'
-  },
-  {
-    name: 'GitHub Fundamentals',
-    issuer: 'GitHub',
-    image: 'https://imagens.henriqzimer.com.br/github-fundations.png',
-    link: 'https://www.github.com/certification/',
-    color: 'grey-darken-4'
-  },
-  {
-    name: 'AWS AI Practitioner - Foundational',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-ai-practioner.png',
-    link: 'https://aws.amazon.com/certification/certified-ai-practitioner/',
-    color: 'orange'
-  },
-  {
-    name: 'AWS Solutions Architect - Associate',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-solutions-architect-associate.png',
-    link: 'https://aws.amazon.com/certification/certified-solutions-architect-associate/',
-    color: 'orange'
-  },
-  {
-    name: 'AWS Developer - Associate',
-    issuer: 'Amazon Web Services',
-    image: 'https://imagens.henriqzimer.com.br/aws-developer-associate.png',
-    link: 'https://aws.amazon.com/certification/certified-developer-associate/',
-    color: 'orange'
-  },
-  {
-    name: 'Terraform Associate',
-    issuer: 'HashiCorp',
-    image: 'https://imagens.henriqzimer.com.br/terraform-associate.png',
-    link: 'https://www.cncf.io/certification/cka/',
-    color: 'purple'
-  },
-  {
-    name: 'GitHub Copilot',
-    issuer: 'GitHub',
-    image: 'https://imagens.henriqzimer.com.br/github-copilot.png',
-    link: 'https://www.github.com/certification/',
-    color: 'grey-darken-4'
-  },
-  {
-    name: 'Azure DevOps Engineer - Associate',
-    issuer: 'Microsoft',
-    image: 'https://imagens.henriqzimer.com.br/azure-devops.png',
-    link: 'https://docs.microsoft.com/en-us/learn/certifications/devops-engineer/',
-    color: 'blue'
-  },
-  {
-    name: 'Azure Administrator - Associate',
-    issuer: 'Microsoft',
-    image: 'https://imagens.henriqzimer.com.br/azure-administrator.png',
-    link: 'https://docs.microsoft.com/en-us/learn/certifications/azure-administrator/',
-    color: 'blue'
-  }
 ]
 
 // Computed stats
@@ -190,9 +92,9 @@ const certificationStats = computed<Stat[]>(() => [
 
 <style>
 .modern-certifications {
-  padding: 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }
@@ -267,10 +169,21 @@ const certificationStats = computed<Stat[]>(() => [
   animation: fadeInScale 0.6s ease forwards;
 }
 
-.modern-certifications .stat-item[data-animate-delay="0"] { animation-delay: 0.8s; }
-.modern-certifications .stat-item[data-animate-delay="100"] { animation-delay: 0.9s; }
-.modern-certifications .stat-item[data-animate-delay="200"] { animation-delay: 1.0s; }
-.modern-certifications .stat-item[data-animate-delay="300"] { animation-delay: 1.1s; }
+.modern-certifications .stat-item[data-animate-delay="0"] {
+  animation-delay: 0.8s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="100"] {
+  animation-delay: 0.9s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="200"] {
+  animation-delay: 1.0s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="300"] {
+  animation-delay: 1.1s;
+}
 
 .modern-certifications .stat-card {
   background: rgba(var(--v-theme-surface), 0.8);
@@ -511,11 +424,11 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 100px 0 60px;
   }
-  
+
   .certifications-container {
     padding: 0 20px;
   }
-  
+
   .certifications-grid {
     gap: 24px;
   }
@@ -525,36 +438,36 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 80px 0 60px;
   }
-  
+
   .certifications-container {
     padding: 0 16px;
   }
-  
+
   .certifications-header {
     margin-bottom: 64px;
   }
-  
+
   .stats-overview {
     margin-bottom: 32px;
   }
-  
+
   .stat-card {
     padding: 16px;
   }
-  
+
   .stat-value {
     font-size: 1.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .progress-section {
     max-width: 300px;
   }
-  
+
   .certifications-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -565,42 +478,42 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 60px 0 40px;
   }
-  
+
   .certifications-container {
     padding: 0 16px;
   }
-  
-  
+
+
   .stats-overview {
     margin-bottom: 24px;
   }
-  
+
   .stat-card {
     padding: 12px;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 40px;
     height: 40px;
     margin-bottom: 8px;
   }
-  
+
   .progress-section {
     max-width: 250px;
   }
-  
+
   .progress-label {
     font-size: 0.75rem;
   }
-  
+
   .progress-percentage {
     font-size: 1.125rem;
   }
@@ -611,15 +524,15 @@ const certificationStats = computed<Stat[]>(() => [
   .certifications-container {
     padding: 0 12px;
   }
-  
+
   .certifications-grid {
     gap: 16px;
   }
-  
+
   .modern-certifications {
     padding: 50px 0 30px;
   }
-  
+
   .progress-section {
     max-width: 200px;
   }

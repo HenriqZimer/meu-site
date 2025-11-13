@@ -2,36 +2,21 @@
   <section id="portfolio" class="modern-portfolio">
     <div class="portfolio-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Portfólio"
-        icon="mdi-briefcase"
-        title-prefix="Meus"
-        title-highlight="projetos"
-        description="Alguns dos meus trabalhos recentes e soluções desenvolvidas"
-      />
+      <SectionHeader badge="Portfólio" icon="mdi-briefcase" title-prefix="Meus" title-highlight="projetos"
+        description="Alguns dos meus trabalhos recentes e soluções desenvolvidas" />
 
       <!-- Filtros -->
       <div class="portfolio-filters" data-animate="fade-up" data-delay="400">
         <div class="filter-chips">
-          <v-chip
-            v-for="(filter, index) in filters"
-            :key="filter.value"
-            :class="{ 'filter-chip--active': selectedFilter === filter.value }"
-            class="filter-chip"
+          <v-chip v-for="(filter, index) in filters" :key="filter.value"
+            :class="{ 'filter-chip--active': selectedFilter === filter.value }" class="filter-chip"
             :color="selectedFilter === filter.value ? 'primary' : 'default'"
-            :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'"
-            size="large"
-            @click="setFilter(filter.value)"
-          >
+            :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'" size="large"
+            @click="setFilter(filter.value)">
             <v-icon start size="18">{{ filter.icon }}</v-icon>
             {{ filter.label }}
-            <v-badge 
-              v-if="filter.count > 0" 
-              :content="filter.count" 
-              :color="selectedFilter === filter.value ? 'white' : 'primary'"
-              inline
-              class="ml-2"
-            />
+            <v-badge v-if="filter.count > 0" :content="filter.count"
+              :color="selectedFilter === filter.value ? 'white' : 'primary'" inline class="ml-2" />
           </v-chip>
         </div>
       </div>
@@ -40,45 +25,21 @@
       <div class="portfolio-content">
         <div v-if="filteredProjects.length > 0" class="carousel-container">
           <!-- Botão Anterior -->
-          <button 
-            class="carousel-nav carousel-nav--prev"
-            :disabled="currentPage === 0"
-            @click="previousPage"
-            aria-label="Projetos anteriores"
-          >
+          <button class="carousel-nav carousel-nav--prev" :disabled="currentPage === 0" @click="previousPage"
+            aria-label="Projetos anteriores">
             <v-icon icon="mdi-chevron-left" size="32" />
           </button>
 
           <!-- Carrossel -->
           <div class="carousel-wrapper">
-            <div 
-              class="carousel-track"
-              :style="{ transform: `translateX(-${currentPage * 100}%)` }"
-            >
-              <div
-                v-for="(page, pageIndex) in paginatedProjects"
-                :key="pageIndex"
-                class="carousel-page"
-              >
+            <div class="carousel-track" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
+              <div v-for="(page, pageIndex) in paginatedProjects" :key="pageIndex" class="carousel-page">
                 <div class="carousel-grid">
-                  <div
-                    v-for="(project, index) in page"
-                    :key="project.id"
-                    class="carousel-item"
-                  >
-                    <ProjectCard
-                      :title="project.title"
-                      :description="project.description"
-                      :image="project.image"
-                      :technologies="project.technologies"
-                      :demo-url="project.demoUrl"
-                      :github-url="project.githubUrl"
-                      :featured="project.featured"
-                      :status="project.status"
-                      size="medium"
-                      :lazy="pageIndex > 0"
-                      class="project-card"
-                    />
+                  <div v-for="(project, index) in page" :key="project.id" class="carousel-item">
+                    <ProjectCard :title="project.title" :description="project.description" :image="project.image"
+                      :technologies="project.technologies" :demo-url="project.demoUrl" :github-url="project.githubUrl"
+                      :featured="project.featured" :status="project.status" size="medium" :lazy="pageIndex > 0"
+                      class="project-card" />
                   </div>
                 </div>
               </div>
@@ -86,30 +47,21 @@
           </div>
 
           <!-- Botão Próximo -->
-          <button 
-            class="carousel-nav carousel-nav--next"
-            :disabled="currentPage === totalPages - 1"
-            @click="nextPage"
-            aria-label="Próximos projetos"
-          >
+          <button class="carousel-nav carousel-nav--next" :disabled="currentPage === totalPages - 1" @click="nextPage"
+            aria-label="Próximos projetos">
             <v-icon icon="mdi-chevron-right" size="32" />
           </button>
         </div>
 
         <!-- Indicadores de Página -->
         <div v-if="totalPages > 1" class="carousel-indicators">
-          <button
-            v-for="(page, index) in totalPages"
-            :key="index"
-            class="indicator"
-            :class="{ 'indicator--active': currentPage === index }"
-            @click="goToPage(index)"
-            :aria-label="`Ir para página ${index + 1}`"
-          >
+          <button v-for="(page, index) in totalPages" :key="index" class="indicator"
+            :class="{ 'indicator--active': currentPage === index }" @click="goToPage(index)"
+            :aria-label="`Ir para página ${index + 1}`">
           </button>
           <span class="page-counter">{{ currentPage + 1 }} / {{ totalPages }}</span>
         </div>
-      
+
         <!-- Empty State -->
         <div v-if="filteredProjects.length === 0" class="empty-state">
           <v-icon size="64" color="grey-lighten-1" class="empty-icon">mdi-folder-open-outline</v-icon>
@@ -117,108 +69,6 @@
           <p class="empty-description">Tente selecionar uma categoria diferente</p>
         </div>
       </div>
-
-      <!-- Technologies Section -->
-      <!-- <div class="technologies-section">
-        <div class="technologies-header">
-          <div class="tech-badge">
-            <v-icon icon="mdi-cog" start size="14" />
-            Stack Tecnológico
-          </div>
-          <h3 class="technologies-title">
-            Outras <span class="tech-highlight">tecnologias</span> que utilizo
-          </h3>
-          <p class="technologies-subtitle">
-            Ferramentas e frameworks que complementam meu arsenal de desenvolvimento
-          </p>
-        </div>
-        
-        <div class="technologies-grid">
-          <div 
-            v-for="(tech, index) in otherTechnologies" 
-            :key="tech.name"
-            class="tech-card"
-            :style="{ animationDelay: `${index * 100}ms` }"
-          >
-            <div class="tech-card-inner">
-              <div class="tech-icon-wrapper">
-                <v-icon 
-                  :icon="tech.icon" 
-                  :color="tech.color"
-                  size="32"
-                  class="tech-icon"
-                />
-              </div>
-              <div class="tech-content">
-                <h4 class="tech-name">{{ tech.name }}</h4>
-                <p class="tech-description">{{ tech.description }}</p>
-                <div class="tech-level">
-                  <span class="tech-level-label">Nível:</span>
-                  <div class="tech-level-bar">
-                    <div 
-                      class="tech-level-fill" 
-                      :style="{ 
-                        width: `${tech.level}%`,
-                        background: tech.color 
-                      }"
-                    ></div>
-                  </div>
-                  <span class="tech-level-value">{{ tech.level }}%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- Call to Action -->
-      <!-- <div class="portfolio-cta">
-        <div class="cta-card">
-          <div class="cta-content">
-            <h3 class="cta-title">
-              <v-icon color="white" size="32" class="cta-icon">mdi-rocket-launch</v-icon>
-              Interessado em trabalhar comigo?
-            </h3>
-            <p class="cta-description">
-              Tenho experiência em criar soluções inovadoras e estou sempre aberto a novos desafios.
-            </p>
-            <div class="cta-actions">
-              <v-btn
-                color="primary"
-                size="large"
-                variant="elevated"
-                class="cta-button"
-                @click="scrollToContact"
-              >
-                <v-icon start>mdi-email</v-icon>
-                Email
-              </v-btn>
-              <v-btn
-                color="secondary"
-                size="large"
-                variant="outlined"
-                class="cta-button"
-                href="https://github.com/HenriqZimer"
-                target="_blank"
-              >
-                <v-icon start>mdi-github</v-icon>
-                Ver no GitHub
-              </v-btn>
-              <v-btn
-                color="info"
-                size="large"
-                variant="tonal"
-                class="cta-button"
-                href="https://linkedin.com/in/henriquezimer"
-                target="_blank"
-              >
-                <v-icon start>mdi-linkedin</v-icon>
-                LinkedIn
-              </v-btn>
-            </div>
-          </div>
-        </div> 
-      </div> -->
     </div>
   </section>
 </template>
@@ -360,11 +210,11 @@ const otherTechnologies = [
 ]
 
 // Computed filters with counts - using constants base
-const filters = computed<Filter[]>(() => 
+const filters = computed<Filter[]>(() =>
   PROJECT_FILTERS.map(filter => ({
     ...filter,
-    count: filter.value === 'all' 
-      ? projects.length 
+    count: filter.value === 'all'
+      ? projects.length
       : projects.filter(p => p.category === filter.value).length
   }))
 )
@@ -404,7 +254,7 @@ if (typeof window !== 'undefined') {
       itemsPerPage.value = 3
     }
   }
-  
+
   updateItemsPerPage()
   window.addEventListener('resize', updateItemsPerPage)
 }
@@ -413,11 +263,11 @@ if (typeof window !== 'undefined') {
 const paginatedProjects = computed(() => {
   const projects = filteredProjects.value
   const pages = []
-  
+
   for (let i = 0; i < projects.length; i += itemsPerPage.value) {
     pages.push(projects.slice(i, i + itemsPerPage.value))
   }
-  
+
   return pages
 })
 
@@ -454,7 +304,7 @@ if (typeof window !== 'undefined') {
       nextPage()
     }
   }
-  
+
   window.addEventListener('keydown', handleKeyboard)
 }
 
@@ -473,7 +323,7 @@ const scrollToContact = () => {
 
 <style scoped>
 .modern-portfolio {
-  padding: 40px 40px 0px 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
   min-height: 80vh;
   display: flex;
@@ -848,6 +698,7 @@ const scrollToContact = () => {
   0% {
     transform: translateX(-100%);
   }
+
   100% {
     transform: translateX(100%);
   }
@@ -877,12 +728,10 @@ const scrollToContact = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(var(--v-theme-primary), 0.05) 0%,
-    transparent 50%,
-    rgba(var(--v-theme-secondary), 0.05) 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(var(--v-theme-primary), 0.05) 0%,
+      transparent 50%,
+      rgba(var(--v-theme-secondary), 0.05) 100%);
   pointer-events: none;
 }
 
@@ -964,24 +813,24 @@ const scrollToContact = () => {
   .modern-portfolio {
     padding: 0;
   }
-  
+
   .portfolio-container {
     padding: 0 20px;
   }
-  
+
   .portfolio-header {
     margin-bottom: 24px;
   }
-  
+
   .portfolio-filters {
     margin-bottom: 40px;
   }
-  
+
   .carousel-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-  
+
   .carousel-nav {
     width: 40px;
     height: 40px;
@@ -992,53 +841,53 @@ const scrollToContact = () => {
   .modern-portfolio {
     padding: 0;
   }
-  
+
   .portfolio-header {
     margin-bottom: 20px;
   }
-  
+
   .section-title {
     font-size: 2.5rem;
   }
-  
+
   .filter-chips {
     gap: 8px;
     justify-content: center;
   }
-  
+
   .portfolio-filters {
     margin-bottom: 32px;
   }
-  
+
   .carousel-container {
     gap: 8px;
   }
-  
+
   .carousel-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .carousel-nav {
     width: 36px;
     height: 36px;
   }
-  
+
   .cta-content {
     padding: 32px 20px;
   }
-  
+
   .cta-title {
     font-size: 1.8rem !important;
     flex-direction: column;
     gap: 8px;
   }
-  
+
   .cta-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .cta-button {
     width: 200px;
   }
@@ -1048,41 +897,41 @@ const scrollToContact = () => {
   .modern-portfolio {
     padding: 0;
   }
-  
+
   .portfolio-container {
     padding: 0 16px;
   }
-  
+
   .portfolio-header {
     margin-bottom: 16px;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .filter-chips {
     justify-content: center;
     gap: 6px;
   }
-  
+
   .portfolio-filters {
     margin-bottom: 24px;
   }
-  
+
   .carousel-container {
     gap: 4px;
   }
-  
+
   .carousel-nav {
     width: 32px;
     height: 32px;
   }
-  
+
   .cta-content {
     padding: 24px 16px;
   }
-  
+
   .cta-title {
     font-size: 1.6rem !important;
     flex-direction: column;

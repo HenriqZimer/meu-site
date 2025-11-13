@@ -2,26 +2,13 @@
   <div class="modern-badge-card" :class="cardClasses">
     <!-- Badge Image -->
     <div class="badge-image-container">
-      <img
-        :src="image"
-        :alt="name"
-        class="badge-image"
-        :loading="lazy ? 'lazy' : 'eager'"
-      />
-      
+      <img :src="image" :alt="name" class="badge-image" :loading="lazy ? 'lazy' : 'eager'" />
+
       <!-- Hover Overlay -->
       <div class="hover-overlay">
         <div class="overlay-buttons">
-          <v-btn
-            icon
-            variant="elevated"
-            color="primary"
-            size="x-large"
-            class="overlay-btn"
-            :href="link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <v-btn icon variant="elevated" color="primary" size="x-large" class="overlay-btn" :href="link" target="_blank"
+            rel="noopener noreferrer">
             <v-icon icon="mdi-open-in-new" size="24" />
           </v-btn>
         </div>
@@ -32,7 +19,7 @@
     <div class="badge-info">
       <h4 class="badge-name">{{ name }}</h4>
       <p class="badge-issuer">{{ issuer }}</p>
-      
+
       <!-- Badge Meta -->
       <div v-if="date || skills" class="badge-meta">
         <span v-if="date" class="badge-date">
@@ -84,8 +71,8 @@ const cardClasses = computed(() => [
   overflow: hidden;
   transition: all 0.3s ease;
   height: 100%;
-  min-height: 340px;
-  max-width: 340px;
+  min-height: 200px;
+  max-width: 300px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
@@ -185,7 +172,6 @@ const cardClasses = computed(() => [
   line-height: 1.4;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-align: center;

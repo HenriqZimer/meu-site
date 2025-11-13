@@ -1,17 +1,12 @@
 <template>
-  <div class="contact-item" data-animate="fade-in" :data-delay="delay">
+  <div class="contact-item" :style="{ animationDelay: `${delay}ms` }">
     <div class="contact-icon">
       <v-icon :icon="icon" size="20" />
     </div>
     <div class="contact-details">
       <span class="contact-label">{{ label }}</span>
-      <a 
-        v-if="href" 
-        :href="href" 
-        class="contact-value"
-        :target="external ? '_blank' : undefined"
-        :rel="external ? 'noopener noreferrer' : undefined"
-      >
+      <a v-if="href" :href="href" class="contact-value" :target="external ? '_blank' : undefined"
+        :rel="external ? 'noopener noreferrer' : undefined">
         {{ value }}
       </a>
       <span v-else class="contact-value">{{ value }}</span>
@@ -48,7 +43,6 @@ withDefaults(defineProps<Props>(), {
   transition: all 0.3s ease;
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
-  animation-delay: calc(var(--base-delay, 0ms) + var(--item-delay, 0ms));
 }
 
 .contact-item:hover {

@@ -1,24 +1,9 @@
 <template>
-  <BaseCard
-    :title="title"
-    :icon="icon"
-    :color="color"
-    :count="count"
-    :type="type"
-    :animation-delay="animationDelay"
-    :aria-label="`Lista de cursos ${
-      type === 'completed' ? 'concluídos' : type === 'planned' ? 'planejados' : 'em andamento'
-    }`"
-  >
-    <CourseItem
-      v-for="(item, index) in items"
-      :key="`${item.name}-${index}`"
-      :course="item"
-      :index="index"
-      :animation-delay="animationDelay + 400 + index * 100"
-      :type="type"
-      :show-status="showStatus"
-    />
+  <BaseCard :title="title" :icon="icon" :color="color" :count="count" :type="type" :animation-delay="animationDelay"
+    :aria-label="`Lista de cursos ${type === 'completed' ? 'concluídos' : type === 'planned' ? 'planejados' : 'em andamento'
+      }`">
+    <CourseItem v-for="(item, index) in items" :key="`${item.name}-${index}`" :course="item" :index="index"
+      :animation-delay="animationDelay + 400 + index * 100" :type="type" :show-status="showStatus" />
   </BaseCard>
 </template>
 

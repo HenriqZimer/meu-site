@@ -2,14 +2,8 @@
   <section id="contact" class="contact-section">
     <div class="contact-container">
       <!-- Header da Seção -->
-      <SectionHeader
-        badge="Contato"
-        icon="mdi-email"
-        title-prefix="Interessado em"
-        title-highlight="trabalhar comigo"
-        description="Vamos conversar sobre seu próximo projeto"
-        custom-class="section-header"
-      />
+      <SectionHeader badge="Contato" icon="mdi-email" title-prefix="Interessado em" title-highlight="trabalhar comigo"
+        description="Vamos conversar sobre seu próximo projeto" custom-class="section-header" />
 
       <div class="contact-content">
         <div class="contact-info-card" data-animate="slide-up" data-delay="200">
@@ -21,59 +15,24 @@
           </div>
 
           <div class="contact-list">
-            <ContactItem
-              icon="mdi-email"
-              label="Email"
-              :value="email"
-              :href="`mailto:${email}`"
-              :delay="300"
-            />
-            
-            <ContactItem
-              icon="mdi-phone"
-              label="Telefone"
-              :value="phone"
-              :href="`tel:${phone}`"
-              :delay="400"
-            />
-            
-            <ContactItem
-              icon="mdi-whatsapp"
-              label="WhatsApp"
-              :value="phone"
-              :href="contactInfo.whatsapp"
-              :delay="450"
-              external
-            />
-            
-            <ContactItem
-              icon="mdi-map-marker"
-              label="Localização"
-              :value="location"
-              :delay="500"
-            />
+            <ContactItem icon="mdi-email" label="Email" :value="email" :href="`mailto:${email}`" :delay="300" />
+
+            <ContactItem icon="mdi-phone" label="Telefone" :value="phone" :href="`tel:${phone}`" :delay="400" />
+
+            <ContactItem icon="mdi-whatsapp" label="WhatsApp" :value="phone" :href="contactInfo.whatsapp" :delay="450"
+              external />
+
+            <ContactItem icon="mdi-map-marker" label="Localização" :value="location" :delay="500" />
           </div>
 
           <div class="social-section">
             <h4 class="social-title">Redes Sociais</h4>
             <div class="social-buttons">
-              <v-btn
-                variant="outlined"
-                color="primary"
-                class="social-btn"
-                :href="githubUrl"
-                target="_blank"
-              >
+              <v-btn variant="outlined" color="primary" class="social-btn" :href="githubUrl" target="_blank">
                 <v-icon start icon="mdi-github" />
                 GitHub
               </v-btn>
-              <v-btn
-                variant="outlined"
-                color="primary"
-                class="social-btn"
-                :href="linkedinUrl"
-                target="_blank"
-              >
+              <v-btn variant="outlined" color="primary" class="social-btn" :href="linkedinUrl" target="_blank">
                 <v-icon start icon="mdi-linkedin" />
                 LinkedIn
               </v-btn>
@@ -183,22 +142,24 @@ const handleSubmit = async () => {
 
 <style scoped>
 .contact-section {
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
-  min-height: 100vh;
-  padding: 80px 0;
-  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
 }
 
 .contact-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  width: 100%;
 }
 
 /* Header da Seção */
 .section-header {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 64px;
 }
 
 .contact-section .section-title {
@@ -207,115 +168,106 @@ const handleSubmit = async () => {
   animation-delay: 0.2s;
 }
 
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(59, 130, 246, 0.15) !important;
-  border: 1px solid rgba(59, 130, 246, 0.3) !important;
-  border-radius: 24px;
-  color: rgb(96, 165, 250) !important;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 24px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
-  backdrop-filter: blur(10px);
-}
-
-.section-badge .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: rgb(96, 165, 250) !important;
-}
-
 /* Content */
 .contact-content {
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  max-width: 800px;
 }
 
 /* Cards */
 .contact-info-card {
-  background: rgba(var(--v-theme-surface), 0.8);
-  backdrop-filter: blur(10px);
+  background: rgba(var(--v-theme-surface), 0.9);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(var(--v-theme-outline), 0.15);
-  border-radius: 20px;
-  padding: 32px;
+  border-radius: 24px;
+  padding: 40px;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.2s;
   transition: all 0.3s ease;
   width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .contact-info-card:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 20px 48px rgba(59, 130, 246, 0.2);
+  transform: translateY(-4px);
 }
 
 .card-header {
   margin-bottom: 32px;
+  text-align: center;
+  padding-bottom: 24px;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.1);
 }
 
 .card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
 }
 
 .card-subtitle {
   color: rgb(var(--v-theme-on-surface-variant));
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  font-weight: 500;
 }
 
 /* Contact List */
 .contact-list {
-  margin-bottom: 24px;
-}
-
-.contact-list {
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 /* Social Section */
 .social-section {
-  padding-top: 20px;
-  border-top: 1px solid rgb(var(--v-theme-surface-bright));
+  padding-top: 28px;
+  margin-top: 28px;
+  border-top: 2px solid rgba(59, 130, 246, 0.1);
 }
 
 .social-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  letter-spacing: -0.025em;
 }
 
 .social-buttons {
   display: flex;
-  gap: 12px;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .social-btn {
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   text-transform: none !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  height: 48px !important;
   border: 2px solid rgb(59, 130, 246) !important;
   color: rgb(96, 165, 250) !important;
   transition: all 0.3s ease !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.025em !important;
 }
 
 .social-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
-  background: rgba(59, 130, 246, 0.1) !important;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.15) !important;
   border-color: rgb(96, 165, 250) !important;
 }
 
@@ -324,96 +276,12 @@ const handleSubmit = async () => {
   background-color: transparent !important;
 }
 
-/* Form */
-.contact-form {
-  margin-bottom: 24px;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-
-.form-field {
-  margin-bottom: 16px;
-  background-color: transparent !important;
-  background: transparent !important;
-}
-
-/* Fix para remover background estranho dos campos */
-.contact-form :deep(.v-field) {
-  background-color: transparent !important;
-  background: transparent !important;
-}
-
-.contact-form :deep(.v-field__overlay) {
-  background-color: transparent !important;
-  opacity: 0 !important;
-}
-
-.contact-form :deep(.v-field__field) {
-  background-color: transparent !important;
-}
-
-.contact-form :deep(.v-field--variant-outlined .v-field__outline) {
-  color: rgba(var(--v-theme-outline), 0.3);
-}
-
-.contact-form :deep(.v-field--focused .v-field__outline) {
-  color: rgb(59, 130, 246);
-}
-
-.contact-form :deep(.v-field--variant-outlined:hover .v-field__outline) {
-  color: rgba(var(--v-theme-outline), 0.5);
-}
-
-/* Borda vermelha em campos com erro */
-.contact-form :deep(.v-field--error .v-field__outline) {
-  color: rgb(239, 68, 68) !important;
-}
-
-.contact-form :deep(.v-field--error:not(.v-field--focused) .v-field__outline) {
-  color: rgb(239, 68, 68) !important;
-}
-
-.contact-form :deep(.v-messages__message) {
-  color: rgb(239, 68, 68) !important;
-}
-
-.submit-btn {
-  width: 100%;
-  border-radius: 16px !important;
-  text-transform: none !important;
-  font-weight: 600 !important;
-  padding: 14px 28px !important;
-  background: rgb(59, 130, 246) !important;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-  transition: all 0.3s ease !important;
-}
-
-.submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(59, 130, 246, 0.5);
-  background: rgb(37, 99, 235) !important;
-}
-
-.submit-btn .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.form-alert {
-  margin-top: 24px;
-}
-
 /* Animations moved to /assets/css/components.css */
 
 /* Responsive */
-@media (max-width: 968px) {
+@media (max-width: 1024px) {
   .contact-content {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    max-width: 700px;
   }
 }
 
@@ -427,28 +295,78 @@ const handleSubmit = async () => {
   }
 
   .section-header {
-    margin-bottom: 60px;
+    margin-bottom: 48px;
   }
 
-  .contact-info-card,
-  .contact-form-card {
-    padding: 24px;
+  .contact-content {
+    max-width: 100%;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 0;
+  .contact-info-card {
+    padding: 28px;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.95rem;
   }
 
   .social-buttons {
-    flex-direction: column;
+    gap: 12px;
+  }
+
+  .social-btn {
+    flex: 1;
+    min-width: 140px;
   }
 }
 
 @media (max-width: 480px) {
-  .contact-info-card,
-  .contact-form-card {
-    padding: 20px;
+  .contact-section {
+    padding: 50px 0;
+  }
+
+  .contact-info-card {
+    padding: 24px;
+  }
+
+  .card-header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .contact-list {
+    gap: 14px;
+  }
+
+  .social-section {
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+
+  .social-title {
+    font-size: 1.15rem;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .social-btn {
+    width: 100%;
+    min-width: auto;
   }
 }
 </style>

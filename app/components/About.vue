@@ -2,82 +2,18 @@
   <section id="about" class="modern-about">
     <div class="about-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Sobre Mim"
-        icon="mdi-account-circle"
-        title-prefix="Conhecendo minha"
-        title-highlight="jornada"
-        description="Uma trajetória em constante evolução no mundo da tecnologia"
-      />
+      <SectionHeader badge="Sobre Mim" icon="mdi-account-circle" title-prefix="Conhecendo minha"
+        title-highlight="jornada" description="Uma trajetória em constante evolução no mundo da tecnologia" />
 
       <!-- Main Content -->
       <div class="about-content">
         <!-- Story Grid -->
-        <div class="story-grid">
-          <!-- Past -->
-          <StoryCard
-            variant="past"
-            icon="mdi-history"
-            title="Minha História"
-            description="Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva."
-            :delay="400"
-          />
-
-          <!-- Present -->
-          <StoryCard
-            variant="present"
-            icon="mdi-cogs"
-            title="Presente"
-            description="Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas."
-            :delay="500"
-          />
-
-          <!-- Future -->
-          <StoryCard
-            variant="future"
-            icon="mdi-rocket-launch"
-            title="Futuro"
-            description="Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes."
-            :delay="600"
-          />
-        </div>
+        <StatsGrid :items="storyItems" variant="story" :columns="{ xs: 1, sm: 2, md: 3, lg: 3 }" :base-delay="400"
+          :delay-increment="100" custom-class="story-section" />
 
         <!-- Stats Section -->
-        <StatsGrid :stats="stats" />
-
-        <!-- Values Section -->
-        <!-- <div class="values-section">
-          <div class="values-header">
-            <div class="values-badge">
-              <v-icon icon="mdi-heart" start size="14" />
-              Valores
-            </div>
-            <h3 class="values-title">Princípios que <span class="values-highlight">me guiam</span></h3>
-            <p class="values-subtitle">Cada projeto é uma oportunidade de aplicar valores sólidos e entregar excelência</p>
-          </div>
-          <div class="values-grid">
-            <div 
-              v-for="(value, index) in valuesData" 
-              :key="value.title"
-              class="value-card"
-              :style="{ animationDelay: `${index * 150}ms` }"
-            >
-              <div class="value-card-inner">
-                <div class="value-icon-wrapper">
-                  <div class="value-icon" :style="{ background: value.gradient }">
-                    <v-icon :icon="value.icon" />
-                  </div>
-                  <div class="value-glow" :style="{ background: value.gradient }"></div>
-                </div>
-                <div class="value-content">
-                  <h4 class="value-title">{{ value.title }}</h4>
-                  <p class="value-description">{{ value.description }}</p>
-                </div>
-                <div class="value-border" :style="{ background: value.gradient }"></div>
-              </div>
-            </div>
-          </div>
-        </div> -->
+        <StatsGrid :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }" :base-delay="200"
+          :delay-increment="100" custom-class="stats-section" />
       </div>
     </div>
   </section>
@@ -96,31 +32,57 @@ onMounted(() => {
   });
 });
 
+// Story items para StatsGrid
+const storyItems: Stat[] = [
+  {
+    icon: 'mdi-history',
+    title: 'Minha História',
+    description: 'Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva.',
+    color: 'purple',
+    variant: 'past'
+  },
+  {
+    icon: 'mdi-cogs',
+    title: 'Presente',
+    description: 'Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas.',
+    color: 'primary',
+    variant: 'present'
+  },
+  {
+    icon: 'mdi-rocket-launch',
+    title: 'Futuro',
+    description: 'Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes.',
+    color: 'cyan',
+    variant: 'future'
+  }
+];
+
+// Stats items
 const stats: Stat[] = [
   {
-    value: "3+",
-    label: "Anos de Experiência",
-    icon: "mdi-briefcase-outline",
-    color: "primary",
+    icon: 'mdi-briefcase',
+    value: '6+',
+    label: 'Anos de Experiência',
+    color: 'primary'
   },
   {
-    value: "5+",
-    label: "Projetos Realizados",
-    icon: "mdi-rocket-launch-outline",
-    color: "primary",
+    icon: 'mdi-code-braces',
+    value: '50+',
+    label: 'Projetos Realizados',
+    color: 'success'
   },
   {
-    value: "3+",
-    label: "Anos de Estudo",
-    icon: "mdi-school-outline",
-    color: "info",
+    icon: 'mdi-certificate',
+    value: '15+',
+    label: 'Certificações',
+    color: 'warning'
   },
-  // {
-  //   value: "100%",
-  //   label: "Comprometimento",
-  //   icon: "mdi-heart-outline",
-  //   color: "error",
-  // },
+  {
+    icon: 'mdi-rocket',
+    value: '100%',
+    label: 'Dedicação',
+    color: 'error'
+  }
 ];
 
 const values = [
@@ -204,9 +166,9 @@ const getValueColor = (index: number) => {
 
 <style scoped>
 .modern-about {
-  padding: 40px;
+  padding: 40px 40px 40px 40px;
   background: rgb(var(--v-theme-background));
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
 }
@@ -227,104 +189,28 @@ const getValueColor = (index: number) => {
 
 /* Content Section */
 .about-content {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 60px;
 }
 
-/* Story Grid */
-.story-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 32px;
-  justify-content: center;
+/* Story Section */
+.story-section {
+  width: 100%;
 }
 
 /* Stats Section */
 .stats-section {
-  background: rgb(var(--v-theme-surface));
-  padding: 40px;
-  border-radius: 24px;
-  border: 1px solid rgb(var(--v-theme-surface-bright));
+  width: 100%;
 }
 
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
-  justify-content: center;
-}
 
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 20px;
-  background: rgb(var(--v-theme-surface-bright));
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.stat-item:hover {
-  background: rgba(59, 130, 246, 0.1);
-  transform: translateY(-2px);
-}
-
-.stat-icon {
-  width: 48px;
-  height: 48px;
-  background: rgba(59, 130, 246, 0.05) !important;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-.stat-item:hover .stat-icon {
-  background: rgba(59, 130, 246, 0.1) !important;
-  border-color: rgba(59, 130, 246, 0.4);
-}
-
-.stat-icon .v-icon {
-  font-size: 24px !important;
-  background: transparent !important;
-  background-color: transparent !important;
-  color: rgb(96, 165, 250) !important;
-}
-
-.stat-icon .v-icon::before,
-.stat-icon .v-icon::after {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.stat-content {
-  flex: 1;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: 800;
-  color: rgb(var(--v-theme-on-surface));
-  line-height: 1;
-  margin-bottom: 4px;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: rgb(var(--v-theme-on-surface-variant));
-  font-weight: 500;
-}
 
 /* Values Section */
 .values-section {
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.03),
-    rgba(16, 185, 129, 0.03)
-  );
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.03),
+      rgba(16, 185, 129, 0.03));
   padding: 60px 48px;
   border-radius: 32px;
   border: 1px solid rgba(59, 130, 246, 0.1);
@@ -339,16 +225,12 @@ const getValueColor = (index: number) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(
-      circle at 20% 80%,
+  background: radial-gradient(circle at 20% 80%,
       rgba(59, 130, 246, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
+      transparent 50%),
+    radial-gradient(circle at 80% 20%,
       rgba(16, 185, 129, 0.1) 0%,
-      transparent 50%
-    );
+      transparent 50%);
   pointer-events: none;
 }
 
@@ -520,11 +402,9 @@ const getValueColor = (index: number) => {
 
 /* Dark mode support */
 :global(.v-theme--dark) .values-section {
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.05),
-    rgba(16, 185, 129, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.05),
+      rgba(16, 185, 129, 0.05));
   border-color: rgba(59, 130, 246, 0.2);
 }
 
@@ -551,46 +431,6 @@ const getValueColor = (index: number) => {
 
 /* Animations definidas em assets/css/components.css */
 
-/* Tablet adjustments */
-@media (max-width: 1024px) and (min-width: 769px) {
-  .story-grid {
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    justify-content: center;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    justify-content: center;
-  }
-}
-
-/* Medium tablets */
-@media (max-width: 960px) and (min-width: 769px) {
-  .story-grid {
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
-    justify-content: center;
-  }
-}
-
-/* Small tablets - 2+1 fix */
-@media (max-width: 900px) and (min-width: 769px) {
-  .story-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    justify-content: center;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    justify-content: center;
-  }
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .modern-about {
@@ -605,29 +445,12 @@ const getValueColor = (index: number) => {
     margin-bottom: 60px;
   }
 
-  .story-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 40px;
+  .about-content {
+    gap: 40px;
   }
 
-  .stats-section,
   .values-section {
     padding: 32px 24px;
-    margin-bottom: 40px;
-  }
-
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .stat-item {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-    padding: 16px;
   }
 
   .values-grid {
@@ -648,11 +471,10 @@ const getValueColor = (index: number) => {
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .about-content {
+    gap: 32px;
   }
 
-  .stats-section,
   .values-section {
     padding: 24px 16px;
   }

@@ -352,3 +352,59 @@
 .text-on-background {
   color: rgb(var(--v-theme-on-background));
 }
+
+/* ===================================
+   V-EXPANSION-PANELS STYLES
+   =================================== */
+
+/* Base panel styles */
+.v-expansion-panels {
+  background: transparent !important;
+}
+
+.v-expansion-panel {
+  background: rgba(var(--v-theme-surface), 0.95) !important;
+  backdrop-filter: blur(20px);
+  border: 2px solid rgb(var(--v-theme-surface-bright)) !important;
+  border-radius: 16px !important;
+  margin-bottom: 16px !important;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.v-expansion-panel:hover {
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+}
+
+.v-expansion-panel-title {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(96, 165, 250, 0.04)) !important;
+  border-bottom: 1px solid rgba(var(--v-theme-outline), 0.08);
+  padding: 20px 24px !important;
+  min-height: auto !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.v-expansion-panel:hover .v-expansion-panel-title {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(96, 165, 250, 0.06)) !important;
+}
+
+.v-expansion-panel-text {
+  padding: 20px 24px 24px 24px !important;
+  background: transparent !important;
+}
+
+.v-expansion-panel-text__wrapper {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .v-expansion-panel-title {
+    padding: 16px !important;
+  }
+
+  .v-expansion-panel-text {
+    padding: 16px !important;
+  }
+}

@@ -3,17 +3,9 @@
     <div class="certification-item-inner">
       <!-- Avatar/Icon -->
       <div class="certification-avatar">
-        <v-avatar
-          v-if="certification.image"
-          :size="avatarSize"
-          class="certification-avatar-img"
-        >
-          <v-img
-            :src="certification.image"
-            :alt="`Logo da certificação ${certification.name}`"
-            :loading="index > 2 ? 'lazy' : 'eager'"
-            transition="fade-transition"
-          >
+        <v-avatar v-if="certification.image" :size="avatarSize" class="certification-avatar-img">
+          <v-img :src="certification.image" :alt="`Logo da certificação ${certification.name}`"
+            :loading="index > 2 ? 'lazy' : 'eager'" transition="fade-transition">
             <template #placeholder>
               <div class="d-flex align-center justify-center fill-height">
                 <v-icon :color="certification.color || 'primary'" size="large">
@@ -44,18 +36,9 @@
 
       <!-- Action Button -->
       <div class="certification-action">
-        <v-btn
-          :href="certification.link"
-          target="_blank"
-          :icon="actionIcon"
-          :size="buttonSize"
-          variant="outlined"
-          :color="type === 'obtained' ? 'success' : 'primary'"
-          class="certification-action-btn"
-          :aria-label="`Abrir ${
-            type === 'obtained' ? 'certificação' : 'informações da certificação'
-          } ${certification.name} em nova aba`"
-        />
+        <v-btn :href="certification.link" target="_blank" :icon="actionIcon" :size="buttonSize" variant="outlined"
+          :color="type === 'obtained' ? 'success' : 'primary'" class="certification-action-btn" :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'
+            } ${certification.name} em nova aba`" />
       </div>
 
       <!-- Decorative Element -->
@@ -103,9 +86,8 @@ const itemClasses = computed(() => [
 
 const itemStyles = computed(() => ({
   "--animation-delay": `${props.animationDelay}ms`,
-  "--item-color": `var(--v-theme-${
-    props.type === "obtained" ? "primary" : "primary"
-  })`,
+  "--item-color": `var(--v-theme-${props.type === "obtained" ? "primary" : "primary"
+    })`,
 }));
 
 const titleClasses = computed(() => [
@@ -303,11 +285,9 @@ const actionIcon = computed(() =>
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(var(--item-color), 0.8) 0%,
-    rgba(var(--item-color), 0.4) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(var(--item-color), 0.8) 0%,
+      rgba(var(--item-color), 0.4) 100%);
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.3s ease;
@@ -319,19 +299,15 @@ const actionIcon = computed(() =>
 
 /* Type-specific styles */
 .certification-item--obtained .certification-decoration {
-  background: linear-gradient(
-    180deg,
-    rgba(16, 185, 129, 0.8) 0%,
-    rgba(16, 185, 129, 0.4) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(16, 185, 129, 0.8) 0%,
+      rgba(16, 185, 129, 0.4) 100%);
 }
 
 .certification-item--planned .certification-decoration {
-  background: linear-gradient(
-    180deg,
-    rgba(59, 130, 246, 0.8) 0%,
-    rgba(59, 130, 246, 0.4) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(59, 130, 246, 0.8) 0%,
+      rgba(59, 130, 246, 0.4) 100%);
 }
 
 /* fadeInUp animation available in /assets/css/components.css */
@@ -363,6 +339,7 @@ const actionIcon = computed(() =>
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   .modern-certification-item,
   .certification-avatar,
   .certification-action-btn,
