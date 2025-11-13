@@ -2,19 +2,14 @@
   <section id="contact" class="contact-section">
     <div class="contact-container">
       <!-- Header da Seção -->
-      <div class="section-header" data-animate="fade-in">
-        <div class="section-badge">
-          <v-icon icon="mdi-email" size="16" />
-          <span>Contato</span>
-        </div>
-        <h2 class="section-title">
-          Interessado em
-          <span class="title-highlight">trabalhar comigo</span>?
-        </h2>
-        <p class="section-description">
-          Vamos conversar sobre seu próximo projeto
-        </p>
-      </div>
+      <SectionHeader
+        badge="Contato"
+        icon="mdi-email"
+        title-prefix="Interessado em"
+        title-highlight="trabalhar comigo"
+        description="Vamos conversar sobre seu próximo projeto"
+        custom-class="section-header"
+      />
 
       <div class="contact-content">
         <div class="contact-info-card" data-animate="slide-up" data-delay="200">
@@ -26,47 +21,37 @@
           </div>
 
           <div class="contact-list">
-            <div class="contact-item" data-animate="fade-in" data-delay="300">
-              <div class="contact-icon">
-                <v-icon icon="mdi-email" size="20" />
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Email</span>
-                <a :href="`mailto:${email}`" class="contact-value">{{
-                  email
-                }}</a>
-              </div>
-            </div>
-
-            <div class="contact-item" data-animate="fade-in" data-delay="400">
-              <div class="contact-icon">
-                <v-icon icon="mdi-phone" size="20" />
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Telefone</span>
-                <a :href="`tel:${phone}`" class="contact-value">{{ phone }}</a>
-              </div>
-            </div>
-
-            <div class="contact-item" data-animate="fade-in" data-delay="400">
-              <div class="contact-icon">
-                <v-icon icon="mdi-whatsapp" size="20" />
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">WhatsApp</span>
-                <a :href="`https://wa.me/5547992606276?text=Estou%20entrando%20em%20contato%20pelo%20seu%20site`" class="contact-value">{{ phone }}</a>
-              </div>
-            </div>
-
-            <div class="contact-item" data-animate="fade-in" data-delay="500">
-              <div class="contact-icon">
-                <v-icon icon="mdi-map-marker" size="20" />
-              </div>
-              <div class="contact-details">
-                <span class="contact-label">Localização</span>
-                <span class="contact-value">{{ location }}</span>
-              </div>
-            </div>
+            <ContactItem
+              icon="mdi-email"
+              label="Email"
+              :value="email"
+              :href="`mailto:${email}`"
+              :delay="300"
+            />
+            
+            <ContactItem
+              icon="mdi-phone"
+              label="Telefone"
+              :value="phone"
+              :href="`tel:${phone}`"
+              :delay="400"
+            />
+            
+            <ContactItem
+              icon="mdi-whatsapp"
+              label="WhatsApp"
+              :value="phone"
+              :href="contactInfo.whatsapp"
+              :delay="450"
+              external
+            />
+            
+            <ContactItem
+              icon="mdi-map-marker"
+              label="Localização"
+              :value="location"
+              :delay="500"
+            />
           </div>
 
           <div class="social-section">
@@ -95,80 +80,6 @@
             </div>
           </div>
         </div>
-
-        <div class="contact-form-card" data-animate="slide-up" data-delay="400">
-          <div class="card-header">
-            <h3 class="card-title">Envie uma Mensagem</h3>
-            <p class="card-subtitle">Descreva seu projeto e vamos conversar</p>
-          </div>
-
-          <v-form
-            ref="form"
-            v-model="valid"
-            @submit.prevent="handleSubmit"
-            class="contact-form"
-          >
-            <div class="form-row">
-              <v-text-field
-                v-model="formData.name"
-                label="Nome"
-                :rules="nameRules"
-                variant="outlined"
-                density="comfortable"
-                class="form-field"
-              />
-              <v-text-field
-                v-model="formData.email"
-                label="Email"
-                type="email"
-                :rules="emailRules"
-                variant="outlined"
-                density="comfortable"
-                class="form-field"
-              />
-            </div>
-
-            <v-text-field
-              v-model="formData.subject"
-              label="Assunto"
-              :rules="subjectRules"
-              variant="outlined"
-              density="comfortable"
-              class="form-field"
-            />
-
-            <v-textarea
-              v-model="formData.message"
-              label="Mensagem"
-              :rules="messageRules"
-              variant="outlined"
-              rows="5"
-              class="form-field"
-            />
-
-            <v-btn
-              type="submit"
-              color="primary"
-              size="large"
-              :loading="loading"
-              :disabled="!valid"
-              class="submit-btn"
-            >
-              <v-icon start icon="mdi-send" />
-              Enviar Mensagem
-            </v-btn>
-          </v-form>
-
-          <v-alert
-            v-if="alert.show"
-            :type="alert.type"
-            class="form-alert"
-            closable
-            @click:close="alert.show = false"
-          >
-            {{ alert.message }}
-          </v-alert>
-        </div>
       </div>
     </div>
   </section>
@@ -176,13 +87,19 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { VALIDATION_RULES } from "~/constants";
+import { useSocialLinks } from "~/composables/useSocialLinks";
+
+// Composables
+const { contactInfo } = useSocialLinks();
 
 // Variáveis de ambiente
-const email = useRuntimeConfig().public.email;
-const phone = useRuntimeConfig().public.phone;
-const location = useRuntimeConfig().public.location;
-const githubUrl = useRuntimeConfig().public.githubUrl;
-const linkedinUrl = useRuntimeConfig().public.linkedinUrl;
+const config = useRuntimeConfig();
+const email = contactInfo.email;
+const phone = contactInfo.phone;
+const location = contactInfo.location;
+const githubUrl = config.public.githubUrl;
+const linkedinUrl = config.public.linkedinUrl;
 
 const valid = ref(false);
 const loading = ref(false);
@@ -205,22 +122,11 @@ const alert = ref<{
   message: "",
 });
 
-const nameRules = [
-  (v: string) => !!v || "Nome é obrigatório",
-  (v: string) => v.length >= 3 || "Nome deve ter pelo menos 3 caracteres",
-];
-
-const emailRules = [
-  (v: string) => !!v || "Email é obrigatório",
-  (v: string) => /.+@.+\..+/.test(v) || "Email deve ser válido",
-];
-
-const subjectRules = [(v: string) => !!v || "Assunto é obrigatório"];
-
-const messageRules = [
-  (v: string) => !!v || "Mensagem é obrigatória",
-  (v: string) => v.length >= 10 || "Mensagem deve ter pelo menos 10 caracteres",
-];
+// Use validation rules from constants
+const nameRules = VALIDATION_RULES.NAME;
+const emailRules = VALIDATION_RULES.EMAIL;
+const subjectRules = VALIDATION_RULES.SUBJECT;
+const messageRules = VALIDATION_RULES.MESSAGE;
 
 const handleSubmit = async () => {
   if (!valid.value) return;
@@ -327,15 +233,13 @@ const handleSubmit = async () => {
 
 /* Content */
 .contact-content {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 48px;
-  align-items: start;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 /* Cards */
-.contact-info-card,
-.contact-form-card {
+.contact-info-card {
   background: rgba(var(--v-theme-surface), 0.8);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(var(--v-theme-outline), 0.15);
@@ -345,16 +249,12 @@ const handleSubmit = async () => {
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
   transition: all 0.3s ease;
+  width: 100%;
 }
 
-.contact-info-card:hover,
-.contact-form-card:hover {
+.contact-info-card:hover {
   border-color: rgba(59, 130, 246, 0.3);
   box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
-}
-
-.contact-form-card {
-  animation-delay: 0.2s;
 }
 
 .card-header {
@@ -379,72 +279,10 @@ const handleSubmit = async () => {
   margin-bottom: 24px;
 }
 
-.contact-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid rgb(var(--v-theme-surface-bright));
-  transition: all 0.3s ease;
-}
-
-.contact-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.contact-item:hover {
-  transform: translateX(8px);
-}
-
-.contact-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: rgba(59, 130, 246, 0.1) !important;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 12px;
-  color: rgb(96, 165, 250) !important;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-.contact-item:hover .contact-icon {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border-color: rgba(59, 130, 246, 0.4);
-  transform: scale(1.1);
-}
-
-.contact-icon .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-  color: rgb(96, 165, 250) !important;
-}
-
-.contact-details {
+.contact-list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.contact-label {
-  font-size: 0.875rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  font-weight: 500;
-}
-
-.contact-value {
-  font-size: 1rem;
-  color: rgb(var(--v-theme-on-surface));
-  font-weight: 500;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.contact-value:hover {
-  color: rgb(var(--v-theme-primary));
+  gap: 12px;
 }
 
 /* Social Section */
@@ -569,17 +407,7 @@ const handleSubmit = async () => {
   margin-top: 24px;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animations moved to /assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 968px) {

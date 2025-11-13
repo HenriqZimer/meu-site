@@ -7,7 +7,7 @@
         <div class="footer-brand">
           <div class="brand-logo">
             <img 
-              src="/logo.png" 
+              :src="IMAGE_URLS.LOGO"
               alt="Henrique Zimermann Logo" 
               class="brand-logo-img"
             />
@@ -110,66 +110,39 @@
 </template>
 
 <script setup lang="ts">
+import { QUICK_LINKS, SCROLL_CONFIG, IMAGE_URLS } from "~/constants";
+import { useNavigation } from "~/composables/useNavigation";
+import { useSocialLinks } from "~/composables/useSocialLinks";
+
 // Configuration
-const config = useRuntimeConfig()
-const siteName = config.public.siteName
-const email = config.public.email
-const githubUrl = config.public.githubUrl
-const linkedinUrl = config.public.linkedinUrl
-const phoneNumber = config.public.phone
+const config = useRuntimeConfig();
+const siteName = config.public.siteName;
+const currentYear = new Date().getFullYear();
+const showScrollTop = ref(false);
 
-const currentYear = new Date().getFullYear()
-const showScrollTop = ref(false)
+// Composables
+const { scrollToSection, scrollToTop, shouldShowScrollTop } = useNavigation();
+const { footerSocialLinks, contactInfo } = useSocialLinks();
 
-const socialLinks = [
-  { name: 'GitHub', icon: 'mdi-github', href: githubUrl },
-  { name: 'LinkedIn', icon: 'mdi-linkedin', href: linkedinUrl },
-  { name: 'Email', icon: 'mdi-email-outline', href: `mailto:${email}` }
-]
-
-const quickLinks = [
-  { label: 'Sobre', href: 'about' },
-  { label: 'Skills', href: 'skills' },
-  { label: 'Projetos', href: 'portfolio' },
-  { label: 'Cursos', href: 'courses' },
-  { label: 'Certificações', href: 'certifications' },
-  { label: 'Contato', href: 'contact' }
-]
+// Data
+const socialLinks = footerSocialLinks;
+const quickLinks = QUICK_LINKS;
+const email = contactInfo.email;
+const phoneNumber = contactInfo.phone;
 
 // Methods
 const handleScroll = () => {
-  showScrollTop.value = window.scrollY > 400
-}
-
-const scrollToSection = (id: string) => {
-  const element = document.getElementById(id)
-  if (element) {
-    const offset = 80
-    const elementPosition = element.getBoundingClientRect().top
-    const offsetPosition = elementPosition + window.pageYOffset - offset
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    })
-  }
-}
-
-const scrollToTop = () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  })
-}
+  showScrollTop.value = shouldShowScrollTop();
+};
 
 // Lifecycle
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-})
+  window.addEventListener("scroll", handleScroll, { passive: true });
+});
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
 
 <style scoped>

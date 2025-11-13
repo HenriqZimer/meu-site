@@ -18,7 +18,7 @@
             <div class="brand-content">
               <div class="brand-logo">
                 <img
-                  src="/logo.png"
+                  :src="IMAGE_URLS.LOGO"
                   alt="Henrique Zimermann Logo"
                   class="brand-logo-img"
                 />
@@ -128,59 +128,22 @@
 </template>
 
 <script setup lang="ts">
-import { useResponsive } from "~/composables/useResponsive";
-
-// Types
-interface MenuItem {
-  id: string;
-  label: string;
-  icon: string;
-}
+import { MENU_ITEMS, SCROLL_CONFIG, IMAGE_URLS } from "~/constants";
+import { useNavigation } from "~/composables/useNavigation";
 
 // Composables
 const { isMobile } = useResponsive();
+const { scrollToSection, getActiveSection } = useNavigation();
 
 // Reactive state
 const scrolled = ref(false);
 const drawer = ref(false);
 const activeSection = ref("home");
 
-// Menu items configuration
-const menuItems: MenuItem[] = [
-  { id: "about", label: "Sobre", icon: "mdi-account-circle" },
-  { id: "portfolio", label: "Projetos", icon: "mdi-briefcase-variant" },
-  { id: "skills", label: "Skills", icon: "mdi-brain" },
-  { id: "courses", label: "Cursos", icon: "mdi-school" },
-  { id: "certifications", label: "Certificações", icon: "mdi-certificate" },
-  { id: "contact", label: "Contato", icon: "mdi-message-text" },
-];
+// Menu items from constants
+const menuItems = MENU_ITEMS;
 
 // Navigation methods
-const scrollToSection = (id: string) => {
-  if (id === "home") {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    activeSection.value = "home";
-    return;
-  }
-
-  const element = document.getElementById(id);
-  if (element) {
-    const offset = 80;
-    const elementPosition = element.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth",
-    });
-
-    activeSection.value = id;
-  }
-};
-
 const toggleDrawer = () => {
   drawer.value = !drawer.value;
 };
@@ -192,29 +155,15 @@ const handleDrawerItemClick = (id: string) => {
 
 // Scroll detection
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 20;
-  updateActiveSection();
-};
-
-const updateActiveSection = () => {
+  scrolled.value = window.scrollY > SCROLL_CONFIG.SCROLL_THRESHOLD;
   const sections = ["home", ...menuItems.map((item) => item.id)];
-  const scrollPosition = window.scrollY + 100;
-
-  for (let i = sections.length - 1; i >= 0; i--) {
-    const sectionId = sections[i];
-    if (!sectionId) continue;
-    const element = document.getElementById(sectionId);
-    if (element && element.offsetTop <= scrollPosition) {
-      activeSection.value = sectionId;
-      break;
-    }
-  }
+  activeSection.value = getActiveSection(sections);
 };
 
 // Lifecycle hooks
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
-  updateActiveSection();
+  handleScroll();
 });
 
 onUnmounted(() => {

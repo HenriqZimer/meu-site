@@ -334,17 +334,7 @@ const actionIcon = computed(() =>
   );
 }
 
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* fadeInUp animation available in /assets/css/components.css */
 
 /* Responsive */
 @media (max-width: 768px) {

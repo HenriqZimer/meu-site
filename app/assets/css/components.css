@@ -151,6 +151,27 @@
   }
 }
 
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 /* Utility Classes */
 .text-gradient-primary {
   background: linear-gradient(135deg, #3b82f6, #06b6d4);
