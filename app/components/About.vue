@@ -2,82 +2,31 @@
   <section id="about" class="modern-about">
     <div class="about-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Sobre Mim"
-        icon="mdi-account-circle"
-        title-prefix="Conhecendo minha"
-        title-highlight="jornada"
-        description="Uma trajetória em constante evolução no mundo da tecnologia"
-      />
+      <SectionHeader badge="Sobre Mim" icon="mdi-account-circle" title-prefix="Conhecendo minha"
+        title-highlight="jornada" description="Uma trajetória em constante evolução no mundo da tecnologia" />
 
       <!-- Main Content -->
       <div class="about-content">
         <!-- Story Grid -->
         <div class="story-grid">
           <!-- Past -->
-          <StoryCard
-            variant="past"
-            icon="mdi-history"
-            title="Minha História"
+          <StoryCard variant="past" icon="mdi-history" title="Minha História"
             description="Mais de 6 anos de experiência em atendimento ao público, onde desenvolvi habilidades essenciais como paciência, resolução de problemas e comunicação efetiva."
-            :delay="400"
-          />
+            :delay="400" />
 
           <!-- Present -->
-          <StoryCard
-            variant="present"
-            icon="mdi-cogs"
-            title="Presente"
+          <StoryCard variant="present" icon="mdi-cogs" title="Presente"
             description="Atualmente focado em infraestrutura de TI, trabalhando com redes, ferramentas Microsoft, virtualização e automação. Apaixonado por soluções práticas."
-            :delay="500"
-          />
+            :delay="500" />
 
           <!-- Future -->
-          <StoryCard
-            variant="future"
-            icon="mdi-rocket-launch"
-            title="Futuro"
+          <StoryCard variant="future" icon="mdi-rocket-launch" title="Futuro"
             description="Estudando DevOps intensivamente, explorando containers, automação e cloud computing para criar soluções mais inteligentes e eficientes."
-            :delay="600"
-          />
+            :delay="600" />
         </div>
 
         <!-- Stats Section -->
         <StatsGrid :stats="stats" />
-
-        <!-- Values Section -->
-        <!-- <div class="values-section">
-          <div class="values-header">
-            <div class="values-badge">
-              <v-icon icon="mdi-heart" start size="14" />
-              Valores
-            </div>
-            <h3 class="values-title">Princípios que <span class="values-highlight">me guiam</span></h3>
-            <p class="values-subtitle">Cada projeto é uma oportunidade de aplicar valores sólidos e entregar excelência</p>
-          </div>
-          <div class="values-grid">
-            <div 
-              v-for="(value, index) in valuesData" 
-              :key="value.title"
-              class="value-card"
-              :style="{ animationDelay: `${index * 150}ms` }"
-            >
-              <div class="value-card-inner">
-                <div class="value-icon-wrapper">
-                  <div class="value-icon" :style="{ background: value.gradient }">
-                    <v-icon :icon="value.icon" />
-                  </div>
-                  <div class="value-glow" :style="{ background: value.gradient }"></div>
-                </div>
-                <div class="value-content">
-                  <h4 class="value-title">{{ value.title }}</h4>
-                  <p class="value-description">{{ value.description }}</p>
-                </div>
-                <div class="value-border" :style="{ background: value.gradient }"></div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
   </section>
@@ -320,11 +269,9 @@ const getValueColor = (index: number) => {
 
 /* Values Section */
 .values-section {
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.03),
-    rgba(16, 185, 129, 0.03)
-  );
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.03),
+      rgba(16, 185, 129, 0.03));
   padding: 60px 48px;
   border-radius: 32px;
   border: 1px solid rgba(59, 130, 246, 0.1);
@@ -339,16 +286,12 @@ const getValueColor = (index: number) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(
-      circle at 20% 80%,
+  background: radial-gradient(circle at 20% 80%,
       rgba(59, 130, 246, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
+      transparent 50%),
+    radial-gradient(circle at 80% 20%,
       rgba(16, 185, 129, 0.1) 0%,
-      transparent 50%
-    );
+      transparent 50%);
   pointer-events: none;
 }
 
@@ -520,11 +463,9 @@ const getValueColor = (index: number) => {
 
 /* Dark mode support */
 :global(.v-theme--dark) .values-section {
-  background: linear-gradient(
-    135deg,
-    rgba(59, 130, 246, 0.05),
-    rgba(16, 185, 129, 0.05)
-  );
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.05),
+      rgba(16, 185, 129, 0.05));
   border-color: rgba(59, 130, 246, 0.2);
 }
 

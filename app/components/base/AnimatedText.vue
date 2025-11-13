@@ -1,10 +1,5 @@
 <template>
-  <component
-    :is="tag"
-    :class="textClasses"
-    data-animate="fade-up"
-    :data-delay="delay"
-  >
+  <component :is="tag" :class="textClasses" data-animate="fade-up" :data-delay="delay">
     <span v-if="animated" ref="textElement" :class="animatedContentClasses">
       {{ displayText }}
     </span>
@@ -23,15 +18,15 @@ interface Props {
   delay?: number;
   duration?: number;
   size?:
-    | "caption"
-    | "body-2"
-    | "body-1"
-    | "h6"
-    | "h5"
-    | "h4"
-    | "h3"
-    | "h2"
-    | "h1";
+  | "caption"
+  | "body-2"
+  | "body-1"
+  | "h6"
+  | "h5"
+  | "h4"
+  | "h3"
+  | "h2"
+  | "h1";
   weight?: "light" | "regular" | "medium" | "bold";
   color?: string;
   align?: "left" | "center" | "right";
@@ -110,7 +105,7 @@ const textClasses = computed(() => {
 
     classes.push(
       responsiveSizes[props.size as keyof typeof responsiveSizes] ||
-        `text-${props.size}`
+      `text-${props.size}`
     );
   } else {
     classes.push(`text-${props.size}`);

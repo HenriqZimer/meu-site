@@ -1,32 +1,15 @@
 <template>
-  <div
-    class="modern-base-card"
-    :class="cardClasses"
-    :style="cardStyles"
-  >
+  <div class="modern-base-card" :class="cardClasses" :style="cardStyles">
     <!-- Header do Card -->
     <div class="card-header" :class="headerClasses">
       <div class="header-content">
         <div v-if="image" class="header-image-wrapper">
-          <v-img
-            :src="image"
-            :alt="title"
-            class="header-image"
-            width="48"
-            height="48"
-            cover
-          />
+          <v-img :src="image" :alt="title" class="header-image" width="48" height="48" cover />
         </div>
         <v-icon v-else :icon="icon" size="large" class="header-icon" />
         <div class="header-text">
           <span class="header-title">{{ title }}</span>
-          <v-chip
-            class="count-badge"
-            color="white"
-            :text-color="color"
-            size="small"
-            variant="elevated"
-          >
+          <v-chip class="count-badge" color="white" :text-color="color" size="small" variant="elevated">
             {{ count }}
           </v-chip>
         </div>
@@ -36,11 +19,7 @@
 
     <!-- Content -->
     <div class="card-content" :style="contentStyles">
-      <div
-        class="items-list"
-        role="list"
-        :aria-label="ariaLabel"
-      >
+      <div class="items-list" role="list" :aria-label="ariaLabel">
         <slot />
       </div>
     </div>
@@ -133,11 +112,9 @@ const contentStyles = computed(() => {
   position: relative;
   color: white;
   padding: 24px;
-  background: linear-gradient(
-    135deg,
-    rgb(var(--header-color)) 0%,
-    color-mix(in srgb, rgb(var(--header-color)) 80%, black 20%) 100%
-  );
+  background: linear-gradient(135deg,
+      rgb(var(--header-color)) 0%,
+      color-mix(in srgb, rgb(var(--header-color)) 80%, black 20%) 100%);
 }
 
 .card-header--primary {
@@ -213,12 +190,10 @@ const contentStyles = computed(() => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
+  background: linear-gradient(45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent);
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
@@ -312,6 +287,7 @@ const contentStyles = computed(() => {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   .modern-base-card,
   .header-decoration,
   .header-icon {

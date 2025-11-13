@@ -16,23 +16,11 @@
 
     <!-- Grid de Badges -->
     <div class="badges-grid" :class="gridClasses">
-      <div
-        v-for="(badge, index) in badges"
-        :key="badge.id || index"
-        class="badge-item"
-        data-animate="fade-up"
+      <div v-for="(badge, index) in badges" :key="badge.id || index" class="badge-item" data-animate="fade-up"
         :data-delay="animationDelay + index * 100"
-        :style="{ '--animation-delay': `${animationDelay + index * 100}ms` }"
-      >
-        <CredlyBadge
-          :name="badge.name"
-          :issuer="badge.issuer"
-          :image="badge.image"
-          :link="badge.link"
-          :date="badge.date"
-          :skills="badge.skills"
-          :variant="badgeVariant"
-        />
+        :style="{ '--animation-delay': `${animationDelay + index * 100}ms` }">
+        <CredlyBadge :name="badge.name" :issuer="badge.issuer" :image="badge.image" :link="badge.link"
+          :date="badge.date" :skills="badge.skills" :variant="badgeVariant" />
       </div>
     </div>
   </div>
@@ -179,7 +167,7 @@ const gridClasses = computed(() => [
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 16px;
   }
-  
+
   .badges-header {
     margin-bottom: 28px;
   }
@@ -202,7 +190,7 @@ const gridClasses = computed(() => [
   .badges-header {
     margin-bottom: 24px;
   }
-  
+
   .badges-title {
     font-size: 1.25rem;
   }

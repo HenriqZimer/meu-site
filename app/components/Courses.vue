@@ -2,20 +2,11 @@
   <section id="courses" class="modern-courses">
     <div class="courses-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Cursos"
-        icon="mdi-school"
-        title-prefix="Meus"
-        title-highlight="Cursos Concluídos"
+      <SectionHeader badge="Cursos" icon="mdi-school" title-prefix="Meus" title-highlight="Cursos Concluídos"
         description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
-        theme="primary"
-      >
+        theme="primary">
         <!-- Statistics Overview -->
-        <StatsGrid 
-          :stats="courseStats" 
-          :base-delay="400"
-          custom-class="mt-8"
-        />
+        <StatsGrid :stats="courseStats" :base-delay="400" custom-class="mt-8" />
       </SectionHeader>
 
       <!-- Expansion Panels por Ano -->

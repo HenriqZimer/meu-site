@@ -1,21 +1,8 @@
 <template>
-  <BaseCard
-    :title="title"
-    :icon="icon"
-    :color="color"
-    :count="count"
-    :type="type"
-    :animation-delay="animationDelay"
-    :aria-label="`Lista de certificações ${type === 'obtained' ? 'obtidas' : 'planejadas'}`"
-  >
-    <CertificationItem
-      v-for="(item, index) in items"
-      :key="`${item.name}-${index}`"
-      :certification="item"
-      :index="index"
-      :animation-delay="animationDelay + 400 + index * 100"
-      :type="type"
-    />
+  <BaseCard :title="title" :icon="icon" :color="color" :count="count" :type="type" :animation-delay="animationDelay"
+    :aria-label="`Lista de certificações ${type === 'obtained' ? 'obtidas' : 'planejadas'}`">
+    <CertificationItem v-for="(item, index) in items" :key="`${item.name}-${index}`" :certification="item"
+      :index="index" :animation-delay="animationDelay + 400 + index * 100" :type="type" />
   </BaseCard>
 </template>
 

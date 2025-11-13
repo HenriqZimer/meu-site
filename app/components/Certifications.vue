@@ -2,30 +2,15 @@
   <section id="certifications" class="modern-certifications">
     <div class="certifications-container">
       <!-- Header Section -->
-      <SectionHeader
-        badge="Certificações"
-        icon="mdi-certificate"
-        title-prefix="Minhas"
-        title-highlight="Certificações"
+      <SectionHeader badge="Certificações" icon="mdi-certificate" title-prefix="Minhas" title-highlight="Certificações"
         description="Desenvolvimento profissional contínuo através de certificações e especializações em tecnologias cloud e DevOps"
-        theme="primary"
-      >
-        <!-- Statistics Overview -->
-        <StatsGrid 
-          :stats="certificationStats" 
-          :base-delay="400"
-          custom-class="mt-8"
-        />
+        theme="primary">
       </SectionHeader>
 
       <!-- Badges -->
       <div class="certifications-content" data-animate="fade-up" data-delay="600">
-        <CredlyBadgeGrid
-          :badges="credlyBadges"
-          :show-header="false"
-          :columns="responsiveColumns"
-          :animation-delay="600"
-        />
+        <CredlyBadgeGrid :badges="credlyBadges" :show-header="false" :columns="responsiveColumns"
+          :animation-delay="600" />
       </div>
     </div>
   </section>
@@ -267,10 +252,21 @@ const certificationStats = computed<Stat[]>(() => [
   animation: fadeInScale 0.6s ease forwards;
 }
 
-.modern-certifications .stat-item[data-animate-delay="0"] { animation-delay: 0.8s; }
-.modern-certifications .stat-item[data-animate-delay="100"] { animation-delay: 0.9s; }
-.modern-certifications .stat-item[data-animate-delay="200"] { animation-delay: 1.0s; }
-.modern-certifications .stat-item[data-animate-delay="300"] { animation-delay: 1.1s; }
+.modern-certifications .stat-item[data-animate-delay="0"] {
+  animation-delay: 0.8s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="100"] {
+  animation-delay: 0.9s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="200"] {
+  animation-delay: 1.0s;
+}
+
+.modern-certifications .stat-item[data-animate-delay="300"] {
+  animation-delay: 1.1s;
+}
 
 .modern-certifications .stat-card {
   background: rgba(var(--v-theme-surface), 0.8);
@@ -511,11 +507,11 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 100px 0 60px;
   }
-  
+
   .certifications-container {
     padding: 0 20px;
   }
-  
+
   .certifications-grid {
     gap: 24px;
   }
@@ -525,36 +521,36 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 80px 0 60px;
   }
-  
+
   .certifications-container {
     padding: 0 16px;
   }
-  
+
   .certifications-header {
     margin-bottom: 64px;
   }
-  
+
   .stats-overview {
     margin-bottom: 32px;
   }
-  
+
   .stat-card {
     padding: 16px;
   }
-  
+
   .stat-value {
     font-size: 1.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 48px;
     height: 48px;
   }
-  
+
   .progress-section {
     max-width: 300px;
   }
-  
+
   .certifications-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -565,42 +561,42 @@ const certificationStats = computed<Stat[]>(() => [
   .modern-certifications {
     padding: 60px 0 40px;
   }
-  
+
   .certifications-container {
     padding: 0 16px;
   }
-  
-  
+
+
   .stats-overview {
     margin-bottom: 24px;
   }
-  
+
   .stat-card {
     padding: 12px;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }
-  
+
   .stat-label {
     font-size: 0.75rem;
   }
-  
+
   .stat-icon-wrapper {
     width: 40px;
     height: 40px;
     margin-bottom: 8px;
   }
-  
+
   .progress-section {
     max-width: 250px;
   }
-  
+
   .progress-label {
     font-size: 0.75rem;
   }
-  
+
   .progress-percentage {
     font-size: 1.125rem;
   }
@@ -611,15 +607,15 @@ const certificationStats = computed<Stat[]>(() => [
   .certifications-container {
     padding: 0 12px;
   }
-  
+
   .certifications-grid {
     gap: 16px;
   }
-  
+
   .modern-certifications {
     padding: 50px 0 30px;
   }
-  
+
   .progress-section {
     max-width: 200px;
   }

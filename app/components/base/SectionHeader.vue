@@ -1,22 +1,13 @@
 <template>
   <div :class="headerClasses" data-animate="fade-up">
     <!-- Badge -->
-    <span
-      v-if="badge"
-      :class="badgeClasses"
-      data-animate="fade-in"
-      :data-delay="animationDelays.badge"
-    >
+    <span v-if="badge" :class="badgeClasses" data-animate="fade-in" :data-delay="animationDelays.badge">
       <v-icon v-if="icon" :icon="icon" start size="16" />
       {{ badge }}
     </span>
 
     <!-- Title -->
-    <h2
-      class="section-title"
-      data-animate="fade-up"
-      :data-delay="animationDelays.title"
-    >
+    <h2 class="section-title" data-animate="fade-up" :data-delay="animationDelays.title">
       <slot name="title">
         {{ titlePrefix }}
         <span class="title-highlight">{{ titleHighlight }}</span>
@@ -24,12 +15,8 @@
     </h2>
 
     <!-- Description -->
-    <p
-      v-if="description || $slots.description"
-      class="section-description"
-      data-animate="fade-up"
-      :data-delay="animationDelays.description"
-    >
+    <p v-if="description || $slots.description" class="section-description" data-animate="fade-up"
+      :data-delay="animationDelays.description">
       <slot name="description">{{ description }}</slot>
     </p>
 

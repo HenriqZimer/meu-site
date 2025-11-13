@@ -1,22 +1,11 @@
 <template>
   <div :class="containerClasses" data-animate="fade-up" :data-delay="baseDelay">
     <v-row justify="center">
-      <v-col
-        v-for="(stat, index) in stats"
-        :key="index"
-        :cols="layout.cols"
-        :sm="layout.sm"
-        class="stat-item"
-        :data-animate-delay="index * delayIncrement"
-      >
+      <v-col v-for="(stat, index) in stats" :key="index" :cols="layout.cols" :sm="layout.sm" class="stat-item"
+        :data-animate-delay="index * delayIncrement">
         <div class="stat-card">
           <div class="stat-icon-wrapper">
-            <v-icon
-              :icon="stat.icon"
-              :color="stat.color"
-              :size="iconSize"
-              class="stat-icon"
-            />
+            <v-icon :icon="stat.icon" :color="stat.color" :size="iconSize" class="stat-icon" />
           </div>
           <div class="stat-content">
             <div class="stat-value" :class="`text-${stat.color}`">

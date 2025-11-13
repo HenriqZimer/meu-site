@@ -1,9 +1,5 @@
 <template>
-  <div 
-    :class="['story-card', variant]" 
-    data-animate="fade-up" 
-    :data-delay="delay"
-  >
+  <div :class="['story-card', variant]" data-animate="fade-up" :data-delay="delay">
     <div class="story-icon">
       <v-icon :icon="icon" />
     </div>

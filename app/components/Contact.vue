@@ -2,14 +2,8 @@
   <section id="contact" class="contact-section">
     <div class="contact-container">
       <!-- Header da Seção -->
-      <SectionHeader
-        badge="Contato"
-        icon="mdi-email"
-        title-prefix="Interessado em"
-        title-highlight="trabalhar comigo"
-        description="Vamos conversar sobre seu próximo projeto"
-        custom-class="section-header"
-      />
+      <SectionHeader badge="Contato" icon="mdi-email" title-prefix="Interessado em" title-highlight="trabalhar comigo"
+        description="Vamos conversar sobre seu próximo projeto" custom-class="section-header" />
 
       <div class="contact-content">
         <div class="contact-info-card" data-animate="slide-up" data-delay="200">
@@ -21,59 +15,24 @@
           </div>
 
           <div class="contact-list">
-            <ContactItem
-              icon="mdi-email"
-              label="Email"
-              :value="email"
-              :href="`mailto:${email}`"
-              :delay="300"
-            />
-            
-            <ContactItem
-              icon="mdi-phone"
-              label="Telefone"
-              :value="phone"
-              :href="`tel:${phone}`"
-              :delay="400"
-            />
-            
-            <ContactItem
-              icon="mdi-whatsapp"
-              label="WhatsApp"
-              :value="phone"
-              :href="contactInfo.whatsapp"
-              :delay="450"
-              external
-            />
-            
-            <ContactItem
-              icon="mdi-map-marker"
-              label="Localização"
-              :value="location"
-              :delay="500"
-            />
+            <ContactItem icon="mdi-email" label="Email" :value="email" :href="`mailto:${email}`" :delay="300" />
+
+            <ContactItem icon="mdi-phone" label="Telefone" :value="phone" :href="`tel:${phone}`" :delay="400" />
+
+            <ContactItem icon="mdi-whatsapp" label="WhatsApp" :value="phone" :href="contactInfo.whatsapp" :delay="450"
+              external />
+
+            <ContactItem icon="mdi-map-marker" label="Localização" :value="location" :delay="500" />
           </div>
 
           <div class="social-section">
             <h4 class="social-title">Redes Sociais</h4>
             <div class="social-buttons">
-              <v-btn
-                variant="outlined"
-                color="primary"
-                class="social-btn"
-                :href="githubUrl"
-                target="_blank"
-              >
+              <v-btn variant="outlined" color="primary" class="social-btn" :href="githubUrl" target="_blank">
                 <v-icon start icon="mdi-github" />
                 GitHub
               </v-btn>
-              <v-btn
-                variant="outlined"
-                color="primary"
-                class="social-btn"
-                :href="linkedinUrl"
-                target="_blank"
-              >
+              <v-btn variant="outlined" color="primary" class="social-btn" :href="linkedinUrl" target="_blank">
                 <v-icon start icon="mdi-linkedin" />
                 LinkedIn
               </v-btn>
@@ -446,6 +405,7 @@ const handleSubmit = async () => {
 }
 
 @media (max-width: 480px) {
+
   .contact-info-card,
   .contact-form-card {
     padding: 20px;

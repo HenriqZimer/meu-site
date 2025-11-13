@@ -1,33 +1,14 @@
 <template>
-  <div
-    class="modern-course-item"
-    :class="itemClasses"
-    :style="itemStyles"
-    role="listitem"
-  >
-    <a
-      :href="course.link"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="course-link"
-      :aria-label="`Abrir detalhes do curso ${course.name}`"
-    >
+  <div class="modern-course-item" :class="itemClasses" :style="itemStyles" role="listitem">
+    <a :href="course.link" target="_blank" rel="noopener noreferrer" class="course-link"
+      :aria-label="`Abrir detalhes do curso ${course.name}`">
       <!-- Course Image/Icon -->
       <div class="course-image-container">
         <div v-if="course.image" class="course-image-wrapper">
-          <img
-            :src="course.image"
-            :alt="`Logo ${course.platform}`"
-            class="course-image"
-            loading="lazy"
-          />
+          <img :src="course.image" :alt="`Logo ${course.platform}`" class="course-image" loading="lazy" />
         </div>
         <div v-else class="course-icon-wrapper" :style="iconWrapperStyles">
-          <v-icon
-            :icon="course.icon || defaultIcon"
-            :color="course.color || 'primary'"
-            size="32"
-          />
+          <v-icon :icon="course.icon || defaultIcon" :color="course.color || 'primary'" size="32" />
         </div>
       </div>
 
@@ -57,25 +38,14 @@
             <span class="progress-label">Progresso</span>
             <span class="progress-value">{{ course.progress }}%</span>
           </div>
-          <v-progress-linear
-            :model-value="course.progress"
-            color="primary"
-            bg-color="surface-variant"
-            height="6"
-            rounded
-            class="progress-bar"
-          />
+          <v-progress-linear :model-value="course.progress" color="primary" bg-color="surface-variant" height="6"
+            rounded class="progress-bar" />
         </div>
 
         <!-- Status Badge -->
         <div v-if="showStatus" class="course-status">
-          <v-chip
-            :color="statusConfig.color"
-            :prepend-icon="statusConfig.icon"
-            size="small"
-            variant="flat"
-            class="status-chip"
-          >
+          <v-chip :color="statusConfig.color" :prepend-icon="statusConfig.icon" size="small" variant="flat"
+            class="status-chip">
             {{ statusConfig.label }}
           </v-chip>
         </div>
@@ -83,12 +53,7 @@
 
       <!-- External Link Icon -->
       <div class="course-action">
-        <v-icon
-          icon="mdi-open-in-new"
-          size="20"
-          class="external-icon"
-          color="primary"
-        />
+        <v-icon icon="mdi-open-in-new" size="20" class="external-icon" color="primary" />
       </div>
     </a>
   </div>
@@ -147,7 +112,7 @@ const itemStyles = computed(() => ({
 }));
 
 const iconWrapperStyles = computed(() => ({
-  background: props.course.color 
+  background: props.course.color
     ? `color-mix(in srgb, var(--v-theme-${props.course.color}) 20%, transparent)`
     : 'rgba(var(--v-theme-primary), 0.1)',
 }));
@@ -202,10 +167,9 @@ const statusConfig = computed(() => {
   left: 0;
   width: 4px;
   height: 100%;
-  background: linear-gradient(180deg, 
-    rgb(var(--v-theme-primary)),
-    rgb(var(--v-theme-secondary))
-  );
+  background: linear-gradient(180deg,
+      rgb(var(--v-theme-primary)),
+      rgb(var(--v-theme-secondary)));
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -394,17 +358,15 @@ const statusConfig = computed(() => {
 
 /* Type Specific Styles */
 .course-item--completed .course-link::before {
-  background: linear-gradient(180deg, 
-    rgb(var(--v-theme-success)),
-    color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black)
-  );
+  background: linear-gradient(180deg,
+      rgb(var(--v-theme-success)),
+      color-mix(in srgb, rgb(var(--v-theme-success)) 70%, black));
 }
 
 .course-item--in-progress .course-link::before {
-  background: linear-gradient(180deg, 
-    rgb(var(--v-theme-primary)),
-    rgb(var(--v-theme-secondary))
-  );
+  background: linear-gradient(180deg,
+      rgb(var(--v-theme-primary)),
+      rgb(var(--v-theme-secondary)));
 }
 
 /* Responsive */

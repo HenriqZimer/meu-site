@@ -4,14 +4,8 @@
       <span class="progress-label">{{ label }}</span>
       <span class="progress-percentage">{{ Math.round(percentage) }}%</span>
     </div>
-    <v-progress-linear
-      :model-value="percentage"
-      :color="color"
-      bg-color="surface-variant"
-      height="8"
-      rounded
-      class="progress-bar"
-    />
+    <v-progress-linear :model-value="percentage" :color="color" bg-color="surface-variant" height="8" rounded
+      class="progress-bar" />
   </div>
 </template>
 

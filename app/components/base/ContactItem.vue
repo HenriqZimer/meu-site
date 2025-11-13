@@ -5,13 +5,8 @@
     </div>
     <div class="contact-details">
       <span class="contact-label">{{ label }}</span>
-      <a 
-        v-if="href" 
-        :href="href" 
-        class="contact-value"
-        :target="external ? '_blank' : undefined"
-        :rel="external ? 'noopener noreferrer' : undefined"
-      >
+      <a v-if="href" :href="href" class="contact-value" :target="external ? '_blank' : undefined"
+        :rel="external ? 'noopener noreferrer' : undefined">
         {{ value }}
       </a>
       <span v-else class="contact-value">{{ value }}</span>

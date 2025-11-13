@@ -1,51 +1,24 @@
 <template>
-  <v-card
-    :class="cardClasses"
-    :elevation="elevation"
-    :rounded="rounded"
-    :style="cardStyles"
-    data-animate="fade-up"
-    :data-delay="animationDelay"
-  >
+  <v-card :class="cardClasses" :elevation="elevation" :rounded="rounded" :style="cardStyles" data-animate="fade-up"
+    :data-delay="animationDelay">
     <!-- Header da categoria -->
     <div :class="headerClasses">
-      <v-icon
-        v-if="icon"
-        :icon="icon"
-        :size="iconSize"
-        :color="iconColor"
-        :class="iconClasses"
-      />
+      <v-icon v-if="icon" :icon="icon" :size="iconSize" :color="iconColor" :class="iconClasses" />
       <h3 :class="titleClasses">{{ title }}</h3>
     </div>
 
     <!-- Lista de skills -->
-    <v-list
-      v-if="skills.length > 0"
-      density="compact"
-      class="bg-transparent skill-list"
-    >
-      <v-list-item
-        v-for="(skill, index) in skills"
-        :key="skill.name"
-        class="px-0 skill-item"
-        :style="`animation-delay: ${animationDelay + 200 + index * 100}ms;`"
-        data-animate="fade-left"
-      >
+    <v-list v-if="skills.length > 0" density="compact" class="bg-transparent skill-list">
+      <v-list-item v-for="(skill, index) in skills" :key="skill.name" class="px-0 skill-item"
+        :style="`animation-delay: ${animationDelay + 200 + index * 100}ms;`" data-animate="fade-left">
         <div class="skill-content">
           <div class="d-flex justify-space-between align-center mb-2">
             <span :class="skillNameClasses">{{ skill.name }}</span>
             <span :class="skillLevelClasses">{{ skill.level }}%</span>
           </div>
-          <v-progress-linear
-            :model-value="skill.level"
-            :color="progressColor"
-            :height="progressHeight"
-            rounded
-            class="skill-progress"
-            :style="`animation-delay: ${animationDelay + 400 + index * 100}ms;`"
-            data-animate="scale-width"
-          />
+          <v-progress-linear :model-value="skill.level" :color="progressColor" :height="progressHeight" rounded
+            class="skill-progress" :style="`animation-delay: ${animationDelay + 400 + index * 100}ms;`"
+            data-animate="scale-width" />
         </div>
       </v-list-item>
     </v-list>

@@ -24,36 +24,21 @@
           </p>
 
           <div class="hero-actions" data-animate="fade-up" data-delay="500">
-            <v-btn
-              variant="flat"
-              color="primary"
-              size="large"
-              class="cta-primary"
-              @click="scrollToSection('portfolio')"
-              :ripple="false"
-            >
+            <v-btn variant="flat" color="primary" size="large" class="cta-primary" @click="scrollToSection('portfolio')"
+              :ripple="false">
               <v-icon icon="mdi-briefcase-variant" start />
               Ver Projetos
             </v-btn>
 
-            <v-btn
-              variant="outlined"
-              color="primary"
-              size="large"
-              class="cta-secondary"
-              @click="scrollToSection('contact')"
-              :ripple="false"
-            >
+            <v-btn variant="outlined" color="primary" size="large" class="cta-secondary"
+              @click="scrollToSection('contact')" :ripple="false">
               <v-icon icon="mdi-message-text" start />
               Fale Comigo
             </v-btn>
           </div>
 
           <div data-animate="fade-up" data-delay="600">
-            <SocialLinks
-              :links="socialLinks"
-              label="Conecte-se comigo"
-            />
+            <SocialLinks :links="socialLinks" label="Conecte-se comigo" />
           </div>
         </div>
 
@@ -61,12 +46,7 @@
         <div class="hero-visual" data-animate="fade-left" data-delay="300">
           <div class="avatar-container">
             <div class="avatar-wrapper">
-              <img
-                :src="getImageUrl(400, 'webp')"
-                :alt="imageAlt"
-                class="hero-avatar"
-                loading="eager"
-              />
+              <img :src="getImageUrl(400, 'webp')" :alt="imageAlt" class="hero-avatar" loading="eager" />
             </div>
           </div>
         </div>
@@ -108,7 +88,7 @@ onMounted(() => {
 const imageAlt = `Foto profissional de ${siteFirstName}`;
 
 // Use utility function
-const getImageUrl = (width: number, format: string = "webp") => 
+const getImageUrl = (width: number, format: string = "webp") =>
   getProfilePhotoUrl(width, format);
 </script>
 
@@ -346,11 +326,13 @@ const getImageUrl = (width: number, format: string = "webp") =>
 }
 
 @keyframes borderGlow {
+
   0%,
   100% {
     opacity: 0.6;
     filter: brightness(1);
   }
+
   50% {
     opacity: 1;
     filter: brightness(1.2);
@@ -401,16 +383,12 @@ const getImageUrl = (width: number, format: string = "webp") =>
 .bg-pattern {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(
-      circle at 25% 25%,
+  background-image: radial-gradient(circle at 25% 25%,
       rgba(59, 130, 246, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 75% 75%,
+      transparent 50%),
+    radial-gradient(circle at 75% 75%,
       rgba(6, 182, 212, 0.1) 0%,
-      transparent 50%
-    );
+      transparent 50%);
 }
 
 /* Animations available in /assets/css/animations.css */

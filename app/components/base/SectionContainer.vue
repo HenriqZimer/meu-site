@@ -8,21 +8,11 @@
             <h2 :class="titleClasses">
               {{ title }}
             </h2>
-            <p
-              v-if="subtitle"
-              :class="subtitleClasses"
-              data-animate="fade-up"
-              :data-delay="100"
-            >
+            <p v-if="subtitle" :class="subtitleClasses" data-animate="fade-up" :data-delay="100">
               {{ subtitle }}
             </p>
-            <v-divider
-              v-if="showDivider"
-              :class="dividerClasses"
-              :style="dividerStyles"
-              data-animate="scale-width"
-              :data-delay="200"
-            />
+            <v-divider v-if="showDivider" :class="dividerClasses" :style="dividerStyles" data-animate="scale-width"
+              :data-delay="200" />
           </div>
         </v-col>
       </v-row>
@@ -48,11 +38,11 @@ interface Props {
   showHeader?: boolean;
   showDivider?: boolean;
   background?:
-    | "transparent"
-    | "surface"
-    | "background"
-    | "primary"
-    | "secondary";
+  | "transparent"
+  | "surface"
+  | "background"
+  | "primary"
+  | "secondary";
   padding?: "none" | "small" | "medium" | "large" | "xlarge";
   textAlign?: "left" | "center" | "right";
   maxWidth?: string | number;

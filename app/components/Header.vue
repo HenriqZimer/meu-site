@@ -1,27 +1,13 @@
 <template>
-  <v-app-bar
-    flat
-    fixed
-    class="modern-header"
-    :class="{ 'header-scrolled': scrolled }"
-    height="70"
-  >
+  <v-app-bar flat fixed class="modern-header" :class="{ 'header-scrolled': scrolled }" height="70">
     <v-container fluid class="header-container">
       <div class="header-content">
         <!-- Logo/Brand -->
         <div class="brand-section">
-          <button
-            class="brand-btn"
-            @click="scrollToSection('home')"
-            aria-label="Ir para o topo"
-          >
+          <button class="brand-btn" @click="scrollToSection('home')" aria-label="Ir para o topo">
             <div class="brand-content">
               <div class="brand-logo">
-                <img
-                  :src="IMAGE_URLS.LOGO"
-                  alt="Henrique Zimermann Logo"
-                  class="brand-logo-img"
-                />
+                <img :src="IMAGE_URLS.LOGO" alt="Henrique Zimermann Logo" class="brand-logo-img" />
               </div>
               <div class="brand-info">
                 <div class="brand-name">Henrique</div>
@@ -34,13 +20,8 @@
         <!-- Desktop Navigation -->
         <nav class="desktop-nav" v-if="!isMobile">
           <div class="nav-items">
-            <button
-              v-for="item in menuItems"
-              :key="item.id"
-              class="nav-item"
-              :class="{ 'nav-item--active': activeSection === item.id }"
-              @click="scrollToSection(item.id)"
-            >
+            <button v-for="item in menuItems" :key="item.id" class="nav-item"
+              :class="{ 'nav-item--active': activeSection === item.id }" @click="scrollToSection(item.id)">
               {{ item.label }}
             </button>
           </div>
@@ -54,13 +35,7 @@
 
         <!-- Mobile Menu -->
         <div class="mobile-menu" v-if="isMobile">
-          <v-btn
-            icon
-            variant="text"
-            class="mobile-menu-btn"
-            @click="toggleDrawer"
-            :ripple="false"
-          >
+          <v-btn icon variant="text" class="mobile-menu-btn" @click="toggleDrawer" :ripple="false">
             <v-icon :icon="drawer ? 'mdi-close' : 'mdi-menu'" />
           </v-btn>
         </div>
@@ -69,13 +44,7 @@
   </v-app-bar>
 
   <!-- Mobile Navigation Drawer -->
-  <v-navigation-drawer
-    v-model="drawer"
-    temporary
-    location="right"
-    class="mobile-drawer"
-    width="320"
-  >
+  <v-navigation-drawer v-model="drawer" temporary location="right" class="mobile-drawer" width="320">
     <div class="drawer-content">
       <div class="drawer-header">
         <div class="drawer-brand">
@@ -85,40 +54,21 @@
             <div class="drawer-role">DevOps & Cloud Engineer</div>
           </div>
         </div>
-        <v-btn
-          icon
-          variant="text"
-          @click="drawer = false"
-          class="drawer-close"
-          :ripple="false"
-        >
+        <v-btn icon variant="text" @click="drawer = false" class="drawer-close" :ripple="false">
           <v-icon icon="mdi-close" />
         </v-btn>
       </div>
 
       <div class="drawer-nav">
-        <v-btn
-          v-for="item in menuItems"
-          :key="item.id"
-          variant="text"
-          class="drawer-nav-item"
-          :class="{ 'drawer-nav-item--active': activeSection === item.id }"
-          @click="handleDrawerItemClick(item.id)"
-          block
-          :ripple="false"
-        >
+        <v-btn v-for="item in menuItems" :key="item.id" variant="text" class="drawer-nav-item"
+          :class="{ 'drawer-nav-item--active': activeSection === item.id }" @click="handleDrawerItemClick(item.id)"
+          block :ripple="false">
           <v-icon :icon="item.icon" start />
           {{ item.label }}
         </v-btn>
 
-        <v-btn
-          variant="flat"
-          color="primary"
-          class="drawer-cta"
-          @click="handleDrawerItemClick('contact')"
-          block
-          :ripple="false"
-        >
+        <v-btn variant="flat" color="primary" class="drawer-cta" @click="handleDrawerItemClick('contact')" block
+          :ripple="false">
           <v-icon icon="mdi-send" start />
           Fale Comigo
         </v-btn>
@@ -208,6 +158,7 @@ onUnmounted(() => {
   border-radius: 16px;
   object-fit: contain;
 }
+
 /* === BRAND SECTION === */
 .brand-section {
   flex-shrink: 0;
