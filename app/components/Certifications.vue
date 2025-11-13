@@ -77,6 +77,14 @@ const credlyBadges: Badge[] = [
     date: 'Out 2025',
     skills: 8
   },
+  {
+    name: 'Uncomplicating Docker',
+    issuer: 'LINUXtips',
+    image: 'https://images.credly.com/images/1f4948b5-717b-44ae-8484-10c52d4ff4ed/fc576c30-5c05-48f3-aed6-1bc317489a85_cached_image_20251103-29-vx0rga.png',
+    link: 'https://www.credential.net/c5958e12-4cca-400c-a0a2-10f2334b4666#acc.49DLSW0d',
+    date: 'Nov 2025',
+    skills: 4
+  },
 ]
 
 // Computed stats

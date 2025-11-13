@@ -198,11 +198,6 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-/* .brand-btn:hover .brand-logo {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.5);
-} */
-
 .brand-initial {
   font-size: 20px;
   font-weight: 700;

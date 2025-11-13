@@ -238,7 +238,7 @@ const allCourses: Course[] = [
   // 2023
   {
     name: 'ProxMox - do Zero ao Profissional + Hyper-V Server 2019',
-    platform: 'Alura',
+    platform: 'Udemy',
     instructor: 'DICARJ & BorapraNuvem!',
     duration: '8h',
     image: 'https://imagens.henriqzimer.com.br/udemy.png',
@@ -610,6 +610,7 @@ const coursesByYear = computed<YearGroup[]>(() => {
   opacity: 0;
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.6s;
+  display: none;
 }
 
 .modern-courses .courses-expansion-panels {

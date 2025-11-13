@@ -8,8 +8,8 @@ export const MENU_ITEMS = [
   { id: "about", label: "Sobre", icon: "mdi-account-circle" },
   { id: "portfolio", label: "Projetos", icon: "mdi-briefcase-variant" },
   { id: "skills", label: "Skills", icon: "mdi-brain" },
-  { id: "courses", label: "Cursos", icon: "mdi-school" },
   { id: "certifications", label: "Certificações", icon: "mdi-certificate" },
+  { id: "courses", label: "Cursos", icon: "mdi-school" },
   { id: "contact", label: "Contato", icon: "mdi-message-text" },
 ] as const;
 
