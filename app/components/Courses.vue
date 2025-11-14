@@ -17,7 +17,7 @@
 
       <!-- Expansion Panels por Ano -->
       <div class="courses-timeline" data-animate="fade-up" data-delay="600">
-        <v-expansion-panels variant="accordion" class="courses-expansion-panels">
+        <v-expansion-panels variant="accordion" class="courses-expansion-panels" color="primary">
           <v-expansion-panel v-for="yearGroup in coursesByYear" :key="yearGroup.year" class="year-panel"
             :class="yearGroup.year === 'Planejados' ? 'year-panel--planned' : 'year-panel--completed'">
             <v-expansion-panel-title class="year-panel-title">
@@ -28,7 +28,7 @@
                 </div>
               </template>
               <template v-slot:actions>
-                <v-chip :color="yearGroup.year === 'Planejados' ? 'primary' : 'success'" size="small" variant="flat"
+                <v-chip color="primary" size="small" variant="flat"
                   class="year-badge">
                   {{ yearGroup.courses.length }} {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
                 </v-chip>
@@ -36,7 +36,8 @@
             </v-expansion-panel-title>
 
             <v-expansion-panel-text class="year-panel-content">
-              <div class="courses-list">
+              <div class="courses-list-wrapper">
+                <div class="courses-list">
                 <CertificationItem class="ma-4" v-for="(course, index) in yearGroup.courses" :key="`${course.name}-${index}`"
                   :certification="{
                     name: course.name,
@@ -45,7 +46,8 @@
                     color: course.color,
                     link: course.link
                   }" :index="index" :animation-delay="600 + index * 100"
-                  :type="yearGroup.year === 'Planejados' ? 'planned' : 'obtained'" />
+                  type="planned" />
+              </div>
               </div>
             </v-expansion-panel-text>
           </v-expansion-panel>
@@ -57,7 +59,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { IMAGE_URLS } from '~/constants'
+import { MENU_ITEMS, SCROLL_CONFIG } from '~/constants'
 import CertificationItem from '~/components/base/CertificationItem.vue'
 import type { Stat } from '~/components/base/StatsGrid.vue'
 
@@ -129,7 +131,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '12h',
-    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
+    image: '/linux-tips.png',
     link: 'https://www.credential.net/c5958e12-4cca-400c-a0a2-10f2334b4666#acc.aInvtZbs/',
     color: 'blue',
     year: '2025'
@@ -139,7 +141,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '6h',
-    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
+    image: '/linux-tips.png',
     link: 'https://mycourse.app/chvdwqAVGHUBCqQE7',
     color: 'blue',
     year: '2025'
@@ -149,7 +151,7 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Rafael Gomes',
     duration: '6h',
-    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
+    image: '/linux-tips.png',
     link: 'https://mycourse.app/Mg0hRASgoL3dL7nUJ',
     color: 'blue',
     year: '2025'
@@ -159,27 +161,27 @@ const allCourses: Course[] = [
     platform: 'LINUXtips',
     instructor: 'Jeferson Fernando',
     duration: '6h',
-    image: IMAGE_URLS.PLATFORM_LINUXTIPS,
+    image: '/linux-tips.png',
     link: 'https://mycourse.app/cbNZ3gsD2CmzKHhOB',
     color: 'blue',
     year: '2025'
   },
   {
-    name: 'Certificação Amazon AWS Certified Cloud Practitioner CLF-C02',
-    platform: 'Udemy',
-    instructor: 'Andre Iacono',
-    duration: '16.5h',
-    image: IMAGE_URLS.PLATFORM_UDEMY,
-    link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
-    color: 'blue',
-    year: '2025'
+    name: "Certificação Amazon AWS Certified Cloud Practitioner CLF-C02",
+    platform: "Udemy",
+    instructor: "Andre Iacono",
+    duration: "16.5h",
+    image: '/udemy.png',
+    link: "https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/",
+    color: "blue",
+    year: "2025"
   },
   {
     name: 'Terraform para AWS',
     platform: 'Udemy',
     instructor: 'Mateus Muller',
     duration: '7.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-a8ff0165-c1aa-4f8d-af0a-89651b908caf/',
     color: 'blue',
     year: '2025'
@@ -189,7 +191,7 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Mateus Muller',
     duration: '7h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-81ffb271-0aa4-47b8-b452-699532d2c13a/',
     color: 'blue',
     year: '2025'
@@ -199,7 +201,7 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Matheus Battisti, Hora de Codar ',
     duration: '12.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
     color: 'blue',
     year: '2025'
@@ -210,7 +212,7 @@ const allCourses: Course[] = [
     platform: "Udemy",
     instructor: "BoraPraNuvem Cursos para CLOUD! Azure, AWS e muito mais!, DICARJ Empresa especializada em cursos de T.I",
     duration: "25 horas",
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
     color: 'blue',
     year: "2024"
@@ -220,7 +222,7 @@ const allCourses: Course[] = [
     platform: 'Alura',
     instructor: 'Daniel Artine',
     duration: '12h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.alura.com.br',
     color: 'blue',
     year: '2024'
@@ -230,7 +232,7 @@ const allCourses: Course[] = [
     platform: 'Alura',
     instructor: 'Vinicius Dias',
     duration: '8h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.alura.com.br',
     color: 'blue',
     year: '2024'
@@ -238,10 +240,10 @@ const allCourses: Course[] = [
   // 2023
   {
     name: 'ProxMox - do Zero ao Profissional + Hyper-V Server 2019',
-    platform: 'Udemy',
+    platform: 'Alura',
     instructor: 'DICARJ & BorapraNuvem!',
     duration: '8h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-ab425de7-bf0a-465a-84d1-f3947d3bfeb1/',
     color: 'purple',
     year: '2023'
@@ -251,7 +253,7 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Leonardo Moura Leitao, Juracy Filho, Cod3r Cursos Online',
     duration: '5.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-a3afaa53-879f-428e-b78e-0a2eabb3ed93/',
     color: 'purple',
     year: '2023'
@@ -261,7 +263,7 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Matheus Battisti, Hora de Codar',
     duration: '7.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-dd044339-c134-4a3a-ad3c-d1ae3e8bb98d/',
     color: 'purple',
     year: '2023'
@@ -271,21 +273,11 @@ const allCourses: Course[] = [
     platform: 'Udemy',
     instructor: 'Matheus Battisti, Hora de Codar',
     duration: '8.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
+    image: '/udemy.png',
     link: 'https://www.udemy.com/certificate/UC-3e4b68f3-3ac9-43b4-a2d1-ff78fd294ed9/',
     color: 'purple',
     year: '2023'
-  },
-  {
-    name: 'Git e GitHub do básico ao avançado (c/ gist e GitHub Pages)',
-    platform: 'Udemy',
-    instructor: 'Matheus Battisti, Hora de Codar',
-    duration: '8.5h',
-    image: 'https://imagens.henriqzimer.com.br/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-3e4b68f3-3ac9-43b4-a2d1-ff78fd294ed9/',
-    color: 'purple',
-    year: '2023'
-  },
+  }
 ]
 
 // Agrupar cursos por ano
@@ -316,6 +308,12 @@ const coursesByYear = computed<YearGroup[]>(() => {
 </script>
 
 <style>
+
+.v-expansion-panel-text {
+  max-height: 500px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
 
 .modern-courses {
   padding: 40px 40px 40px 40px;
@@ -620,21 +618,17 @@ const coursesByYear = computed<YearGroup[]>(() => {
 .modern-courses .year-panel {
   background: rgba(var(--v-theme-surface), 0.95) !important;
   backdrop-filter: blur(20px);
-  border: 2px solid rgb(var(--v-theme-surface-bright)) !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
   border-radius: 16px !important;
   margin-bottom: 20px !important;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Borda verde para anos concluídos */
-.modern-courses .year-panel--completed:hover {
-  border-color: rgba(16, 185, 129, 0.6) !important;
-}
-
-/* Borda azul para Planejados */
-.modern-courses .year-panel--planned:hover {
+/* Borda azul para todos os painéis */
+.modern-courses .year-panel:hover {
   border-color: rgba(59, 130, 246, 0.6) !important;
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
 }
 
 .modern-courses .year-panel-title {
@@ -688,6 +682,34 @@ const coursesByYear = computed<YearGroup[]>(() => {
   background: transparent !important;
 }
 
+/* Courses List Wrapper with Scroll - Limited to 4 items */
+.modern-courses .courses-list-wrapper {
+  max-height: 360px;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(59, 130, 246) rgba(var(--v-theme-surface-bright), 0.3);
+}
+
+.modern-courses .courses-list-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modern-courses .courses-list-wrapper::-webkit-scrollbar-track {
+  background: rgba(var(--v-theme-surface-bright), 0.3);
+  border-radius: 3px;
+}
+
+.modern-courses .courses-list-wrapper::-webkit-scrollbar-thumb {
+  background: rgb(59, 130, 246);
+  border-radius: 3px;
+}
+
+.modern-courses .courses-list-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgb(37, 99, 235);
+}
+
 /* Smooth expansion animation */
 .modern-courses .v-expansion-panel-text__wrapper {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -704,6 +726,14 @@ const coursesByYear = computed<YearGroup[]>(() => {
   gap: 16px;
   animation: fadeInContent 0.6s ease forwards;
   padding: 8px 0;
+}
+
+.v-expansion-panel-text__wrapper {
+  padding: 0px !important;
+}
+
+.courses-list{
+  padding-bottom: 16px !important;
 }
 
 @keyframes fadeInContent {

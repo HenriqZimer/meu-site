@@ -18,7 +18,6 @@
   padding: 0 24px;
   width: 100%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 /* Section Header Styles - Already in components.css */

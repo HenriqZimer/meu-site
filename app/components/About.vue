@@ -61,13 +61,13 @@ const storyItems: Stat[] = [
 const stats: Stat[] = [
   {
     icon: 'mdi-briefcase',
-    value: '6+',
+    value: '3+',
     label: 'Anos de Experiência',
     color: 'primary'
   },
   {
     icon: 'mdi-code-braces',
-    value: '50+',
+    value: '10+',
     label: 'Projetos Realizados',
     color: 'success'
   },

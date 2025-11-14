@@ -44,4 +44,13 @@ coverage
 .Trashes
 ehthumbs.db
 Thumbs.db
-scripts
+./scripts
+Makefile
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+LICENSE
+docker-compose-dev.yml
+docker-compose-swarm.yml
+dockercd -compose-teste.yml

@@ -20,7 +20,7 @@
 
           <p class="hero-description" data-animate="fade-up" data-delay="400">
             Automatizo infraestruturas e otimizo processos de desenvolvimento.
-            Especialista em CI/CD, containerização e orquestração na nuvem.
+            Especialista em containerização e orquestração na nuvem.
           </p>
 
           <div class="hero-actions" data-animate="fade-up" data-delay="500">

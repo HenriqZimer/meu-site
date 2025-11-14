@@ -47,7 +47,7 @@ push-version: build-version
 .PHONY: deploy
 deploy: push-version
 	@echo "Deploying to production..."
-	@docker stack deploy -c docker-compose.yml meu-site
+	@docker stack deploy -c docker-compose-swarm.yml meu-site
 
 .PHONY: redeploy
 redeploy:

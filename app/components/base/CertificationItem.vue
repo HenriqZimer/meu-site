@@ -37,7 +37,7 @@
       <!-- Action Button -->
       <div class="certification-action">
         <v-btn :href="certification.link" target="_blank" :icon="actionIcon" :size="buttonSize" variant="outlined"
-          :color="type === 'obtained' ? 'success' : 'primary'" class="certification-action-btn" :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'
+          color="primary" class="certification-action-btn" :aria-label="`Abrir ${type === 'obtained' ? 'certificação' : 'informações da certificação'
             } ${certification.name} em nova aba`" />
       </div>
 
@@ -157,13 +157,8 @@ const actionIcon = computed(() =>
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
-/* Hover para certificações obtidas - verde */
-.certification-item--obtained:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.2);
-}
-
-/* Hover para certificações planejadas - azul */
+/* Hover sempre azul */
+.certification-item--obtained:hover,
 .certification-item--planned:hover {
   border-color: rgba(59, 130, 246, 0.4);
   box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
@@ -226,12 +221,8 @@ const actionIcon = computed(() =>
   transition: color 0.3s ease;
 }
 
-/* Título verde para certificações obtidas */
-.certification-item--obtained:hover .certification-title {
-  color: #10b981;
-}
-
-/* Título azul para certificações planejadas */
+/* Título sempre azul em hover */
+.certification-item--obtained:hover .certification-title,
 .certification-item--planned:hover .certification-title {
   color: #3b82f6;
 }
@@ -260,20 +251,13 @@ const actionIcon = computed(() =>
   transform: scale(1.1);
 }
 
-/* Borda verde no botão de certificações obtidas */
-.certification-item--obtained .certification-action-btn {
-  border-color: rgba(16, 185, 129, 0.5) !important;
-}
-
-.certification-item--obtained:hover .certification-action-btn {
-  border-color: #10b981 !important;
-}
-
-/* Borda azul no botão de certificações planejadas */
+/* Borda sempre azul nos botões */
+.certification-item--obtained .certification-action-btn,
 .certification-item--planned .certification-action-btn {
   border-color: rgba(59, 130, 246, 0.5) !important;
 }
 
+.certification-item--obtained:hover .certification-action-btn,
 .certification-item--planned:hover .certification-action-btn {
   border-color: #3b82f6 !important;
 }
@@ -297,13 +281,8 @@ const actionIcon = computed(() =>
   transform: scaleY(1);
 }
 
-/* Type-specific styles */
-.certification-item--obtained .certification-decoration {
-  background: linear-gradient(180deg,
-      rgba(16, 185, 129, 0.8) 0%,
-      rgba(16, 185, 129, 0.4) 100%);
-}
-
+/* Decoração sempre azul */
+.certification-item--obtained .certification-decoration,
 .certification-item--planned .certification-decoration {
   background: linear-gradient(180deg,
       rgba(59, 130, 246, 0.8) 0%,

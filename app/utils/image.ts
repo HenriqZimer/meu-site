@@ -28,7 +28,7 @@ export const getProfilePhotoUrl = (
   width: number = 400,
   format: string = "webp"
 ): string => {
-  return getOptimizedImageUrl(IMAGE_URLS.PROFILE_PHOTO, width, format);
+  return "/foto-perfil-profissional.jpg";
 };
 
 /**
