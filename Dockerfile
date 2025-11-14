@@ -1,9 +1,6 @@
 # Use Node.js 22 Alpine image
 FROM node:lts-alpine3.22
 
-# Update package index and install curl
-RUN apk update && apk add --no-cache curl
-
 # Set working directory
 WORKDIR /app
 
