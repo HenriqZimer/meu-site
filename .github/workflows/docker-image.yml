@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    # Define variáveis de ambiente estáticas para este job
+    env:
+      IMAGE_NAME: henriquezimermann/meu-site
+      TAG: latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate dynamic version tag (date)
+        id: generate_tag
+        # Este comando gera a data e a "exporta" para os próximos passos
+        # O formato é dd-mm-YYYY
+        run: echo "VERSION_TAG=$(date +%d-%m-%Y)" >> $GITHUB_ENV
+
+      - name: Build the Docker image
+        run: |
+          # Agora usamos as variáveis de ambiente com a sintaxe ${{ env.VAR_NAME }}
+          # A VERSION_TAG gerada no passo anterior também está disponível em 'env'
+          docker build --no-cache \
+            -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} \
+            -t ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} \
+            .
