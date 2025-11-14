@@ -7,13 +7,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     
-    # Define variáveis de ambiente estáticas para este job
     env:
-      IMAGE_NAME: henriquezimermann/meu-site
-      TAG: latest
+      IMAGE_NAME: henriquezimermann/meu-site 
 
     steps:
       - name: Checkout repository
@@ -21,15 +19,35 @@ jobs:
 
       - name: Generate dynamic version tag (date)
         id: generate_tag
-        # Este comando gera a data e a "exporta" para os próximos passos
-        # O formato é dd-mm-YYYY
+        # Gera a tag no formato dd-mm-YYYY e a salva no ambiente
         run: echo "VERSION_TAG=$(date +%d-%m-%Y)" >> $GITHUB_ENV
 
-      - name: Build the Docker image
-        run: |
-          # Agora usamos as variáveis de ambiente com a sintaxe ${{ env.VAR_NAME }}
-          # A VERSION_TAG gerada no passo anterior também está disponível em 'env'
-          docker build --no-cache \
-            -t ${{ env.IMAGE_NAME }}:${{ env.TAG }} \
-            -t ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }} \
-            .
+      # 1. PASSO DE LOGIN (NOVO)
+      # Só executa o login se o evento for um PUSH na branch main.
+      # Em Pull Requests, este passo será pulado.
+      - name: Log in to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 2. PASSO DE BUILD E PUSH (ATUALIZADO)
+      # Esta ação moderna combina build e push em um só passo.
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Onde está o Dockerfile (raiz)
+          file: ./Dockerfile # Caminho para o Dockerfile
+          # Define as tags da imagem
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
+          # A mágica acontece aqui:
+          # - Se for um push na main (if do passo anterior), 'push' será true.
+          # - Se for um Pull Request, 'push' será false (só vai construir para testar).
+          push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+          # Habilita o cache para builds futuros serem mais rápidos
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
