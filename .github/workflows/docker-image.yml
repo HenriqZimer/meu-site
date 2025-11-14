@@ -17,14 +17,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # --- PASSO NOVO E NECESSÁRIO ---
+      # Este passo configura o Buildx, que habilita o suporte a cache avançado
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Generate dynamic version tag (date)
         id: generate_tag
-        # Gera a tag no formato dd-mm-YYYY e a salva no ambiente
         run: echo "VERSION_TAG=$(date +%d-%m-%Y)" >> $GITHUB_ENV
 
-      # 1. PASSO DE LOGIN (NOVO)
-      # Só executa o login se o evento for um PUSH na branch main.
-      # Em Pull Requests, este passo será pulado.
       - name: Log in to Docker Hub
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
@@ -32,22 +33,15 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 2. PASSO DE BUILD E PUSH (ATUALIZADO)
-      # Esta ação moderna combina build e push em um só passo.
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: . # Onde está o Dockerfile (raiz)
-          file: ./Dockerfile # Caminho para o Dockerfile
-          # Define as tags da imagem
+          context: .
+          file: ./Dockerfile
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}
-          # A mágica acontece aqui:
-          # - Se for um push na main (if do passo anterior), 'push' será true.
-          # - Se for um Pull Request, 'push' será false (só vai construir para testar).
           push: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          # Habilita o cache para builds futuros serem mais rápidos
           cache-from: type=gha
           cache-to: type=gha,mode=max
