@@ -4,12 +4,12 @@ services:
     image: henriquezimermann/meu-site:latest
     container_name: meu-site-test
     ports:
-      - "3001:3000"
+      - "3001:80"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://0.0.0.0:3000/"]
+      test: ["CMD", "wget", "--spider", "-q", "http://0.0.0.0:80/"]
       interval: 30s
       timeout: 10s
       retries: 3
