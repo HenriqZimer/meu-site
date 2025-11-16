@@ -85,6 +85,14 @@ const credlyBadges: Badge[] = [
     date: 'Nov 2025',
     skills: 4
   },
+  {
+    name: 'Uncomplicating Kubernetes',
+    issuer: 'LINUXtips',
+    image: 'https://images.credly.com/images/fe65bff9-69ca-438c-9cf5-2c62273f33ff/62100ac3-8bd7-4622-bbb4-104071717ece_cached_image_20251116-31-xrhd54.png',
+    link: 'https://www.credential.net/e3ce127c-ff2d-481a-809b-c8122a3a019c#acc.3i8X2erC',
+    date: 'Nov 2025',
+    skills: 4
+  },
 ]
 
 // Computed stats
