@@ -1,0 +1,13 @@
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: portfolio-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: portfolio
+      MONGO_INITDB_ROOT_PASSWORD: portfolio123
+      MONGO_INITDB_DATABASE: portfolio
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongodb:/data/db

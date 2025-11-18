@@ -1,6 +1,9 @@
 services:
   app:
     image: henriquezimermann/meu-site:latest
+    environment:
+      - NODE_ENV=production
+      - NUXT_PUBLIC_API_URL=http://backend:3001/api
     networks:
       - site-network
       - traefik-proxy

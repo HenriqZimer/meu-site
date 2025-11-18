@@ -23,3 +23,7 @@ logs
 .env.*
 !.env.example
 !.env.production
+
+dist
+coverage
+backend/data
