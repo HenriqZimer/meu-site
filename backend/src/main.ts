@@ -8,9 +8,8 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(','),
+    origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
   });
 
   // Global validation pipe
@@ -39,7 +38,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  const port = process.env.BACKEND_PORT || 5000;
+  const port = process.env.BACKEND_PORT;
   await app.listen(port);
 
   console.log('');

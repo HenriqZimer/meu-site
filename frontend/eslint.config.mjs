@@ -19,10 +19,6 @@ export default createConfigForNuxt()
       
       // Permite uso controlado de any em casos específicos
       '@typescript-eslint/no-explicit-any': 'warn',
-      
-      // Configurações mais flexíveis para desenvolvimento
-      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-      'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
     }
   })
   .append({
