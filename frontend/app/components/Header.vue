@@ -67,11 +67,11 @@
           {{ item.label }}
         </v-btn>
 
-        <v-btn variant="flat" color="primary" class="drawer-cta" @click="handleDrawerItemClick('contact')" block
+        <!-- <v-btn variant="flat" color="primary" class="drawer-cta" @click="handleDrawerItemClick('contact')" block
           :ripple="false">
           <v-icon icon="mdi-send" start />
           Fale Comigo
-        </v-btn>
+        </v-btn> -->
       </div>
     </div>
   </v-navigation-drawer>
