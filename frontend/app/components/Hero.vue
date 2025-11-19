@@ -65,7 +65,6 @@
 import { IMAGE_URLS } from "~/constants";
 import { useNavigation } from "~/composables/useNavigation";
 import { useSocialLinks } from "~/composables/useSocialLinks";
-import { getProfilePhotoUrl } from "~/utils/image";
 
 // Configuration
 const config = useRuntimeConfig();
@@ -78,18 +77,18 @@ const { socialLinks } = useSocialLinks();
 // Scroll Animation
 const { observeElements } = useScrollAnimation();
 
+const imageAlt = `Foto profissional de ${siteFirstName}`;
+
+// Use utility function
+const getImageUrl = (width: number, format: string = "webp") =>
+  "/foto-perfil-profissional.jpg";
+
 onMounted(() => {
   observeElements({
     threshold: 0.2,
     once: true,
   });
 });
-
-const imageAlt = `Foto profissional de ${siteFirstName}`;
-
-// Use utility function
-const getImageUrl = (width: number, format: string = "webp") =>
-  getProfilePhotoUrl(width, format);
 </script>
 
 <style scoped>

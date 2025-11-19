@@ -45,99 +45,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { VALIDATION_RULES } from "~/constants";
 import { useSocialLinks } from "~/composables/useSocialLinks";
 
 // Composables
 const { contactInfo } = useSocialLinks();
 
 // Variáveis de ambiente
-const config = useRuntimeConfig();
 const email = contactInfo.email;
 const phone = contactInfo.phone;
 const location = contactInfo.location;
-const githubUrl = config.public.githubUrl;
-const linkedinUrl = config.public.linkedinUrl;
-
-const valid = ref(false);
-const loading = ref(false);
-const form = ref(null);
-
-const formData = ref({
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-});
-
-const alert = ref<{
-  show: boolean;
-  type: "success" | "error" | "warning" | "info";
-  message: string;
-}>({
-  show: false,
-  type: "success",
-  message: "",
-});
-
-// Use validation rules from constants
-const nameRules = VALIDATION_RULES.NAME;
-const emailRules = VALIDATION_RULES.EMAIL;
-const subjectRules = VALIDATION_RULES.SUBJECT;
-const messageRules = VALIDATION_RULES.MESSAGE;
-
-const handleSubmit = async () => {
-  if (!valid.value) return;
-
-  loading.value = true;
-
-  try {
-    // Criar o corpo do email com os dados do formulário
-    const emailBody = `Nome: ${formData.value.name}%0D%0AEmail: ${formData.value.email}%0D%0A%0D%0AMensagem:%0D%0A${formData.value.message}`;
-    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(
-      formData.value.subject
-    )}&body=${emailBody}`;
-
-    // Abrir cliente de email
-    window.location.href = mailtoLink;
-
-    // Aguardar um pouco antes de mostrar a mensagem
-    await new Promise((resolve) => setTimeout(resolve, 500));
-
-    alert.value = {
-      show: true,
-      type: "success",
-      message:
-        "Abrindo seu cliente de email! Se não abrir automaticamente, envie para: " +
-        email,
-    };
-
-    // Resetar formulário
-    formData.value = {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    };
-
-    if (form.value) {
-      const formElement = form.value as any;
-      if (formElement.reset) {
-        formElement.reset();
-      }
-    }
-  } catch (error) {
-    alert.value = {
-      show: true,
-      type: "error",
-      message:
-        "Erro ao abrir cliente de email. Envie diretamente para: " + email,
-    };
-  } finally {
-    loading.value = false;
-  }
-};
+const githubUrl = "https://github.com/henriqzimer";
+const linkedinUrl = "https://linkedin.com/in/henrique-zimermann";
 </script>
 
 <style scoped>

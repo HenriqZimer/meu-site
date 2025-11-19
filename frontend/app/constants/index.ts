@@ -10,7 +10,6 @@ export const MENU_ITEMS = [
   { id: "skills", label: "Skills", icon: "mdi-brain" },
   { id: "certifications", label: "Certificações", icon: "mdi-certificate" },
   { id: "courses", label: "Cursos", icon: "mdi-school" },
-  { id: "contact", label: "Contato", icon: "mdi-message-text" },
 ] as const;
 
 // ===== QUICK LINKS (FOOTER) =====
@@ -40,26 +39,6 @@ export const ANIMATION_DELAYS = {
   EXTRA: 600,
 } as const;
 
-// ===== VALIDATION RULES =====
-export const VALIDATION_RULES = {
-  EMAIL: [
-    (v: string) => !!v || "Email é obrigatório",
-    (v: string) => /.+@.+\..+/.test(v) || "Email deve ser válido",
-  ],
-  NAME: [
-    (v: string) => !!v || "Nome é obrigatório",
-    (v: string) => v.length >= 3 || "Nome deve ter no mínimo 3 caracteres",
-  ],
-  SUBJECT: [
-    (v: string) => !!v || "Assunto é obrigatório",
-    (v: string) => v.length >= 5 || "Assunto deve ter no mínimo 5 caracteres",
-  ],
-  MESSAGE: [
-    (v: string) => !!v || "Mensagem é obrigatória",
-    (v: string) => v.length >= 20 || "Mensagem deve ter no mínimo 20 caracteres",
-  ],
-} as const;
-
 // ===== RESPONSIVE GRID LAYOUTS =====
 export const GRID_LAYOUTS = {
   STATS: {
@@ -86,7 +65,8 @@ export const CAROUSEL_CONFIG = {
 // ===== IMAGE URLS =====
 export const IMAGE_URLS = {
   LOGO: "/logo.png",
-  PROFILE_PHOTO: "https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg",
+  PROFILE_PHOTO:
+    "https://imagens.henriqzimer.com.br/foto-perfil-profissional.jpg",
   PLATFORM_LINUXTIPS: "https://imagens.henriqzimer.com.br/linux-tips.png",
   PLATFORM_UDEMY: "https://imagens.henriqzimer.com.br/udemy.png",
 } as const;
@@ -139,7 +119,11 @@ export const buildSocialLinks = (config: any) => [
 export const buildFooterSocialLinks = (config: any) => [
   { name: "GitHub", icon: "mdi-github", href: config.public.githubUrl },
   { name: "LinkedIn", icon: "mdi-linkedin", href: config.public.linkedinUrl },
-  { name: "Email", icon: "mdi-email-outline", href: `mailto:${config.public.email}` },
+  {
+    name: "Email",
+    icon: "mdi-email-outline",
+    href: `mailto:${config.public.email}`,
+  },
 ];
 
 // ===== FILTER CONFIG =====
@@ -150,28 +134,6 @@ export const PROJECT_FILTERS = [
   { value: "automation", label: "Automação", icon: "mdi-robot" },
   { value: "cloud", label: "Cloud", icon: "mdi-cloud" },
 ] as const;
-
-// ===== STATUS CONFIG =====
-export const PROJECT_STATUS = {
-  COMPLETED: "completed",
-  IN_PROGRESS: "in-progress",
-  PLANNING: "planning",
-} as const;
-
-export const STATUS_CONFIG = {
-  [PROJECT_STATUS.COMPLETED]: {
-    icon: "mdi-check-circle",
-    label: "Concluído",
-  },
-  [PROJECT_STATUS.IN_PROGRESS]: {
-    icon: "mdi-clock-outline",
-    label: "Em progresso",
-  },
-  [PROJECT_STATUS.PLANNING]: {
-    icon: "mdi-lightbulb-outline",
-    label: "Planejado",
-  },
-} as const;
 
 // ===== BUTTON TYPES =====
 export const BUTTON_TYPES = {

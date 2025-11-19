@@ -3,8 +3,8 @@ export default defineNuxtConfig({
   srcDir: "app/",
   devServer: {
     host: "localhost",
-    port: process.env.NUXT_PUBLIC_PORT
-      ? parseInt(process.env.NUXT_PUBLIC_PORT)
+    port: process.env.FRONTEND_PORT
+      ? parseInt(process.env.FRONTEND_PORT)
       : 3000,
   },
 
@@ -12,22 +12,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      siteName: "Henrique Zimermann",
-      siteFirstName: "Henrique",
-      siteDescription: "DevOps & Cloud Engineer",
-      siteUrl: "https://henriqzimer.com.br",
-      email: "contato@henriqzimer.com.br",
-      phone: "+55 (47) 99260-6276",
-      location: "Balneário Piçarras - Santa Catarina, Brasil",
-      githubUrl: "https://github.com/henriqzimer",
-      linkedinUrl: "https://linkedin.com/in/henrique-zimermann",
-      formspreeId: "",
-      gaId: "",
-      apiUrl: process.env.NUXT_PUBLIC_API_URL || "http://localhost:3001/api",
-      heroDescription:
-        "Automatizando infraestruturas e otimizando processos de desenvolvimento. Especialista em CI/CD, containerização e orquestração na nuvem.",
-      footerDescription:
-        "Engenheiro DevOps focado em automação, infraestrutura como código e entrega contínua",
+      apiUrl: process.env.FRONTEND_API_URL,
     },
   },
 
@@ -38,17 +23,6 @@ export default defineNuxtConfig({
       theme: {
         defaultTheme: "dark",
         themes: {
-          light: {
-            colors: {
-              primary: "#3b82f6",
-              secondary: "#64748b",
-              accent: "#06b6d4",
-              error: "#ef4444",
-              warning: "#f59e0b",
-              info: "#3b82f6",
-              success: "#10b981",
-            },
-          },
           dark: {
             dark: true,
             colors: {

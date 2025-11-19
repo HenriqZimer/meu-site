@@ -23,7 +23,7 @@ interface SocialLink {
 }
 
 interface Props {
-  links: SocialLink[];
+  links?: SocialLink[];
   label?: string;
   variant?: "default" | "footer";
   iconSize?: string | number;
@@ -31,6 +31,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  links: () => [],
   label: "",
   variant: "default",
   iconSize: 20,

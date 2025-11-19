@@ -47,7 +47,9 @@ export const useNavigation = () => {
   /**
    * Verifica se a página foi scrollada além do threshold
    */
-  const isPageScrolled = (threshold: number = SCROLL_CONFIG.SCROLL_THRESHOLD) => {
+  const isPageScrolled = (
+    threshold: number = SCROLL_CONFIG.SCROLL_THRESHOLD
+  ) => {
     return window.scrollY > threshold;
   };
 

@@ -4,6 +4,9 @@ FROM node:lts-alpine3.22 AS builder
 # Set working directory
 WORKDIR /app
 
+# # Set API URL for build
+ENV NUXT_PUBLIC_API_URL=http://localhost:5000/api
+
 # Copy package files
 COPY package*.json ./
 

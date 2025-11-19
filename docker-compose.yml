@@ -11,6 +11,11 @@ services:
       - "${MONGODB_PORT}:27017"
     networks:
       - portfolio
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -21,12 +26,13 @@ services:
     environment:
       NODE_ENV: development
       PORT: ${BACKEND_PORT}
-      MONGODB_URI: mongodb://portfolio:portfolio123@192.168.1.102:27017/portfolio?authSource=admin
+      MONGODB_URI: mongodb://portfolio:portfolio123@172.22.0.2:27017/portfolio?authSource=admin
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     networks:
       - portfolio
 
@@ -43,7 +49,7 @@ services:
       HOST: 0.0.0.0
       PORT: ${FRONTEND_PORT}
       NUXT_PUBLIC_PORT: ${FRONTEND_PORT}
-      NUXT_PUBLIC_API_URL: ${NUXT_PUBLIC_API_URL}
+      NUXT_PUBLIC_API_URL: http://localhost:5001/api
     ports:
       - "${FRONTEND_PORT}:80"
     networks:
