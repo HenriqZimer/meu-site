@@ -8,7 +8,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: process.env.CORS_ORIGIN?.split(',') || '*',
+    origin: process.env.CORS_ORIGIN?.split(','),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -39,10 +39,17 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 5000;
   await app.listen(port);
+  
+  console.log('');
+  console.log('============================================================');
+  console.log('');
   console.log(`🚀 Application is running on: http://localhost:${port}`);
   console.log(`📚 Swagger docs available at: http://localhost:${port}/api/docs`);
+  console.log(`🔐 CORS enabled for origins: ${process.env.CORS_ORIGIN}`);
+  console.log('');
+  console.log('============================================================');
 }
 
 bootstrap();

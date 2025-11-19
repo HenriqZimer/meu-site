@@ -29,7 +29,6 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "docker": "docker compose -f 'docker-compose-teste.yml' up -d",
     "dev": "nuxt dev",
     "dev:prod": "nuxt preview",
     "build": "nuxt build",
@@ -37,18 +36,10 @@
     "preview": "nuxt preview",
     "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
-    "test": "echo 'No tests specified yet' && exit 0",
     "test:build": "npm run build",
-    "validate": "./scripts/validate.sh",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "clean": "rm -rf .nuxt .output node_modules/.cache dist",
-    "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
-    "clean:docker": "docker system prune -f && docker volume prune -f",
-    "cleanup": "./scripts/cleanup.sh",
-    "cleanup:full": "./scripts/cleanup.sh full",
-    "cleanup:docker": "./scripts/cleanup.sh docker"
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@artmizu/nuxt-prometheus": "^2.7.0",

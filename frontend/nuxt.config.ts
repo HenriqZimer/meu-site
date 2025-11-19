@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   srcDir: "app/",
   devServer: {
     host: "localhost",
-    port: process.env.NUXT_PUBLIC_PORT ? parseInt(process.env.NUXT_PUBLIC_PORT) : 3000,
+    port: process.env.NUXT_PUBLIC_PORT
+      ? parseInt(process.env.NUXT_PUBLIC_PORT)
+      : 3000,
   },
 
   devtools: { enabled: true },
@@ -70,13 +72,13 @@ export default defineNuxtConfig({
     },
   },
 
-    css: [
-    '~/assets/css/design-tokens.css',
-    '~/assets/css/critical.css',
-    '~/assets/css/animations.css',
-    '~/assets/css/sections.css',
-    '~/assets/css/components.css',
-    '~/assets/css/vuetify.css',
+  css: [
+    "~/assets/css/design-tokens.css",
+    "~/assets/css/critical.css",
+    "~/assets/css/animations.css",
+    "~/assets/css/sections.css",
+    "~/assets/css/components.css",
+    "~/assets/css/vuetify.css",
   ],
 
   components: {
