@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   srcDir: "app/",
   devServer: {
     host: "localhost",
-    port: 3000,
+    port: process.env.NUXT_PUBLIC_PORT ? parseInt(process.env.NUXT_PUBLIC_PORT) : 3000,
   },
 
   devtools: { enabled: true },

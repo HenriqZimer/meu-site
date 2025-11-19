@@ -1,0 +1,62 @@
+services:
+  mongodb:
+    image: mongo:4.4
+    container_name: portfolio-mongodb-dev
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER:-portfolio}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD:-portfolio123}
+      MONGO_INITDB_DATABASE: portfolio
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    volumes:
+      - ./backend/data/mongodb:/data/db
+    networks:
+      - portfolio-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: portfolio-backend-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: ${BACKEND_PORT:-3001}
+      MONGODB_URI: mongodb://${MONGODB_USER:-portfolio}:${MONGODB_PASSWORD:-portfolio123}@mongodb:27017/portfolio?authSource=admin
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+    ports:
+      - "${BACKEND_PORT:-3001}:${BACKEND_PORT:-3001}"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - portfolio-network
+    command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: portfolio-frontend-dev
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: ${FRONTEND_PORT:-3000}
+      NUXT_PUBLIC_PORT: ${FRONTEND_PORT:-3000}
+      NUXT_PUBLIC_API_URL: ${NUXT_PUBLIC_API_URL:-http://localhost:3001/api}
+    ports:
+      - "${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - portfolio-network
+    command: npm run dev -- --host 0.0.0.0 --port ${FRONTEND_PORT:-3000}
+
+networks:
+  portfolio-network:
+    driver: bridge

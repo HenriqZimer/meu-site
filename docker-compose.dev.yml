@@ -4,10 +4,10 @@ services:
     container_name: portfolio-mongodb-dev
     restart: unless-stopped
     environment:
-      MONGO_INITDB_ROOT_USERNAME: portfolio
-      MONGO_INITDB_ROOT_PASSWORD: portfolio123
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: portfolio
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT}:27017"
     volumes:
-      - ./data/mongodb:/data/db
+      - ./backend/data/mongodb:/data/db
