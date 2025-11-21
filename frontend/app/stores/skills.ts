@@ -42,7 +42,7 @@ export const useSkillsStore = defineStore('skills', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/skills`
-        console.log('[Skills Store] Fetching from:', fullUrl)
+        // console.log('[Skills Store] Fetching from:', fullUrl)
         
         const data = await $fetch<Technology[]>(fullUrl, {
           method: 'GET',

@@ -72,7 +72,7 @@ export const useCoursesStore = defineStore('courses', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/courses`
-        console.log('[Courses Store] Fetching from:', fullUrl)
+        // console.log('[Courses Store] Fetching from:', fullUrl)
         
         const data = await $fetch<Course[]>(fullUrl, {
           method: 'GET',

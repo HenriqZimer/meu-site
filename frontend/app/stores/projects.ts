@@ -47,7 +47,7 @@ export const useProjectsStore = defineStore('projects', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/projects`
-        console.log('[Projects Store] Fetching from:', fullUrl)
+        // console.log('[Projects Store] Fetching from:', fullUrl)
         
         const data = await $fetch<Project[]>(fullUrl, {
           method: 'GET',

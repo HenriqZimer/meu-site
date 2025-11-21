@@ -43,7 +43,7 @@ export const useCertificationsStore = defineStore('certifications', {
         const config = useRuntimeConfig()
         const apiUrl = config.public.apiUrl
         const fullUrl = `${apiUrl}/certifications`
-        console.log('[Certifications Store] Fetching from:', fullUrl)
+        // console.log('[Certifications Store] Fetching from:', fullUrl)
         
         const data = await $fetch<Certification[]>(fullUrl, {
           method: 'GET',
