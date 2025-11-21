@@ -23,8 +23,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files and lock file
 COPY package*.json ./
+COPY --from=builder /app/package-lock.json ./
 
 # Install production dependencies only
 RUN npm ci --only=production --no-audit && npm cache clean --force
