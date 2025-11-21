@@ -23,11 +23,21 @@ RUN npm run generate
 # Production stage
 FROM nginx:alpine
 
-# Copy static files from builder stage
-COPY --from=builder /app/.output/public /usr/share/nginx/html
+# Create nginx user and set up directories with proper permissions
+RUN addgroup -g 1000 -S nginx-app && \
+    adduser -u 1000 -S nginx-app -G nginx-app && \
+    mkdir -p /var/cache/nginx /var/run /var/log/nginx /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp && \
+    chown -R nginx-app:nginx-app /var/cache/nginx /var/run /var/log/nginx /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp /usr/share/nginx/html && \
+    chmod -R 755 /var/cache/nginx /var/run /var/log/nginx /tmp/client_temp /tmp/proxy_temp /tmp/fastcgi_temp /tmp/uwsgi_temp /tmp/scgi_temp /usr/share/nginx/html
 
-# Copy custom nginx config if needed (optional)
-# COPY nginx.conf /etc/nginx/nginx.conf
+# Copy static files from builder stage
+COPY --chown=nginx-app:nginx-app --from=builder /app/.output/public /usr/share/nginx/html
+
+# Copy custom nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Switch to non-root user
+USER nginx-app
 
 # Expose port
 EXPOSE 80
