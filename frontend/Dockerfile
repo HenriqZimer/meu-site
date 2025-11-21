@@ -34,7 +34,7 @@ RUN addgroup -g 1000 -S nginx-app && \
 COPY --chown=nginx-app:nginx-app --from=builder /app/.output/public /usr/share/nginx/html
 
 # Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY --chown=nginx-app:nginx-app nginx.conf /etc/nginx/nginx.conf
 
 # Switch to non-root user
 USER nginx-app
