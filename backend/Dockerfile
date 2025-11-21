@@ -1,13 +1,13 @@
 # Build stage
-FROM node:22-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install all dependencies (including dev dependencies for build)
+RUN npm ci --prefer-offline --no-audit --no-fund --legacy-peer-deps && npm cache clean --force
 
 # Copy source code
 COPY . .
@@ -19,7 +19,7 @@ ENV MONGODB_URI=mongodb://portfolio:portfolio123@mongodb:27017/portfolio?authSou
 RUN npm run build
 
 # Production stage
-FROM node:22-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -27,7 +27,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install production dependencies only
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --only=production --prefer-offline --no-audit --no-fund --legacy-peer-deps && npm cache clean --force
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
