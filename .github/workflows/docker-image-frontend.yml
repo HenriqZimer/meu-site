@@ -37,7 +37,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./frontend
           file: ./frontend/Dockerfile
           tags: |
             ${{ env.IMAGE_NAME }}:latest
