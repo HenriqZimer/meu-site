@@ -3,9 +3,7 @@ export default defineNuxtConfig({
   srcDir: "app/",
   devServer: {
     host: "localhost",
-    port: process.env.FRONTEND_PORT
-      ? parseInt(process.env.FRONTEND_PORT)
-      : 3000,
+    port: 3000,
   },
 
   devtools: { enabled: true },
@@ -13,6 +11,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiUrl: process.env.FRONTEND_API_URL,
+      siteName: "Henrique Zimermann",
+      siteDescription: "DevOps & Cloud Engineer",
+      siteUrl: "https://henriqzimer.com.br",
     },
   },
 

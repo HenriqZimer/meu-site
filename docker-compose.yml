@@ -24,12 +24,9 @@ services:
     container_name: backend
     restart: unless-stopped
     environment:
-      NODE_ENV: development
-      PORT: ${BACKEND_PORT}
-      MONGODB_URI: mongodb://portfolio:portfolio123@172.22.0.2:27017/portfolio?authSource=admin
-      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      MONGODB_URI: mongodb://portfolio:portfolio123@172.20.0.2:27017/portfolio?authSource=admin
     ports:
-      - "${BACKEND_PORT}:${BACKEND_PORT}"
+      - "5000:5000"
     depends_on:
       mongodb:
         condition: service_healthy
@@ -44,14 +41,10 @@ services:
     restart: unless-stopped
     depends_on:
       - backend
-    environment:
-      NODE_ENV: development
-      HOST: 0.0.0.0
-      PORT: ${FRONTEND_PORT}
-      NUXT_PUBLIC_PORT: ${FRONTEND_PORT}
-      NUXT_PUBLIC_API_URL: http://localhost:5001/api
+    # environment:
+    #   FRONTEND_API_URL: http://backend:5000/api
     ports:
-      - "${FRONTEND_PORT}:80"
+      - "3000:80"
     networks:
       - portfolio
 

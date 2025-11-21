@@ -1,17 +1,17 @@
-name: Docker Image CI
+name: Docker Image CI - Backend
 
-on: workflow_dispatch
-  # push:
-  #   branches: [ "main" ]
-  # pull_request:
-  #   branches: [ "main" ]
+on: 
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     
     env:
-      IMAGE_NAME: henriquezimermann/meu-site 
+      IMAGE_NAME: henriquezimermann/meu-site-backend
 
     steps:
       - name: Checkout repository
@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./backend/Dockerfile
           tags: |
             ${{ env.IMAGE_NAME }}:latest
             ${{ env.IMAGE_NAME }}:${{ env.VERSION_TAG }}

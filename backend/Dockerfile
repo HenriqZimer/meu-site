@@ -12,6 +12,9 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Set environment variables
+ENV MONGODB_URI=mongodb://portfolio:portfolio123@mongodb:27017/portfolio?authSource=admin
+
 # Build application
 RUN npm run build
 
@@ -34,7 +37,7 @@ EXPOSE 5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
-  CMD node -e "require('http').get('http://localhost:5001/api', (r) => {process.exit(r.statusCode === 404 ? 0 : 1)})"
+  CMD node -e "require('http').get('http://localhost:5000/api', (r) => {process.exit(r.statusCode === 404 ? 0 : 1)})"
 
 # Start application
 CMD ["node", "dist/main"]
