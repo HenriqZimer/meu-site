@@ -9,8 +9,6 @@ interface Project {
   technologies: string[]
   demoUrl: string
   githubUrl: string
-  featured: boolean
-  status: string
 }
 
 export const useProjectsStore = defineStore('projects', {
@@ -23,7 +21,6 @@ export const useProjectsStore = defineStore('projects', {
 
   getters: {
     allProjects: (state) => state.projects,
-    featuredProjects: (state) => state.projects.filter(p => p.featured),
     projectsByCategory: (state) => (category: string) => 
       state.projects.filter(p => p.category === category),
     projectsCount: (state) => state.projects.length,
@@ -59,7 +56,7 @@ export const useProjectsStore = defineStore('projects', {
           }
         })
         
-        console.log('[Projects Store] Dados recebidos:', data.length, 'items')
+        // console.log('[Projects Store] Dados recebidos:', data.length, 'items')
         this.projects = data
         this.lastFetch = Date.now()
         return data

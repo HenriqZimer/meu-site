@@ -52,7 +52,7 @@ export const useCertificationsStore = defineStore('certifications', {
           }
         })
         
-        console.log('[Certifications Store] Dados recebidos:', data.length, 'items')
+        // console.log('[Certifications Store] Dados recebidos:', data.length, 'items')
         this.certifications = data
         this.lastFetch = Date.now()
         return data

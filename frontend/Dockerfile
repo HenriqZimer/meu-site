@@ -13,8 +13,9 @@ RUN npm ci && npm cache clean --force
 # Copy source code
 COPY . .
 
-# Set API URL for build
-ENV FRONTEND_API_URL=http://localhost:5000/api
+# Set API URL for build (accepts from docker-compose build args)
+ARG FRONTEND_API_URL=
+ENV FRONTEND_API_URL=${FRONTEND_API_URL}
 
 # Generate static site
 RUN npm run generate

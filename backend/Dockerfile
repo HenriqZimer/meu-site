@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine AS builder
+FROM node:lts-alpine3.22 AS builder
 
 WORKDIR /app
 
@@ -12,8 +12,9 @@ RUN npm install --production=false --no-optional && npm cache clean --force
 # Copy source code
 COPY . .
 
-# Set environment variables
-ENV MONGODB_URI=mongodb://portfolio:portfolio123@mongodb:27017/portfolio?authSource=admin
+# Set DB URL for build (accepts from docker-compose build args)
+ARG MONGODB_URI=
+ENV MONGODB_URI=${MONGODB_URI}
 
 # Build application
 RUN npm run build

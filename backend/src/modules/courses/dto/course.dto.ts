@@ -29,11 +29,6 @@ export class CreateCourseDto {
   @IsString()
   link?: string;
 
-  @ApiProperty({ example: 'blue', required: false })
-  @IsOptional()
-  @IsString()
-  color?: string;
-
   @ApiProperty({ example: '2025', required: false })
   @IsOptional()
   @IsString()
@@ -80,11 +75,6 @@ export class UpdateCourseDto {
   @IsOptional()
   @IsString()
   link?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  color?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

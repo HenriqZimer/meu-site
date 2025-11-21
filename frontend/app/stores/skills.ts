@@ -51,7 +51,7 @@ export const useSkillsStore = defineStore('skills', {
           }
         })
         
-        console.log('[Skills Store] Dados recebidos:', data.length, 'items')
+        // console.log('[Skills Store] Dados recebidos:', data.length, 'items')
         this.skills = data
         this.lastFetch = Date.now()
         return data

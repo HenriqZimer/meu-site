@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: mongo:4.4
+    image: mongo:latest
     container_name: mongodb
     restart: unless-stopped
     environment:
@@ -11,11 +11,6 @@ services:
       - "${MONGODB_PORT}:27017"
     networks:
       - portfolio
-    healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   backend:
     build:
@@ -28,21 +23,20 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - portfolio
-
+  
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        FRONTEND_API_URL: ${FRONTEND_API_URL:-http://localhost:5000/api}
     container_name: frontend
     restart: unless-stopped
     depends_on:
       - backend
-    # environment:
-    #   FRONTEND_API_URL: http://backend:5000/api
     ports:
       - "3000:80"
     networks:

@@ -34,16 +34,6 @@ export class CreateProjectDto {
   @IsString()
   githubUrl?: string;
 
-  @ApiProperty({ example: true, required: false })
-  @IsOptional()
-  @IsBoolean()
-  featured?: boolean;
-
-  @ApiProperty({ example: 'completed', required: false })
-  @IsOptional()
-  @IsString()
-  status?: string;
-
   @ApiProperty({ example: 0, required: false })
   @IsOptional()
   @IsNumber()
@@ -91,16 +81,6 @@ export class UpdateProjectDto {
   @IsOptional()
   @IsString()
   githubUrl?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsBoolean()
-  featured?: boolean;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  status?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

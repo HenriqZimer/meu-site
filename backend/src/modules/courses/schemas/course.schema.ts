@@ -22,9 +22,6 @@ export class Course extends Document {
   link: string;
 
   @Prop()
-  color: string;
-
-  @Prop()
   year: string;
 
   @Prop({ default: 0 })

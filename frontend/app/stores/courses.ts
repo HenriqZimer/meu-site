@@ -5,8 +5,6 @@ interface Course {
   platform: string
   instructor?: string
   duration?: string
-  icon?: string
-  color?: string
   image?: string
   link: string
   year?: string
@@ -83,7 +81,7 @@ export const useCoursesStore = defineStore('courses', {
           }
         })
         
-        console.log('[Courses Store] Dados recebidos:', data.length, 'items')
+        // console.log('[Courses Store] Dados recebidos:', data.length, 'items')
         this.courses = data
         this.lastFetch = Date.now()
         return data

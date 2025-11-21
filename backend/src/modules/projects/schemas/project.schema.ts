@@ -24,12 +24,6 @@ export class Project extends Document {
   @Prop()
   githubUrl: string;
 
-  @Prop({ default: false })
-  featured: boolean;
-
-  @Prop({ default: 'completed' })
-  status: string;
-
   @Prop({ default: 0 })
   order: number;
 
