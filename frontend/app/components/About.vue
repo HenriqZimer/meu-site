@@ -1,39 +1,161 @@
 <template>
-  <section id="about" class="modern-about">
-    <div class="about-container">
-      <!-- Header Section -->
-      <SectionHeader badge="Sobre Mim" icon="mdi-account-circle" title-prefix="Conhecendo minha"
-        title-highlight="jornada" description="Uma trajetória em constante evolução no mundo da tecnologia" />
+  <Section id="about" badge="Sobre Mim" badge-icon="mdi-account-circle" badge-color="purple"
+    title-prefix="Conhecendo minha" title-highlight="jornada"
+    description="Uma trajetória em constante evolução no mundo da tecnologia" section-class="py-16 py-md-20">
 
-      <!-- Main Content -->
-      <div class="about-content">
-        <!-- Story Grid -->
-        <StatsGrid :items="storyItems" variant="story" :columns="{ xs: 1, sm: 2, md: 3, lg: 3 }" :base-delay="400"
-          :delay-increment="100" custom-class="story-section" />
+    <!-- Journey Timeline -->
+    <div class="journey-timeline mb-16 mb-md-20">
+      <v-row>
+        <v-col v-for="(item, index) in storyItems" :key="index" cols="12" md="4" class="timeline-item"
+          :data-animate="index % 2 === 0 ? 'slide-in-left' : 'slide-in-right'" :data-delay="index * 150">
+          <FeatureCard :icon="item.icon" :title="item.title" :description="item.description" :color="item.color"
+            :variant="item.variant" :animation-delay="index * 0.2" />
+        </v-col>
+      </v-row>
 
-        <!-- Stats Section -->
-        <StatsGrid :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }" :base-delay="200"
-          :delay-increment="100" custom-class="stats-section" />
-      </div>
+      <!-- Connecting Line -->
+      <div class="timeline-line d-none d-md-block" />
     </div>
-  </section>
+
+    <!-- Stats Section - Enhanced -->
+    <div class="stats-showcase">
+      <v-row>
+        <v-col v-for="(stat, index) in stats" :key="index" cols="6" md="3" data-animate="zoom-in"
+          :data-delay="index * 100">
+          <v-card class="stat-card elevation-4 text-center" :style="{ animationDelay: `${index * 0.1}s` }">
+            <v-card-text class="pa-6 pa-md-8">
+              <!-- Icon -->
+              <div class="stat-icon-wrapper mb-4">
+                <v-icon :icon="stat.icon" size="40" :color="stat.color" />
+              </div>
+
+              <!-- Value with gradient -->
+              <div class="stat-value text-h3 font-weight-bold mb-2" :class="`text-gradient-${stat.color}`">
+                {{ stat.value }}
+              </div>
+
+              <!-- Label -->
+              <div class="stat-label text-body-2 font-weight-medium">
+                {{ stat.label }}
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
+
+    <!-- Values & Principles Section -->
+    <div class="mt-16 mt-md-20">
+      <div class="text-center mb-8 mb-md-12">
+        <h3 class="text-h4 text-md-h3" style="color: rgb(241, 245, 249); font-weight: 900;">
+          O que me <span class="text-gradient-error">move</span>
+        </h3>
+        <p class="text-body-1 mt-4"
+          style="color: rgb(148, 163, 184); max-width: 600px; margin-left: auto; margin-right: auto;">
+          Princípios que guiam minha jornada profissional
+        </p>
+      </div>
+
+      <v-row>
+        <v-col v-for="(value, index) in valuesData" :key="index" cols="12" sm="6" md="4" data-animate="fade-up"
+          :data-delay="index * 120">
+          <FeatureCard :icon="value.icon" :title="value.title" :description="value.description" color="error"
+            variant="value" :gradient="value.gradient" :icon-size="40" :animation-delay="index * 0.1"
+            custom-class="value-card" />
+        </v-col>
+      </v-row>
+    </div>
+  </Section>
 </template>
 
 <script setup lang="ts">
 import type { Stat } from "~/components/base/StatsGrid.vue";
+import { useProjectsStore } from "~/stores/projects";
+import { useCertificationsStore } from "~/stores/certifications";
+
+interface StoryItem {
+  icon: string;
+  title: string;
+  description: string;
+  color: string;
+  variant: string;
+}
+
+// Stores
+const projectsStore = useProjectsStore();
+const certificationsStore = useCertificationsStore();
 
 // Scroll Animation
 const { observeElements } = useScrollAnimation();
 
 onMounted(() => {
+  // Fetch stats from backend
+  projectsStore.fetchStats();
+  certificationsStore.fetchStats();
+
   observeElements({
     threshold: 0.15,
     once: true,
   });
+
+  // Adicionar observer para animações de scroll
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('[data-animate]');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const element = entry.target as HTMLElement;
+          const delay = element.getAttribute('data-delay');
+
+          setTimeout(() => {
+            element.classList.add('is-visible');
+          }, delay ? parseInt(delay) : 0);
+
+          observer.unobserve(element);
+        }
+      });
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+  };
+
+  animateOnScroll();
+
+  // Adicionar parallax suave nos cards ao mover o mouse
+  const addCardParallax = () => {
+    const cards = document.querySelectorAll('.stat-card, .feature-card, .value-card');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e: Event) => {
+        const mouseEvent = e as MouseEvent;
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = mouseEvent.clientX - rect.left;
+        const y = mouseEvent.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+
+        (card as HTMLElement).style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px) scale(1.02)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        (card as HTMLElement).style.transform = '';
+      });
+    });
+  };
+
+  setTimeout(addCardParallax, 1000);
 });
 
-// Story items para StatsGrid
-const storyItems: Stat[] = [
+// Story items
+const storyItems: StoryItem[] = [
   {
     icon: 'mdi-history',
     title: 'Minha História',
@@ -57,8 +179,8 @@ const storyItems: Stat[] = [
   }
 ];
 
-// Stats items
-const stats: Stat[] = [
+// Stats items - dynamic from stores
+const stats = computed<Stat[]>(() => [
   {
     icon: 'mdi-briefcase',
     value: '3+',
@@ -67,13 +189,13 @@ const stats: Stat[] = [
   },
   {
     icon: 'mdi-code-braces',
-    value: '10+',
+    value: `${projectsStore.projectsCount}+`,
     label: 'Projetos Realizados',
     color: 'success'
   },
   {
     icon: 'mdi-certificate',
-    value: '15+',
+    value: `${certificationsStore.certificationsCount}+`,
     label: 'Certificações',
     color: 'warning'
   },
@@ -83,7 +205,7 @@ const stats: Stat[] = [
     label: 'Dedicação',
     color: 'error'
   }
-];
+]);
 
 const values = [
   "Estudo Contínuo",
@@ -165,359 +287,372 @@ const getValueColor = (index: number) => {
 </script>
 
 <style scoped>
-.modern-about {
-  padding: 40px 40px 40px 40px;
-  background: rgb(var(--v-theme-background));
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-}
-
-.about-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  width: 100%;
-}
-
-/* Header Section */
-/* Header usa classes globais: .section-badge, .section-title, .title-highlight, .section-description */
-.about-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
-
-/* Content Section */
-.about-content {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-}
-
-/* Story Section */
-.story-section {
-  width: 100%;
-}
-
-/* Stats Section */
-.stats-section {
-  width: 100%;
-}
-
-
-
-/* Values Section */
-.values-section {
-  background: linear-gradient(135deg,
-      rgba(59, 130, 246, 0.03),
-      rgba(16, 185, 129, 0.03));
-  padding: 60px 48px;
-  border-radius: 32px;
-  border: 1px solid rgba(59, 130, 246, 0.1);
+/* ===================================
+   ABOUT SECTION
+   =================================== */
+.about-section {
   position: relative;
+  background: rgb(15, 23, 42);
   overflow: hidden;
 }
 
-.values-section::before {
-  content: "";
+.about-section::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 20% 80%,
-      rgba(59, 130, 246, 0.1) 0%,
-      transparent 50%),
-    radial-gradient(circle at 80% 20%,
-      rgba(16, 185, 129, 0.1) 0%,
-      transparent 50%);
-  pointer-events: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
 }
 
-.values-header {
-  text-align: center;
-  margin-bottom: 48px;
+/* ===================================
+   JOURNEY TIMELINE
+   =================================== */
+.journey-timeline {
   position: relative;
-  z-index: 1;
+  padding: 40px 0;
 }
 
-.values-badge {
-  display: inline-flex;
+.timeline-item {
+  will-change: transform, opacity;
+}
+
+.timeline-item:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.timeline-item:nth-child(2) {
+  transition-delay: 150ms;
+}
+
+.timeline-item:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg,
+      rgba(168, 85, 247, 0.5),
+      rgba(59, 130, 246, 0.5),
+      rgba(6, 182, 212, 0.5));
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.timeline-line::before,
+.timeline-line::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(59, 130, 246);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+}
+
+.timeline-line::before {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.timeline-line::after {
+  right: 0;
+  transform: translateX(50%);
+}
+
+/* Cards agora usam FeatureCard component */
+
+/* ===================================
+   STATS SHOWCASE
+   =================================== */
+.stats-showcase {
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.stats-showcase [data-animate=\"zoom-in\"] {
+  animation-fill-mode: both;
+}
+
+.stats-showcase .stat-card,
+.journey-timeline .feature-card,
+.value-card {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out !important;
+}
+
+.stat-card {
+  background: rgba(30, 41, 59, 0.6) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 24px !important;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: fadeInUp 0.6s ease both, breathe 4s ease-in-out infinite 1s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #8b5cf6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.6);
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(6, 182, 212, 0.5), rgba(139, 92, 246, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 24px 48px rgba(59, 130, 246, 0.35), 0 0 0 1px rgba(59, 130, 246, 0.3) !important;
+  background: rgba(30, 41, 59, 0.8) !important;
+  animation-play-state: paused;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+  animation: shimmerFlow 2s ease-in-out infinite;
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+.stat-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(59, 130, 246, 0.15);
-  color: rgb(96, 165, 250);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(30, 41, 59, 0.8);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
 }
 
-.values-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  color: rgb(241, 245, 249);
-  margin-bottom: 12px;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
+.stat-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  animation: spin 3s linear infinite;
 }
 
-.values-highlight {
-  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(16, 185, 129));
+.stat-card:hover .stat-icon-wrapper {
+  transform: scale(1.2) rotate(15deg);
+  background: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4), inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.stat-card:hover .stat-icon-wrapper::before {
+  opacity: 1;
+}
+
+.stat-card:hover .stat-icon-wrapper .v-icon {
+  animation: bounce 0.6s ease;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.stat-value {
+  line-height: 1;
+}
+
+.text-gradient-primary {
+  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(59, 130, 246));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.values-subtitle {
-  font-size: 1.1rem;
-  color: rgb(203, 213, 225);
-  margin: 0;
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
+.text-gradient-success {
+  background: linear-gradient(135deg, rgb(74, 222, 128), rgb(34, 197, 94));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.values-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-  justify-content: center;
+.text-gradient-warning {
+  background: linear-gradient(135deg, rgb(251, 191, 36), rgb(245, 158, 11));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+.text-gradient-error {
+  background: linear-gradient(135deg, rgb(248, 113, 113), rgb(239, 68, 68));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+  color: rgb(148, 163, 184);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Value cards customization */
 .value-card {
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
-  transition: transform 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
 }
 
 .value-card:hover {
-  transform: translateY(-8px);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 24px 64px rgba(239, 68, 68, 0.3) !important;
+  transform: translateY(-10px) scale(1.03);
 }
 
-.value-card-inner {
-  background: rgba(var(--v-theme-surface), 0.9);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.1);
-  border-radius: 20px;
-  padding: 32px 24px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.value-card:hover :deep(.feature-icon) {
+  animation: pulse 1s ease-in-out infinite;
 }
 
-.value-card:hover .value-card-inner {
-  background: rgba(var(--v-theme-surface), 1);
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 16px currentColor);
+  }
 }
 
-.value-icon-wrapper {
-  position: relative;
-  margin-bottom: 20px;
-  align-self: flex-start;
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-3px) scale(1.005);
+  }
 }
 
-.value-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  background: rgba(59, 130, 246, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
-  color: rgb(96, 165, 250);
+/* Animations moved to FeatureCard component */
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+@keyframes shimmerFlow {
+  0% {
+    background-position: 0% 50%;
+    background-size: 200% 200%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.value-card:hover .value-icon {
-  transform: scale(1.1);
-  background: rgba(59, 130, 246, 0.2);
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.value-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background: rgba(59, 130, 246, 0.3);
-  border-radius: 50%;
-  opacity: 0.3;
-  filter: blur(20px);
-  z-index: 1;
-  transition: opacity 0.3s ease;
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.1);
+  }
 }
 
-.value-card:hover .value-glow {
-  opacity: 0.6;
-}
-
-.value-content {
-  flex: 1;
-  text-align: left;
-}
-
-.value-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 8px;
-  letter-spacing: -0.025em;
-}
-
-.value-description {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin: 0;
-}
-
-.value-border {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+/* Scroll reveal animations */
+[data-animate] {
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
-.value-card:hover .value-border {
+[data-animate="slide-in-left"] {
+  transform: translateX(-60px);
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-animate="slide-in-right"] {
+  transform: translateX(60px);
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-animate="zoom-in"] {
+  transform: scale(0.8);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-animate].is-visible {
   opacity: 1;
+  transform: translateX(0) translateY(0) scale(1) !important;
 }
 
-/* Dark mode support */
-:global(.v-theme--dark) .values-section {
-  background: linear-gradient(135deg,
-      rgba(59, 130, 246, 0.05),
-      rgba(16, 185, 129, 0.05));
-  border-color: rgba(59, 130, 246, 0.2);
-}
-
-:global(.v-theme--dark) .value-card-inner {
-  background: rgba(30, 41, 59, 0.8);
-  border-color: rgba(71, 85, 105, 0.3);
-}
-
-:global(.v-theme--dark) .value-card:hover .value-card-inner {
-  background: rgba(30, 41, 59, 0.95);
-  border-color: rgba(59, 130, 246, 0.4);
-}
-
-.value-card:hover .value-icon {
-  background: rgba(59, 130, 246, 0.2);
-  transform: scale(1.1);
-}
-
-.value-text {
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-}
-
-/* Animations definidas em assets/css/components.css */
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .modern-about {
-    padding: 80px 0 60px;
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media (max-width: 960px) {
+  .timeline-line {
+    display: none !important;
   }
 
-  .about-container {
-    padding: 0 16px;
-  }
-
-  .about-header {
-    margin-bottom: 60px;
-  }
-
-  .about-content {
-    gap: 40px;
-  }
-
-  .values-section {
-    padding: 32px 24px;
-  }
-
-  .values-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .value-card {
-    padding: 20px 12px;
-    min-height: 90px;
-  }
-
-  .value-icon {
-    width: 40px;
-    height: 40px;
+  .journey-card {
+    margin-bottom: 20px;
   }
 }
 
-@media (max-width: 480px) {
-  .about-content {
-    gap: 32px;
+@media (max-width: 600px) {
+  .stat-icon-wrapper {
+    width: 60px;
+    height: 60px;
   }
 
-  .values-section {
-    padding: 24px 16px;
+  .stat-value {
+    font-size: 2rem !important;
   }
-
-  .values-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .value-card {
-    padding: 16px 12px;
-    min-height: 80px;
-  }
-}
-
-/* Value color variations */
-.value-icon--color-0 {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.value-icon--color-1 {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.value-icon--color-2 {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-}
-
-.value-icon--color-3 {
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-}
-
-.value-icon--color-4 {
-  background: rgba(139, 92, 246, 0.1);
-  border: 1px solid rgba(139, 92, 246, 0.2);
-}
-
-.value-icon--color-5 {
-  background: rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(6, 182, 212, 0.2);
 }
 </style>

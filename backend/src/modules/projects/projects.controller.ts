@@ -17,6 +17,13 @@ import { CreateProjectDto, UpdateProjectDto } from './dto/project.dto';
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
+  @Get('stats')
+  @ApiOperation({ summary: 'Get projects statistics' })
+  @ApiResponse({ status: 200, description: 'Returns projects statistics' })
+  getStats() {
+    return this.projectsService.getStats();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all projects' })
   @ApiQuery({ name: 'category', required: false, type: String })

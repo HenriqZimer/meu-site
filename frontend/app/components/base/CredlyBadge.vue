@@ -69,18 +69,47 @@ const cardClasses = computed(() => [
   border: 1px solid rgb(var(--v-theme-surface-bright));
   border-radius: 12px;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   height: 100%;
   min-height: 200px;
   max-width: 300px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  opacity: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.modern-badge-card[data-animate="flip-in"] {
+  opacity: 0;
+  transform: perspective(1000px) rotateY(-90deg) scale(0.8);
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modern-badge-card[data-animate="flip-in"].is-visible {
+  opacity: 1;
+  transform: perspective(1000px) rotateY(0deg) scale(1);
 }
 
 .modern-badge-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.2);
-  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.25), 0 0 0 1px rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.modern-badge-card.is-visible {
+  animation: breatheBadge 4s ease-in-out infinite 0.5s;
+}
+
+@keyframes breatheBadge {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  50% {
+    box-shadow: 0 6px 12px rgba(59, 130, 246, 0.15);
+  }
 }
 
 /* Badge Image Container */
@@ -96,13 +125,15 @@ const cardClasses = computed(() => [
   height: 100%;
   object-fit: contain;
   padding: 20px;
-  transition: transform 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   opacity: 0.9;
+  filter: brightness(0.95);
 }
 
 .modern-badge-card:hover .badge-image {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(3deg);
   opacity: 1;
+  filter: brightness(1.1) drop-shadow(0 0 20px rgba(59, 130, 246, 0.3));
 }
 
 /* Hover Overlay - mesmo estilo do Portfolio */
@@ -112,19 +143,32 @@ const cardClasses = computed(() => [
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(15, 23, 42, 0.95);
+  background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
   padding: 20px;
 }
 
 .modern-badge-card:hover .hover-overlay {
   opacity: 1;
+  animation: overlayPulse 2s ease-in-out infinite;
+}
+
+@keyframes overlayPulse {
+
+  0%,
+  100% {
+    background: rgba(15, 23, 42, 0.75);
+  }
+
+  50% {
+    background: rgba(15, 23, 42, 0.85);
+  }
 }
 
 .overlay-buttons {
@@ -133,25 +177,55 @@ const cardClasses = computed(() => [
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  transform: translateY(10px);
-  transition: transform 0.3s ease 0.1s;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
 }
 
 .modern-badge-card:hover .overlay-buttons {
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  opacity: 1;
 }
 
 .overlay-btn {
   width: 60px !important;
   height: 60px !important;
   border-radius: 50% !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
-  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4) !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  position: relative;
+}
+
+.overlay-btn::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: ripple 2s ease-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 .overlay-btn:hover {
-  transform: scale(1.15);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5) !important;
+  transform: scale(1.2) rotate(10deg);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.6), 0 0 0 4px rgba(59, 130, 246, 0.2) !important;
+}
+
+.overlay-btn:hover::before {
+  opacity: 1;
 }
 
 /* Badge Info */

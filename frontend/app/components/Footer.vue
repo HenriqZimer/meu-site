@@ -1,86 +1,112 @@
 <template>
-  <footer class="modern-footer">
-    <div class="footer-container">
+  <footer class="modern-footer pt-12 pb-8">
+    <div class="footer-gradient" />
+    <v-container class="px-4 px-md-6">
       <!-- Main Content -->
-      <div class="footer-content">
+      <v-row class="py-10 py-md-16">
         <!-- Brand Section -->
-        <div class="footer-brand">
-          <div class="brand-logo">
-            <img :src="IMAGE_URLS.LOGO" alt="Henrique Zimermann Logo" class="brand-logo-img" />
-            <div class="brand-text">
-              <div class="brand-name">Henrique Zimermann</div>
-              <div class="brand-tagline">DevOps & Cloud Engineer</div>
+        <v-col cols="12" md="12" lg="5" class="mb-8 mb-lg-0">
+          <div class="d-flex align-center ga-4 mb-6">
+            <v-avatar size="48" rounded="lg">
+              <v-img :src="IMAGE_URLS.LOGO" alt="Henrique Zimermann Logo" cover />
+            </v-avatar>
+            <div>
+              <div class="text-subtitle-1 font-weight-bold"
+                style="color: rgb(241, 245, 249); letter-spacing: -0.025em;">
+                Henrique Zimermann
+              </div>
+              <div class="text-caption font-weight-medium" style="color: rgb(148, 163, 184);">
+                DevOps & Cloud Engineer
+              </div>
             </div>
           </div>
-          <p class="brand-description">
+          <p class="text-body-2" style="color: rgb(148, 163, 184); line-height: 1.6; max-width: 320px;">
             Automatizando infraestruturas e otimizando processos de desenvolvimento.
             Especialista em CI/CD, containerização e orquestração na nuvem.
           </p>
-        </div>
+        </v-col>
 
         <!-- Quick Links -->
-        <div class="footer-links">
-          <h4 class="links-title">Navegação</h4>
-          <nav class="links-nav">
-            <a v-for="link in quickLinks" :key="link.label" @click="scrollToSection(link.href)" class="nav-link">
+        <v-col cols="6" sm="4" md="4" lg="2" class="pl-md-4 pl-lg-8">
+          <h4 class="text-subtitle-2 font-weight-bold mb-5"
+            style="color: rgb(241, 245, 249); letter-spacing: -0.025em;">
+            Navegação
+          </h4>
+          <div class="d-flex flex-column ga-3">
+            <a v-for="link in quickLinks" :key="link.label" @click="scrollToSection(link.href)"
+              class="nav-link text-body-2 text-decoration-none font-weight-medium"
+              style="color: rgb(148, 163, 184); cursor: pointer;">
               {{ link.label }}
             </a>
-          </nav>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="footer-contact">
-          <h4 class="contact-title">Contato</h4>
-          <div class="contact-info">
-            <a :href="`mailto:${email}`" class="contact-item">
-              <v-icon icon="mdi-email-outline" size="16" />
-              {{ email }}
-            </a>
-            <a :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`" class="contact-item" target="_blank">
-              <v-icon icon="mdi-phone-outline" size="16" />
-              {{ phoneNumber }}
-            </a>
-            <div class="contact-item">
-              <v-icon icon="mdi-map-marker-outline" size="16" />
-              Santa Catarina, Brasil
-            </div>
           </div>
-        </div>
+        </v-col>
 
-        <!-- Social Links -->
-        <div class="footer-social">
-          <h4 class="social-title">Conecte-se</h4>
-          <div class="social-links">
-            <a v-for="social in socialLinks" :key="social.name" :href="social.href"
-              :aria-label="`Visitar ${social.name}`" class="social-link" target="_blank" rel="noopener noreferrer">
-              <v-icon :icon="social.icon" class="social-icons" size="20" />
-            </a>
-          </div>
-        </div>
-      </div>
+        <v-col cols="6" sm="8" md="8" lg="5" class="pl-md-6 pl-lg-8">
+          <v-row>
+            <!-- Contact Info -->
+            <v-col cols="12" lg="6">
+              <h4 class="text-subtitle-2 font-weight-bold mb-5"
+                style="color: rgb(241, 245, 249); letter-spacing: -0.025em;">
+                Contato
+              </h4>
+              <div class="d-flex flex-column ga-3">
+                <a :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`"
+                  class="contact-item d-flex align-center ga-2 text-body-2 text-decoration-none" target="_blank">
+                  <v-icon icon="mdi-phone-outline" size="16" />
+                  {{ phoneNumber }}
+                </a>
+                <div class="contact-item d-flex align-center ga-2 text-body-2">
+                  <v-icon icon="mdi-map-marker-outline" size="16" />
+                  Santa Catarina, Brasil
+                </div>
+                <a :href="`mailto:${email}`"
+                  class="contact-item d-flex align-center ga-2 text-body-2 text-decoration-none">
+                  <v-icon icon="mdi-email-outline" size="16" />
+                  {{ email }}
+                </a>
+              </div>
+            </v-col>
+
+            <!-- Social Links -->
+            <v-col cols="12" lg="6" class="mt-6 mt-lg-0">
+              <h4 class="text-subtitle-2 font-weight-bold mb-5"
+                style="color: rgb(241, 245, 249); letter-spacing: -0.025em;">
+                Conecte-se
+              </h4>
+              <div class="d-flex flex-wrap ga-3">
+                <v-btn v-for="social in socialLinks" :key="social.name" :href="social.href"
+                  :aria-label="`Visitar ${social.name}`" icon rounded="circle" class="social-link" width="40"
+                  height="40" target="_blank" rel="noopener noreferrer">
+                  <v-icon :icon="social.icon" size="20" />
+                </v-btn>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
 
       <!-- Bottom Bar -->
-      <div class="footer-bottom">
-        <div class="bottom-content">
-          <div class="copyright">
-            <span>© {{ currentYear }} Henrique Zimermann</span>
-            <span class="separator">•</span>
-            <span>Todos os direitos reservados</span>
-          </div>
-          <div class="tech-stack">
-            <span>Desenvolvido com</span>
-            <v-icon icon="mdi-heart" size="14" class="heart-icon" />
-            <span>usando</span>
-            <span class="tech-highlight">Vue.js</span>
-            <span>&</span>
-            <span class="tech-highlight">Nuxt</span>
-          </div>
+      <v-divider class="border-opacity-10 mb-8"></v-divider>
+      <div class="d-flex flex-column flex-md-row align-center justify-space-between ga-4">
+        <div class="d-flex align-center ga-2 text-body-2" style="color: rgb(148, 163, 184);">
+          <span>© {{ currentYear }} Henrique Zimermann</span>
+          <span style="color: rgb(100, 116, 139);">•</span>
+          <span>Todos os direitos reservados</span>
+        </div>
+        <div class="d-flex flex-wrap align-center justify-center ga-2 text-body-2" style="color: rgb(148, 163, 184);">
+          <span>Desenvolvido com</span>
+          <v-icon icon="mdi-heart" size="14" class="heart-icon" />
+          <span>usando</span>
+          <span class="tech-highlight">Vue.js</span>
+          <span>&</span>
+          <span class="tech-highlight">Nuxt</span>
         </div>
       </div>
-    </div>
+    </v-container>
 
     <!-- Scroll to Top Button -->
-    <v-btn v-if="showScrollTop" @click="scrollToTop" class="scroll-top-btn" :ripple="false" fab fixed>
+    <v-btn v-if="showScrollTop" @click="scrollToTop" class="scroll-top-btn" icon size="56" elevation="8"
+      color="primary">
       <v-icon icon="mdi-arrow-up" size="20" />
     </v-btn>
   </footer>
@@ -123,321 +149,298 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* === FOOTER === */
 .modern-footer {
-  background: rgb(var(--v-theme-surface));
-  color: rgb(var(--v-theme-on-surface-variant));
-  padding: 60px 0 30px;
   position: relative;
   overflow: hidden;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
 }
 
 .modern-footer::before {
   content: '';
   position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.08), transparent);
+  pointer-events: none;
+}
+
+.footer-gradient {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(59, 130, 246, 0.5),
+      rgba(6, 182, 212, 0.5),
+      transparent);
+  animation: shimmer 3s ease-in-out infinite;
 }
 
-.footer-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 24px;
+/* === BRAND SECTION === */
+.modern-footer .v-avatar {
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
 }
 
-.footer-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 48px;
-  padding: 80px 0 60px;
+.modern-footer .v-avatar:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
 }
 
-/* Brand Section */
-.footer-brand {
-  max-width: 400px;
+/* === HEADINGS === */
+.modern-footer h4 {
+  position: relative;
+  padding-bottom: 8px;
 }
 
-.brand-logo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+.modern-footer h4::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-radius: 2px;
 }
 
-.brand-logo-img {
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  object-fit: contain;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.brand-name {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin: 0;
-  letter-spacing: -0.025em;
-}
-
-.brand-tagline {
-  font-size: 14px;
-  font-weight: 500;
-  color: rgb(var(--v-theme-on-surface-variant));
-  margin: 0;
-}
-
-.brand-description {
-  color: rgb(var(--v-theme-on-surface-variant));
-  line-height: 1.6;
-  margin: 16px 0 0 0;
-  max-width: 320px;
-}
-
-/* Links Section */
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.links-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
-  margin: 0 0 4px 0;
-  letter-spacing: -0.025em;
-}
-
-.links-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* === NAVIGATION LINKS === */
 .nav-link {
-  font-size: 14px;
-  color: rgb(var(--v-theme-on-surface-variant));
-  text-decoration: none;
-  transition: all 0.2s ease;
-  cursor: pointer;
-  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding-left: 12px;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  transition: width 0.3s ease;
+  border-radius: 2px;
 }
 
 .nav-link:hover {
-  color: rgb(96, 165, 250);
+  color: rgb(96, 165, 250) !important;
   transform: translateX(4px);
 }
 
-/* Contact Section */
-.footer-contact {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.nav-link:hover::before {
+  width: 6px;
 }
 
-.contact-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgb(241, 245, 249);
-  margin: 0 0 4px 0;
-  letter-spacing: -0.025em;
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* === CONTACT ITEMS === */
 .contact-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
   color: rgb(203, 213, 225);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding-left: 4px;
+}
+
+.contact-item .v-icon {
+  transition: all 0.3s ease;
+  color: rgba(59, 130, 246, 0.6);
 }
 
 .contact-item:hover {
-  color: rgb(96, 165, 250);
+  color: rgb(96, 165, 250) !important;
+  transform: translateX(4px);
 }
 
-/* Social Section */
-.footer-social {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.contact-item:hover .v-icon {
+  color: rgb(59, 130, 246);
+  transform: scale(1.15);
 }
 
-.social-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-surface));
-  margin: 0 0 4px 0;
-  letter-spacing: -0.025em;
-}
-
-.social-links {
-  display: flex;
-  gap: 12px;
-}
-
+/* === SOCIAL LINKS === */
 .social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 12px;
-  color: rgb(96, 165, 250);
-  text-decoration: none;
-  transition: all 0.2s ease;
+  background: rgba(30, 41, 59, 0.6) !important;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: rgb(96, 165, 250) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.3));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .social-link:hover {
-  background: rgb(59, 130, 246);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: white !important;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+  border-color: rgba(59, 130, 246, 0.5);
 }
 
-.social-icons {
-  background: transparent !important;
-  background-color: transparent !important;
+.social-link:hover::before {
+  opacity: 1;
 }
 
-/* Bottom Bar */
-.footer-bottom {
-  border-top: 1px solid rgba(148, 163, 184, 0.1);
-  padding: 32px 0;
+.social-link .v-icon {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
 }
 
-.bottom-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+.social-link:hover .v-icon {
+  transform: rotate(5deg) scale(1.1);
 }
 
-.copyright {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: rgb(148, 163, 184);
-  font-weight: 500;
-}
-
-.separator {
-  color: rgb(100, 116, 139);
-}
-
-.tech-stack {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: rgb(148, 163, 184);
-  font-weight: 500;
-}
-
+/* === TECH HIGHLIGHT === */
 .tech-highlight {
   color: rgb(96, 165, 250);
   font-weight: 600;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-/* Scroll to Top Button */
+.tech-highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  opacity: 0.5;
+}
+
+/* === HEART ICON === */
+.heart-icon {
+  color: #ef4444;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  10%,
+  30% {
+    transform: scale(1.2);
+  }
+
+  20%,
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* === SCROLL TO TOP BUTTON === */
 .scroll-top-btn {
   position: fixed !important;
   bottom: 32px;
   right: 32px;
-  width: 56px !important;
-  height: 56px !important;
-  background: linear-gradient(135deg, #3b82f6, #06b6d4) !important;
-  color: white !important;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
-  transition: all 0.3s ease;
   z-index: 100;
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow:
+    0 8px 24px rgba(59, 130, 246, 0.4),
+    0 0 40px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: float 3s ease-in-out infinite;
+}
+
+.scroll-top-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .scroll-top-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+  transform: translateY(-8px) scale(1.05);
+  box-shadow:
+    0 12px 32px rgba(59, 130, 246, 0.6),
+    0 0 60px rgba(59, 130, 246, 0.3);
 }
 
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .footer-content {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 40px;
+.scroll-top-btn:hover::before {
+  opacity: 1;
+}
+
+.scroll-top-btn:active {
+  transform: translateY(-6px) scale(1.02);
+}
+
+/* === ANIMATIONS === */
+@keyframes shimmer {
+
+  0%,
+  100% {
+    opacity: 0.5;
   }
 
-  .footer-brand {
-    grid-column: 1 / -1;
-    max-width: none;
+  50% {
+    opacity: 1;
   }
 }
 
-@media (max-width: 768px) {
-  .footer-container {
-    padding: 0 16px;
+/* === RESPONSIVE === */
+@media (max-width: 1280px) {
+  .modern-footer .v-col {
+    padding-left: 12px !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .modern-footer h4 {
+    font-size: 0.875rem;
   }
 
-  .footer-content {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 60px 0 40px;
+  .modern-footer .text-body-2 {
+    font-size: 0.8125rem;
   }
+}
 
-  .brand-logo {
-    flex-direction: row;
-    text-align: left;
-  }
-
-  .brand-logo-img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .bottom-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 12px;
-  }
-
+@media (max-width: 600px) {
   .scroll-top-btn {
     bottom: 24px !important;
     right: 24px !important;
     width: 48px !important;
     height: 48px !important;
   }
-}
 
-@media (max-width: 480px) {
-  .footer-content {
-    padding: 48px 0 32px;
+  .modern-footer h4::after {
+    width: 24px;
   }
 
-  .social-links {
-    justify-content: flex-start;
+  .modern-footer .v-col {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 
-  .tech-stack {
-    flex-wrap: wrap;
-    justify-content: center;
+  .modern-footer .ga-3 {
+    gap: 8px !important;
   }
 }
 </style>

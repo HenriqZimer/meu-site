@@ -26,4 +26,4 @@ logs
 
 dist
 coverage
-backend/data
+backend/src/database/seed.ts

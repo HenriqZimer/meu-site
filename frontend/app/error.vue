@@ -63,9 +63,9 @@
                 <v-icon icon="mdi-briefcase" size="20" />
                 <span>Skills</span>
               </NuxtLink>
-              <NuxtLink to="/#portfolio" class="error-link">
+              <NuxtLink to="/#projects" class="error-link">
                 <v-icon icon="mdi-folder-multiple" size="20" />
-                <span>Portfólio</span>
+                <span>Projetos</span>
               </NuxtLink>
               <NuxtLink to="/#courses" class="error-link">
                 <v-icon icon="mdi-school" size="20" />

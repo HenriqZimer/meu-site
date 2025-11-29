@@ -1,70 +1,159 @@
 <template>
-  <section id="home" class="modern-hero">
-    <div class="hero-container">
-      <div class="hero-content">
-        <!-- Text Content -->
-        <div class="hero-text" data-animate="fade-up">
-          <div class="hero-badge" data-animate="fade-in" data-delay="100">
-            <div class="badge-indicator"></div>
-            <span>Disponível para projetos</span>
-          </div>
-
-          <h1 class="hero-title" data-animate="fade-up" data-delay="200">
-            Olá, eu sou o
-            <span class="hero-name">Henrique</span>
-          </h1>
-
-          <h2 class="hero-subtitle" data-animate="fade-up" data-delay="300">
-            DevOps & Cloud Engineer
-          </h2>
-
-          <p class="hero-description" data-animate="fade-up" data-delay="400">
-            Automatizo infraestruturas e otimizo processos de desenvolvimento.
-            Especialista em containerização e orquestração na nuvem.
-          </p>
-
-          <div class="hero-actions" data-animate="fade-up" data-delay="500">
-            <v-btn variant="flat" color="primary" size="large" class="cta-primary" @click="scrollToSection('portfolio')"
-              :ripple="false">
-              <v-icon icon="mdi-briefcase-variant" start />
-              Ver Projetos
-            </v-btn>
-
-            <v-btn variant="outlined" color="primary" size="large" class="cta-secondary"
-              @click="scrollToSection('contact')" :ripple="false">
-              <v-icon icon="mdi-message-text" start />
-              Fale Comigo
-            </v-btn>
-          </div>
-
-          <div data-animate="fade-up" data-delay="600">
-            <SocialLinks :links="socialLinks" label="Conecte-se comigo" />
-          </div>
-        </div>
-
-        <!-- Image Content -->
-        <div class="hero-visual" data-animate="fade-left" data-delay="300">
-          <div class="avatar-container">
-            <div class="avatar-wrapper">
-              <img :src="getImageUrl(400, 'webp')" :alt="imageAlt" class="hero-avatar" loading="eager" />
-            </div>
-          </div>
-        </div>
+  <section id="home" class="hero-modern position-relative d-flex align-center overflow-hidden">
+    <!-- Animated Background -->
+    <div class="hero-background">
+      <div class="bg-gradient-mesh" />
+      <div class="bg-grid" />
+      <div class="floating-shapes">
+        <div class="shape shape-1" />
+        <div class="shape shape-2" />
+        <div class="shape shape-3" />
       </div>
     </div>
 
-    <!-- Background Elements -->
-    <div class="hero-background">
-      <div class="bg-gradient" />
-      <div class="bg-pattern" />
+    <v-container class="py-12 py-md-16 position-relative" style="z-index: 2;">
+      <v-row align="center" justify="center" class="flex-column-reverse flex-md-row">
+        <!-- Text Content -->
+        <v-col cols="12" md="7" lg="6" class="text-center text-md-left">
+          <div class="hero-content" data-animate="fade-up">
+            <!-- Status Badge -->
+            <v-chip class="hero-badge mb-6 mb-md-8" variant="flat" size="default">
+              <span class="status-dot" />
+              <span class="ml-2">Disponível para novos projetos</span>
+            </v-chip>
+
+            <!-- Main Title -->
+            <h1 class="hero-title mb-4 mb-md-6">
+              <span class="title-greeting">Olá, eu sou</span>
+              <span class="title-name text-gradient-vibrant">Henrique Zimermann</span>
+            </h1>
+
+            <!-- Subtitle with Icon -->
+            <div class="hero-subtitle-box mb-6 mb-md-8">
+              <div class="d-inline-flex align-center ga-3 flex-wrap justify-center justify-md-start">
+                <v-chip color="primary" variant="flat" class="subtitle-chip">
+                  <v-icon icon="mdi-infinity" start size="20" />
+                  DevOps
+                </v-chip>
+                <v-chip color="info" variant="flat" class="subtitle-chip">
+                  <v-icon icon="mdi-cloud-outline" start size="20" />
+                  Cloud
+                </v-chip>
+                <v-chip color="info" variant="flat" class="subtitle-chip">
+                  <v-icon icon="mdi-kubernetes" start size="20" />
+                  Kubernetes
+                </v-chip>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <p class="hero-description text-body-1 text-md-h6 mb-8 mb-md-10 mx-auto mx-md-0">
+              Resolvo problemas de infraestrutura com soluções automatizadas com <span
+                class="text-highlight">CI/CD</span>,
+              <span class="text-highlight">Kubernetes</span> e
+              <span class="text-highlight">Cloud</span>.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="d-flex flex-column flex-sm-row align-center justify-center justify-md-start ga-4 mb-8 mb-md-12">
+              <v-btn size="x-large" color="primary" variant="flat"
+                class="cta-btn-primary text-none rounded-xl px-10 font-weight-bold" elevation="8"
+                @click="scrollToSection('contact')">
+                <v-icon icon="mdi-send" start />
+                Entre em Contato
+              </v-btn>
+
+              <v-btn size="x-large" variant="outlined" color="primary"
+                class="cta-btn-secondary text-none rounded-xl px-10 font-weight-bold"
+                @click="scrollToSection('projects')">
+                <v-icon icon="mdi-briefcase-variant-outline" start />
+                Ver Projetos
+              </v-btn>
+            </div>
+
+            <!-- Mini Stats -->
+            <div class="d-flex justify-center justify-md-start mb-8 mb-md-10">
+              <v-row class="hero-mini-stats" style="max-width: 500px;">
+                <v-col cols="4" class="text-center">
+                  <div class="stat-card">
+                    <div class="stat-value text-gradient-vibrant">3+</div>
+                    <div class="stat-label">Anos</div>
+                  </div>
+                </v-col>
+                <v-col cols="4" class="text-center">
+                  <div class="stat-card">
+                    <div class="stat-value text-gradient-cyan">{{ projectCount }}+</div>
+                    <div class="stat-label">Projetos</div>
+                  </div>
+                </v-col>
+                <v-col cols="4" class="text-center">
+                  <div class="stat-card">
+                    <div class="stat-value text-gradient-purple">{{ certificationCount }}+</div>
+                    <div class="stat-label">Certificações</div>
+                  </div>
+                </v-col>
+              </v-row>
+            </div>
+          </div>
+        </v-col>
+
+        <!-- Image with Floating Elements -->
+        <v-col cols="12" md="5" lg="6" class="d-flex flex-column justify-center align-center mb-10 mb-md-0">
+          <div class="hero-image-container position-relative">
+            <!-- Main Avatar -->
+            <div class="avatar-wrapper">
+              <v-avatar :size="avatarSize" class="hero-avatar">
+                <v-img :src="profileImageUrl" :alt="imageAlt" eager cover />
+              </v-avatar>
+              <div class="avatar-ring" />
+              <div class="avatar-glow" />
+            </div>
+
+            <!-- Floating Tech Badges -->
+            <div class="floating-badge badge-kubernetes">
+              <v-icon icon="mdi-kubernetes" size="28" color="primary" />
+            </div>
+            <div class="floating-badge badge-docker">
+              <v-icon icon="mdi-docker" size="28" color="info" />
+            </div>
+            <div class="floating-badge badge-aws">
+              <v-icon icon="mdi-aws" size="28" color="warning" />
+            </div>
+            <div class="floating-badge badge-infinity">
+              <v-icon icon="mdi-infinity" size="28" color="primary" />
+            </div>
+          </div>
+
+          <!-- Social Links - Modern Design -->
+          <div class="hero-social-links mt-10">
+            <div class="social-label mb-4 text-center">
+              <span class="text-body-2 font-weight-medium" style="color: rgb(148, 163, 184);">Conecte-se comigo</span>
+            </div>
+            <div class="d-flex justify-center ga-3">
+              <v-btn v-for="social in socialLinks" :key="social.name" :href="social.url"
+                :aria-label="`Visitar ${social.name}`" icon rounded="circle" class="social-btn-hero" width="48"
+                height="48" target="_blank" rel="noopener noreferrer">
+                <v-icon :icon="social.icon" size="22" />
+              </v-btn>
+            </div>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator">
+      <div class="scroll-line" />
+      <v-icon icon="mdi-chevron-down" class="scroll-icon" size="24" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { IMAGE_URLS } from "~/constants";
 import { useNavigation } from "~/composables/useNavigation";
 import { useSocialLinks } from "~/composables/useSocialLinks";
+import { useProjectsStore } from "~/stores/projects";
+import { useCertificationsStore } from "~/stores/certifications";
 
 // Configuration
 const config = useRuntimeConfig();
@@ -73,297 +162,51 @@ const siteFirstName = config.public.siteFirstName || "Henrique";
 // Composables
 const { scrollToSection } = useNavigation();
 const { socialLinks } = useSocialLinks();
-
-// Scroll Animation
+const { isMobile, isTablet } = useResponsive();
 const { observeElements } = useScrollAnimation();
 
-const imageAlt = `Foto profissional de ${siteFirstName}`;
+// Stores
+const projectsStore = useProjectsStore();
+const certificationsStore = useCertificationsStore();
 
-// Use utility function
-const getImageUrl = (width: number, format: string = "webp") =>
-  "/foto-perfil-profissional.jpg";
+const imageAlt = `Foto profissional de ${siteFirstName}`;
+const profileImageUrl = "/foto-perfil-profissional.jpg";
+
+// Avatar size responsivo
+const avatarSize = computed(() => {
+  if (isMobile.value) return 250;
+  if (isTablet.value) return 280;
+  return 320;
+});
+
+// Dynamic stats from stores
+const projectCount = computed(() => projectsStore.projectsCount || 25);
+const certificationCount = computed(() => certificationsStore.certificationsCount || 15);
 
 onMounted(() => {
   observeElements({
     threshold: 0.2,
     once: true,
   });
+
+  // Fetch stats from backend
+  projectsStore.fetchStats();
+  certificationsStore.fetchStats();
 });
 </script>
 
 <style scoped>
-.modern-hero {
-  position: relative;
-  min-height: 93vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: rgb(var(--v-theme-background));
-  margin-top: 0 !important;
-  padding-top: 0 !important;
+/* ===================================
+   HERO SECTION
+   =================================== */
+.hero-modern {
+  min-height: 100vh;
+  background: rgb(15, 23, 42);
 }
 
-.hero-container {
-  max-width: 1400px;
-  width: 100%;
-  padding: 100px 24px 60px;
-  position: relative;
-  z-index: 2;
-  margin-top: 0 !important;
-}
-
-.hero-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-/* Text Content */
-.hero-text {
-  max-width: 540px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 24px;
-  font-size: 14px;
-  font-weight: 500;
-  color: rgb(96, 165, 250);
-  margin-bottom: 32px;
-}
-
-.hero-badge .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.badge-indicator {
-  width: 8px;
-  height: 8px;
-  background: rgb(16, 185, 129);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-.hero-title {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  color: rgb(241, 245, 249);
-  margin-bottom: 16px;
-  letter-spacing: -0.025em;
-}
-
-.hero-name {
-  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(34, 211, 238));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-}
-
-.hero-subtitle {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  font-weight: 600;
-  color: rgb(203, 213, 225);
-  margin-bottom: 24px;
-  letter-spacing: -0.025em;
-}
-
-.hero-description {
-  font-size: 18px;
-  line-height: 1.7;
-  color: rgb(203, 213, 225);
-  margin-bottom: 40px;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.cta-primary {
-  padding: 12px 32px !important;
-  height: 56px !important;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 16px !important;
-  background: rgb(59, 130, 246) !important;
-  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
-  transition: all 0.3s ease;
-  text-transform: none !important;
-}
-
-.cta-primary .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.cta-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
-  background: rgb(37, 99, 235) !important;
-}
-
-.cta-secondary {
-  padding: 12px 32px !important;
-  height: 56px !important;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 16px !important;
-  border: 2px solid rgb(59, 130, 246) !important;
-  color: rgb(96, 165, 250) !important;
-  transition: all 0.3s ease;
-  text-transform: none !important;
-}
-
-.cta-secondary .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.cta-secondary:hover {
-  transform: translateY(-2px);
-  background: rgba(59, 130, 246, 0.1) !important;
-  border-color: rgb(96, 165, 250) !important;
-}
-
-.hero-social {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.social-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(148, 163, 184);
-  margin: 0;
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
-}
-
-.social-links {
-  display: flex;
-  gap: 12px;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: rgba(59, 130, 246, 0.1);
-  border: 2px solid rgba(59, 130, 246, 0.3);
-  border-radius: 16px;
-  color: rgb(96, 165, 250);
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.social-link .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.social-link:hover {
-  border-color: rgb(96, 165, 250);
-  background: rgba(59, 130, 246, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-/* Visual Content */
-.hero-visual {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.avatar-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.avatar-wrapper {
-  position: relative;
-  width: 400px;
-  height: 400px;
-  border-radius: 32px;
-  overflow: visible;
-  padding: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.avatar-wrapper::before {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
-  border-radius: 36px;
-  z-index: -1;
-  opacity: 0.8;
-  transition: all 0.5s ease;
-  animation: borderGlow 3s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-
-  0%,
-  100% {
-    opacity: 0.6;
-    filter: brightness(1);
-  }
-
-  50% {
-    opacity: 1;
-    filter: brightness(1.2);
-  }
-}
-
-.avatar-wrapper:hover::before {
-  opacity: 1;
-  inset: -6px;
-  box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
-}
-
-.avatar-wrapper:hover {
-  transform: translateY(-12px) scale(1.02);
-}
-
-.hero-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 32px;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.4);
-  transition: all 0.5s ease;
-}
-
-.avatar-wrapper:hover .hero-avatar {
-  box-shadow: 0 30px 80px rgba(59, 130, 246, 0.6);
-}
-
-/* Background Elements */
+/* ===================================
+   ANIMATED BACKGROUND
+   =================================== */
 .hero-background {
   position: absolute;
   inset: 0;
@@ -371,98 +214,532 @@ onMounted(() => {
   z-index: 1;
 }
 
-.bg-gradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-}
-
-.bg-pattern {
+.bg-gradient-mesh {
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle at 25% 25%,
-      rgba(59, 130, 246, 0.1) 0%,
-      transparent 50%),
-    radial-gradient(circle at 75% 75%,
-      rgba(6, 182, 212, 0.1) 0%,
-      transparent 50%);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+  animation: gradientShift 15s ease infinite;
 }
 
-/* Animations available in /assets/css/animations.css */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-content {
-    grid-template-columns: 1fr;
-    gap: 60px;
-    text-align: center;
+.floating-shapes .shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: float 20s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: rgba(59, 130, 246, 0.3);
+  top: -200px;
+  right: -200px;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: rgba(6, 182, 212, 0.3);
+  bottom: -150px;
+  left: -150px;
+  animation-delay: 5s;
+}
+
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  background: rgba(168, 85, 247, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 10s;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
   }
 
-  .hero-text {
-    max-width: none;
-    order: 2;
+  33% {
+    transform: translate(30px, -30px);
   }
 
-  .hero-visual {
-    order: 1;
-  }
-
-  .hero-actions {
-    justify-content: center;
-  }
-
-  .avatar-wrapper {
-    width: 350px;
-    height: 350px;
+  66% {
+    transform: translate(-20px, 20px);
   }
 }
 
-@media (max-width: 768px) {
-  .hero-container {
-    padding: 100px 16px 40px;
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    opacity: 1;
   }
 
-  .hero-content {
-    gap: 40px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .avatar-wrapper {
-    width: 300px;
-    height: 300px;
-  }
-
-  .social-links {
-    justify-content: center;
+  50% {
+    opacity: 0.8;
   }
 }
 
-@media (max-width: 480px) {
+/* ===================================
+   HERO BADGE
+   =================================== */
+.hero-badge {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  backdrop-filter: blur(10px);
+  color: rgb(147, 197, 253) !important;
+  font-weight: 600;
+  padding: 10px 24px !important;
+  height: auto !important;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgb(34, 197, 94);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ===================================
+   TITLE
+   =================================== */
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.title-greeting {
+  color: rgb(203, 213, 225);
+  font-weight: 500;
+  font-size: 0.6em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.title-name {
+  font-weight: 800;
+}
+
+/* ===================================
+   SUBTITLE
+   =================================== */
+.hero-subtitle-box {
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.subtitle-chip {
+  font-weight: 600 !important;
+  padding: 10px 18px !important;
+  height: auto !important;
+}
+
+/* ===================================
+   DESCRIPTION
+   =================================== */
+.hero-description {
+  color: rgb(203, 213, 225);
+  max-width: 600px;
+  line-height: 1.7;
+  animation: fadeInUp 1s ease 0.8s both;
+}
+
+.text-highlight {
+  color: rgb(147, 197, 253);
+  font-weight: 600;
+}
+
+/* ===================================
+   CTA BUTTONS
+   =================================== */
+.cta-btn-primary {
+  background: linear-gradient(135deg, rgb(59, 130, 246), rgb(37, 99, 235)) !important;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  animation: fadeInUp 1s ease 1s both;
+}
+
+.cta-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6) !important;
+}
+
+.cta-btn-secondary {
+  border-width: 2px !important;
+  border-color: rgb(59, 130, 246) !important;
+  color: rgb(147, 197, 253) !important;
+  transition: all 0.3s ease !important;
+  animation: fadeInUp 1s ease 1.2s both;
+}
+
+.cta-btn-secondary:hover {
+  transform: translateY(-3px);
+  background: rgba(59, 130, 246, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* ===================================
+   MINI STATS
+   =================================== */
+.hero-mini-stats {
+  animation: fadeInUp 1s ease 1.4s both;
+  width: 100%;
+  margin: 0;
+}
+
+.stat-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 12px;
+  padding: 16px 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  color: rgb(148, 163, 184);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===================================
+   HERO IMAGE
+   =================================== */
+.hero-image-container {
+  animation: fadeInLeft 1s ease 0.5s both;
+}
+
+.avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.hero-avatar {
+  border: 4px solid rgba(59, 130, 246, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.hero-avatar:hover {
+  transform: scale(1.05);
+  border-color: rgba(59, 130, 246, 0.6);
+  box-shadow: 0 25px 70px rgba(59, 130, 246, 0.4);
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  animation: rotate 20s linear infinite;
+  z-index: 1;
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%);
+  animation: pulse 3s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* ===================================
+   FLOATING BADGES
+   =================================== */
+.floating-badge {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(30, 41, 59, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-badge:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.5);
+}
+
+.badge-kubernetes {
+  top: 10%;
+  right: 10%;
+}
+
+.badge-docker {
+  top: 50%;
+  right: 0;
+  animation-delay: 1s;
+}
+
+.badge-aws {
+  bottom: 20%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+.badge-infinity {
+  top: 35%;
+  left: -10%;
+  animation-delay: 3s;
+}
+
+/* ===================================
+   SOCIAL LINKS
+   =================================== */
+.hero-social-links {
+  animation: fadeInUp 1s ease 1.6s both;
+}
+
+.social-label {
+  opacity: 0.9;
+}
+
+.social-btn-hero {
+  background: rgba(30, 41, 59, 0.7) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  color: rgb(96, 165, 250) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.social-btn-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.social-btn-hero:hover {
+  transform: translateY(-4px) scale(1.1);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+  color: white !important;
+}
+
+.social-btn-hero:hover::before {
+  opacity: 1;
+}
+
+.social-btn-hero .v-icon {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.social-btn-hero:hover .v-icon {
+  transform: rotate(5deg) scale(1.1);
+}
+
+/* ===================================
+   SCROLL INDICATOR
+   ===================================*/
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-line {
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(to bottom, transparent, rgb(59, 130, 246));
+}
+
+.scroll-icon {
+  color: rgb(59, 130, 246);
+  opacity: 0.7;
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media (max-width: 960px) {
+  .floating-badge {
+    width: 50px;
+    height: 50px;
+  }
+
+  .shape {
+    filter: blur(60px);
+  }
+
+  .stat-card {
+    padding: 12px 8px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
   .hero-badge {
-    font-size: 12px;
-    padding: 6px 12px;
+    padding: 8px 18px !important;
+    font-size: 0.9rem;
   }
 
-  .hero-description {
-    font-size: 16px;
+  .floating-badge {
+    width: 45px;
+    height: 45px;
   }
 
-  .avatar-wrapper {
-    width: 250px;
-    height: 250px;
+  .badge-infinity {
+    left: 0;
+  }
+
+  .avatar-ring {
+    inset: -10px;
+  }
+
+  .avatar-glow {
+    inset: -20px;
+  }
+
+  .scroll-indicator {
+    bottom: 20px;
+  }
+
+  .stat-card {
+    padding: 10px 6px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+  }
+
+  .social-btn-hero {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .hero-social-links {
+    margin-top: 32px !important;
   }
 }
 </style>

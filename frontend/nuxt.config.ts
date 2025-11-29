@@ -6,7 +6,10 @@ export default defineNuxtConfig({
     port: 3000,
   },
 
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+    timeline: { enabled: true },
+  },
 
   runtimeConfig: {
     public: {
@@ -54,6 +57,7 @@ export default defineNuxtConfig({
     "~/assets/css/sections.css",
     "~/assets/css/components.css",
     "~/assets/css/vuetify.css",
+    "~/assets/css/global.css",
   ],
 
   components: {

@@ -1,91 +1,82 @@
 <template>
-  <section id="portfolio" class="modern-portfolio">
-    <div class="portfolio-container">
-      <!-- Header Section -->
-      <SectionHeader badge="Portfólio" icon="mdi-briefcase" title-prefix="Meus" title-highlight="projetos"
-        description="Alguns dos meus trabalhos recentes e soluções desenvolvidas" />
+  <Section id="projects" badge="Projetos" badge-icon="mdi-briefcase-variant" badge-color="primary" title-prefix="Meus"
+    title-highlight="Projetos" description="Alguns dos meus trabalhos recentes e soluções desenvolvidas"
+    section-class="py-10 py-md-16" container-class="px-4 px-md-6">
 
-      <!-- Filtros -->
-      <div class="portfolio-filters" data-animate="fade-up" data-delay="400">
-        <div class="filter-chips">
-          <v-chip v-for="(filter, index) in filters" :key="filter.value"
-            :class="{ 'filter-chip--active': selectedFilter === filter.value }" class="filter-chip"
-            :color="selectedFilter === filter.value ? 'primary' : 'default'"
-            :variant="selectedFilter === filter.value ? 'elevated' : 'outlined'" size="large"
-            @click="setFilter(filter.value)">
-            <v-icon start size="18">{{ filter.icon }}</v-icon>
-            {{ filter.label }}
-            <v-badge v-if="filter.count > 0" :content="filter.count"
-              :color="selectedFilter === filter.value ? 'white' : 'primary'" inline class="ml-2" />
-          </v-chip>
-        </div>
-      </div>
+    <!-- Filtros -->
+    <div class="d-flex flex-wrap justify-center ga-3 mb-10 mb-md-12" data-animate="fade-up" data-delay="400">
+      <v-chip v-for="filter in filters" :key="filter.value"
+        :color="selectedFilter === filter.value ? 'primary' : 'default'"
+        :variant="selectedFilter === filter.value ? 'flat' : 'outlined'"
+        :class="{ 'filter-chip--active': selectedFilter === filter.value }" class="filter-chip" size="default"
+        @click="setFilter(filter.value)">
+        <v-icon start size="18">{{ filter.icon }}</v-icon>
+        {{ filter.label }}
+        <v-badge v-if="filter.count > 0" :content="filter.count"
+          :color="selectedFilter === filter.value ? 'white' : 'primary'" inline class="ml-2" />
+      </v-chip>
+    </div>
 
-      <!-- Carrossel de Projetos -->
-      <div class="portfolio-content">
-        <div v-if="filteredProjects.length > 0" class="carousel-container">
-          <!-- Botão Anterior -->
-          <button class="carousel-nav carousel-nav--prev" :disabled="currentPage === 0" @click="previousPage"
-            aria-label="Projetos anteriores">
-            <v-icon icon="mdi-chevron-left" size="32" />
-          </button>
+    <!-- Carrossel de Projetos -->
+    <div class="position-relative">
+      <div v-if="filteredProjects.length > 0" class="d-flex align-center ga-3 ga-md-4">
+        <!-- Botão Anterior -->
+        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === 0" @click="previousPage"
+          aria-label="Projetos anteriores" size="large" elevation="2">
+          <v-icon icon="mdi-chevron-left" />
+        </v-btn>
 
-          <!-- Carrossel -->
-          <div class="carousel-wrapper">
-            <div class="carousel-track" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
-              <div v-for="(page, pageIndex) in paginatedProjects" :key="pageIndex" class="carousel-page">
-                <div class="carousel-grid">
-                  <div v-for="(project, index) in page" :key="project.id" class="carousel-item">
-                    <ProjectCard :title="project.title" :description="project.description" :image="project.image"
-                      :technologies="project.technologies" :demo-url="project.demoUrl" :github-url="project.githubUrl"
-                      :featured="project.featured" :status="project.status" size="medium" :lazy="pageIndex > 0"
-                      class="project-card" />
-                  </div>
+        <!-- Carrossel -->
+        <div class="flex-grow-1 overflow-hidden carousel-wrapper">
+          <div class="carousel-track d-flex" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
+            <div v-for="(page, pageIndex) in paginatedProjects" :key="pageIndex" class="carousel-page">
+              <div class="carousel-grid">
+                <div v-for="(project, index) in page" :key="project.id"
+                  :data-animate="index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'zoom-in' : 'slide-in-up'"
+                  :data-delay="index * 150" class="project-card-wrapper">
+                  <ProjectCard :title="project.title" :description="project.description" :image="project.image"
+                    :technologies="project.technologies" :demo-url="project.demoUrl" :github-url="project.githubUrl"
+                    size="medium" :lazy="pageIndex > 0" />
                 </div>
               </div>
             </div>
           </div>
-
-          <!-- Botão Próximo -->
-          <button class="carousel-nav carousel-nav--next" :disabled="currentPage === totalPages - 1" @click="nextPage"
-            aria-label="Próximos projetos">
-            <v-icon icon="mdi-chevron-right" size="32" />
-          </button>
         </div>
 
-        <!-- Indicadores de Página -->
-        <div v-if="totalPages > 1" class="carousel-indicators">
-          <button v-for="(page, index) in totalPages" :key="index" class="indicator"
-            :class="{ 'indicator--active': currentPage === index }" @click="goToPage(index)"
-            :aria-label="`Ir para página ${index + 1}`">
-          </button>
-          <span class="page-counter">{{ currentPage + 1 }} / {{ totalPages }}</span>
-        </div>
+        <!-- Botão Próximo -->
+        <v-btn icon class="carousel-nav flex-shrink-0" :disabled="currentPage === totalPages - 1" @click="nextPage"
+          aria-label="Próximos projetos" size="large" elevation="2">
+          <v-icon icon="mdi-chevron-right" />
+        </v-btn>
+      </div>
 
-        <!-- Empty State -->
-        <div v-if="filteredProjects.length === 0" class="empty-state">
-          <v-icon size="64" color="grey-lighten-1" class="empty-icon">mdi-folder-open-outline</v-icon>
-          <h3 class="empty-title">Nenhum projeto encontrado</h3>
-          <p class="empty-description">Tente selecionar uma categoria diferente</p>
-        </div>
+      <!-- Indicadores de Página -->
+      <div v-if="totalPages > 1" class="d-flex justify-center align-center ga-2 mt-6">
+        <button v-for="(page, index) in totalPages" :key="index" class="indicator"
+          :class="{ 'indicator--active': currentPage === index }" @click="goToPage(index)"
+          :aria-label="`Ir para página ${index + 1}`">
+        </button>
+        <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184);">{{ currentPage + 1 }} / {{ totalPages
+        }}</span>
+      </div>
+
+      <!-- Empty State -->
+      <div v-if="filteredProjects.length === 0" class="text-center py-16">
+        <v-icon size="64" class="mb-6" style="color: rgb(148, 163, 184); opacity: 0.5;">mdi-folder-open-outline</v-icon>
+        <div class="text-h6 font-weight-medium mb-3" style="color: rgb(241, 245, 249);">Nenhum projeto encontrado</div>
+        <p class="text-body-1" style="color: rgb(148, 163, 184); opacity: 0.8;">Tente selecionar uma categoria diferente
+        </p>
       </div>
     </div>
-  </section>
+  </Section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { PROJECT_FILTERS, PROJECT_STATUS } from '~/constants'
+import { ref, computed, watch, nextTick } from 'vue'
+import { PROJECT_FILTERS } from '~/constants'
 
 // Scroll Animation
 const { observeElements } = useScrollAnimation()
-
-onMounted(() => {
-  observeElements({
-    threshold: 0.1,
-    once: true
-  })
-})
 
 // Types
 interface Project {
@@ -98,7 +89,7 @@ interface Project {
   demoUrl: string
   githubUrl: string
   featured?: boolean
-  status?: 'completed' | 'in-progress' | 'planning'
+  status?: string
 }
 
 interface Filter {
@@ -114,68 +105,87 @@ const projectsStore = useProjectsStore()
 // Reactive state
 const selectedFilter = ref('all')
 
-// Carregar projetos da API
+// Carregar projetos da API e inicializar animações
 onMounted(async () => {
   await projectsStore.fetchProjects()
+
+  // Forçar atualização do itemsPerPage
+  if (typeof window !== 'undefined') {
+    if (window.innerWidth <= 600) {
+      itemsPerPage.value = 1
+    } else if (window.innerWidth <= 960) {
+      itemsPerPage.value = 2
+    } else {
+      itemsPerPage.value = 3
+    }
+  }
+
+  // Inicializar scroll animations
+  observeElements({
+    threshold: 0.1,
+    once: true
+  })
+
+  // Animações de scroll para os cards
+  nextTick(() => {
+    const animateCardsOnScroll = () => {
+      const elements = document.querySelectorAll('[data-animate]')
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target as HTMLElement
+            const delay = element.getAttribute('data-delay')
+
+            setTimeout(() => {
+              element.classList.add('is-visible')
+            }, delay ? parseInt(delay) : 0)
+
+            observer.unobserve(element)
+          }
+        })
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+      })
+
+      elements.forEach(el => observer.observe(el))
+    }
+
+    setTimeout(animateCardsOnScroll, 100)
+
+    // Adicionar efeito parallax 3D nos project cards
+    setTimeout(() => {
+      const projectCards = document.querySelectorAll('.project-card-modern')
+
+      projectCards.forEach(card => {
+        card.addEventListener('mousemove', (e: Event) => {
+          const mouseEvent = e as MouseEvent
+          const element = card as HTMLElement
+          const rect = element.getBoundingClientRect()
+          const x = mouseEvent.clientX - rect.left
+          const y = mouseEvent.clientY - rect.top
+
+          const centerX = rect.width / 2
+          const centerY = rect.height / 2
+
+          const rotateXVal = ((y - centerY) / centerY) * -6
+          const rotateYVal = ((x - centerX) / centerX) * 6
+
+          element.style.transform = 'perspective(1000px) rotateX(' + rotateXVal + 'deg) rotateY(' + rotateYVal + 'deg) translateY(-8px) scale(1.02)'
+        })
+
+        card.addEventListener('mouseleave', () => {
+          (card as HTMLElement).style.transform = ''
+        })
+      })
+    }, 300)
+  })
 })
 
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
 const loading = computed(() => projectsStore.loading)
-
-// Projects data (removido - agora vem da API)
-/*
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'Docker Swarm com NFS e Cloudflare',
-    description: 'Repositório com configuração de um cluster Docker Swarm para deploy de aplicações web escaláveis com integração NFS e CDN Cloudflare.',
-    image: '/portfolio-swarm-nfs-cloudflare.png',
-    category: 'containerization',
-    technologies: ['Docker', 'Docker Swarm', 'Cloudflare', 'NFS', 'DevOps'],
-    demoUrl: 'https://www.notion.so/wiki-henrique-zimermann/Docker-Swarm-Cluster-de-Alta-Disponibilidade-2520ca676c53809eb88cdf145f32257a',
-    githubUrl: 'https://github.com/HenriqZimer/docker-swarm',
-    featured: true,
-    status: 'completed'
-  },
-  {
-    id: 2,
-    title: 'EKS com Terraform',
-    description: 'Implementação completa de um cluster EKS na AWS utilizando Terraform para infraestrutura como código, incluindo configurações de rede e segurança.',
-    image: '/portfolio-eks-terraform.png',
-    category: 'infrastructure',
-    technologies: ['EKS', 'Terraform', 'AWS', 'Kubernetes', 'IaC'],
-    demoUrl: 'https://github.com/HenriqZimer/eks-terraform',
-    githubUrl: 'https://github.com/HenriqZimer/eks-terraform',
-    featured: true,
-    status: 'completed'
-  },
-  {
-    id: 3,
-    title: 'Assinatura de Email Automática para Outlook',
-    description: 'Script PowerShell automatizado para geração e deploy de assinaturas de email corporativas no Microsoft Outlook, integrado com Active Directory.',
-    image: '/portfolio-powershell-ad-outlook.png',
-    category: 'automation',
-    technologies: ['PowerShell', 'HTML', 'Active Directory', 'Exchange'],
-    demoUrl: 'https://www.notion.so/wiki-henrique-zimermann/Assinatura-autom-tica-de-Email-Vis-o-Geral-2520ca676c538005bb5dd8ef6d83f1f3',
-    githubUrl: 'https://github.com/HenriqZimer/AutomatedOutlookSignature',
-    featured: false,
-    status: 'completed'
-  },
-  {
-    id: 4,
-    title: 'Portfolio Pessoal Moderno em Vue',
-    description: 'Site pessoal desenvolvido com Vue 3, Nuxt 3 e Vuetify, focado em performance, acessibilidade e design responsivo.',
-    image: '/portfolio-vue-nuxt.png',
-    category: 'frontend',
-    technologies: ['Vue 3', 'Nuxt 3', 'TypeScript', 'Vuetify', 'CSS'],
-    demoUrl: 'https://henriquezimer.dev',
-    githubUrl: 'https://github.com/HenriqZimer/meu-site',
-    featured: true,
-    status: 'in-progress'
-  }
-]
-*/
 
 // Other Technologies Data
 const otherTechnologies = [
@@ -236,21 +246,9 @@ const filters = computed<Filter[]>(() =>
 // Computed filtered projects
 const filteredProjects = computed(() => {
   if (selectedFilter.value === 'all') {
-    return projects.value.sort((a, b) => {
-      // Featured projects first
-      if (a.featured && !b.featured) return -1
-      if (!a.featured && b.featured) return 1
-      return 0
-    })
+    return projects.value
   }
-  return projects.value
-    .filter(project => project.category === selectedFilter.value)
-    .sort((a, b) => {
-      // Featured projects first
-      if (a.featured && !b.featured) return -1
-      if (!a.featured && b.featured) return 1
-      return 0
-    })
+  return projects.value.filter(project => project.category === selectedFilter.value)
 })
 
 // Carousel state
@@ -260,12 +258,12 @@ const itemsPerPage = ref(3)
 // Update items per page based on window width
 if (typeof window !== 'undefined') {
   const updateItemsPerPage = () => {
-    if (window.innerWidth <= 768) {
-      itemsPerPage.value = 1
-    } else if (window.innerWidth <= 1024) {
-      itemsPerPage.value = 2
+    if (window.innerWidth <= 600) {
+      itemsPerPage.value = 1 // Mobile: 1 card por página
+    } else if (window.innerWidth <= 960) {
+      itemsPerPage.value = 2 // Tablet: 2 cards por página
     } else {
-      itemsPerPage.value = 3
+      itemsPerPage.value = 3 // Desktop: 3 cards por página (1 linha)
     }
   }
 
@@ -281,6 +279,13 @@ const paginatedProjects = computed(() => {
   for (let i = 0; i < projects.length; i += itemsPerPage.value) {
     pages.push(projects.slice(i, i + itemsPerPage.value))
   }
+
+  console.log('📊 Paginação:', {
+    totalProjects: projects.length,
+    itemsPerPage: itemsPerPage.value,
+    totalPages: pages.length,
+    projectsPerPage: pages.map(p => p.length)
+  })
 
   return pages
 })
@@ -336,638 +341,209 @@ const scrollToContact = () => {
 </script>
 
 <style scoped>
-.modern-portfolio {
-  padding: 40px 40px 40px 40px;
-  background: rgb(var(--v-theme-background));
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
-}
-
-.portfolio-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  width: 100%;
-}
-
-/* Header Section */
-/* Header usa classes globais: .section-badge, .section-title, .title-highlight, .section-description */
-.portfolio-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-/* Filtros */
-.portfolio-filters {
-  margin-bottom: 48px;
-}
-
-.filter-chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
+/* === FILTERS === */
 .filter-chip {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 12px !important;
-  border: 2px solid white !important;
+  backdrop-filter: blur(8px);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
 }
 
-.filter-chip .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
+.filter-chip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .filter-chip:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+}
+
+.filter-chip:hover::before {
+  opacity: 1;
 }
 
 .filter-chip--active {
   transform: scale(1.05);
-  border-color: rgb(241, 245, 249) !important;
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+  animation: pulse 2s ease-in-out infinite;
 }
 
-/* Badge customization for active filter */
-.filter-chip--active .v-badge__badge {
-  background-color: rgb(168, 85, 247) !important;
-  color: white !important;
-}
-
-/* Portfolio Content */
-.portfolio-content {
-  position: relative;
-}
-
-/* Carousel Container */
-.carousel-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 0;
-  padding: 0;
-}
-
-/* Carousel Navigation */
+/* === CAROUSEL NAVIGATION === */
 .carousel-nav {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(var(--v-theme-surface), 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(var(--v-theme-outline), 0.2);
-  color: rgb(var(--v-theme-primary));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 2;
+  background: rgba(30, 41, 59, 0.8) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.carousel-nav .v-icon {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-
-.carousel-nav:hover:not(:disabled) {
-  background: rgb(var(--v-theme-primary));
-  color: white;
+.carousel-nav:not(:disabled):hover {
   transform: scale(1.1);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.carousel-nav:not(:disabled):active {
+  transform: scale(1.05);
 }
 
 .carousel-nav:disabled {
-  opacity: 0.3;
+  opacity: 0.2;
   cursor: not-allowed;
 }
 
-/* Carousel Wrapper */
+/* === CAROUSEL WRAPPER === */
 .carousel-wrapper {
-  flex: 1;
-  overflow-x: hidden;
-  overflow-y: visible;
   position: relative;
   padding: 30px 0;
   margin: -30px 0;
 }
 
 .carousel-track {
-  display: flex;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
-  width: 100%;
 }
 
 .carousel-page {
   flex: 0 0 100%;
   min-width: 0;
-  padding: 0;
 }
 
 .carousel-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 0;
+  grid-template-rows: 1fr;
+  gap: 24px;
+  max-width: 100%;
 }
 
-/* Carousel Indicators */
-.carousel-indicators {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 24px;
+.carousel-grid>* {
+  min-width: 0;
 }
 
+/* === CAROUSEL INDICATORS === */
 .indicator {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(var(--v-theme-outline), 0.3);
-  border: none;
+  background: rgba(148, 163, 184, 0.25);
+  border: 2px solid rgba(148, 163, 184, 0.4);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
+  position: relative;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .indicator:hover {
-  background: rgba(59, 130, 246, 0.5);
-  transform: scale(1.2);
+  background: rgba(59, 130, 246, 0.6);
+  border-color: rgba(59, 130, 246, 0.8);
+  transform: scale(1.3);
+}
+
+.indicator:hover::before {
+  opacity: 1;
 }
 
 .indicator--active {
-  width: 24px;
-  border-radius: 4px;
-  background: rgb(var(--v-theme-primary));
+  width: 32px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+  animation: indicatorPulse 2s ease-in-out infinite;
 }
 
-.page-counter {
-  margin-left: 8px;
-  font-size: 0.875rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  font-weight: 500;
-}
+/* === ANIMATIONS === */
+@keyframes pulse {
 
-/* Empty State */
-.empty-state {
-  text-align: center;
-  padding: 80px 20px;
-  color: rgb(var(--v-theme-on-surface-variant));
-}
-
-.empty-icon {
-  margin-bottom: 24px;
-  opacity: 0.5;
-}
-
-.empty-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 12px;
-  color: rgb(var(--v-theme-on-surface));
-}
-
-.empty-description {
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/* Technologies Section */
-.technologies-section {
-  margin: 80px 0;
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-.technologies-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.tech-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(59, 130, 246, 0.15);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  color: rgb(96, 165, 250);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-.technologies-title {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  font-weight: 700;
-  color: rgb(241, 245, 249);
-  margin: 16px 0;
-  line-height: 1.2;
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-.tech-highlight {
-  background: linear-gradient(135deg, rgb(96, 165, 250), rgb(59, 130, 246));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.technologies-subtitle {
-  font-size: 1.125rem;
-  color: rgb(203, 213, 225);
-  max-width: 600px;
-  margin: 0 auto;
-  line-height: 1.6;
-  animation: fadeInUp 1s ease forwards;
-}
-
-.technologies-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 48px;
-}
-
-.tech-card {
-  background: rgba(var(--v-theme-surface), 0.8);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(var(--v-theme-outline), 0.1);
-  border-radius: 16px;
-  padding: 24px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: fadeInUp 0.6s ease forwards;
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.tech-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
-}
-
-.tech-card-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.tech-icon-wrapper {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  background: rgba(59, 130, 246, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
-}
-
-.tech-card:hover .tech-icon-wrapper {
-  transform: scale(1.1);
-  background: rgba(59, 130, 246, 0.15);
-}
-
-.tech-icon {
-  transition: all 0.3s ease;
-}
-
-.tech-content {
-  flex: 1;
-}
-
-.tech-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: rgb(var(--v-theme-on-background));
-  margin-bottom: 8px;
-}
-
-.tech-description {
-  color: rgba(var(--v-theme-on-background), 0.7);
-  line-height: 1.5;
-  margin-bottom: 16px;
-}
-
-.tech-level {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: auto;
-}
-
-.tech-level-label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: rgba(var(--v-theme-on-background), 0.8);
-  min-width: 40px;
-}
-
-.tech-level-bar {
-  flex: 1;
-  height: 6px;
-  background: rgba(var(--v-theme-outline), 0.2);
-  border-radius: 3px;
-  overflow: hidden;
-  position: relative;
-}
-
-.tech-level-fill {
-  height: 100%;
-  border-radius: 3px;
-  transition: width 1s ease 0.5s;
-  position: relative;
-}
-
-.tech-level-fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
-  animation: shimmer 2s infinite;
-}
-
-.tech-level-value {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: rgba(var(--v-theme-on-background), 0.9);
-  min-width: 35px;
-  text-align: right;
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-
+  0%,
   100% {
-    transform: translateX(100%);
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.6);
   }
 }
 
-/* Call to Action */
-.portfolio-cta {
-  margin-top: 80px;
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.6s;
+@keyframes indicatorPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+    transform: scaleX(1);
+  }
+
+  50% {
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.7);
+    transform: scaleX(1.05);
+  }
+}
+
+/* Scroll Reveal Animations */
+.project-card-wrapper {
+  height: 100%;
+}
+
+.project-card-wrapper :deep(.project-card-modern) {
+  transform-style: preserve-3d;
+  will-change: transform;
+  opacity: 1 !important;
+}
+
+.project-card-wrapper[data-animate] {
   opacity: 0;
 }
 
-.cta-card {
-  background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-surface-bright));
-  border-radius: 16px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-  position: relative;
+.project-card-wrapper[data-animate="fade-up"] {
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cta-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg,
-      rgba(var(--v-theme-primary), 0.05) 0%,
-      transparent 50%,
-      rgba(var(--v-theme-secondary), 0.05) 100%);
-  pointer-events: none;
+.project-card-wrapper[data-animate="zoom-in"] {
+  transform: scale(0.85);
+  transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cta-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border-color: rgba(var(--v-theme-primary), 0.2);
+.project-card-wrapper[data-animate="slide-in-up"] {
+  transform: translateY(60px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cta-content {
-  text-align: center;
-  padding: 48px 32px;
-  position: relative;
-  z-index: 2;
+.project-card-wrapper[data-animate].is-visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1) !important;
 }
-
-.cta-icon {
-  animation: pulse-gentle 3s ease-in-out infinite;
-  color: white !important;
-}
-
-/* pulse-gentle available in /assets/css/components.css */
-
-.cta-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  margin-bottom: 16px;
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.cta-icon {
-  animation: pulse-gentle 3s ease-in-out infinite;
-  color: white !important;
-}
-
-.cta-description {
-  font-size: 1.1rem;
-  color: rgb(var(--v-theme-on-surface-variant));
-  max-width: 500px;
-  margin: 0 auto 32px;
-  line-height: 1.6;
-}
-
-.cta-actions {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.cta-button {
-  border-radius: 12px !important;
-  font-weight: 600 !important;
-  text-transform: none !important;
-  transition: all 0.3s ease !important;
-  padding: 12px 24px !important;
-  flex: 1;
-  min-width: 160px;
-  max-width: 200px;
-}
-
-.cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(var(--v-theme-primary), 0.3);
-}
-
-/* Animations definidas em assets/css/components.css */
 
 /* Responsive */
-@media (max-width: 1024px) {
-  .modern-portfolio {
-    padding: 0;
-  }
-
-  .portfolio-container {
-    padding: 0 20px;
-  }
-
-  .portfolio-header {
-    margin-bottom: 24px;
-  }
-
-  .portfolio-filters {
-    margin-bottom: 40px;
-  }
-
+@media (max-width: 960px) {
   .carousel-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-
-  .carousel-nav {
-    width: 40px;
-    height: 40px;
-  }
 }
 
-@media (max-width: 768px) {
-  .modern-portfolio {
-    padding: 0;
-  }
-
-  .portfolio-header {
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-size: 2.5rem;
-  }
-
-  .filter-chips {
-    gap: 8px;
-    justify-content: center;
-  }
-
-  .portfolio-filters {
-    margin-bottom: 32px;
-  }
-
-  .carousel-container {
-    gap: 8px;
-  }
-
+@media (max-width: 600px) {
   .carousel-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-
-  .carousel-nav {
-    width: 36px;
-    height: 36px;
-  }
-
-  .cta-content {
-    padding: 32px 20px;
-  }
-
-  .cta-title {
-    font-size: 1.8rem !important;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .cta-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .cta-button {
-    width: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modern-portfolio {
-    padding: 0;
-  }
-
-  .portfolio-container {
-    padding: 0 16px;
-  }
-
-  .portfolio-header {
-    margin-bottom: 16px;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
-  .filter-chips {
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .portfolio-filters {
-    margin-bottom: 24px;
-  }
-
-  .carousel-container {
-    gap: 4px;
-  }
-
-  .carousel-nav {
-    width: 32px;
-    height: 32px;
-  }
-
-  .cta-content {
-    padding: 24px 16px;
-  }
-
-  .cta-title {
-    font-size: 1.6rem !important;
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-/* Portfolio animations */
-.portfolio-item {
-  opacity: 0;
-  animation-fill-mode: forwards;
-}
-
-/* Animation fadeInUp definida em assets/css/components.css */
-
-/* Filter transition effect */
-.portfolio-grid {
-  transition: all 0.3s ease;
-  min-height: 400px;
-}
-
-.portfolio-content {
-  position: relative;
 }
 </style>
