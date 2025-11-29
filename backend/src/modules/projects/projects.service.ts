@@ -54,4 +54,16 @@ export class ProjectsService {
       throw new NotFoundException(`Project with ID ${id} not found`);
     }
   }
+
+  async getStats(): Promise<{ total: number; byCategory: Record<string, number> }> {
+    const projects = await this.projectModel.find({ active: true }).exec();
+    const total = projects.length;
+    
+    const byCategory = projects.reduce((acc, project) => {
+      acc[project.category] = (acc[project.category] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return { total, byCategory };
+  }
 }

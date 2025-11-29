@@ -112,6 +112,7 @@ const iconClass = computed(() =>
     justify-content: center;
     align-items: center;
   }
+
   .social-link {
     width: 36px;
     height: 36px;

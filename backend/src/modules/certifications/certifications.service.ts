@@ -48,4 +48,16 @@ export class CertificationsService {
       throw new NotFoundException(`Certification with ID ${id} not found`);
     }
   }
+
+  async getStats(): Promise<{ total: number; byIssuer: Record<string, number> }> {
+    const certifications = await this.certificationModel.find({ active: true }).exec();
+    const total = certifications.length;
+    
+    const byIssuer = certifications.reduce((acc, cert) => {
+      acc[cert.issuer] = (acc[cert.issuer] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    
+    return { total, byIssuer };
+  }
 }

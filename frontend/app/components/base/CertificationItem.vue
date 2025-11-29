@@ -42,7 +42,7 @@
       </div>
 
       <!-- Decorative Element -->
-      <div class="certification-decoration"></div>
+      <div class="certification-decoration" />
     </div>
   </article>
 </template>

@@ -1,58 +1,87 @@
 <template>
-  <section id="courses" class="section-modern">
-    <div class="section-container">
-      <!-- Header Section -->
-      <SectionHeader badge="Cursos" icon="mdi-school" title-prefix="Meus" title-highlight="Cursos Concluídos"
-        description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
-        theme="primary">
-        <!-- Statistics Overview -->
-        <!-- Main Content -->
-        <div class="about-content">
+  <Section id="courses" badge="Cursos" badge-icon="mdi-school" badge-color="success" title-prefix="Meus"
+    title-highlight="Cursos Concluídos"
+    description="Aprendizado contínuo através de cursos e especializações nas melhores plataformas de ensino online"
+    section-class="section-modern" container-class="section-container">
 
-          <!-- Stats Section -->
-          <StatsGrid class="teste" :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }"
-            :base-delay="200" :delay-increment="100" custom-class="stats-section" />
+    <!-- Statistics Overview -->
+    <div class="mb-8 mb-md-10">
+      <StatsGrid class="teste" :items="stats" variant="stats" :columns="{ xs: 1, sm: 2, md: 4, lg: 4 }"
+        :base-delay="200" :delay-increment="100" custom-class="stats-section" />
+    </div>
+
+    <!-- Modern Course Cards Grid -->
+    <div class="courses-grid-container">
+      <div v-for="(yearGroup, yearIndex) in coursesByYear" :key="yearGroup.year" class="year-section"
+        :class="yearGroup.year === 'Planejados' ? 'year-section--planned' : 'year-section--completed'">
+        <!-- Year Header -->
+        <div class="year-header" data-animate="fade-up" :data-delay="yearIndex * 150">
+          <div class="year-header-content">
+            <div class="year-icon-wrapper">
+              <v-icon icon="mdi-calendar" size="32" class="year-icon" />
+            </div>
+            <div class="year-info">
+              <h3 class="year-title">{{ yearGroup.year }}</h3>
+              <p class="year-count">
+                {{ yearGroup.courses.length }} {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
+              </p>
+            </div>
+          </div>
+          <div class="year-divider"></div>
         </div>
-      </SectionHeader>
 
-      <!-- Expansion Panels por Ano -->
-      <div class="courses-timeline" data-animate="fade-up" data-delay="600">
-        <v-expansion-panels variant="accordion" class="courses-expansion-panels" color="primary">
-          <v-expansion-panel v-for="yearGroup in coursesByYear" :key="yearGroup.year" class="year-panel"
-            :class="yearGroup.year === 'Planejados' ? 'year-panel--planned' : 'year-panel--completed'">
-            <v-expansion-panel-title class="year-panel-title">
-              <template v-slot:default>
-                <div class="year-info">
-                  <v-icon icon="mdi-calendar" size="24" class="year-icon ma-2" />
-                  <span class="year-text">{{ yearGroup.year }}</span>
+        <!-- Course Cards Grid -->
+        <v-row class="courses-grid">
+          <v-col v-for="(course, index) in yearGroup.courses" :key="`${course.name}-${index}`" cols="12" sm="6" md="4"
+            class="course-col">
+            <div class="course-card-wrapper" data-animate="flip-in" :data-delay="yearIndex * 150 + index * 100"
+              @mouseenter="handleCardHover($event)" @mousemove="handleCardMove($event)"
+              @mouseleave="handleCardLeave($event)">
+              <v-card class="course-card" elevation="0">
+                <!-- Course Image/Icon -->
+                <div class="course-image-wrapper">
+                  <img v-if="course.image" :src="course.image" :alt="course.name" class="course-image" />
+                  <div v-else class="course-icon-placeholder">
+                    <v-icon icon="mdi-school" size="64" />
+                  </div>
+                  <div class="course-image-overlay" />
                 </div>
-              </template>
-              <template v-slot:actions>
-                <v-chip color="primary" size="small" variant="flat" class="year-badge">
-                  {{ yearGroup.courses.length }} {{ yearGroup.courses.length === 1 ? 'curso' : 'cursos' }}
-                </v-chip>
-              </template>
-            </v-expansion-panel-title>
 
-            <v-expansion-panel-text class="year-panel-content">
-              <div class="courses-list-wrapper">
-                <div class="courses-list">
-                  <CertificationItem class="ma-4" v-for="(course, index) in yearGroup.courses"
-                    :key="`${course.name}-${index}`" :certification="{
-                      name: course.name,
-                      issuer: course.platform + (course.instructor ? ' • ' + course.instructor : '') + (course.duration ? ' • ' + course.duration : ''),
-                      image: course.image,
-                      color: course.color,
-                      link: course.link
-                    }" :index="index" :animation-delay="600 + index * 100" type="planned" />
-                </div>
-              </div>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
+                <!-- Course Content -->
+                <v-card-text class="course-content">
+                  <h4 class="course-name">{{ course.name }}</h4>
+
+                  <div class="course-meta">
+                    <div v-if="course.platform" class="course-platform">
+                      <v-icon icon="mdi-domain" size="14" />
+                      <span>{{ course.platform }}</span>
+                    </div>
+
+                    <div v-if="course.instructor" class="course-instructor">
+                      <v-icon icon="mdi-account" size="14" />
+                      <span>{{ course.instructor }}</span>
+                    </div>
+
+                    <div v-if="course.duration" class="course-duration">
+                      <v-icon icon="mdi-clock-outline" size="14" />
+                      <span>{{ course.duration }}</span>
+                    </div>
+                  </div>
+
+                  <!-- View Certificate Button -->
+                  <v-btn v-if="course.link" :href="course.link" target="_blank" variant="flat" color="primary"
+                    size="small" class="course-btn mt-3" block>
+                    <v-icon start>mdi-certificate</v-icon>
+                    Ver Certificado
+                  </v-btn>
+                </v-card-text>
+              </v-card>
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </div>
-  </section>
+  </Section>
 </template>
 
 <script setup lang="ts">
@@ -119,211 +148,429 @@ const { isMobile, isTablet, isDesktop, getResponsiveValue } = useResponsive()
 // Scroll Animation
 const { observeElements } = useScrollAnimation()
 
-// Data - Todos os Cursos (removido - agora vem da API)
-/*
-const allCourses: Course[] = [
-  // 2025
-  {
-    name: 'Descomplicando Kubernetes',
-    platform: 'LINUXtips',
-    instructor: 'Jeferson Fernando',
-    duration: '30h',
-    image: '/linux-tips.png',
-    link: 'https://www.credential.net/9e6302ff-381c-40ab-84a2-8134e66d0705#acc.4t9M65TG',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Descomplicando Helm',
-    platform: 'LINUXtips',
-    instructor: 'Jeferson Fernando',
-    duration: '8h',
-    image: '/linux-tips.png',
-    link: 'https://www.credential.net/e3ce127c-ff2d-481a-809b-c8122a3a019c#acc.7ulCRwUi',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Descomplicando Docker',
-    platform: 'LINUXtips',
-    instructor: 'Jeferson Fernando',
-    duration: '12h',
-    image: '/linux-tips.png',
-    link: 'https://www.credential.net/c5958e12-4cca-400c-a0a2-10f2334b4666#acc.aInvtZbs/',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Docker Essencials',
-    platform: 'LINUXtips',
-    instructor: 'Jeferson Fernando',
-    duration: '6h',
-    image: '/linux-tips.png',
-    link: 'https://mycourse.app/chvdwqAVGHUBCqQE7',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Terraform Essencials',
-    platform: 'LINUXtips',
-    instructor: 'Rafael Gomes',
-    duration: '6h',
-    image: '/linux-tips.png',
-    link: 'https://mycourse.app/Mg0hRASgoL3dL7nUJ',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Kubernetes Essencials',
-    platform: 'LINUXtips',
-    instructor: 'Jeferson Fernando',
-    duration: '6h',
-    image: '/linux-tips.png',
-    link: 'https://mycourse.app/cbNZ3gsD2CmzKHhOB',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: "Certificação Amazon AWS Certified Cloud Practitioner CLF-C02",
-    platform: "Udemy",
-    instructor: "Andre Iacono",
-    duration: "16.5h",
-    image: '/udemy.png',
-    link: "https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/",
-    color: "blue",
-    year: "2025"
-  },
-  {
-    name: 'Terraform para AWS',
-    platform: 'Udemy',
-    instructor: 'Mateus Muller',
-    duration: '7.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-a8ff0165-c1aa-4f8d-af0a-89651b908caf/',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: ' Fundamentos de Redes para DevOps',
-    platform: 'Udemy',
-    instructor: 'Mateus Muller',
-    duration: '7h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-81ffb271-0aa4-47b8-b452-699532d2c13a/',
-    color: 'blue',
-    year: '2025'
-  },
-  {
-    name: 'Docker para Desenvolvedores (com Docker Swarm e Kubernetes)',
-    platform: 'Udemy',
-    instructor: 'Matheus Battisti, Hora de Codar ',
-    duration: '12.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
-    color: 'blue',
-    year: '2025'
-  },
-  // 2024
-  {
-    name: "Windows Server 2022 + 2019 + Az-104 + Az-900 + A. Directory",
-    platform: "Udemy",
-    instructor: "BoraPraNuvem Cursos para CLOUD! Azure, AWS e muito mais!, DICARJ Empresa especializada em cursos de T.I",
-    duration: "25 horas",
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-707a98ee-7cb7-4b9f-8057-6fc5b78f75d3/',
-    color: 'blue',
-    year: "2024"
-  },
-  {
-    name: 'Microsoft Windows Server 2019 [COMPLETO]',
-    platform: 'Udemy',
-    instructor: 'Denilson Bonatti',
-    duration: '12.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-f7d4946d-5b2e-495f-b686-9a6ac091a3fd/',
-    color: 'blue',
-    year: '2024'
-  },
-  {
-    name: 'Virtualização com VMware',
-    platform: 'Udemy',
-    instructor: 'Maiki Soares',
-    duration: '4.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-f7d4946d-5b2e-495f-b686-9a6ac091a3fd/',
-    color: 'blue',
-    year: '2024'
-  },
-  // 2023
-  {
-    name: 'ProxMox - do Zero ao Profissional + Hyper-V Server 2019',
-    platform: 'Udemy',
-    instructor: 'DICARJ & BorapraNuvem! Empresa especializada em cursos de T.I',
-    duration: '8h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-ab425de7-bf0a-465a-84d1-f3947d3bfeb1/',
-    color: 'blue',
-    year: '2023'
-  },
-  {
-    name: 'Docker: Ferramenta essencial para Desenvolvedores',
-    platform: 'Udemy',
-    instructor: 'Leonardo Moura Leitao, Juracy Filho, Cod3r Cursos Online',
-    duration: '5.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-a3afaa53-879f-428e-b78e-0a2eabb3ed93/',
-    color: 'purple',
-    year: '2023'
-  },
-  {
-    name: 'Linux para Desenvolvedores (c/ terminal, Shell, Apache e +)',
-    platform: 'Udemy',
-    instructor: 'Matheus Battisti, Hora de Codar',
-    duration: '7.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-dd044339-c134-4a3a-ad3c-d1ae3e8bb98d/',
-    color: 'purple',
-    year: '2023'
-  },
-  {
-    name: 'Git e GitHub do básico ao avançado (c/ gist e GitHub Pages)',
-    platform: 'Udemy',
-    instructor: 'Matheus Battisti, Hora de Codar',
-    duration: '8.5h',
-    image: '/udemy.png',
-    link: 'https://www.udemy.com/certificate/UC-3e4b68f3-3ac9-43b4-a2d1-ff78fd294ed9/',
-    color: 'purple',
-    year: '2023'
-  }
-]
-*/
-
 // Agrupar cursos por ano (usa getter da store)
 const coursesByYear = computed(() => coursesStore.coursesByYear)
+
+// 3D Parallax hover effect
+const handleCardHover = (event: MouseEvent) => {
+  const card = event.currentTarget as HTMLElement
+  card.style.transition = 'transform 0.1s ease-out'
+}
+
+const handleCardMove = (event: MouseEvent) => {
+  const card = event.currentTarget as HTMLElement
+  const rect = card.getBoundingClientRect()
+  const x = event.clientX - rect.left
+  const y = event.clientY - rect.top
+  const centerX = rect.width / 2
+  const centerY = rect.height / 2
+  const rotateX = ((y - centerY) / centerY) * -8
+  const rotateY = ((x - centerX) / centerX) * 8
+
+  card.style.transform = 'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)'
+}
+
+const handleCardLeave = (event: MouseEvent) => {
+  const card = event.currentTarget as HTMLElement
+  card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'
+  card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
+}
 </script>
 
-<style>
-.v-expansion-panel-text {
-  max-height: 500px !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+<style scoped>
+/* === GRID CONTAINER === */
+.courses-grid-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-.modern-courses {
-  padding: 40px 40px 40px 40px;
-  background: rgb(var(--v-theme-background));
-  min-height: 80vh;
+/* === YEAR SECTION === */
+.year-section {
+  margin-bottom: 80px;
+}
+
+.year-section:last-child {
+  margin-bottom: 0;
+}
+
+/* === YEAR HEADER === */
+.year-header {
+  margin-bottom: 40px;
+  opacity: 0;
+}
+
+.year-header[data-animate="fade-up"] {
+  animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.year-header-content {
   display: flex;
   align-items: center;
+  gap: 20px;
+  margin-bottom: 16px;
 }
 
-.modern-courses .courses-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
+.year-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.year-icon-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.year-header:hover .year-icon-wrapper::before {
+  opacity: 1;
+}
+
+.year-icon {
+  color: #3b82f6;
+  transition: transform 0.3s ease;
+}
+
+.year-header:hover .year-icon {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.year-info {
+  flex: 1;
+}
+
+.year-title {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.year-count {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+
+.year-divider {
+  height: 2px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.5) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* === PLANNED YEAR VARIANT === */
+.year-section--planned .year-icon-wrapper {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.year-section--planned .year-icon-wrapper::before {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, transparent 100%);
+}
+
+.year-section--planned .year-icon {
+  color: #f59e0b;
+}
+
+.year-section--planned .year-title {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.year-section--planned .year-divider {
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.5) 0%, rgba(245, 158, 11, 0.1) 50%, transparent 100%);
+}
+
+/* === COURSE CARDS GRID === */
+.courses-grid {
+  margin: 0 -12px;
+}
+
+.course-col {
+  padding: 12px;
+}
+
+.course-card-wrapper {
+  height: 100%;
+  opacity: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+}
+
+.course-card-wrapper[data-animate="flip-in"] {
+  animation: flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.course-card {
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.15) !important;
+  border-radius: 20px !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.course-card-wrapper:hover .course-card {
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+  transform: translateY(-4px);
+}
+
+.course-card-wrapper:hover .course-card::before {
+  opacity: 1;
+}
+
+/* === COURSE IMAGE === */
+.course-image-wrapper {
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden;
+  height: 200px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.course-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.course-icon-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.course-icon-placeholder .v-icon {
+  color: rgba(59, 130, 246, 0.4);
+}
+
+.course-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.8) 100%);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.course-card-wrapper:hover .course-image {
+  transform: scale(1.1);
+}
+
+.course-card-wrapper:hover .course-image-overlay {
+  opacity: 0.4;
+}
+
+/* === COURSE CONTENT === */
+.course-content {
+  padding: 20px !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 2.8rem;
+}
+
+.course-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.course-platform,
+.course-instructor,
+.course-duration {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.course-platform .v-icon,
+.course-instructor .v-icon,
+.course-duration .v-icon {
+  color: rgba(59, 130, 246, 0.6);
+  flex-shrink: 0;
+}
+
+.course-platform span,
+.course-instructor span,
+.course-duration span {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* === COURSE BUTTON === */
+.course-btn {
+  background: rgba(59, 130, 246, 0.12) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  color: #60a5fa !important;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  transition: all 0.3s ease;
+}
+
+.course-btn:hover {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+}
+
+.course-btn .v-icon {
+  transition: transform 0.3s ease;
+}
+
+.course-btn:hover .v-icon {
+  transform: rotate(12deg) scale(1.1);
+}
+
+/* === ANIMATIONS === */
+@keyframes flipIn {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-90deg) scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateY(0deg) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 960px) {
+  .year-section {
+    margin-bottom: 60px;
+  }
+
+  .year-header {
+    margin-bottom: 30px;
+  }
+
+  .year-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .year-title {
+    font-size: 1.75rem;
+  }
+
+  .course-image-wrapper {
+    height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .year-section {
+    margin-bottom: 48px;
+  }
+
+  .year-header-content {
+    gap: 16px;
+  }
+
+  .year-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .year-icon {
+    font-size: 24px !important;
+  }
+
+  .year-title {
+    font-size: 1.5rem;
+  }
+
+  .year-count {
+    font-size: 0.875rem;
+  }
+
+  .course-image-wrapper {
+    height: 160px;
+  }
+
+  .course-content {
+    padding: 16px !important;
+  }
+
+  .course-name {
+    font-size: 1rem;
+    min-height: 2.5rem;
+  }
 }
 
 /* Header Section */

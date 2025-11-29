@@ -1,51 +1,44 @@
 <template>
-  <section id="skills" class="modern-skills">
-    <div class="skills-container">
-      <!-- Header Section -->
-      <SectionHeader icon="mdi-briefcase" title-prefix="Minha Stack" title-highlight="Tecnológica"
-        description="Ferramentas e tecnologias que domino e estou estudando" custom-class="skills-header" />
+  <Section id="skills" badge="Skills" badge-icon="mdi-code-braces" badge-color="cyan" title-prefix="Minha Stack"
+    title-highlight="Tecnológica" description="Ferramentas e tecnologias que domino e estou estudando"
+    section-class="py-10 py-md-16" container-class="px-4 px-md-6">
 
-      <!-- Tech Carousel -->
-      <div class="tech-carousel-container">
-        <div class="tech-carousel-wrapper">
-          <div class="tech-carousel-track">
-            <!-- First set -->
-            <div v-for="tech in technologies" :key="tech.name" class="tech-card">
-              <div class="tech-card-content">
-                <div class="tech-icon-container" :data-icon="tech.name
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/\./g, '')
-                  ">
-                  <v-icon :icon="tech.icon" />
-                </div>
-                <div class="tech-details">
-                  <h3 class="tech-name">{{ tech.name }}</h3>
-                  <p class="tech-category">{{ tech.category }}</p>
-                </div>
+    <!-- Tech Carousel -->
+    <div class="tech-carousel-container mt-8">
+      <div class="tech-carousel-wrapper overflow-x-hidden">
+        <div class="tech-carousel-track d-inline-flex ga-4 ga-md-6">
+          <!-- First set -->
+          <v-card v-for="tech in technologies" :key="tech.name" class="tech-card elevation-2 rounded-xl" width="180"
+            height="auto">
+            <v-card-text class="d-flex flex-column align-center ga-3 pa-5 text-center">
+              <div class="tech-icon-container d-flex align-center justify-center rounded-lg"
+                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')">
+                <v-icon :icon="tech.icon" size="40" />
               </div>
-            </div>
-            <!-- Duplicate for seamless loop -->
-            <div v-for="tech in technologies" :key="`duplicate-${tech.name}`" class="tech-card" aria-hidden="true">
-              <div class="tech-card-content">
-                <div class="tech-icon-container" :data-icon="tech.name
-                  .toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/\./g, '')
-                  ">
-                  <v-icon :icon="tech.icon" />
-                </div>
-                <div class="tech-details">
-                  <h3 class="tech-name">{{ tech.name }}</h3>
-                  <p class="tech-category">{{ tech.category }}</p>
-                </div>
+              <div class="tech-details">
+                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249);">{{ tech.name }}</div>
+                <div class="text-caption" style="color: rgb(148, 163, 184);">{{ tech.category }}</div>
               </div>
-            </div>
-          </div>
+            </v-card-text>
+          </v-card>
+          <!-- Duplicate for seamless loop -->
+          <v-card v-for="tech in technologies" :key="`duplicate-${tech.name}`" class="tech-card elevation-2 rounded-xl"
+            width="180" height="auto" aria-hidden="true">
+            <v-card-text class="d-flex flex-column align-center ga-3 pa-5 text-center">
+              <div class="tech-icon-container d-flex align-center justify-center rounded-lg"
+                :data-icon="tech.name.toLowerCase().replace(/\s+/g, '-').replace(/\./g, '')">
+                <v-icon :icon="tech.icon" size="40" />
+              </div>
+              <div class="tech-details">
+                <div class="text-subtitle-1 font-weight-bold" style="color: rgb(241, 245, 249);">{{ tech.name }}</div>
+                <div class="text-caption" style="color: rgb(148, 163, 184);">{{ tech.category }}</div>
+              </div>
+            </v-card-text>
+          </v-card>
         </div>
       </div>
     </div>
-  </section>
+  </Section>
 </template>
 
 <script setup lang="ts">
@@ -72,131 +65,18 @@ onMounted(async () => {
 const technologies = computed(() => skillsStore.allSkills)
 const loading = computed(() => skillsStore.loading)
 
-// Fallback data (removido - agora vem da API)
-/*
-const technologies: Technology[] = [
-  // Infraestrutura & Cloud
-  {
-    name: "Kubernetes",
-    category: "Orquestração",
-    icon: "mdi-kubernetes",
-    color: "#326CE5",
-    bgColor: "#e3f2fd",
-  },
-  {
-    name: "Docker",
-    category: "Containerização",
-    icon: "mdi-docker",
-    color: "#2496ED",
-    bgColor: "#e3f2fd",
-  },
-  {
-    name: "Terraform",
-    category: "IaC",
-    icon: "mdi-terraform",
-    color: "#7B42BC",
-    bgColor: "#f3e5f5",
-  },
-  {
-    name: "AWS",
-    category: "Cloud Provider",
-    icon: "mdi-aws",
-    color: "#FF9900",
-    bgColor: "#fff3e0",
-  },
-  {
-    name: "Helm",
-    category: "Package Manager",
-    icon: "mdi-ship-wheel",
-    color: "#0F1689",
-    bgColor: "#e8eaf6",
-  },
-  {
-    name: "Node.js",
-    category: "Runtime",
-    icon: "mdi-nodejs",
-    color: "#339933",
-    bgColor: "#e8f5e9",
-  },
-  {
-    name: "Grafana",
-    category: "Visualização",
-    icon: "mdi-chart-box",
-    color: "#F46800",
-    bgColor: "#fff3e0",
-  },
-  // Databases & Messaging
-  {
-    name: "PostgreSQL",
-    category: "Database",
-    icon: "mdi-database",
-    color: "#336791",
-    bgColor: "#e3f2fd",
-  },
-  {
-    name: "Redis",
-    category: "Cache",
-    icon: "mdi-memory",
-    color: "#DC382D",
-    bgColor: "#ffebee",
-  },
-  // Tools & Others
-  {
-    name: "Git",
-    category: "Version Control",
-    icon: "mdi-git",
-    color: "#F05032",
-    bgColor: "#ffebee",
-  },
-  {
-    name: "Linux",
-    category: "Operating System",
-    icon: "mdi-linux",
-    color: "#FCC624",
-    bgColor: "#fffde7",
-  },
-];
-*/
 </script>
 
 <style scoped>
-.modern-skills {
-  padding: 10px;
-  background: rgb(var(--v-theme-background));
-  min-height: 40vh;
-  display: flex;
-  align-items: center;
-}
-
-.skills-container {
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-/* Header Section */
-/* Header usa classes globais: .section-badge, .section-title, .title-highlight, .section-description */
-.skills-header {
-  text-align: center;
-  margin-bottom: 32px;
-  padding: 0 24px;
-  animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Carousel Container */
+/* === CAROUSEL CONTAINER === */
 .tech-carousel-container {
   position: relative;
-  padding: 0;
-  margin-bottom: 0;
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.4s;
   opacity: 0;
 }
 
 .tech-carousel-wrapper {
-  overflow-x: hidden;
-  overflow-y: visible;
   width: 100%;
   position: relative;
   padding: 40px 0;
@@ -225,18 +105,16 @@ const technologies: Technology[] = [
   }
 }
 
-/* Technology Card */
+/* === TECHNOLOGY CARD === */
 .tech-card {
-  background: rgba(var(--v-theme-surface), 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(var(--v-theme-outline), 0.15);
-  border-radius: 16px;
-  width: 200px;
-  min-width: 200px;
-  flex: 0 0 200px;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  background: rgba(30, 41, 59, 0.7) !important;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  flex: 0 0 auto;
+  min-width: 180px;
 }
 
 .tech-card::before {
@@ -246,282 +124,142 @@ const technologies: Technology[] = [
   left: 0;
   right: 0;
   height: 3px;
-  background: rgb(96, 165, 250);
-  transform: scaleX(1);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, transparent, rgb(96, 165, 250), transparent);
+  transition: all 0.4s ease;
+  z-index: 1;
+}
+
+.tech-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg,
+      rgba(59, 130, 246, 0.15),
+      rgba(6, 182, 212, 0.15));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .tech-card:hover::before {
-  transform: scaleX(1);
   height: 4px;
+  box-shadow: 0 0 20px currentColor;
+}
+
+.tech-card:hover::after {
+  opacity: 1;
 }
 
 .tech-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
-  border-color: rgba(96, 165, 250, 0.5);
-  background: rgba(var(--v-theme-surface), 0.95);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow:
+    0 20px 40px rgba(59, 130, 246, 0.2),
+    0 0 60px rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
-.tech-card-content {
-  padding: 24px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
-  height: 100%;
-}
-
-/* Technology Icon */
+/* === TECHNOLOGY ICON === */
 .tech-icon-container {
   width: 64px;
   height: 64px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  background: transparent !important;
-  background-color: transparent !important;
-  border: none;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent);
+  border-radius: 12px;
+}
+
+.tech-icon-container::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  background: radial-gradient(circle, transparent 30%, rgba(59, 130, 246, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 
 .tech-card:hover .tech-icon-container {
-  transform: scale(1.15);
+  transform: scale(1.2) rotate(5deg);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent);
+}
+
+.tech-card:hover .tech-icon-container::before {
+  opacity: 1;
+  animation: iconGlow 2s ease-in-out infinite;
 }
 
 .tech-icon-container .v-icon {
-  /* Cor específica para cada tecnologia definida abaixo */
-  font-size: 40px;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.tech-card:hover .tech-icon-container .v-icon {
+  filter: drop-shadow(0 4px 12px currentColor);
+}
+
+/* === TEXT STYLES === */
+.tech-details .text-subtitle-1 {
   transition: all 0.3s ease;
-  background: transparent !important;
-  background-color: transparent !important;
+  position: relative;
 }
 
-.tech-icon-container .v-icon::before,
-.tech-icon-container .v-icon::after {
-  background: transparent !important;
-  background-color: transparent !important;
+.tech-card:hover .tech-details .text-subtitle-1 {
+  background: linear-gradient(135deg, #3b82f6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateY(-2px);
 }
 
-/* Technology Details */
-.tech-details {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
+.tech-details .text-caption {
+  transition: color 0.3s ease;
 }
 
-.tech-name {
-  font-size: 16px;
-  font-weight: 700;
-  color: rgb(241, 245, 249);
-  letter-spacing: -0.025em;
-  margin: 0;
-  line-height: 1.2;
+.tech-card:hover .tech-details .text-caption {
+  color: rgb(203, 213, 225) !important;
 }
 
-.tech-category {
-  font-size: 12px;
-  font-weight: 500;
-  color: rgb(148, 163, 184);
-  margin: 0;
-  line-height: 1.3;
-  opacity: 0.9;
-}
+/* === ANIMATIONS === */
+@keyframes iconGlow {
 
-/* Animations - fadeInUp definida em assets/css/components.css */
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .tech-carousel-track {
-    gap: 20px;
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
   }
 
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
   .tech-card {
-    width: 180px;
-    min-width: 180px;
-    flex: 0 0 180px;
+    min-width: 160px;
   }
 
   .tech-icon-container {
     width: 56px;
     height: 56px;
   }
-
-  .tech-icon-container .v-icon {
-    font-size: 28px !important;
-  }
-
-  .tech-card-content {
-    padding: 20px 12px;
-  }
 }
 
-@media (max-width: 1024px) {
-  .modern-skills {
-    padding: 0;
-  }
-
-  .skills-container {
-    padding: 0 20px;
-  }
-
-  .tech-carousel-container {
-    padding: 0;
-  }
-
-  .tech-carousel-track {
-    gap: 16px;
-    animation: scroll 100s linear infinite;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(calc(-50% - 8px));
-    }
-  }
-
+@media (max-width: 600px) {
   .tech-card {
-    width: 160px;
-    min-width: 160px;
-    flex: 0 0 160px;
-  }
-
-  .tech-name {
-    font-size: 14px;
-  }
-
-  .tech-category {
-    font-size: 11px;
-  }
-}
-
-@media (max-width: 768px) {
-  .modern-skills {
-    padding: 0;
-  }
-
-  .skills-container {
-    padding: 0 16px;
-    max-width: 100%;
-  }
-
-  .skills-header {
-    margin-bottom: 24px;
-  }
-
-  .tech-carousel-container {
-    padding: 0;
-  }
-
-  .tech-carousel-track {
-    gap: 12px;
-    animation: scroll 80s linear infinite;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(calc(-50% - 6px));
-    }
-  }
-
-  .tech-card {
-    width: 140px;
     min-width: 140px;
-    flex: 0 0 140px;
-  }
-
-  .tech-icon-container {
-    width: 52px;
-    height: 52px;
-  }
-
-  .tech-icon-container .v-icon {
-    font-size: 26px !important;
-  }
-
-  .tech-card-content {
-    padding: 18px 12px;
-    gap: 10px;
-  }
-
-  .tech-name {
-    font-size: 13px;
-  }
-
-  .tech-category {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modern-skills {
-    padding: 0;
-  }
-
-  .skills-container {
-    padding: 0 16px;
-  }
-
-  .skills-header {
-    margin-bottom: 20px;
-  }
-
-  .tech-carousel-container {
-    padding: 0;
-  }
-
-  .tech-carousel-track {
-    gap: 10px;
-    animation: scroll 70s linear infinite;
-  }
-
-  @keyframes scroll {
-    0% {
-      transform: translateX(0);
-    }
-
-    100% {
-      transform: translateX(calc(-50% - 5px));
-    }
-  }
-
-  .tech-card {
-    width: 120px;
-    min-width: 120px;
-    flex: 0 0 120px;
   }
 
   .tech-icon-container {
     width: 48px;
     height: 48px;
-  }
-
-  .tech-icon-container .v-icon {
-    font-size: 24px !important;
-  }
-
-  .tech-card-content {
-    padding: 16px 10px;
-    gap: 8px;
-  }
-
-  .tech-name {
-    font-size: 12px;
-  }
-
-  .tech-category {
-    font-size: 9px;
   }
 }
 

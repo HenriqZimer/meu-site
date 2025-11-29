@@ -17,6 +17,13 @@ import { CreateCertificationDto, UpdateCertificationDto } from './dto/certificat
 export class CertificationsController {
   constructor(private readonly certificationsService: CertificationsService) {}
 
+  @Get('stats')
+  @ApiOperation({ summary: 'Get certifications statistics' })
+  @ApiResponse({ status: 200, description: 'Returns certifications statistics' })
+  getStats() {
+    return this.certificationsService.getStats();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all certifications' })
   @ApiQuery({ name: 'issuer', required: false, type: String })

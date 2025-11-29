@@ -6,7 +6,7 @@
 // ===== MENU ITEMS =====
 export const MENU_ITEMS = [
   { id: "about", label: "Sobre", icon: "mdi-account-circle" },
-  { id: "portfolio", label: "Projetos", icon: "mdi-briefcase-variant" },
+  { id: "projects", label: "Projetos", icon: "mdi-briefcase-variant" },
   { id: "skills", label: "Skills", icon: "mdi-brain" },
   { id: "certifications", label: "Certificações", icon: "mdi-certificate" },
   { id: "courses", label: "Cursos", icon: "mdi-school" },
@@ -16,7 +16,7 @@ export const MENU_ITEMS = [
 export const QUICK_LINKS = [
   { label: "Sobre", href: "about" },
   { label: "Skills", href: "skills" },
-  { label: "Projetos", href: "portfolio" },
+  { label: "Projetos", href: "projects" },
   { label: "Cursos", href: "courses" },
   { label: "Certificações", href: "certifications" },
   { label: "Contato", href: "contact" },
