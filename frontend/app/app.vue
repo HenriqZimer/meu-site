@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-theme-provider>
-      <!-- Header -->
-      <Header />
+      <!-- Header - esconder em /admin -->
+      <!-- <Header v-if="!isAdminRoute" /> -->
 
       <!-- Main content -->
       <v-main>
@@ -10,13 +10,18 @@
         <NuxtPage />
       </v-main>
 
-      <!-- Footer -->
-      <Footer />
+      <!-- Footer - esconder em /admin -->
+      <!-- <Footer v-if="!isAdminRoute" /> -->
     </v-theme-provider>
   </v-app>
 </template>
 
 <script setup lang="ts">
+const route = useRoute()
+
+// Verificar se está na rota admin
+const isAdminRoute = computed(() => route.path.startsWith('/admin'))
+
 // Configuração de SEO global
 useHead({
   htmlAttrs: { lang: "pt-BR" },

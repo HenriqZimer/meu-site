@@ -222,6 +222,7 @@ const editItem = (item: Course) => {
   isEditing.value = true
   editedIndex.value = courses.value.indexOf(item)
   editedItem.value = { ...item }
+  console.log('Editing course:', { _id: (item as any)._id, name: item.name })
   dialog.value = true
 }
 
@@ -236,24 +237,31 @@ const saveItem = async () => {
   try {
     const apiUrl = `${config.public.apiUrl}/courses`
     
-    if (isEditing.value) {
-      await $fetch(`${apiUrl}/${(editedItem.value as any)._id}`, {
+    // Remover campos do MongoDB que não devem ser enviados
+    const { _id, createdAt, updatedAt, __v, ...courseData } = editedItem.value as any
+    
+    if (isEditing.value && _id) {
+      console.log('Atualizando curso:', _id)
+      await $fetch(`${apiUrl}/${_id}`, {
         method: 'PUT',
-        body: editedItem.value
+        body: courseData
       })
       showSnackbar('Curso atualizado com sucesso')
     } else {
+      console.log('Criando novo curso')
       await $fetch(apiUrl, {
         method: 'POST',
-        body: editedItem.value
+        body: courseData
       })
       showSnackbar('Curso criado com sucesso')
     }
 
     await fetchCourses()
     closeDialog()
-  } catch (error) {
-    showSnackbar('Erro ao salvar curso', 'error')
+  } catch (error: any) {
+    console.error('Erro ao salvar curso:', error)
+    const errorMsg = error?.data?.message || error?.message || 'Erro ao salvar curso'
+    showSnackbar(errorMsg, 'error')
   } finally {
     saving.value = false
   }

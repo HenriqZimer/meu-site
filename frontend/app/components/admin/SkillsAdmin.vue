@@ -213,6 +213,7 @@ const editItem = (item: Skill) => {
   isEditing.value = true
   editedIndex.value = skills.value.indexOf(item)
   editedItem.value = { ...item }
+  console.log('Editing skill:', { _id: (item as any)._id, name: item.name })
   dialog.value = true
 }
 
@@ -227,24 +228,31 @@ const saveItem = async () => {
   try {
     const apiUrl = `${config.public.apiUrl}/skills`
     
-    if (isEditing.value) {
-      await $fetch(`${apiUrl}/${editedItem.value._id}`, {
+    // Remover campos do MongoDB que não devem ser enviados
+    const { _id, createdAt, updatedAt, __v, ...skillData } = editedItem.value as any
+    
+    if (isEditing.value && _id) {
+      console.log('Atualizando skill:', _id)
+      await $fetch(`${apiUrl}/${_id}`, {
         method: 'PUT',
-        body: editedItem.value
+        body: skillData
       })
       showSnackbar('Skill atualizada com sucesso')
     } else {
+      console.log('Criando nova skill')
       await $fetch(apiUrl, {
         method: 'POST',
-        body: editedItem.value
+        body: skillData
       })
       showSnackbar('Skill criada com sucesso')
     }
 
     await fetchSkills()
     closeDialog()
-  } catch (error) {
-    showSnackbar('Erro ao salvar skill', 'error')
+  } catch (error: any) {
+    console.error('Erro ao salvar skill:', error)
+    const errorMsg = error?.data?.message || error?.message || 'Erro ao salvar skill'
+    showSnackbar(errorMsg, 'error')
   } finally {
     saving.value = false
   }

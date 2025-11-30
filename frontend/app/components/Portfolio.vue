@@ -57,7 +57,7 @@
           :aria-label="`Ir para página ${index + 1}`">
         </button>
         <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184);">{{ currentPage + 1 }} / {{ totalPages
-        }}</span>
+          }}</span>
       </div>
 
       <!-- Empty State -->
@@ -280,13 +280,6 @@ const paginatedProjects = computed(() => {
     pages.push(projects.slice(i, i + itemsPerPage.value))
   }
 
-  console.log('📊 Paginação:', {
-    totalProjects: projects.length,
-    itemsPerPage: itemsPerPage.value,
-    totalPages: pages.length,
-    projectsPerPage: pages.map(p => p.length)
-  })
-
   return pages
 })
 
@@ -381,6 +374,8 @@ const scrollToContact = () => {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(148, 163, 184, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 48px !important;
+  min-height: 48px !important;
 }
 
 .carousel-nav:not(:disabled):hover {
@@ -538,12 +533,47 @@ const scrollToContact = () => {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
+
+  .carousel-nav {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .carousel-nav .v-icon {
+    font-size: 20px !important;
+  }
 }
 
 @media (max-width: 600px) {
   .carousel-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .carousel-nav {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .carousel-nav .v-icon {
+    font-size: 18px !important;
+  }
+
+  .d-flex.align-center.ga-3.ga-md-4 {
+    gap: 8px !important;
+  }
+
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .indicator--active {
+    width: 24px;
   }
 }
 </style>

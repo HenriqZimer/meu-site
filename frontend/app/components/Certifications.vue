@@ -6,8 +6,7 @@
 
     <!-- Badges -->
     <div class="certifications-content">
-      <CredlyBadgeGrid :badges="credlyBadges" :show-header="false" :columns="responsiveColumns" :animation-delay="600"
-        :enable-scroll-animation="true" />
+      <CertificationBadgeGrid :badges="certificationBadges" :show-header="false" />
     </div>
   </Section>
 </template>
@@ -41,91 +40,14 @@ const certificationsStore = useCertificationsStore()
 // Composables
 const { isMobile, isTablet, isDesktop, getResponsiveValue } = useResponsive()
 
-// Scroll Animation
-const { observeElements } = useScrollAnimation()
-
 onMounted(async () => {
-  observeElements({
-    threshold: 0.1,
-    once: true
-  })
-
   // Carregar certificações da API
   await certificationsStore.fetchCertifications()
-
-  // Animações de scroll para os badges
-  setTimeout(() => {
-    const animateBadgesOnScroll = () => {
-      const badges = document.querySelectorAll('.modern-badge-card')
-
-      badges.forEach((badge, index) => {
-        const element = badge as HTMLElement
-        element.setAttribute('data-animate', 'flip-in')
-        element.setAttribute('data-delay', String(index * 100))
-      })
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const element = entry.target as HTMLElement
-            const delay = element.getAttribute('data-delay')
-
-            setTimeout(() => {
-              element.classList.add('is-visible')
-            }, delay ? parseInt(delay) : 0)
-
-            observer.unobserve(element)
-          }
-        })
-      }, {
-        threshold: 0.2,
-        rootMargin: '0px 0px -30px 0px'
-      })
-
-      badges.forEach(badge => observer.observe(badge))
-    }
-
-    animateBadgesOnScroll()
-
-    // Adicionar efeito parallax 3D nos badges
-    setTimeout(() => {
-      const badges = document.querySelectorAll('.modern-badge-card')
-
-      badges.forEach(badge => {
-        badge.addEventListener('mousemove', (e: Event) => {
-          const mouseEvent = e as MouseEvent
-          const element = badge as HTMLElement
-          const rect = element.getBoundingClientRect()
-          const x = mouseEvent.clientX - rect.left
-          const y = mouseEvent.clientY - rect.top
-
-          const centerX = rect.width / 2
-          const centerY = rect.height / 2
-
-          const rotateXVal = ((y - centerY) / centerY) * -8
-          const rotateYVal = ((x - centerX) / centerX) * 8
-
-          element.style.transform = 'perspective(1000px) rotateX(' + rotateXVal + 'deg) rotateY(' + rotateYVal + 'deg) translateY(-8px) scale(1.03)'
-        })
-
-        badge.addEventListener('mouseleave', () => {
-          (badge as HTMLElement).style.transform = ''
-        })
-      })
-    }, 1500)
-  }, 500)
 })
 
 // Computed do store
-const credlyBadges = computed(() => certificationsStore.allCertifications)
+const certificationBadges = computed(() => certificationsStore.allCertifications)
 const loading = computed(() => certificationsStore.loading)
-
-// Responsive columns
-const responsiveColumns = computed(() => {
-  if (isMobile.value) return 1
-  if (isTablet.value) return 2
-  return 4
-})
 
 // Computed stats
 const certificationStats = computed<Stat[]>(() => [
@@ -145,5 +67,5 @@ const certificationStats = computed<Stat[]>(() => [
   margin: 0 auto;
 }
 
-/* All other styles inherited from Section component and CredlyBadgeGrid */
+/* All other styles inherited from Section component and CertificationBadgeGrid */
 </style>
