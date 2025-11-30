@@ -180,8 +180,8 @@ const avatarSize = computed(() => {
 });
 
 // Dynamic stats from stores
-const projectCount = computed(() => projectsStore.projectsCount || 25);
-const certificationCount = computed(() => certificationsStore.certificationsCount || 15);
+const projectCount = computed(() => projectsStore.projectsCount);
+const certificationCount = computed(() => certificationsStore.certificationsCount);
 
 onMounted(() => {
   observeElements({
@@ -570,6 +570,9 @@ onMounted(() => {
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  min-width: 48px !important;
+  aspect-ratio: 1 / 1;
+  padding: 0 !important;
 }
 
 .social-btn-hero::before {
@@ -736,10 +739,18 @@ onMounted(() => {
   .social-btn-hero {
     width: 44px !important;
     height: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    aspect-ratio: 1 / 1;
   }
 
   .hero-social-links {
     margin-top: 32px !important;
+  }
+
+  .hero-social-links .d-flex {
+    flex-wrap: wrap;
+    gap: 8px !important;
   }
 }
 </style>

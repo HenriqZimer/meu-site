@@ -32,7 +32,7 @@
 
         <!-- Course Cards Grid -->
         <v-row class="courses-grid">
-          <v-col v-for="(course, index) in yearGroup.courses" :key="`${course.name}-${index}`" cols="12" sm="6" md="4"
+          <v-col v-for="(course, index) in getVisibleCourses(yearGroup)" :key="`${course.name}-${index}`" cols="12" sm="6" md="4"
             class="course-col">
             <div class="course-card-wrapper" data-animate="flip-in" :data-delay="yearIndex * 150 + index * 100"
               @mouseenter="handleCardHover($event)" @mousemove="handleCardMove($event)"
@@ -79,6 +79,20 @@
             </div>
           </v-col>
         </v-row>
+
+        <!-- Ver Mais Button -->
+        <div v-if="shouldShowMoreButton(yearGroup)" class="text-center mt-6">
+          <v-btn
+            variant="outlined"
+            color="primary"
+            size="large"
+            class="see-more-btn"
+            @click="toggleYearExpansion(yearGroup.year)"
+          >
+            <v-icon start>{{ isYearExpanded(yearGroup.year) ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+            {{ isYearExpanded(yearGroup.year) ? 'Ver Menos' : `Ver Mais (${yearGroup.courses.length - 3})` }}
+          </v-btn>
+        </div>
       </div>
     </div>
   </Section>
@@ -150,6 +164,36 @@ const { observeElements } = useScrollAnimation()
 
 // Agrupar cursos por ano (usa getter da store)
 const coursesByYear = computed(() => coursesStore.coursesByYear)
+
+// Estado de expansão dos anos
+const expandedYears = ref<Set<string>>(new Set())
+
+// Verificar se deve mostrar botão "ver mais"
+const shouldShowMoreButton = (yearGroup: YearGroup) => {
+  return yearGroup.courses.length > 3
+}
+
+// Verificar se ano está expandido
+const isYearExpanded = (year: string) => {
+  return expandedYears.value.has(year)
+}
+
+// Alternar expansão do ano
+const toggleYearExpansion = (year: string) => {
+  if (expandedYears.value.has(year)) {
+    expandedYears.value.delete(year)
+  } else {
+    expandedYears.value.add(year)
+  }
+}
+
+// Obter cursos visíveis (primeiros 3 ou todos se expandido)
+const getVisibleCourses = (yearGroup: YearGroup) => {
+  if (isYearExpanded(yearGroup.year) || yearGroup.courses.length <= 3) {
+    return yearGroup.courses
+  }
+  return yearGroup.courses.slice(0, 3)
+}
 
 // 3D Parallax hover effect
 const handleCardHover = (event: MouseEvent) => {
@@ -478,6 +522,31 @@ const handleCardLeave = (event: MouseEvent) => {
 
 .course-btn:hover .v-icon {
   transform: rotate(12deg) scale(1.1);
+}
+
+/* === VER MAIS BUTTON === */
+.see-more-btn {
+  border-radius: 12px !important;
+  border-width: 2px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  padding: 12px 32px !important;
+  transition: all 0.3s ease !important;
+}
+
+.see-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3) !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+.see-more-btn .v-icon {
+  transition: transform 0.3s ease;
+}
+
+.see-more-btn:hover .v-icon {
+  transform: scale(1.2);
 }
 
 /* === ANIMATIONS === */

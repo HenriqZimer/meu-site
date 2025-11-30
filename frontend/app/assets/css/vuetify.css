@@ -124,7 +124,6 @@ i.mdi::after,
 
 .v-theme--dark .v-card,
 .v-theme--dark .v-sheet {
-  background: rgb(30, 41, 59) !important;
   color: rgb(241, 245, 249) !important;
   border-color: rgba(148, 163, 184, 0.15) !important;
 }

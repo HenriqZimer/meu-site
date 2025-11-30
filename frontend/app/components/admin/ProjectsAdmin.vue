@@ -241,6 +241,7 @@ const editItem = (item: Project) => {
   isEditing.value = true
   editedIndex.value = projects.value.indexOf(item)
   editedItem.value = { ...item }
+  console.log('Editing project:', { _id: (item as any)._id, title: item.title })
   dialog.value = true
 }
 
@@ -257,24 +258,31 @@ const saveItem = async () => {
   try {
     const apiUrl = `${config.public.apiUrl}/projects`
     
-    if (isEditing.value) {
-      await $fetch(`${apiUrl}/${editedItem.value._id}`, {
+    // Remover campos do MongoDB que não devem ser enviados
+    const { _id, createdAt, updatedAt, __v, ...projectData } = editedItem.value as any
+    
+    if (isEditing.value && _id) {
+      console.log('Atualizando projeto:', _id)
+      await $fetch(`${apiUrl}/${_id}`, {
         method: 'PUT',
-        body: editedItem.value
+        body: projectData
       })
       showSnackbar('Projeto atualizado com sucesso')
     } else {
+      console.log('Criando novo projeto')
       await $fetch(apiUrl, {
         method: 'POST',
-        body: editedItem.value
+        body: projectData
       })
       showSnackbar('Projeto criado com sucesso')
     }
 
     await fetchProjects()
     closeDialog()
-  } catch (error) {
-    showSnackbar('Erro ao salvar projeto', 'error')
+  } catch (error: any) {
+    console.error('Erro ao salvar projeto:', error)
+    const errorMsg = error?.data?.message || error?.message || 'Erro ao salvar projeto'
+    showSnackbar(errorMsg, 'error')
   } finally {
     saving.value = false
   }

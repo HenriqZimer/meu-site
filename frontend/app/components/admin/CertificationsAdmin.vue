@@ -211,6 +211,7 @@ const editItem = (item: Certification) => {
   isEditing.value = true
   editedIndex.value = certifications.value.indexOf(item)
   editedItem.value = { ...item }
+  console.log('Editing certification:', { _id: (item as any)._id, name: item.name })
   dialog.value = true
 }
 
@@ -225,24 +226,31 @@ const saveItem = async () => {
   try {
     const apiUrl = `${config.public.apiUrl}/certifications`
     
-    if (isEditing.value) {
-      await $fetch(`${apiUrl}/${(editedItem.value as any)._id}`, {
+    // Remover campos do MongoDB que não devem ser enviados
+    const { _id, createdAt, updatedAt, __v, ...certificationData } = editedItem.value as any
+    
+    if (isEditing.value && _id) {
+      console.log('Atualizando certificação:', _id)
+      await $fetch(`${apiUrl}/${_id}`, {
         method: 'PUT',
-        body: editedItem.value
+        body: certificationData
       })
       showSnackbar('Certificação atualizada com sucesso')
     } else {
+      console.log('Criando nova certificação')
       await $fetch(apiUrl, {
         method: 'POST',
-        body: editedItem.value
+        body: certificationData
       })
       showSnackbar('Certificação criada com sucesso')
     }
 
     await fetchCertifications()
     closeDialog()
-  } catch (error) {
-    showSnackbar('Erro ao salvar certificação', 'error')
+  } catch (error: any) {
+    console.error('Erro ao salvar certificação:', error)
+    const errorMsg = error?.data?.message || error?.message || 'Erro ao salvar certificação'
+    showSnackbar(errorMsg, 'error')
   } finally {
     saving.value = false
   }

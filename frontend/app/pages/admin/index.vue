@@ -214,11 +214,9 @@ useHead({
 
 <style scoped>
 .admin-page {
-    min-height: 100vh;
-    position: relative;
-}
-
-/* Login Container with Animated Background */
+  min-height: 100vh;
+  position: relative;
+}/* Login Container with Animated Background */
 .login-container {
     position: relative;
     overflow: hidden;
