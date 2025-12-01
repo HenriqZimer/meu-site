@@ -31,15 +31,15 @@
             <!-- Subtitle with Icon -->
             <div class="hero-subtitle-box mb-6 mb-md-8">
               <div class="d-inline-flex align-center ga-3 flex-wrap justify-center justify-md-start">
-                <v-chip color="primary" variant="flat" class="subtitle-chip">
+                <v-chip color="primary" variant="flat" class="subtitle-chip high-contrast-chip">
                   <v-icon icon="mdi-infinity" start size="20" />
                   DevOps
                 </v-chip>
-                <v-chip color="info" variant="flat" class="subtitle-chip">
+                <v-chip color="blue-darken-2" variant="flat" class="subtitle-chip high-contrast-chip">
                   <v-icon icon="mdi-cloud-outline" start size="20" />
                   Cloud
                 </v-chip>
-                <v-chip color="info" variant="flat" class="subtitle-chip">
+                <v-chip color="blue-darken-2" variant="flat" class="subtitle-chip high-contrast-chip">
                   <v-icon icon="mdi-kubernetes" start size="20" />
                   Kubernetes
                 </v-chip>
@@ -351,6 +351,21 @@ onMounted(() => {
   font-weight: 600 !important;
   padding: 10px 18px !important;
   height: auto !important;
+}
+
+/* High contrast chips for accessibility */
+.high-contrast-chip {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #1e40af, #1e3a8a) !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+.high-contrast-chip .v-chip__content {
+  color: #ffffff !important;
+}
+
+.high-contrast-chip .v-icon {
+  color: #ffffff !important;
 }
 
 /* ===================================

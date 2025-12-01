@@ -31,12 +31,12 @@ export const useSocialLinks = () => {
   ];
 
   /**
-   * Links sociais para footer (formato simplificado)
+   * Links sociais para footer (com labels para acessibilidade)
    */
   const footerSocialLinks = [
-    { name: "GitHub", icon: "mdi-github", href: "https://github.com/henriqzimer" },
-    { name: "LinkedIn", icon: "mdi-linkedin", href: "https://linkedin.com/in/henrique-zimermann" },
-    { name: "Email", icon: "mdi-email-outline", href: "mailto:contato@henriqzimer.com.br" },
+    { name: "GitHub", icon: "mdi-github", href: "https://github.com/henriqzimer", label: "Visitar GitHub" },
+    { name: "LinkedIn", icon: "mdi-linkedin", href: "https://linkedin.com/in/henrique-zimermann", label: "Visitar LinkedIn" },
+    { name: "Email", icon: "mdi-email-outline", href: "mailto:contato@henriqzimer.com.br", label: "Enviar email" },
   ];
 
   /**

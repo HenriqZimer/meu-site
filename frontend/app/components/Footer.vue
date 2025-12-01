@@ -20,7 +20,8 @@
             </p>
             <div class="social-links-wrapper mt-4">
               <v-btn v-for="social in socialLinks" :key="social.name" :href="social.href" :icon="social.icon"
-                size="small" variant="tonal" color="primary" target="_blank" class="social-btn" width="48" />
+                size="small" variant="tonal" color="primary" target="_blank" class="social-btn" width="48"
+                :aria-label="social.label" />
             </div>
           </div>
         </v-col>
@@ -31,7 +32,7 @@
             <h3 class="footer-title">Navegação</h3>
             <ul class="footer-links">
               <li v-for="link in quickLinks" :key="link.label">
-                <a @click.prevent="scrollToSection(link.href)" class="footer-link">
+                <a :href="link.href" @click.prevent="scrollToSection(link.href)" class="footer-link">
                   {{ link.label }}
                 </a>
               </li>
@@ -125,15 +126,21 @@ const email = contactInfo.email;
 const phoneNumber = contactInfo.phone;
 
 const handleScroll = () => {
-  showScrollTop.value = shouldShowScrollTop();
+  if (process.client) {
+    showScrollTop.value = shouldShowScrollTop();
+  }
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  if (process.client) {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+  if (process.client) {
+    window.removeEventListener("scroll", handleScroll);
+  }
 });
 </script>
 
