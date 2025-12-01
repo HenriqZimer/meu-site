@@ -15,20 +15,12 @@
               </div>
             </div>
             <p class="footer-description">
-              Automatizando infraestruturas e otimizando processos de desenvolvimento com soluções modernas e escaláveis.
+              Automatizando infraestruturas e otimizando processos de desenvolvimento com soluções modernas e
+              escaláveis.
             </p>
             <div class="social-links-wrapper mt-4">
-              <v-btn 
-                v-for="social in socialLinks" 
-                :key="social.name" 
-                :href="social.href" 
-                :icon="social.icon" 
-                size="small"
-                variant="tonal" 
-                color="primary" 
-                target="_blank"
-                class="social-btn"
-              />
+              <v-btn v-for="social in socialLinks" :key="social.name" :href="social.href" :icon="social.icon"
+                size="small" variant="tonal" color="primary" target="_blank" class="social-btn" width="48" />
             </div>
           </div>
         </v-col>
@@ -53,11 +45,7 @@
             <h3 class="footer-title">Contato</h3>
             <ul class="footer-links">
               <li>
-                <a 
-                  :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`" 
-                  target="_blank" 
-                  class="footer-link"
-                >
+                <a :href="`https://wa.me/${phoneNumber.replace(/\D/g, '')}`" target="_blank" class="footer-link">
                   <v-icon size="16" class="mr-2">mdi-phone</v-icon>
                   {{ phoneNumber }}
                 </a>
@@ -85,14 +73,8 @@
             <p class="footer-cta-text mb-4">
               Tem um projeto em mente? Entre em contato!
             </p>
-            <v-btn 
-              color="primary" 
-              variant="flat" 
-              block
-              size="large"
-              @click="scrollToSection('contact')"
-              class="cta-btn"
-            >
+            <v-btn color="primary" variant="flat" block size="large" @click="scrollToSection('contact')"
+              class="cta-btn">
               <v-icon start>mdi-email-fast</v-icon>
               Enviar Mensagem
             </v-btn>
@@ -112,7 +94,7 @@
         </v-col>
         <v-col cols="12" md="6" class="text-center text-md-right">
           <span class="footer-tech">
-            Desenvolvido com 
+            Desenvolvido com
             <v-icon size="14" color="error" class="mx-1">mdi-heart</v-icon>
             usando <strong>Nuxt 3</strong> & <strong>Vuetify</strong>
           </span>
@@ -121,16 +103,8 @@
     </v-container>
 
     <!-- Scroll to Top Button -->
-    <v-btn 
-      v-show="showScrollTop" 
-      @click="scrollToTop" 
-      icon="mdi-arrow-up" 
-      color="primary" 
-      size="large" 
-      position="fixed"
-      location="bottom end" 
-      class="scroll-top-btn"
-    />
+    <v-btn v-show="showScrollTop" @click="scrollToTop" icon="mdi-arrow-up" color="primary" size="large" position="fixed"
+      location="bottom end" class="scroll-top-btn" />
   </v-footer>
 </template>
 
