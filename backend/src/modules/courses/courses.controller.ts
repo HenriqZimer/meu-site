@@ -17,6 +17,13 @@ import { CreateCourseDto, UpdateCourseDto } from './dto/course.dto';
 export class CoursesController {
   constructor(private readonly coursesService: CoursesService) {}
 
+  @Get('admin/all')
+  @ApiOperation({ summary: 'Get all courses for admin (including inactive)' })
+  @ApiResponse({ status: 200, description: 'Returns all courses' })
+  findAllForAdmin() {
+    return this.coursesService.findAllForAdmin();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all courses' })
   @ApiQuery({ name: 'year', required: false, type: String })

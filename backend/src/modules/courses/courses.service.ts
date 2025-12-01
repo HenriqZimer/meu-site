@@ -20,6 +20,10 @@ export class CoursesService {
     return this.courseModel.find(filter).sort({ year: -1, order: 1, name: 1 }).exec();
   }
 
+  async findAllForAdmin(): Promise<Course[]> {
+    return this.courseModel.find().sort({ year: -1, order: 1, name: 1 }).exec();
+  }
+
   async findOne(id: string): Promise<Course> {
     const course = await this.courseModel.findById(id).exec();
     if (!course) {

@@ -1,7 +1,7 @@
 <template>
   <Section id="skills" badge="Skills" badge-icon="mdi-code-braces" badge-color="cyan" title-prefix="Minha Stack"
     title-highlight="Tecnológica" description="Ferramentas e tecnologias que domino e estou estudando"
-    section-class="py-10 py-md-16" container-class="px-4 px-md-6">
+    section-class="py-10 py-md-16" container-class="pa-0">
 
     <!-- Tech Carousel -->
     <div class="tech-carousel-container mt-8">
@@ -74,6 +74,8 @@ const loading = computed(() => skillsStore.loading)
   animation: fadeInUp 0.8s ease forwards;
   animation-delay: 0.4s;
   opacity: 0;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 
 .tech-carousel-wrapper {

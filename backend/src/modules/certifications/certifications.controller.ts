@@ -24,6 +24,13 @@ export class CertificationsController {
     return this.certificationsService.getStats();
   }
 
+  @Get('admin/all')
+  @ApiOperation({ summary: 'Get all certifications for admin (including inactive)' })
+  @ApiResponse({ status: 200, description: 'Returns all certifications' })
+  findAllForAdmin() {
+    return this.certificationsService.findAllForAdmin();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all certifications' })
   @ApiQuery({ name: 'issuer', required: false, type: String })
