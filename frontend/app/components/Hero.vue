@@ -172,18 +172,24 @@ const certificationsStore = useCertificationsStore();
 const imageAlt = `Foto profissional de ${siteFirstName}`;
 const profileImageUrl = "/foto-perfil-profissional.jpg";
 
-// Avatar size responsivo
-const avatarSize = computed(() => {
-  if (isMobile.value) return 250;
-  if (isTablet.value) return 280;
-  return 320;
-});
+// Avatar size responsivo - inicializar com valor padrão para evitar hidratação mismatch
+const avatarSize = ref(320);
+
+const updateAvatarSize = () => {
+  if (process.client) {
+    if (isMobile.value) avatarSize.value = 250;
+    else if (isTablet.value) avatarSize.value = 280;
+    else avatarSize.value = 320;
+  }
+};
 
 // Dynamic stats from stores
 const projectCount = computed(() => projectsStore.projectsCount);
 const certificationCount = computed(() => certificationsStore.certificationsCount);
 
 onMounted(() => {
+  updateAvatarSize();
+  
   observeElements({
     threshold: 0.2,
     once: true,
@@ -193,6 +199,9 @@ onMounted(() => {
   projectsStore.fetchStats();
   certificationsStore.fetchStats();
 });
+
+// Watch para mudanças responsivas
+watch([isMobile, isTablet], updateAvatarSize);
 </script>
 
 <style scoped>
