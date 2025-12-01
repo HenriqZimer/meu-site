@@ -1,67 +1,55 @@
 <template>
-  <v-card class="project-card-modern" :style="cardStyles" elevation="8" rounded="xl">
-    <!-- Featured Badge -->
-    <v-chip v-if="featured" class="featured-badge" variant="flat" size="small">
-      <v-icon icon="mdi-star" start size="14" />
-      Destaque
-    </v-chip>
-
-    <!-- Status Badge -->
-    <v-chip v-if="status !== 'completed'" class="status-badge" :class="`status-${status}`" variant="flat"
-      size="x-small">
-      <v-icon :icon="getStatusIcon(status)" start size="12" />
-      {{ getStatusLabel(status) }}
-    </v-chip>
+  <a :href="demoUrl || githubUrl" target="_blank" rel="noopener noreferrer" class="project-card-modern"
+    :style="cardStyles">
+    <!-- Left Border Indicator -->
+    <div class="card-border-indicator" />
 
     <!-- Project Image -->
-    <div v-if="image || $slots.image" class="project-image-wrapper">
-      <v-img :src="image" :alt="imageAlt" height="220" cover :lazy-src="lazy ? image : undefined"
-        class="project-image" />
+    <div v-if="image || $slots.image" class="project-image-container">
+      <div class="project-image-wrapper">
+        <img :src="image" :alt="imageAlt" :loading="lazy ? 'lazy' : 'eager'" class="project-image" />
+      </div>
 
-      <!-- Gradient Overlay -->
-      <div class="image-gradient" />
-
-      <!-- Hover Overlay -->
-      <div class="hover-overlay">
-        <div class="overlay-content">
-          <v-btn v-if="demoUrl" icon variant="elevated" color="primary" size="large" :href="demoUrl" target="_blank"
-            class="action-btn">
-            <v-icon icon="mdi-open-in-new" />
-          </v-btn>
-          <v-btn v-if="githubUrl" icon variant="elevated" color="white" size="large" :href="githubUrl" target="_blank"
-            class="action-btn">
-            <v-icon icon="mdi-github" />
-          </v-btn>
-        </div>
+      <!-- Status Badge Overlay -->
+      <div class="status-badge-overlay">
+        <v-chip v-if="featured" size="small" variant="flat" color="warning" prepend-icon="mdi-star" class="mb-1">
+          Destaque
+        </v-chip>
       </div>
     </div>
 
     <!-- Project Content -->
-    <v-card-text class="project-content pa-5">
-      <!-- Title -->
-      <h3 class="project-title text-h6 font-weight-bold mb-2 text-truncate-2">
-        {{ title }}
-      </h3>
-
-      <!-- Description -->
-      <p class="project-description text-body-2 mb-3 flex-grow-1 text-truncate-3">
-        {{ description }}
-      </p>
+    <div class="project-content">
+      <div class="project-header">
+        <h3 class="project-title">{{ title }}</h3>
+        <p class="project-description">{{ description }}</p>
+      </div>
 
       <!-- Tech Stack -->
       <div v-if="technologies && technologies.length" class="tech-stack">
-        <v-chip v-for="tech in technologies.slice(0, 5)" :key="tech" size="small" variant="flat" class="tech-tag">
+        <span v-for="tech in technologies.slice(0, 4)" :key="tech" class="tech-tag">
           {{ tech }}
-        </v-chip>
-        <v-chip v-if="technologies.length > 5" size="small" variant="outlined" class="tech-more">
-          +{{ technologies.length - 5 }}
-        </v-chip>
+        </span>
+        <span v-if="technologies.length > 4" class="tech-more">
+          +{{ technologies.length - 4 }}
+        </span>
       </div>
-    </v-card-text>
 
-    <!-- Card Glow Effect -->
-    <div class="card-glow" />
-  </v-card>
+      <!-- Action Links -->
+      <div class="project-actions">
+        <v-btn v-if="demoUrl" variant="text" size="small" color="primary" :href="demoUrl" target="_blank"
+          class="action-link" @click.stop>
+          <v-icon start size="16">mdi-open-in-new</v-icon>
+          Demo
+        </v-btn>
+        <v-btn v-if="githubUrl" variant="text" size="small" color="primary" :href="githubUrl" target="_blank"
+          class="action-link" @click.stop>
+          <v-icon start size="16">mdi-github</v-icon>
+          Código
+        </v-btn>
+      </div>
+    </div>
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -99,7 +87,7 @@ const props = withDefaults(defineProps<Props>(), {
 const getStatusIcon = (status: string) => {
   const icons = {
     completed: "mdi-check-circle",
-    "in-progress": "mdi-clock-outline",
+    "in-progress": "mdi-progress-clock",
     planning: "mdi-lightbulb-outline",
   };
   return icons[status as keyof typeof icons] || "mdi-help-circle";
@@ -108,10 +96,19 @@ const getStatusIcon = (status: string) => {
 const getStatusLabel = (status: string) => {
   const labels = {
     completed: "Concluído",
-    "in-progress": "Em progresso",
+    "in-progress": "Em Andamento",
     planning: "Planejado",
   };
   return labels[status as keyof typeof labels] || "Desconhecido";
+};
+
+const getStatusColor = (status: string) => {
+  const colors = {
+    completed: "success",
+    "in-progress": "primary",
+    planning: "info",
+  };
+  return colors[status as keyof typeof colors] || "default";
 };
 
 // Computed properties
@@ -123,213 +120,136 @@ const cardStyles = computed(() => ({
 <style scoped>
 /* === PROJECT CARD === */
 .project-card-modern {
+  display: flex;
+  flex-direction: column;
   position: relative;
+  overflow: hidden;
+  background: rgba(var(--v-theme-surface-variant), 0.3);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
   opacity: 0;
   transform: translateY(30px);
   animation: fadeInUp 0.6s ease forwards;
   animation-delay: var(--animation-delay);
-  background: rgba(30, 41, 59, 0.6) !important;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(148, 163, 184, 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  height: 460px;
-  display: flex;
-  flex-direction: column;
 }
 
-.project-card-modern .project-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
+.project-card-modern:hover {
+  background: rgba(var(--v-theme-surface-variant), 0.5);
+  border-color: rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-.project-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg,
-      rgba(59, 130, 246, 0.2),
-      rgba(6, 182, 212, 0.2),
-      rgba(168, 85, 247, 0.2));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.4s ease;
+.project-card-modern:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 2px;
 }
 
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow:
-    0 20px 40px rgba(59, 130, 246, 0.25),
-    0 0 80px rgba(59, 130, 246, 0.15) !important;
-  border-color: rgba(59, 130, 246, 0.4);
-}
-
-.project-card:hover::before {
-  opacity: 1;
-}
-
-/* === CARD GLOW === */
-.card-glow {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.project-card:hover .card-glow {
-  opacity: 1;
-  animation: glow 3s ease-in-out infinite;
-}
-
-/* === FEATURED BADGE === */
-.featured-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  z-index: 3;
-  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-  color: white !important;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-  backdrop-filter: blur(8px);
-  animation: pulse 2s ease-in-out infinite;
-}
-
-/* === STATUS BADGE === */
-.status-badge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 3;
-  font-weight: 600;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.status-badge.completed {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(22, 163, 74, 0.9)) !important;
-  color: white !important;
-}
-
-.status-badge.in-progress {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9)) !important;
-  color: white !important;
-}
-
-.status-badge.planning {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.9), rgba(147, 51, 234, 0.9)) !important;
-  color: white !important;
-}
-
-/* === IMAGE WRAPPER === */
-.project-image-wrapper {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), rgba(6, 182, 212, 0.08));
-}
-
-.project-img {
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.92;
-  filter: brightness(0.95);
-}
-
-.project-card:hover .project-img {
-  transform: scale(1.08);
-  opacity: 1;
-  filter: brightness(1);
-}
-
-/* === IMAGE GRADIENT === */
-.image-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
-  opacity: 0.7;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
-}
-
-.project-card:hover .image-gradient {
-  opacity: 0.5;
-}
-
-/* === HOVER OVERLAY === */
-.hover-overlay {
+/* Left Border Indicator */
+.card-border-indicator {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(15, 23, 42, 0.96);
-  backdrop-filter: blur(12px);
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg,
+      rgb(var(--v-theme-primary)),
+      rgb(var(--v-theme-secondary)));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
+}
+
+.project-card-modern:hover .card-border-indicator {
+  transform: scaleY(1);
+}
+
+/* === IMAGE CONTAINER === */
+.project-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(var(--v-theme-surface), 0.05) 0%, rgba(var(--v-theme-surface), 0.02) 100%);
+}
+
+.project-image-wrapper {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  padding: 16px;
 }
 
-.project-card:hover .hover-overlay {
-  opacity: 1;
+.project-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
 }
 
-.overlay-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+.project-card-modern:hover .project-image {
+  transform: scale(1.05);
 }
 
-.overlay-btn:hover {
-  transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
-  border-color: rgba(59, 130, 246, 0.6) !important;
-}
-
-.overlay-btn:active {
-  transform: scale(1.05) rotate(2deg);
+/* Status Badge Overlay */
+.status-badge-overlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  z-index: 2;
 }
 
 /* === CONTENT === */
-.project-card :deep(.v-card-text) {
-  background: rgba(15, 23, 42, 0.3);
+.project-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+.project-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .project-title {
-  background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  transition: all 0.3s ease;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
+  line-height: 1.4;
+  margin: 0;
+  transition: color 0.3s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.project-card:hover .project-title {
-  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.project-card-modern:hover .project-title {
+  color: rgb(var(--v-theme-primary));
 }
 
 .project-description {
-  color: #cbd5e1;
+  font-size: 14px;
+  color: rgb(var(--v-theme-on-surface-variant));
   line-height: 1.6;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* === TECH STACK === */
@@ -337,118 +257,146 @@ const cardStyles = computed(() => ({
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 16px;
+  margin-top: auto;
 }
 
-.tech-chip {
-  background: rgba(59, 130, 246, 0.12) !important;
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  color: #93c5fd !important;
-  font-size: 0.75rem;
+.tech-tag {
+  font-size: 11px;
   font-weight: 500;
-  transition: all 0.3s ease;
+  padding: 4px 10px;
+  background: rgba(var(--v-theme-primary), 0.1);
+  color: rgb(var(--v-theme-primary));
+  border-radius: 6px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.2);
+  transition: all 0.2s ease;
 }
 
-.tech-chip:hover {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border-color: rgba(59, 130, 246, 0.4);
-  transform: translateY(-2px);
+.tech-tag:hover {
+  background: rgba(var(--v-theme-primary), 0.2);
+  transform: translateY(-1px);
 }
 
-/* === TEXT TRUNCATE === */
-.text-truncate-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.4;
+.tech-more {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  background: transparent;
+  color: rgb(var(--v-theme-on-surface-variant));
+  border-radius: 6px;
+  border: 1px solid rgba(var(--v-theme-on-surface-variant), 0.3);
 }
 
-.text-truncate-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.6;
+/* === ACTION LINKS === */
+.project-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.action-link {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* Action Icon */
+.card-action {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(var(--v-theme-primary), 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+  opacity: 0;
+}
+
+.action-icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.project-card-modern:hover .card-action {
+  background: rgba(var(--v-theme-primary), 0.2);
+  transform: scale(1.1);
+  opacity: 1;
 }
 
 /* === ANIMATIONS === */
-@keyframes glow {
-
-  0%,
-  100% {
+@keyframes fadeInUp {
+  from {
     opacity: 0;
+    transform: translateY(30px);
   }
 
-  50% {
+  to {
     opacity: 1;
-  }
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
-  }
-
-  50% {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+    transform: translateY(0);
   }
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 960px) {
-  .project-card-modern {
-    height: 420px;
-  }
-
-  .project-image-wrapper {
+  .project-image-container {
     height: 180px;
   }
 
-  .featured-badge,
-  .status-badge {
-    font-size: 0.7rem;
-    padding: 4px 8px;
+  .project-content {
+    padding: 14px;
+  }
+
+  .project-title {
+    font-size: 17px;
+  }
+
+  .card-action {
+    width: 32px;
+    height: 32px;
   }
 }
 
 @media (max-width: 600px) {
-  .project-card-modern {
-    height: 400px;
-  }
-
-  .project-image-wrapper {
+  .project-image-container {
     height: 160px;
   }
 
-  .featured-badge,
-  .status-badge {
-    top: 12px;
+  .project-content {
+    padding: 12px;
+    gap: 10px;
   }
 
-  .featured-badge {
-    left: 12px;
+  .project-title {
+    font-size: 16px;
   }
 
-  .status-badge {
-    right: 12px;
+  .project-description {
+    font-size: 13px;
   }
 
-  .overlay-btn {
-    width: 48px !important;
-    height: 48px !important;
+  .tech-stack {
+    gap: 6px;
   }
 
-  .hover-overlay {
-    gap: 12px;
+  .tech-tag,
+  .tech-more {
+    font-size: 10px;
+    padding: 3px 8px;
   }
 
-  .project-card :deep(.v-card-text) {
-    padding: 20px !important;
+  .card-action {
+    display: none;
+  }
+
+  .status-badge-overlay {
+    top: 8px;
+    right: 8px;
   }
 }
 </style>

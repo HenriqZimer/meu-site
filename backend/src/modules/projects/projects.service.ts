@@ -24,6 +24,10 @@ export class ProjectsService {
     return this.projectModel.find(filter).sort({ order: 1, createdAt: -1 }).exec();
   }
 
+  async findAllForAdmin(): Promise<Project[]> {
+    return this.projectModel.find().sort({ order: 1, createdAt: -1 }).exec();
+  }
+
   async findOne(id: string): Promise<Project> {
     const project = await this.projectModel.findById(id).exec();
     if (!project) {

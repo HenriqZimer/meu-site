@@ -31,7 +31,7 @@
         </div>
 
         <!-- Course Cards Grid -->
-        <v-row class="courses-grid">
+        <v-row class="courses-grid" justify="center">
           <v-col v-for="(course, index) in getVisibleCourses(yearGroup)" :key="`${course.name}-${index}`" cols="12" sm="6" md="4"
             class="course-col">
             <div class="course-card-wrapper" data-animate="flip-in" :data-delay="yearIndex * 150 + index * 100"

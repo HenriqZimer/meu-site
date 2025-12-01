@@ -26,8 +26,8 @@ async function bootstrap() {
 
   // Swagger documentation
   const config = new DocumentBuilder()
-    .setTitle('Portfolio API')
-    .setDescription('API for portfolio website data')
+    .setTitle('Meu Site API')
+    .setDescription('Documentação da API do Meu Site')
     .setVersion('1.0')
     .addTag('skills')
     .addTag('projects')

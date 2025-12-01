@@ -17,6 +17,13 @@ import { CreateSkillDto, UpdateSkillDto } from './dto/skill.dto';
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
+  @Get('admin/all')
+  @ApiOperation({ summary: 'Get all skills for admin (including inactive)' })
+  @ApiResponse({ status: 200, description: 'Returns all skills' })
+  findAllForAdmin() {
+    return this.skillsService.findAllForAdmin();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all skills' })
   @ApiResponse({ status: 200, description: 'Returns all skills' })

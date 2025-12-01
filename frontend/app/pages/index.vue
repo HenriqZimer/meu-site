@@ -1,24 +1,35 @@
 <template>
-  <!-- Hero Section -->
-  <Hero />
+  <div class="page-wrapper">
+    <!-- Header -->
+    <Header />
 
-  <!-- About Section -->
-  <About />
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hero Section -->
+      <Hero />
 
-  <!-- Portfolio Section -->
-  <Portfolio />
+      <!-- About Section -->
+      <About />
 
-  <!-- Skills Section -->
-  <Skills />
+      <!-- Portfolio Section -->
+      <Portfolio />
 
-  <!-- Certifications Section -->
-  <Certifications />
+      <!-- Skills Section -->
+      <Skills />
 
-  <!-- Courses Section -->
-  <Courses />
+      <!-- Certifications Section -->
+      <Certifications />
 
-  <!-- Contact Section -->
-  <Contact />
+      <!-- Courses Section -->
+      <Courses />
+
+      <!-- Contact Section -->
+      <Contact />
+    </main>
+
+    <!-- Footer -->
+    <Footer />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,14 +74,31 @@ useHead({
 </script>
 
 <style scoped>
-.page-container {
+.page-wrapper {
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Smooth scroll behavior */
+:global(html) {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 @media (max-width: 1024px) {
   .section-spacer {
     margin-top: 100px;
+  }
+  
+  :global(html) {
+    scroll-padding-top: 64px;
   }
 }
 

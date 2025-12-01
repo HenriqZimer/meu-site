@@ -72,7 +72,7 @@
             </div>
 
             <!-- Mini Stats -->
-            <div class="d-flex justify-center justify-md-start mb-8 mb-md-10">
+            <div class="d-flex justify-center justify-md-start mb-8 mb-md-10 mb-4">
               <v-row class="hero-mini-stats" style="max-width: 500px;">
                 <v-col cols="4" class="text-center">
                   <div class="stat-card">
@@ -721,7 +721,7 @@ onMounted(() => {
   }
 
   .scroll-indicator {
-    bottom: 20px;
+    bottom: 5px;
   }
 
   .stat-card {
@@ -741,11 +741,13 @@ onMounted(() => {
     height: 44px !important;
     min-width: 44px !important;
     max-width: 44px !important;
-    aspect-ratio: 1 / 1;
+    min-height: 44px !important;
+    max-height: 44px !important;
   }
 
   .hero-social-links {
     margin-top: 32px !important;
+    margin-bottom: 40px !important;
   }
 
   .hero-social-links .d-flex {

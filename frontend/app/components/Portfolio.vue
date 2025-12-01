@@ -417,10 +417,14 @@ const scrollToContact = () => {
   grid-template-rows: 1fr;
   gap: 24px;
   max-width: 100%;
+  justify-items: center;
+  place-items: center;
 }
 
 .carousel-grid>* {
   min-width: 0;
+  width: 100%;
+  max-width: 400px;
 }
 
 /* === CAROUSEL INDICATORS === */
@@ -530,8 +534,12 @@ const scrollToContact = () => {
 /* Responsive */
 @media (max-width: 960px) {
   .carousel-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .carousel-grid>* {
+    max-width: 500px;
   }
 
   .carousel-nav {

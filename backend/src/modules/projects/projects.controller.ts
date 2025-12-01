@@ -24,6 +24,13 @@ export class ProjectsController {
     return this.projectsService.getStats();
   }
 
+  @Get('admin/all')
+  @ApiOperation({ summary: 'Get all projects for admin (including inactive)' })
+  @ApiResponse({ status: 200, description: 'Returns all projects' })
+  findAllForAdmin() {
+    return this.projectsService.findAllForAdmin();
+  }
+
   @Get()
   @ApiOperation({ summary: 'Get all projects' })
   @ApiQuery({ name: 'category', required: false, type: String })

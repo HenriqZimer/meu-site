@@ -14,6 +14,10 @@ export class CertificationsService {
     return this.certificationModel.find({ active: true }).sort({ order: 1, date: -1 }).exec();
   }
 
+  async findAllForAdmin(): Promise<Certification[]> {
+    return this.certificationModel.find().sort({ order: 1, date: -1 }).exec();
+  }
+
   async findOne(id: string): Promise<Certification> {
     const certification = await this.certificationModel.findById(id).exec();
     if (!certification) {

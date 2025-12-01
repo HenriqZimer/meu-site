@@ -14,6 +14,10 @@ export class SkillsService {
     return this.skillModel.find({ active: true }).sort({ order: 1, name: 1 }).exec();
   }
 
+  async findAllForAdmin(): Promise<Skill[]> {
+    return this.skillModel.find().sort({ order: 1, name: 1 }).exec();
+  }
+
   async findOne(id: string): Promise<Skill> {
     const skill = await this.skillModel.findById(id).exec();
     if (!skill) {
