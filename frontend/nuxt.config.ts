@@ -65,6 +65,13 @@ export default defineNuxtConfig({
     dirs: ["~/components", "~/components/base"],
   },
 
+  nitro: {
+    prerender: {
+      routes: ['/'],
+      crawlLinks: false,
+    },
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: "pt-BR" },
