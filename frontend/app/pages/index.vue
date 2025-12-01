@@ -41,34 +41,84 @@ const siteUrl = config.public.siteUrl;
 
 // Configuração de SEO e meta tags
 useHead({
-  title: `${siteName} - ${siteDescription}`,
+  title: `${siteName} - DevOps Engineer & Cloud Specialist`,
   meta: [
     {
       name: "description",
-      content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.`,
+      content: `Portfólio de ${siteName}, DevOps Engineer especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud.`,
     },
     {
       name: "keywords",
       content:
-        "devops, desenvolvedor, vue.js, nuxt, react, typescript, web developer, portfolio, kubernetes, docker, aws",
+        "devops engineer, cloud specialist, kubernetes, docker, aws, ci/cd, infraestrutura, automação, containers, cloud computing, terraform, monitoramento",
     },
-    { property: "og:title", content: `${siteName} - ${siteDescription}` },
+    { property: "og:title", content: `${siteName} - DevOps Engineer & Cloud Specialist` },
     {
       property: "og:description",
-      content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.`,
+      content: `DevOps Engineer focado em resolver problemas de infraestrutura com soluções automatizadas. Especialista em CI/CD, Kubernetes e tecnologias cloud para ambientes produtivos.`,
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: siteUrl },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: `${siteName} - ${siteDescription}` },
+    { name: "twitter:title", content: `${siteName} - DevOps Engineer & Cloud Specialist` },
     {
       name: "twitter:description",
-      content: `Portfolio profissional de ${siteName}. ${siteDescription} especializado em criar experiências digitais elegantes e funcionais.`,
+      content: `DevOps Engineer especializado em infraestrutura automatizada, CI/CD pipelines, Kubernetes e soluções cloud escaláveis.`,
     },
+    // Metadados técnicos adicionais
+    { name: "author", content: "Henrique Zimermann" },
+    { name: "robots", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
+    { name: "googlebot", content: "index, follow" },
+    { name: "theme-color", content: "#3b82f6" },
+    { name: "msapplication-TileColor", content: "#3b82f6" },
   ],
   link: [
     { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
     { rel: "canonical", href: siteUrl },
+    // Open Graph images
+    { rel: "image_src", href: `${siteUrl}/og-image.jpg` },
+    // Schema.org structured data
+    { rel: "alternate", type: "application/rss+xml", title: "DevOps & Cloud Engineering Insights", href: `${siteUrl}/rss.xml` },
+  ],
+  script: [
+    // Schema.org structured data
+    {
+      type: "application/ld+json",
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Henrique Zimermann",
+        "jobTitle": "DevOps Engineer",
+        "description": "DevOps Engineer especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud",
+        "url": siteUrl,
+        "sameAs": [
+          "https://github.com/henriqzimer",
+          "https://linkedin.com/in/henrique-zimermann"
+        ],
+        "knowsAbout": [
+          "DevOps",
+          "Cloud Computing",
+          "Kubernetes",
+          "Docker",
+          "AWS",
+          "CI/CD",
+          "Infrastructure Automation",
+          "Container Orchestration",
+          "Monitoring",
+          "Infrastructure as Code"
+        ],
+        "hasOccupation": {
+          "@type": "Occupation",
+          "name": "DevOps Engineer",
+          "occupationLocation": {
+            "@type": "City",
+            "name": "Balneário Piçarras",
+            "addressRegion": "SC",
+            "addressCountry": "BR"
+          }
+        }
+      })
+    }
   ],
 });
 </script>

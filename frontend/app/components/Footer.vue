@@ -114,7 +114,7 @@ import { QUICK_LINKS, IMAGE_URLS } from "~/constants";
 import { useNavigation } from "~/composables/useNavigation";
 import { useSocialLinks } from "~/composables/useSocialLinks";
 
-const currentYear = new Date().getFullYear();
+const currentYear = computed(() => new Date().getFullYear());
 const showScrollTop = ref(false);
 
 const { scrollToSection, scrollToTop, shouldShowScrollTop } = useNavigation();
