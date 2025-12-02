@@ -113,8 +113,6 @@ const animateProjectCards = () => {
   nextTick(() => {
     const elements = document.querySelectorAll('.project-card-wrapper[data-animate]')
 
-    console.log('[Portfolio] Animating', elements.length, 'project cards')
-
     // Forçar visibilidade imediata para todos os cards no carrossel atual
     elements.forEach((el, index) => {
       const element = el as HTMLElement
@@ -138,10 +136,6 @@ onMounted(async () => {
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', updateItemsPerPage)
   }
-
-  // Log para debug
-  console.log('[Portfolio] onMounted - Projects loaded:', projectsStore.allProjects.length)
-  console.log('[Portfolio] onMounted - Items per page:', itemsPerPage.value)
 
   // Inicializar scroll animations
   observeElements({
