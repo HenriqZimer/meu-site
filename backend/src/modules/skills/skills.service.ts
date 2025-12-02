@@ -36,8 +36,16 @@ export class SkillsService {
   }
 
   async update(id: string, updateSkillDto: UpdateSkillDto): Promise<Skill> {
+    // Only allow updating specific fields
+    const allowedFields = ['name', 'category', 'order', 'active']; // adjust as needed per your DTO/schema
+    const safeUpdate: Partial<UpdateSkillDto> = {};
+    for (const key of allowedFields) {
+      if (Object.prototype.hasOwnProperty.call(updateSkillDto, key)) {
+        (safeUpdate as any)[key] = (updateSkillDto as any)[key];
+      }
+    }
     const skill = await this.skillModel
-      .findByIdAndUpdate(id, updateSkillDto, { new: true })
+      .findByIdAndUpdate(id, { $set: safeUpdate }, { new: true })
       .exec();
     
     if (!skill) {
