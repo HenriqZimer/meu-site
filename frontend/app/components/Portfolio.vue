@@ -29,9 +29,9 @@
         <!-- Carrossel -->
         <div class="flex-grow-1 overflow-hidden carousel-wrapper">
           <div class="carousel-track d-flex" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
-            <div v-for="(page, pageIndex) in paginatedProjects" :key="pageIndex" class="carousel-page">
+            <div v-for="(page, pageIndex) in paginatedProjects" :key="`page-${pageIndex}-${selectedFilter}-${filterVersion}`" class="carousel-page">
               <div class="carousel-grid">
-                <div v-for="(project, index) in page" :key="project.id"
+                <div v-for="(project, index) in page" :key="project._id || project.id || index"
                   :data-animate="index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'zoom-in' : 'slide-in-up'"
                   :data-delay="index * 150" class="project-card-wrapper">
                   <ProjectCard :title="project.title" :description="project.description" :image="project.image"
@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onUnmounted, triggerRef, shallowRef } from 'vue'
 import { PROJECT_FILTERS } from '~/constants'
 
 // Scroll Animation
@@ -80,7 +80,8 @@ const { observeElements } = useScrollAnimation()
 
 // Types
 interface Project {
-  id: number
+  _id?: string  // MongoDB ID
+  id?: number   // ID opcional (legado)
   title: string
   description: string
   image: string
@@ -104,21 +105,42 @@ const projectsStore = useProjectsStore()
 
 // Reactive state
 const selectedFilter = ref('all')
+const filterVersion = ref(0)  // Usado para forçar recálculo
+
+// Função para animar os cards - será chamada no mount e quando o filtro mudar
+const animateProjectCards = () => {
+  nextTick(() => {
+    const elements = document.querySelectorAll('.project-card-wrapper[data-animate]')
+    
+    console.log('[Portfolio] Animating', elements.length, 'project cards')
+    
+    // Forçar visibilidade imediata para todos os cards no carrossel atual
+    elements.forEach((el, index) => {
+      const element = el as HTMLElement
+      const delay = element.getAttribute('data-delay')
+      
+      setTimeout(() => {
+        element.classList.add('is-visible')
+      }, delay ? parseInt(delay) : index * 100)
+    })
+  })
+}
 
 // Carregar projetos da API e inicializar animações
 onMounted(async () => {
   await projectsStore.fetchProjects()
 
-  // Forçar atualização do itemsPerPage
+  // Atualizar itemsPerPage baseado na largura da tela
+  updateItemsPerPage()
+  
+  // Registrar listener de resize
   if (typeof window !== 'undefined') {
-    if (window.innerWidth <= 600) {
-      itemsPerPage.value = 1
-    } else if (window.innerWidth <= 960) {
-      itemsPerPage.value = 2
-    } else {
-      itemsPerPage.value = 3
-    }
+    window.addEventListener('resize', updateItemsPerPage)
   }
+  
+  // Log para debug
+  console.log('[Portfolio] onMounted - Projects loaded:', projectsStore.allProjects.length)
+  console.log('[Portfolio] onMounted - Items per page:', itemsPerPage.value)
 
   // Inicializar scroll animations
   observeElements({
@@ -126,35 +148,11 @@ onMounted(async () => {
     once: true
   })
 
-  // Animações de scroll para os cards
+  // Animar cards iniciais
+  setTimeout(animateProjectCards, 100)
+
+  // Adicionar efeito parallax 3D nos project cards
   nextTick(() => {
-    const animateCardsOnScroll = () => {
-      const elements = document.querySelectorAll('[data-animate]')
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const element = entry.target as HTMLElement
-            const delay = element.getAttribute('data-delay')
-
-            setTimeout(() => {
-              element.classList.add('is-visible')
-            }, delay ? parseInt(delay) : 0)
-
-            observer.unobserve(element)
-          }
-        })
-      }, {
-        threshold: 0.15,
-        rootMargin: '0px 0px -50px 0px'
-      })
-
-      elements.forEach(el => observer.observe(el))
-    }
-
-    setTimeout(animateCardsOnScroll, 100)
-
-    // Adicionar efeito parallax 3D nos project cards
     setTimeout(() => {
       const projectCards = document.querySelectorAll('.project-card-modern')
 
@@ -186,6 +184,11 @@ onMounted(async () => {
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
 const loading = computed(() => projectsStore.loading)
+
+// Debug: Log para verificar estado
+watch([projects, selectedFilter], ([projs, filter]) => {
+  console.log('[Portfolio] Projects count:', projs.length, 'Filter:', filter)
+}, { immediate: true })
 
 // Other Technologies Data
 const otherTechnologies = [
@@ -243,43 +246,61 @@ const filters = computed<Filter[]>(() =>
   }))
 )
 
-// Computed filtered projects
+// Computed filtered projects - usando função getter para garantir reatividade
 const filteredProjects = computed(() => {
-  if (selectedFilter.value === 'all') {
-    return projects.value
+  // Incluir filterVersion para forçar recálculo
+  const version = filterVersion.value
+  const allProjects = projects.value
+  const currentFilter = selectedFilter.value
+  
+  console.log('[Portfolio] Filtering v' + version + ' - Total:', allProjects.length, 'Filter:', currentFilter)
+  
+  // Retorna todos os projetos quando filtro é 'all' ou vazio
+  if (!currentFilter || currentFilter === 'all') {
+    const result = allProjects.slice() // Cria nova cópia do array
+    console.log('[Portfolio] Returning all projects:', result.length)
+    return result
   }
-  return projects.value.filter(project => project.category === selectedFilter.value)
+  
+  const filtered = allProjects.filter(project => project.category === currentFilter)
+  console.log('[Portfolio] Returning filtered projects:', filtered.length)
+  return filtered
 })
 
 // Carousel state
 const currentPage = ref(0)
-const itemsPerPage = ref(3)
+const itemsPerPage = ref(3) // Valor default para desktop
 
-// Update items per page based on window width
-if (typeof window !== 'undefined') {
-  const updateItemsPerPage = () => {
-    if (window.innerWidth <= 600) {
-      itemsPerPage.value = 1 // Mobile: 1 card por página
-    } else if (window.innerWidth <= 960) {
-      itemsPerPage.value = 2 // Tablet: 2 cards por página
-    } else {
-      itemsPerPage.value = 3 // Desktop: 3 cards por página (1 linha)
-    }
+// Update items per page based on window width - será chamado no onMounted
+const updateItemsPerPage = () => {
+  if (typeof window === 'undefined') return
+  
+  const width = window.innerWidth
+  let newValue = 3 // Desktop default
+  
+  if (width <= 600) {
+    newValue = 1 // Mobile: 1 card por página
+  } else if (width <= 960) {
+    newValue = 2 // Tablet: 2 cards por página
   }
-
-  updateItemsPerPage()
-  window.addEventListener('resize', updateItemsPerPage)
+  
+  console.log('[Portfolio] Window width:', width, 'Items per page:', newValue)
+  itemsPerPage.value = newValue
 }
 
-// Computed carousel
+// Computed carousel - força recálculo a cada mudança
 const paginatedProjects = computed(() => {
-  const projects = filteredProjects.value
-  const pages = []
+  const projectsList = filteredProjects.value
+  const perPage = itemsPerPage.value
+  const pages: Project[][] = []
 
-  for (let i = 0; i < projects.length; i += itemsPerPage.value) {
-    pages.push(projects.slice(i, i + itemsPerPage.value))
+  console.log('[Portfolio] Paginating - Projects:', projectsList.length, 'Per page:', perPage)
+
+  for (let i = 0; i < projectsList.length; i += perPage) {
+    pages.push(projectsList.slice(i, i + perPage))
   }
 
+  console.log('[Portfolio] Total pages:', pages.length)
   return pages
 })
 
@@ -302,9 +323,26 @@ const goToPage = (page: number) => {
   currentPage.value = page
 }
 
-// Reset page when filter changes
-watch(selectedFilter, () => {
+// Reset page when filter changes and force recalculation
+watch(selectedFilter, (newFilter) => {
+  console.log('[Portfolio] Filter changed to:', newFilter)
   currentPage.value = 0
+  
+  // Força o Vue a recalcular e depois anima os novos cards
+  nextTick(() => {
+    console.log('[Portfolio] After filter change - Filtered count:', filteredProjects.value.length, 'Pages:', totalPages.value)
+    // Re-animar os cards após a mudança de filtro
+    animateProjectCards()
+  })
+})
+
+// Reset page when itemsPerPage changes (ex: resize)
+watch(itemsPerPage, (newValue) => {
+  console.log('[Portfolio] Items per page changed to:', newValue)
+  // Se a página atual ficou fora do range, voltar para a página 0
+  if (currentPage.value >= totalPages.value) {
+    currentPage.value = 0
+  }
 })
 
 // Keyboard navigation
@@ -322,7 +360,9 @@ if (typeof window !== 'undefined') {
 
 // Methods
 const setFilter = (value: string) => {
+  console.log('[Portfolio] setFilter called with:', value)
   selectedFilter.value = value
+  filterVersion.value++  // Força recálculo das computeds
 }
 
 const scrollToContact = () => {
@@ -331,6 +371,13 @@ const scrollToContact = () => {
     element.scrollIntoView({ behavior: 'smooth' })
   }
 }
+
+// Cleanup - remover listeners quando o componente for desmontado
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', updateItemsPerPage)
+  }
+})
 </script>
 
 <style scoped>

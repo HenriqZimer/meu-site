@@ -56,9 +56,9 @@
         icon
         variant="text"
         class="mobile-menu-btn"
-        @click="drawer = true"
+        @click="drawer = !drawer"
       >
-        <v-icon>mdi-menu</v-icon>
+        <v-icon>{{ drawer ? 'mdi-close' : 'mdi-menu' }}</v-icon>
       </v-btn>
     </v-container>
   </v-app-bar>
