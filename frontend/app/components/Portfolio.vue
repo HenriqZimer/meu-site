@@ -29,7 +29,8 @@
         <!-- Carrossel -->
         <div class="flex-grow-1 overflow-hidden carousel-wrapper">
           <div class="carousel-track d-flex" :style="{ transform: `translateX(-${currentPage * 100}%)` }">
-            <div v-for="(page, pageIndex) in paginatedProjects" :key="`page-${pageIndex}-${selectedFilter}-${filterVersion}`" class="carousel-page">
+            <div v-for="(page, pageIndex) in paginatedProjects"
+              :key="`page-${pageIndex}-${selectedFilter}-${filterVersion}`" class="carousel-page">
               <div class="carousel-grid">
                 <div v-for="(project, index) in page" :key="project._id || project.id || index"
                   :data-animate="index % 3 === 0 ? 'fade-up' : index % 3 === 1 ? 'zoom-in' : 'slide-in-up'"
@@ -57,7 +58,7 @@
           :aria-label="`Ir para página ${index + 1}`">
         </button>
         <span class="text-body-2 ml-2" style="color: rgb(148, 163, 184);">{{ currentPage + 1 }} / {{ totalPages
-          }}</span>
+        }}</span>
       </div>
 
       <!-- Empty State -->
@@ -111,14 +112,12 @@ const filterVersion = ref(0)  // Usado para forçar recálculo
 const animateProjectCards = () => {
   nextTick(() => {
     const elements = document.querySelectorAll('.project-card-wrapper[data-animate]')
-    
-    console.log('[Portfolio] Animating', elements.length, 'project cards')
-    
+
     // Forçar visibilidade imediata para todos os cards no carrossel atual
     elements.forEach((el, index) => {
       const element = el as HTMLElement
       const delay = element.getAttribute('data-delay')
-      
+
       setTimeout(() => {
         element.classList.add('is-visible')
       }, delay ? parseInt(delay) : index * 100)
@@ -132,15 +131,11 @@ onMounted(async () => {
 
   // Atualizar itemsPerPage baseado na largura da tela
   updateItemsPerPage()
-  
+
   // Registrar listener de resize
   if (typeof window !== 'undefined') {
     window.addEventListener('resize', updateItemsPerPage)
   }
-  
-  // Log para debug
-  console.log('[Portfolio] onMounted - Projects loaded:', projectsStore.allProjects.length)
-  console.log('[Portfolio] onMounted - Items per page:', itemsPerPage.value)
 
   // Inicializar scroll animations
   observeElements({
@@ -184,11 +179,6 @@ onMounted(async () => {
 // Computed do store
 const projects = computed(() => projectsStore.allProjects)
 const loading = computed(() => projectsStore.loading)
-
-// Debug: Log para verificar estado
-watch([projects, selectedFilter], ([projs, filter]) => {
-  console.log('[Portfolio] Projects count:', projs.length, 'Filter:', filter)
-}, { immediate: true })
 
 // Other Technologies Data
 const otherTechnologies = [
@@ -252,18 +242,15 @@ const filteredProjects = computed(() => {
   const version = filterVersion.value
   const allProjects = projects.value
   const currentFilter = selectedFilter.value
-  
-  console.log('[Portfolio] Filtering v' + version + ' - Total:', allProjects.length, 'Filter:', currentFilter)
-  
+
+
   // Retorna todos os projetos quando filtro é 'all' ou vazio
   if (!currentFilter || currentFilter === 'all') {
     const result = allProjects.slice() // Cria nova cópia do array
-    console.log('[Portfolio] Returning all projects:', result.length)
     return result
   }
-  
+
   const filtered = allProjects.filter(project => project.category === currentFilter)
-  console.log('[Portfolio] Returning filtered projects:', filtered.length)
   return filtered
 })
 
@@ -274,17 +261,16 @@ const itemsPerPage = ref(3) // Valor default para desktop
 // Update items per page based on window width - será chamado no onMounted
 const updateItemsPerPage = () => {
   if (typeof window === 'undefined') return
-  
+
   const width = window.innerWidth
   let newValue = 3 // Desktop default
-  
+
   if (width <= 600) {
     newValue = 1 // Mobile: 1 card por página
   } else if (width <= 960) {
     newValue = 2 // Tablet: 2 cards por página
   }
-  
-  console.log('[Portfolio] Window width:', width, 'Items per page:', newValue)
+
   itemsPerPage.value = newValue
 }
 
@@ -294,13 +280,10 @@ const paginatedProjects = computed(() => {
   const perPage = itemsPerPage.value
   const pages: Project[][] = []
 
-  console.log('[Portfolio] Paginating - Projects:', projectsList.length, 'Per page:', perPage)
 
   for (let i = 0; i < projectsList.length; i += perPage) {
     pages.push(projectsList.slice(i, i + perPage))
   }
-
-  console.log('[Portfolio] Total pages:', pages.length)
   return pages
 })
 
@@ -325,12 +308,10 @@ const goToPage = (page: number) => {
 
 // Reset page when filter changes and force recalculation
 watch(selectedFilter, (newFilter) => {
-  console.log('[Portfolio] Filter changed to:', newFilter)
   currentPage.value = 0
-  
+
   // Força o Vue a recalcular e depois anima os novos cards
   nextTick(() => {
-    console.log('[Portfolio] After filter change - Filtered count:', filteredProjects.value.length, 'Pages:', totalPages.value)
     // Re-animar os cards após a mudança de filtro
     animateProjectCards()
   })
@@ -338,7 +319,6 @@ watch(selectedFilter, (newFilter) => {
 
 // Reset page when itemsPerPage changes (ex: resize)
 watch(itemsPerPage, (newValue) => {
-  console.log('[Portfolio] Items per page changed to:', newValue)
   // Se a página atual ficou fora do range, voltar para a página 0
   if (currentPage.value >= totalPages.value) {
     currentPage.value = 0
@@ -360,7 +340,6 @@ if (typeof window !== 'undefined') {
 
 // Methods
 const setFilter = (value: string) => {
-  console.log('[Portfolio] setFilter called with:', value)
   selectedFilter.value = value
   filterVersion.value++  // Força recálculo das computeds
 }
