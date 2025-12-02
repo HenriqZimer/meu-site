@@ -43,8 +43,20 @@ export class CoursesService {
   }
 
   async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
+    // Only allow whitelisted fields from UpdateCourseDto for updating
+    const allowedFields = ['name', 'year', 'order', 'active'];  // Update to allowed UpdateCourseDto fields
+    const safeUpdate: any = {};
+    for (const field of allowedFields) {
+      if (
+        Object.prototype.hasOwnProperty.call(updateCourseDto, field) &&
+        typeof (updateCourseDto as any)[field] !== 'undefined'
+      ) {
+        safeUpdate[field] = (updateCourseDto as any)[field];
+      }
+    }
+
     const course = await this.courseModel
-      .findByIdAndUpdate(id, updateCourseDto, { new: true })
+      .findByIdAndUpdate(id, { $set: safeUpdate }, { new: true })
       .exec();
     
     if (!course) {
