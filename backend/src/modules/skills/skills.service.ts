@@ -27,7 +27,7 @@ export class SkillsService {
   }
 
   async findByCategory(category: string): Promise<Skill[]> {
-    return this.skillModel.find({ category, active: true }).sort({ order: 1, name: 1 }).exec();
+    return this.skillModel.find({ category: { $eq: category }, active: true }).sort({ order: 1, name: 1 }).exec();
   }
 
   async create(createSkillDto: CreateSkillDto): Promise<Skill> {
