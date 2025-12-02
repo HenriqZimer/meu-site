@@ -16,7 +16,11 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const { username, password } = loginDto;
 
-    const user = await this.userModel.findOne({ username, active: true });
+    // Ensure username is a string and use $eq to prevent NoSQL injection
+    if (typeof username !== 'string') {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+    const user = await this.userModel.findOne({ username: { $eq: username }, active: true });
     if (!user) {
       throw new UnauthorizedException('Credenciais inválidas');
     }
