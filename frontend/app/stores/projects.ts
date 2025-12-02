@@ -48,7 +48,7 @@ export const useProjectsStore = defineStore('projects', {
     async fetchProjects() {
       // Evita requisições desnecessárias
       if (this.isLoaded && !this.needsRefresh) {
-        console.log('[Projects Store] Usando cache')
+        // console.log('[Projects Store] Usando cache')
         return this.projects
       }
 
@@ -84,7 +84,7 @@ export const useProjectsStore = defineStore('projects', {
     async fetchStats() {
       // Evita requisições desnecessárias
       if (this.stats && !this.statsNeedRefresh) {
-        console.log('[Projects Store] Usando cache de stats')
+        // console.log('[Projects Store] Usando cache de stats')
         return this.stats
       }
 
