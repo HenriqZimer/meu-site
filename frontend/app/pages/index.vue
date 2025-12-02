@@ -41,29 +41,29 @@ const siteUrl = config.public.siteUrl;
 
 // Configuração de SEO e meta tags
 useHead({
-  title: `${siteName} - DevOps Engineer & Cloud Specialist`,
+  title: `${siteName} - DevOps & Cloud`,
   meta: [
     {
       name: "description",
-      content: `Portfólio de ${siteName}, DevOps Engineer especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud.`,
+      content: `Portfólio de ${siteName}, DevOps & Cloud especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud.`,
     },
     {
       name: "keywords",
       content:
         "devops engineer, cloud specialist, kubernetes, docker, aws, ci/cd, infraestrutura, automação, containers, cloud computing, terraform, monitoramento",
     },
-    { property: "og:title", content: `${siteName} - DevOps Engineer & Cloud Specialist` },
+    { property: "og:title", content: `${siteName} - DevOps & Cloud` },
     {
       property: "og:description",
-      content: `DevOps Engineer focado em resolver problemas de infraestrutura com soluções automatizadas. Especialista em CI/CD, Kubernetes e tecnologias cloud para ambientes produtivos.`,
+      content: `DevOps & Cloud focado em resolver problemas de infraestrutura com soluções automatizadas. Especialista em CI/CD, Kubernetes e tecnologias cloud para ambientes produtivos.`,
     },
     { property: "og:type", content: "website" },
     { property: "og:url", content: siteUrl },
     { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: `${siteName} - DevOps Engineer & Cloud Specialist` },
+    { name: "twitter:title", content: `${siteName} - DevOps & Cloud` },
     {
       name: "twitter:description",
-      content: `DevOps Engineer especializado em infraestrutura automatizada, CI/CD pipelines, Kubernetes e soluções cloud escaláveis.`,
+      content: `DevOps & Cloud especializado em infraestrutura automatizada, CI/CD pipelines, Kubernetes e soluções cloud escaláveis.`,
     },
     // Metadados técnicos adicionais
     { name: "author", content: "Henrique Zimermann" },
@@ -88,8 +88,8 @@ useHead({
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "Henrique Zimermann",
-        "jobTitle": "DevOps Engineer",
-        "description": "DevOps Engineer especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud",
+        "jobTitle": "DevOps & Cloud",
+        "description": "DevOps & Cloud, especializado em resolver problemas de infraestrutura com soluções automatizadas usando CI/CD, Kubernetes e tecnologias cloud",
         "url": siteUrl,
         "sameAs": [
           "https://github.com/henriqzimer",
@@ -109,7 +109,7 @@ useHead({
         ],
         "hasOccupation": {
           "@type": "Occupation",
-          "name": "DevOps Engineer",
+          "name": "DevOps & Cloud",
           "occupationLocation": {
             "@type": "City",
             "name": "Balneário Piçarras",
@@ -146,7 +146,7 @@ useHead({
   .section-spacer {
     margin-top: 100px;
   }
-  
+
   :global(html) {
     scroll-padding-top: 64px;
   }
