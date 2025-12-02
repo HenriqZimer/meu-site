@@ -36,8 +36,29 @@ export class CertificationsService {
   }
 
   async update(id: string, updateCertificationDto: UpdateCertificationDto): Promise<Certification> {
+    // List of allowed fields for update
+    const allowedFields = [
+      'name',
+      'issuer',
+      'date',
+      'order',
+      'active',
+      // add other allowed field names from the Certification schema
+    ];
+    // Sanitize updateCertificationDto: only allow allowedFields
+    const safeUpdate: Partial<UpdateCertificationDto> = {};
+    for (const key of allowedFields) {
+      if (
+        Object.prototype.hasOwnProperty.call(updateCertificationDto, key)
+        // Avoid accidental update operator injection by explicitly blocking '$'-prefixed keys
+        && !key.startsWith('$')
+      ) {
+        // Optionally also filter out undefined or null values, or implement further validation here
+        safeUpdate[key] = updateCertificationDto[key];
+      }
+    }
     const certification = await this.certificationModel
-      .findByIdAndUpdate(id, updateCertificationDto, { new: true })
+      .findByIdAndUpdate(id, safeUpdate, { new: true })
       .exec();
     
     if (!certification) {
