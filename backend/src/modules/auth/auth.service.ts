@@ -46,7 +46,11 @@ export class AuthService {
   async createUser(createUserDto: CreateUserDto) {
     const { username, password, role } = createUserDto;
 
-    const existingUser = await this.userModel.findOne({ username });
+    // Ensure username is a string and use $eq to prevent NoSQL injection
+    if (typeof username !== 'string') {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+    const existingUser = await this.userModel.findOne({ username: { $eq: username } });
     if (existingUser) {
       throw new UnauthorizedException('Usuário já existe');
     }
