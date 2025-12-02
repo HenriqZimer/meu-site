@@ -14,7 +14,7 @@ export class CoursesService {
     const filter: any = { active: true };
     
     if (year) {
-      filter.year = year;
+      filter.year = { $eq: year };
     }
 
     return this.courseModel.find(filter).sort({ year: -1, order: 1, name: 1 }).exec();
