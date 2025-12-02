@@ -16,7 +16,7 @@
         </div>
         <div class="brand-text">
           <span class="brand-name">Henrique Zimermann</span>
-          <span class="brand-title">DevOps Engineer</span>
+          <span class="brand-title">DevOps & Cloud</span>
         </div>
       </div>
 
@@ -78,7 +78,7 @@
         </v-avatar>
         <div>
           <div class="text-h6 font-weight-bold">Henrique</div>
-          <div class="text-caption text-blue-grey-lighten-2">DevOps Engineer</div>
+          <div class="text-caption text-blue-grey-lighten-2">DevOps & Cloud</div>
         </div>
       </div>
     </div>

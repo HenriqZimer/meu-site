@@ -11,7 +11,7 @@
               </v-avatar>
               <div>
                 <div class="brand-name">Henrique Zimermann</div>
-                <div class="brand-subtitle">DevOps & Cloud Engineer</div>
+                <div class="brand-subtitle">DevOps & Cloud</div>
               </div>
             </div>
             <p class="footer-description">

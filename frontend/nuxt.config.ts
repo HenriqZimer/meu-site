@@ -15,7 +15,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: process.env.FRONTEND_API_URL,
       siteName: "Henrique Zimermann",
-      siteDescription: "DevOps & Cloud Engineer",
+      siteDescription: "DevOps & Cloud",
       siteUrl: "https://henriqzimer.com.br",
     },
   },
