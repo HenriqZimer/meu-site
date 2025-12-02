@@ -55,12 +55,13 @@ export class CertificationsService {
       ) {
         const value = updateCertificationDto[key];
         // Only assign if value is a primitive or safe Date, reject objects to avoid NoSQL injection
+        // Defensive: Value must be strictly a primitive OR a real Date object
         if (
           value === null ||
           typeof value === 'string' ||
           typeof value === 'number' ||
           typeof value === 'boolean' ||
-          (value instanceof Date)
+          (Object.prototype.toString.call(value) === '[object Date]')
         ) {
           safeUpdate[key] = value;
         }
