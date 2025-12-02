@@ -88,21 +88,43 @@ const loading = computed(() => skillsStore.loading)
 .tech-carousel-track {
   display: inline-flex;
   gap: 24px;
+  -webkit-animation: scroll 120s linear infinite;
   animation: scroll 120s linear infinite;
   will-change: transform;
+  -webkit-will-change: transform;
   flex-wrap: nowrap;
+  /* Safari fix */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .tech-carousel-track:hover {
+  -webkit-animation-play-state: paused;
   animation-play-state: paused;
 }
 
-@keyframes scroll {
+@-webkit-keyframes scroll {
   0% {
+    -webkit-transform: translateX(0);
     transform: translateX(0);
   }
 
   100% {
+    -webkit-transform: translateX(calc(-50% - 12px));
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+@keyframes scroll {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+
+  100% {
+    -webkit-transform: translateX(calc(-50% - 12px));
     transform: translateX(calc(-50% - 12px));
   }
 }
