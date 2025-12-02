@@ -1,4 +1,6 @@
 name: Docker Image CI - Backend
+permissions:
+  contents: read
 
 on:
   push:
