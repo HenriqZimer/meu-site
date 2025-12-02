@@ -53,8 +53,18 @@ export class CertificationsService {
         // Avoid accidental update operator injection by explicitly blocking '$'-prefixed keys
         && !key.startsWith('$')
       ) {
-        // Optionally also filter out undefined or null values, or implement further validation here
-        safeUpdate[key] = updateCertificationDto[key];
+        const value = updateCertificationDto[key];
+        // Only assign if value is a primitive or safe Date, reject objects to avoid NoSQL injection
+        if (
+          value === null ||
+          typeof value === 'string' ||
+          typeof value === 'number' ||
+          typeof value === 'boolean' ||
+          (value instanceof Date)
+        ) {
+          safeUpdate[key] = value;
+        }
+        // else: Skip/ignore unsafe types (objects, arrays, functions)
       }
     }
     const certification = await this.certificationModel
