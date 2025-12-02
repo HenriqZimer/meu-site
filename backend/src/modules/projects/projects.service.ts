@@ -14,9 +14,13 @@ export class ProjectsService {
     const filter: any = { active: true };
     
     if (category && category !== 'all') {
-      filter.category = category;
+      if (typeof category === 'string') {
+        // Use $eq operator to ensure it is treated as a literal value
+        filter.category = { $eq: category };
+      }
+      // else: ignore non-string values for security; do not add to filter
     }
-    
+
     if (featured !== undefined) {
       filter.featured = featured;
     }
