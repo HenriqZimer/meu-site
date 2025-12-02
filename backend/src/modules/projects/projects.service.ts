@@ -45,6 +45,29 @@ export class ProjectsService {
     return project.save();
   }
 
+  // Helper: returns true only for safe primitives (string, number, boolean, null)
+  private isSafePrimitive(value: any): boolean {
+    return (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      typeof value === 'boolean' ||
+      value === null
+    );
+  }
+
+  // Helper: recursively reject any object or array value, or keys starting with "$"
+  private containsMongoOperator(obj: any): boolean {
+    if (Array.isArray(obj)) return true;
+    if (obj && typeof obj === 'object') {
+      for (const k of Object.keys(obj)) {
+        if (k.startsWith('$')) return true;
+        if (this.containsMongoOperator(obj[k])) return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
   async update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project> {
     // Whitelist of allowed update fields -- update as appropriate
     const allowedFields = ['title', 'description', 'category', 'featured', 'order', 'active']; // Add all valid fields from UpdateProjectDto
@@ -57,16 +80,15 @@ export class ProjectsService {
       }
       if (allowedFields.includes(key)) {
         const value = updateProjectDto[key];
-        // Accept only primitive types (string, number, boolean, null)
-        if (
-          typeof value === 'string' ||
-          typeof value === 'number' ||
-          typeof value === 'boolean' ||
-          value === null
-        ) {
+        // Only allow primitive values, not objects or arrays
+        if (this.isSafePrimitive(value)) {
           sanitizedUpdate[key] = value;
         }
-        // Otherwise skip
+        // Block any object/array or suspicious value entirely, including nested $ operators
+        else if (!this.isSafePrimitive(value) && !this.containsMongoOperator(value)) {
+          // skip values that are objects or arrays
+          continue;
+        }
       }
     }
 
