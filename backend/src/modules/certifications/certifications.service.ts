@@ -27,7 +27,7 @@ export class CertificationsService {
   }
 
   async findByIssuer(issuer: string): Promise<Certification[]> {
-    return this.certificationModel.find({ issuer, active: true }).sort({ order: 1, date: -1 }).exec();
+    return this.certificationModel.find({ issuer: { $eq: issuer }, active: true }).sort({ order: 1, date: -1 }).exec();
   }
 
   async create(createCertificationDto: CreateCertificationDto): Promise<Certification> {
