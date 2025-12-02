@@ -42,10 +42,24 @@ export class ProjectsService {
   }
 
   async update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project> {
+    // Whitelist of allowed update fields -- update as appropriate
+    const allowedFields = ['title', 'description', 'category', 'featured', 'order', 'active']; // Add all valid fields from UpdateProjectDto
+    const sanitizedUpdate: any = {};
+
+    for (const key of Object.keys(updateProjectDto)) {
+      if (key.startsWith('$')) {
+        // Disallow MongoDB operators
+        continue;
+      }
+      if (allowedFields.includes(key)) {
+        sanitizedUpdate[key] = updateProjectDto[key];
+      }
+    }
+
     const project = await this.projectModel
-      .findByIdAndUpdate(id, updateProjectDto, { new: true })
+      .findByIdAndUpdate(id, sanitizedUpdate, { new: true })
       .exec();
-    
+
     if (!project) {
       throw new NotFoundException(`Project with ID ${id} not found`);
     }
