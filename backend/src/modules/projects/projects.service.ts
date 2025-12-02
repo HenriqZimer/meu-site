@@ -56,7 +56,17 @@ export class ProjectsService {
         continue;
       }
       if (allowedFields.includes(key)) {
-        sanitizedUpdate[key] = updateProjectDto[key];
+        const value = updateProjectDto[key];
+        // Accept only primitive types (string, number, boolean, null)
+        if (
+          typeof value === 'string' ||
+          typeof value === 'number' ||
+          typeof value === 'boolean' ||
+          value === null
+        ) {
+          sanitizedUpdate[key] = value;
+        }
+        // Otherwise skip
       }
     }
 
